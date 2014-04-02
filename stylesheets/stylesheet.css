@@ -26,7 +26,7 @@ time, mark, audio, video {
   padding: 0;
   border: 0;
   font: inherit;
-  vertical-align: baseline;
+  /*vertical-align: baseline;*/
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -56,6 +56,7 @@ body {
   font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  background-color: #2F4352;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -232,7 +233,7 @@ hr {
 }
 
 table {
-  border: 1px solid #373737;
+  /*border: 1px solid #373737;*/
   margin-bottom: 20px;
   text-align: left;
  }
@@ -246,7 +247,7 @@ th {
 
 td {
   padding: 10px;
-  border: 1px solid #373737;
+  /*border: 1px solid #373737;*/
  }
 
 form {
@@ -285,12 +286,14 @@ Full-Width Styles
 }
 
 #header_wrap {
+  /*
   background: #212121;
   background: -moz-linear-gradient(top, #373737, #212121);
   background: -webkit-linear-gradient(top, #373737, #212121);
   background: -ms-linear-gradient(top, #373737, #212121);
   background: -o-linear-gradient(top, #373737, #212121);
   background: linear-gradient(top, #373737, #212121);
+  */
 }
 
 #header_wrap .inner {
@@ -360,10 +363,12 @@ Full-Width Styles
 
 #main_content {
   padding-top: 40px;
+  min-height: 500px;
 }
 
 #footer_wrap {
-  background: #212121;
+  /*background: #212121;*/
+  background-color: #2F4352;
 }
 
 
