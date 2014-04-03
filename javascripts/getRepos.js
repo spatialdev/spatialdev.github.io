@@ -7,6 +7,7 @@ function getSpatialDevRepos(){
     var postArgs = {
 
 
+
     };
 
 
@@ -80,6 +81,10 @@ function createReposCards(data){
         var htmlURL = item.html_url;
         var watchers = item.watchers_count;
         var forks = item.forks_count;
+
+        var fork = item.fork;
+
+
 
         var footer= '<div class="repo-footer"><span class="watchers">' + watchers + ' <i class="fa fa-star"></i></a></span><span class="forks">' + forks + ' <i class="fa fa-code-fork"></i></a></span></div>';
 
