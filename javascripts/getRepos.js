@@ -59,7 +59,7 @@ function createReposCards(data){
   $.each(repoGroupData, function (idx, item) {
 
   //console.log(idx);
-  console.log(item);
+  //console.log(item);
 
 
     //var repoTextWrapper = null;
@@ -74,32 +74,25 @@ function createReposCards(data){
       var repoDesc = item.description;
       var repoLanguage = item.language;
       var htmlURL = item.html_url;
+      console.log(htmlURL);
 
-      //html = ''; //declare string inside function
-        //html += '<tr>';
-        var html = ['<td><div id="' + repoName + '" class="workFrame mid" onclick="clickedWorkImage(this);"><div class="workImage"></div><div class="workText"><div class="workTitle Arab">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div></div></div></td>'];
-        //html += '</tr>';
-        htmlArray.push(html);
+      var html = ['<td><div id="' + repoName + '" class="workFrame mid" onclick="javascript:location.href=' + "'" +  htmlURL + "'" + '"><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div></div></div></td>'];
+      htmlArray.push(html);
 
 
     });
 
-    console.log(htmlArray);
+    //console.log(htmlArray);
 
-    // $(html + "<td></td><td></td><td></td></tr>").appendTo('tbody');
 
     $("<tr><td>"+ htmlArray[0] + "</td><td>"+ htmlArray[1] + "</td><td>"+ htmlArray[2] + "</td></tr>").appendTo(repoTable);
 
-    // $('tbody').append(html);
-
-    // html = null;
-
-
-
   });
 
+}
 
-  //$(html).appendTo(repoTable);
+function clickedWorkImage(htmlURL){
 
+  console.log(htmlURL);
 
 }
