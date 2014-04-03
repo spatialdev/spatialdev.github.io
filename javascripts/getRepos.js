@@ -38,13 +38,16 @@ function formatTrendObject(data) {
 
     var groupArray = [];
     for (var i=0, len=repoData.length; i<len; i+=3) {
-        groupArray.push([repoData[i] || "",repoData[i+1] || "",repoData[i+2] || ""]);
+        groupArray.push([repoData[i],repoData[i+1],repoData[i+2]]);
 
     }
 
     // for (var key in groupArray) {
     //
     // }
+
+    //groupArray = $.grep(groupArray,function(n){ return(n) });
+
     console.log(groupArray);
     return groupArray;
 }
@@ -53,7 +56,7 @@ function createReposCards(data){
 
   repoGroupData = formatTrendObject(data);
 
-  var repoTable = $("<table></table>").appendTo(".imageGallery");
+  var repoTable = $("<table class='repoTable'></table>").appendTo(".imageGallery");
   //var tableHead = $("<tr><th>#</th><th>Village</th><th>Type</th><th>Crop</th><th>Plot Size</th>").appendTo(varietyTable);
 
   $.each(repoGroupData, function (idx, item) {
@@ -69,15 +72,26 @@ function createReposCards(data){
 
     $.each(item, function (idx, item) {
 
-      // //console.log(item.name);
-      var repoName = item.name;
-      var repoDesc = item.description;
-      var repoLanguage = item.language;
-      var htmlURL = item.html_url;
-      console.log(htmlURL);
+      if (item){
 
-      var html = ['<td><div id="' + repoName + '" class="workFrame mid" onclick="javascript:location.href=' + "'" +  htmlURL + "'" + '"><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div></div></div></td>'];
-      htmlArray.push(html);
+        var repoName = item.name;
+        var repoDesc = item.description;
+        var repoLanguage = item.language;
+        var htmlURL = item.html_url;
+        var watchers = item.watchers_count;
+        var forks = item.forks_count;
+
+        var footer= '<div class="repo-footer"><span class="watchers">' + watchers + ' <i class="fa fa-star"></i></a></span><span class="forks">' + forks + ' <i class="fa fa-code-fork"></i></a></span></div>';
+
+        var string = '<td><div id="repoCard" class="workFrame mid" onclick="javascript:location.href=' + "'" +  htmlURL + "'" + '"><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div>' + footer + '</div></div></td>';
+
+
+        var html = [string];
+
+        htmlArray.push(html);
+
+      }
+
 
 
     });
@@ -85,7 +99,9 @@ function createReposCards(data){
     //console.log(htmlArray);
 
 
-    $("<tr><td>"+ htmlArray[0] + "</td><td>"+ htmlArray[1] + "</td><td>"+ htmlArray[2] + "</td></tr>").appendTo(repoTable);
+
+
+    $("<tr><td>"+ htmlArray[0] + "</td><td>"+ htmlArray[1] + "</td><td>"+ htmlArray[2] || "" + "</td></tr>").appendTo(repoTable);
 
   });
 
