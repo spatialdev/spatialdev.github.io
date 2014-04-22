@@ -1,3 +1,5 @@
+var filterReposArray =[];
+
 function getSpatialDevRepos(){
 
     // console.log(data);
@@ -18,12 +20,41 @@ function getSpatialDevRepos(){
     	console.log(data);
       createReposCards(data);
 
+      getFilterRepos(data);
+
       //formatTrendObject(data);
 
     }).fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ', ' + error;
         console.log("Request Failed: " + err);
     });
+}
+
+function getFilterRepos(data){
+
+  filterReposArray = [];
+
+      $.each(data.data, function (id, item) {
+
+          var forksBool = item.fork;
+          // console.log(forksBool);
+
+          var hasName = item.name;
+          // console.log(hasName);
+
+
+          if (forksBool == false) {
+
+            filterReposArray.push(item);
+          }
+
+      });
+
+
+
+      console.log(filterReposArray);
+      createReposCards(filterReposArray);
+
 }
 
 function formatTrendObject(data) {
@@ -88,7 +119,7 @@ function createReposCards(data){
 
         var footer= '<div class="repo-footer"><span class="watchers">' + watchers + ' <i class="fa fa-star"></i></a></span><span class="forks">' + forks + ' <i class="fa fa-code-fork"></i></a></span></div>';
 
-        var string = '<td><div id="repoCard" class="workFrame mid" onclick="javascript:location.href=' + "'" +  htmlURL + "'" + '"><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div>' + footer + '</div></div></td>';
+        var string = '<td><div id="repoCard" class="workFrame mid" onclick="javascript:location.href=' + "'" +  htmlURL + "'" + '"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div>' + footer + '</div></div></td>';
 
 
         var html = [string];

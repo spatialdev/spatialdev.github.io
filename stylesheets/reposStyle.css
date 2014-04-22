@@ -35,22 +35,29 @@ border-spacing: 0;
 
 }
 
+#repoCard{
+  position: relative;
+}
+
 .workFrame {
 display: inline-block;
 background-color: #fff;
 padding: 8px;
-margin: 5px;
+margin: 10px;
 margin-bottom: 18px;
 cursor: pointer;
 border: 1px solid #e8e8e8;
 height:235px;
-width: 250px;
+width: 260px;
 cursor: pointer;
+box-shadow: 0 4px 4px -2px #232323;
+    -moz-box-shadow: 0 4px 4px -2px #232323;
+    -webkit-box-shadow: 0 4px 4px -2px #232323;
 }
 
 .workFrame:hover {
-box-shadow: rgb(119, 119, 119) 0px 0px 10px;
-border: 0px solid #e8e8e8;
+/*box-shadow: rgb(119, 119, 119) 0px 0px 10px;*/
+
 
 }
 
@@ -67,29 +74,49 @@ margin: 0 10px 5px 10px;
 
 .workTitle {
 text-align: left;
-font-size: 20px;
+font-size: 18px;
 text-transform: uppercase;
-font-family: 'PT Sans Narrow' , sans-serif;
-font-weight:bold;
+color: #1c769e;
+width: 170px;
+font-family: futura;
 }
 
 .workSubTitle {
 height: 40px;
 font-size: 13.5px;
-color: #272727;
+color: #1c769e;;
 }
 
 .workDescription {
-height: 80px;
+height: 105px;
 font-size: 13.5px;
 line-height: 21px;
 color: #545554;
 overflow: auto;
 }
 
+.repoTag{
+  width: 88px;
+  height: 29px;
+  background: red;
+  position: absolute;
+  right:-1px;
+  float: right;
+  top: -1px;
+  background-image:url(../images/repoTag.png);
+  display:none;
+}
+
+.workFrame:hover  .repoTag {
+
+	display: block;
+
+}
+
 .repo-footer{
-  margin-top: 63px;
   color:#999;
+  bottom: 0px;
+  position: absolute;
 }
 .watchers{
   padding-right: 10px;
@@ -97,4 +124,72 @@ overflow: auto;
 
 .forks{
   padding-right: 10px;
+}
+
+
+.hero {
+position: relative;
+/*background-image: url('/images/hero.png');*/
+background: #fff;
+background-image:url(../images/bg_6.png);
+background-repeat:repeat;
+}
+
+.wrapper {
+position: relative;
+width: 960px;
+margin: 0 auto;
+background:#fff;
+}
+
+#herotext {
+padding: 20px 0 0;
+color: #1c769e;
+}
+
+.big{
+  color: #1c769e;
+  font-family: FiraSansOT-Bold;
+  line-height: 40px;
+}
+
+.small{
+line-height: 36px;
+font-size: 18px;
+}
+
+.graycolor{
+  color: #434343;
+}
+
+.hero-item {
+float: left;
+display: inline-block;
+width: 700px;
+margin-left: 40px;
+}
+
+.hero-item2 {
+float: left;
+display: inline-block;
+width: 220px;
+height: 283px;
+}
+
+.cf:before, .cf:after {
+content: " ";
+display: table;
+}
+
+.cf:after {
+clear: both;
+}
+
+.imageGallery table {
+margin: auto;
+}
+
+.footerText{
+  color: #1c769e;
+ margin-left: 40px;
 }

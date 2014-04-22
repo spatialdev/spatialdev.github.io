@@ -1,0 +1,14 @@
+@font-face {
+    font-family: FiraSansOT-Bold;
+    src: url('fonts/FiraSansOT-Bold.otf') format("opentype");
+}
+
+@font-face {
+    font-family: FiraSansOT-Regular;
+    src: url('fonts/FiraSansOT-Regular.otf') format("opentype");
+}
+
+@font-face {
+    font-family: Futura;
+    src: url('fonts/Futura.ttc') format("opentype");
+}
