@@ -1,5 +1,82 @@
 var filterReposArray =[];
 
+function init(){
+  githubInfoSpatialDev();
+
+  getSpatialDevRepos();
+
+
+}
+
+function createRepoStats(data){
+
+
+
+
+
+  var followers = data.data.followers;
+  var publicRepos = data.data.public_repos;
+
+  var repoStatsTable = $("<table class='repoStatsTable'></table>").appendTo(".repoStats");
+  //var tableHead = $("<tr><th>#</th><th>Village</th><th>Type</th><th>Crop</th><th>Plot Size</th>").appendTo(varietyTable);
+
+  var Statistics = '<td><div id="repoCard" class="repoStatCard mid" ><span class="headerStat">STATS</span><p><a href="https://github.com/spatialdev/repositories"><span id="num-repos">' + publicRepos + ' </span>Public Repos</a><br><a href="https://github.com/spatialdev?tab=followers"><span id="num-followers">' + followers + ' </span>Followers</a></p></div></td>';
+
+  var RecentUpdates = '<td><div id="recentsRepoCard" class="repoStatCard mid" ><span class="headerStat">RECENTLY UPDATED</span><ol class="recentRepoList"></ol></div></td>';
+
+
+  $("<tr><td>"+ Statistics + "</td><td>"+ RecentUpdates + "</td></tr>").appendTo(repoStatsTable);
+
+}
+
+function getMostRecentUpdatedRepos(reposArray){
+
+  var mostRecentUpdatedRepos = reposArray;
+
+  var recentList = mostRecentUpdatedRepos.slice(0,4);
+
+
+
+  for (var i=0, len=recentList.length; i<len; i++) {
+      recentItem = recentList[i];
+      console.log(recentItem);
+
+      var name = recentItem.name;
+      var htmlURL = recentItem.html_url;
+      var updatedDate = recentItem.updated_at;
+
+      var updatedDate = updatedDate.split('T')[0];
+
+      var RecentRepoList = $("<li class='repos'><span class='name'><a href='" + htmlURL + "'>" + name + "  </a></span><span class='repoDate'>" + updatedDate + "</span></lo>").appendTo(".recentRepoList");
+
+  }
+
+
+}
+
+function githubInfoSpatialDev(){
+
+    var postArgs = {
+
+    };
+
+    var url = 'https://api.github.com/users/spatialdev';
+
+    $.getJSON(url + "?callback=?", postArgs).done(function (data) {
+
+      console.log(data);
+      //createReposCards(data);
+
+      createRepoStats(data);
+
+      //formatTrendObject(data);
+
+    }).fail(function (jqxhr, textStatus, error) {
+        var err = textStatus + ', ' + error;
+        console.log("Request Failed: " + err);
+    });
+}
+
 function getSpatialDevRepos(){
 
     // console.log(data);
@@ -8,6 +85,8 @@ function getSpatialDevRepos(){
 
     var postArgs = {
 
+      type: "public",
+      sort: "updated"
 
 
     };
@@ -18,7 +97,7 @@ function getSpatialDevRepos(){
     $.getJSON(url + "?callback=?", postArgs).done(function (data) {
 
     	console.log(data);
-      createReposCards(data);
+      //createReposCards(data);
 
       getFilterRepos(data);
 
@@ -42,6 +121,7 @@ function getFilterRepos(data){
           var hasName = item.name;
           // console.log(hasName);
 
+          var haslanguage = item.language;
 
           if (forksBool == false) {
 
@@ -52,8 +132,9 @@ function getFilterRepos(data){
 
 
 
-      console.log(filterReposArray);
+      // console.log(filterReposArray);
       createReposCards(filterReposArray);
+      getMostRecentUpdatedRepos(filterReposArray)
 
 }
 
@@ -62,11 +143,11 @@ function formatTrendObject(data) {
     //Should have 4 rows, one for each plot_type.  But sometimes, data may  not exist for all of those.
     //Columns should contain any additional properties
 
-    repoData = data.data;
+    repoData = data;
 
     //repoData = data;
 
-    console.log(repoData.length);
+    // console.log(repoData.length);
 
     var groupArray = [];
     for (var i=0, len=repoData.length; i<len; i+=3) {
@@ -74,13 +155,7 @@ function formatTrendObject(data) {
 
     }
 
-    // for (var key in groupArray) {
-    //
-    // }
-
-    //groupArray = $.grep(groupArray,function(n){ return(n) });
-
-    console.log(groupArray);
+    // console.log(groupArray);
     return groupArray;
 }
 
@@ -90,6 +165,15 @@ function createReposCards(data){
 
   var repoTable = $("<table class='repoTable'></table>").appendTo(".imageGallery");
   //var tableHead = $("<tr><th>#</th><th>Village</th><th>Type</th><th>Crop</th><th>Plot Size</th>").appendTo(varietyTable);
+
+  // var Statistics = '<td><div id="repoCard" class="workFrame mid" onclick="javascript:location.href=' + "'" +  "htmlURL" + "'" + '"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + "repoName" + '</div><div class="workSubTitle">' + "repoLanguage" + '</div><div class="workDescription">' + "repoDesc" + '</div>' + "footer" + '</div></div></td>';
+  //
+  // var RecentUpdates = '<td><div id="repoCard" class="workFrame mid" onclick="javascript:location.href=' + "'" +  "htmlURL" + "'" + '"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + "repoName" + '</div><div class="workSubTitle">' + "repoLanguage" + '</div><div class="workDescription">' + "repoDesc" + '</div>' + "footer" + '</div></div></td>';
+  //
+  //
+  // $("<tr><td>"+ Statistics + "</td><td>"+ RecentUpdates + "</td></tr>").appendTo(repoTable);
+  //
+
 
   $.each(repoGroupData, function (idx, item) {
 
