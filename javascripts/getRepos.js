@@ -1,7 +1,7 @@
 var filterReposArray =[];
 
 function init(){
-  githubInfoSpatialDev();
+  //githubInfoSpatialDev();
 
   getSpatialDevRepos();
 
@@ -163,7 +163,7 @@ function createReposCards(data){
 
   repoGroupData = formatTrendObject(data);
 
-  var repoTable = $("<table class='repoTable'></table>").appendTo(".imageGallery");
+  var repoTable = $("<table class='repoTable'></table>").appendTo("#repos");
   //var tableHead = $("<tr><th>#</th><th>Village</th><th>Type</th><th>Crop</th><th>Plot Size</th>").appendTo(varietyTable);
 
   // var Statistics = '<td><div id="repoCard" class="workFrame mid" onclick="javascript:location.href=' + "'" +  "htmlURL" + "'" + '"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + "repoName" + '</div><div class="workSubTitle">' + "repoLanguage" + '</div><div class="workDescription">' + "repoDesc" + '</div>' + "footer" + '</div></div></td>';

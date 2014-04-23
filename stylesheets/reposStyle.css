@@ -172,30 +172,33 @@ overflow: auto;
 position: relative;
 /*background-image: url('/images/hero.png');*/
 background: #fff;
-background-image:url(../images/bg_6.png);
-background-repeat:repeat;
+/*background-image:url(../images/bg_6.png);
+background-repeat:repeat;*/
+height: 150px;
 }
 
 .wrapper {
 position: relative;
-width: 1024px;
-margin: 0 auto;
+min-width: 1024px;
+width: 100%;
+/*margin: 0 auto;*/
 background:#fff;
+height: 150px;
 }
 
 #herotext {
-padding: 20px 0 0;
+padding: 10px 10px 0;
 color: #1c769e;
 }
 
 .big{
   color: #1c769e;
   font-family: FiraSansOT-Bold;
-  line-height: 40px;
+  line-height: 26px;
+  font-size:24px;
 }
 
 .small{
-line-height: 36px;
 font-size: 18px;
 }
 
@@ -208,13 +211,14 @@ float: left;
 display: inline-block;
 width: 700px;
 margin-left: 40px;
+margin: 0 auto;
 }
 
 .hero-item2 {
 float: right;
 display: inline-block;
 width: 220px;
-height: 283px;
+height: 150px;
 }
 
 .cf:before, .cf:after {
