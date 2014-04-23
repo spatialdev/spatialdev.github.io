@@ -487,9 +487,9 @@ a.btn {
 
 }
 .hero-item {
-  float: left;
-  display: inline-block;
-  width: 420px;
+float: left;
+display: inline-block;
+width: 600px;
 }
 
 .hero .wrapper {
@@ -503,28 +503,28 @@ a.btn {
   color: #ffffff;
 }
 #herotext h2 {
-  color: #1c769e;
-  font-size: 25px;
-
-  line-height: 1em;
-  margin-bottom: 10px;
-  font-family: Futura Condensed Bold;
+color: #1c769e;
+font-size: 25px;
+line-height: 1em;
+margin-bottom: 10px;
+font-family: Futura Condensed;
+margin-top: 17px;
 }
 #herotext p {
-  color: #434344;
-  font-size: 16px;
-  line-height: 20px;
-  margin-top: -15px;
-  font-family: FiraSansOT-Regular;
-  margin-top:10px;
-  width:500px;
+color: #434344;
+font-size: 16px;
+line-height: 27px;
+margin-top: -15px;
+font-family: FiraSansOT-Regular;
+margin-top: 10px;
+width: 700px;
 }
-#world {
+#sdImage {
 /*  padding-top: 50px;*/
   float:right;
-  width: 220px;
+  width: 135px;
 }
-#world img {
+#sdImage img {
   vertical-align: middle;
 }
 

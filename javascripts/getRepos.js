@@ -16,19 +16,7 @@ function createRepoStats(data){
 
   var followers = data.data.followers;
   $("#num-followers").html(followers);
-  // var publicRepos = data.data.public_repos;
-  //
-  // var repoStatsTable = $("<table class='repoStatsTable'></table>").appendTo("#recently-updated");
-  // //var tableHead = $("<tr><th>#</th><th>Village</th><th>Type</th><th>Crop</th><th>Plot Size</th>").appendTo(varietyTable);
-  //
-  // // var Statistics = '<td><div id="repoCard" class="repoStatCard mid" ><span class="headerStat">STATS</span><p><a href="https://github.com/spatialdev/repositories"><span id="num-repos">' + publicRepos + ' </span>Public Repos</a><br><a href="https://github.com/spatialdev?tab=followers"><span id="num-followers">' + followers + ' </span>Followers</a></p></div></td>';
-  //
-  // // var RecentUpdates = '<td><div id="recentsRepoCard" class="repoStatCard mid" ><ol class="recentRepoList"></ol></div></td>';
-  //
-  // var RecentUpdates = '<td><div id="recentsRepoCard" class="repoStatCard mid" ><ol class="recentRepoList"></ol></div></td>';
-  //
-  //
-  // $("<tr><td>"+ RecentUpdates + "</td></tr>").appendTo(repoStatsTable);
+
 
 }
 
@@ -210,7 +198,7 @@ function createReposCards(data){
 
         var footer= '<div class="repo-footer"><span class="watchers">' + watchers + ' <i class="fa fa-star"></i></a></span><span class="forks">' + forks + ' <i class="fa fa-code-fork"></i></a></span></div>';
 
-        var string = '<td><div id="repoCard" class="workFrame mid" onclick="javascript:location.href=' + "'" +  htmlURL + "'" + '"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div>' + footer + '</div></div></td>';
+        var string = '<td><div id="repoCard" class="workFrame" onclick="javascript:location.href=' + "'" +  htmlURL + "'" + '"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div>' + footer + '</div></div></td>';
 
 
         var html = [string];
@@ -228,7 +216,7 @@ function createReposCards(data){
 
 
 
-    $("<tr><td>"+ htmlArray[0] + "</td><td>"+ htmlArray[1] + "</td><td>"+ htmlArray[2] || "" + "</td></tr>").appendTo(repoTable);
+    $("<tr>"+ htmlArray[0] + htmlArray[1] + htmlArray[2] || "" + "</tr>").appendTo(repoTable);
 
   });
 
