@@ -1,7 +1,7 @@
 var filterReposArray =[];
 
 function init(){
-  //githubInfoSpatialDev();
+  githubInfoSpatialDev();
 
   getSpatialDevRepos();
 
@@ -15,17 +15,20 @@ function createRepoStats(data){
 
 
   var followers = data.data.followers;
-  var publicRepos = data.data.public_repos;
-
-  var repoStatsTable = $("<table class='repoStatsTable'></table>").appendTo(".repoStats");
-  //var tableHead = $("<tr><th>#</th><th>Village</th><th>Type</th><th>Crop</th><th>Plot Size</th>").appendTo(varietyTable);
-
-  var Statistics = '<td><div id="repoCard" class="repoStatCard mid" ><span class="headerStat">STATS</span><p><a href="https://github.com/spatialdev/repositories"><span id="num-repos">' + publicRepos + ' </span>Public Repos</a><br><a href="https://github.com/spatialdev?tab=followers"><span id="num-followers">' + followers + ' </span>Followers</a></p></div></td>';
-
-  var RecentUpdates = '<td><div id="recentsRepoCard" class="repoStatCard mid" ><span class="headerStat">RECENTLY UPDATED</span><ol class="recentRepoList"></ol></div></td>';
-
-
-  $("<tr><td>"+ Statistics + "</td><td>"+ RecentUpdates + "</td></tr>").appendTo(repoStatsTable);
+  $("#num-followers").html(followers);
+  // var publicRepos = data.data.public_repos;
+  //
+  // var repoStatsTable = $("<table class='repoStatsTable'></table>").appendTo("#recently-updated");
+  // //var tableHead = $("<tr><th>#</th><th>Village</th><th>Type</th><th>Crop</th><th>Plot Size</th>").appendTo(varietyTable);
+  //
+  // // var Statistics = '<td><div id="repoCard" class="repoStatCard mid" ><span class="headerStat">STATS</span><p><a href="https://github.com/spatialdev/repositories"><span id="num-repos">' + publicRepos + ' </span>Public Repos</a><br><a href="https://github.com/spatialdev?tab=followers"><span id="num-followers">' + followers + ' </span>Followers</a></p></div></td>';
+  //
+  // // var RecentUpdates = '<td><div id="recentsRepoCard" class="repoStatCard mid" ><ol class="recentRepoList"></ol></div></td>';
+  //
+  // var RecentUpdates = '<td><div id="recentsRepoCard" class="repoStatCard mid" ><ol class="recentRepoList"></ol></div></td>';
+  //
+  //
+  // $("<tr><td>"+ RecentUpdates + "</td></tr>").appendTo(repoStatsTable);
 
 }
 
@@ -47,7 +50,7 @@ function getMostRecentUpdatedRepos(reposArray){
 
       var updatedDate = updatedDate.split('T')[0];
 
-      var RecentRepoList = $("<li class='repos'><span class='name'><a href='" + htmlURL + "'>" + name + "  </a></span><span class='repoDate'>" + updatedDate + "</span></lo>").appendTo(".recentRepoList");
+      var RecentRepoList = $("<li class='repos'><span class='name'><a href='" + htmlURL + "'>" + name + "  </a></span><span class='repoDate'>" + updatedDate + "</span></lo>").appendTo("#recently-updated-repos");
 
   }
 
@@ -101,6 +104,11 @@ function getSpatialDevRepos(){
 
       getFilterRepos(data);
 
+      var numberRepos = data.data.length;
+      console.log(numberRepos);
+
+      $("#num-repos").html(numberRepos);
+
       //formatTrendObject(data);
 
     }).fail(function (jqxhr, textStatus, error) {
@@ -147,7 +155,6 @@ function formatTrendObject(data) {
 
     //repoData = data;
 
-    // console.log(repoData.length);
 
     var groupArray = [];
     for (var i=0, len=repoData.length; i<len; i+=3) {

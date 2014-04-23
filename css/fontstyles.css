@@ -9,6 +9,10 @@
 }
 
 @font-face {
-    font-family: Futura;
-    src: url("fonts/Futura.ttc") format("opentype");
+  font-family: 'Futura Condensed';
+  src: url('fonts/Futura Condensed.ttf');
+}
+@font-face {
+  font-family: 'Futura Condensed Bold';
+  src: url('fonts/Futura Condensed Bold.ttf');
 }
