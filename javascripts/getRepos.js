@@ -198,9 +198,9 @@ function createReposCards(data){
 
         var footer= '<div class="repo-footer"><span class="watchers">' + watchers + ' <i class="fa fa-star"></i></a></span><span class="forks">' + forks + ' <i class="fa fa-code-fork"></i></a></span></div>';
 
-        //var string = '<td><div id="repoCard" class="workFrame" onclick="javascript:location.href=' + "'" +  htmlURL + "'" + '"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div>' + footer + '</div></div></td>';
+        var string = '<td><div id="repoCard" class="workFrame" onclick="window.open(' + "'" +  htmlURL + "')" + '"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div>' + footer + '</div></div></td>';
 
-        var string = '<td><a class="divlink" href="' + htmlURL + '" target="_blank" ><div id="repoCard" class="workFrame"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div>' + footer + '</div></div></a></td>';
+        // var string = '<td><a class="divlink" href="' + htmlURL + '" target="_blank" ><div id="repoCard" class="workFrame"><div class="repoTag"></div><div class="workImage"></div><div class="workText"><div class="workTitle wordwrap">' + repoName + '</div><div class="workSubTitle">' + repoLanguage + '</div><div class="workDescription">' + repoDesc + '</div>' + footer + '</div></div></a></td>';
 
 
         var html = [string];
