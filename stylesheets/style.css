@@ -44,7 +44,7 @@ a:link, a:visited {
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 footer {
@@ -517,7 +517,7 @@ line-height: 27px;
 margin-top: -15px;
 font-family: FiraSansOT-Regular;
 margin-top: 10px;
-width: 700px;
+width: 663px;
 }
 #sdImage {
 /*  padding-top: 50px;*/
@@ -672,10 +672,11 @@ font-family: FiraSansOT-Regular;
 
 }
 
-.repo-footer{
-  color:#999;
-  bottom: 0px;
-  position: absolute;
+.repo-footer {
+color: #999;
+bottom: 0px;
+position: absolute;
+margin-bottom: 10px;
 }
 .watchers{
   padding-right: 10px;
@@ -689,4 +690,8 @@ font-family: FiraSansOT-Regular;
   color: #1c769e;
   margin-left: 40px;
   line-height: 50px;
+}
+
+.divlink{
+  text-decoration: none
 }
