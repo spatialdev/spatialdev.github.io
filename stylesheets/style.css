@@ -387,7 +387,7 @@ li.repo .repo-footer a {
 
   letter-spacing: 1px;
   height: 30px;
-/*  padding-left: 45px;*/
+  padding-left: 14px;
   color: #fff;
   vertical-align: middle;
 }
@@ -499,7 +499,7 @@ width: 600px;
   padding: 0 10px;
 }
 #herotext {
-  padding: 10px 0 0;
+  padding: 10px 20px 0;
   color: #ffffff;
 }
 #herotext h2 {
@@ -606,7 +606,7 @@ margin-bottom: 18px;
 cursor: pointer;
 border: 1px solid #e8e8e8;
 height:235px;
-width: 284px;
+width: 275px;
 cursor: pointer;
 box-shadow: 0 4px 4px -2px #232323;
     -moz-box-shadow: 0 4px 4px -2px #232323;
@@ -688,7 +688,7 @@ margin-bottom: 10px;
 
 .footerText{
   color: #1c769e;
-  margin-left: 40px;
+  margin-left: 55px;
   line-height: 50px;
 }
 
