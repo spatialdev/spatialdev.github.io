@@ -1,12 +1,12 @@
 /* Logo */
-#ARCLogo{
+#logo{
     background: url(../images/arc_logo.png) no-repeat;
     width:48px;
     margin: 0px auto;
 }
 
 /* Keep The logo dimensions the same in the flyout panel to keep the flyouts aligned with the buttons */
-#FlyoutLogoPlaceHolder, #ARCLogo{
+#FlyoutLogoPlaceHolder, #logo{
     height:48px;
     margin-top: 9px;
 }

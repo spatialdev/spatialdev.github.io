@@ -50,16 +50,14 @@
   </head>
   <body ng-app="GeoAngular">
     <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
-    <!-- Add your site or application content here -->
 
     <!-- AppContainer is the wrapper for the jQuery Layout plugin. -->
     <div id="AppContainer">
         <!-- NavBar is the vertical & left-hand (west) panel controlled by the jQuery Layout plugin. -->
         <div id="NavBar" class="ui-layout-west" ng-controller="NavBarCtrl">
-                <a href="/mapfolio/#/default"><div id="ARCLogo"></div></a>
+                <a href="#/default"><div id="logo"></div></a>
                 <div class="NavButtonGroup btn-group">
                     <button type="button" class="btn btn-default"   ng-mouseenter="isStoriesActive = isNotParam('stories')"
                                                                     ng-mouseleave="isStoriesActive = false"
@@ -854,10 +852,6 @@
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
-    <!--<script src="lib/leaflet/leaflet-src.js"></script>-->
-
-    <!-- build:js scripts/lib.js -->
-    <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
     <script src="bower_components/ng-file-upload/angular-file-upload-shim.js"></script>
@@ -877,11 +871,8 @@
     <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
     <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     <script src="bower_components/angular-ui-slider/src/slider.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="lib/d3.min.js"></script>
+
     <script src="lib/togeojson.js"></script>
     <script src="lib/mapbox.standalone.uncompressed.js"></script>
     <script src="lib/jquery.layout-latest.min.js"></script>
@@ -889,11 +880,7 @@
     <script src="lib/jquery.csv-0.71.min.js"></script>
     <script src="scripts/global.js"></script>
     <script src="scripts/config.js"></script>
-    <script src="scripts/geo-angular.js"></script>
-
-    <!-- endbuild -->
-
-    <!--<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>-->
+    <script src="scripts/spatial-viewer.js"></script>
 
 </body>
 </html>

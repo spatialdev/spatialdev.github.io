@@ -18,7 +18,6 @@ module.exports = angular.module('GeoAngular').factory('VectorProvider', function
 
   var Resource = require('./Resource');
   var GeoJSON = require('./GeoJSON');
-  var BBoxGeoJSON = require('./BBoxGeoJSON');
   var KML = require('./KML');
   var CSV = require('./csv');
 
@@ -31,7 +30,6 @@ module.exports = angular.module('GeoAngular').factory('VectorProvider', function
    */
   var types = {
     geojson: GeoJSON,
-    bboxgeojson: BBoxGeoJSON,
     kml: KML,
     csv: CSV
   };

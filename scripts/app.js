@@ -96,9 +96,9 @@ GeoAngular.run(function ($rootScope, $state, $stateParams) {
 
 GeoAngular.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
-    .when('/default', '/map@0,0,2(satellite,themecount)')
-    .when('/phl', '/map@11.759815,121.893311,6(redcross,phl)')
-    .otherwise(localStorage.getItem('defaultRoute') || '/map@0,0,2(satellite,themecount)');
+    .when('/default', '/map@0,0,2(satellite,wa)')
+    .when('/phl', '/map@11.759815,121.893311,6(satellite,phl)')
+    .otherwise(localStorage.getItem('defaultRoute') || '/map@0,0,2(satellite)');
 
   $stateProvider
     .state('main', {
@@ -198,4 +198,3 @@ require('./controllers/theme');
 require('./controllers/upload');
 require('./controllers/search');
 require('./controllers/export');
-
