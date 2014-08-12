@@ -1912,51 +1912,20 @@ angular.module('GeoAngular')
 module.exports = angular.module('GeoAngular').controller('ThemeCtrl', function ($scope, $rootScope, $state, $stateParams, VectorProvider) {
 
   var themeNameHash = $rootScope.themeNameHash = {
-    project: 'Projects',
-    disaster: 'Disasters',
-    projectRisk: 'Project Risk',
-    projectHealth: 'Project Health',
-    none: 'None'
+    all: 'All Countries',
+    bangladesh: 'Bangladesh',
+    india: 'India',
+    indonesia: 'Indonesia',
+    kenya: 'Kenya',
+    nigeria: 'Nigeria',
+    tanzania: 'Tanzania',
+    uganda: 'Uganda'
   };
 
-  $scope.project = function () {
-    $scope.themeName = themeNameHash.project;
-    ensureThemeCount();
-    $scope.setThemeQueryParam('project');
+  $scope.setTheme = function(key) {
+    $scope.themeName = themeNameHash[key];
+    $scope.setThemeQueryParam(key);
   };
-
-  $scope.disaster = function () {
-    $scope.themeName = themeNameHash.disaster;
-    ensureThemeCount();
-    $scope.setThemeQueryParam('disaster');
-  };
-
-  $scope.projectRisk = function () {
-      $scope.themeName = themeNameHash.projectRisk;
-      ensureThemeCount();
-      $scope.setThemeQueryParam('projectRisk');
-  };
-
-  $scope.projectHealth = function () {
-      $scope.themeName = themeNameHash.projectHealth;
-      ensureThemeCount();
-      $scope.setThemeQueryParam('projectHealth');
-  };
-
-  $scope.none = function () {
-    $scope.themeName = themeNameHash.none;
-    var layersArr = $.grep($stateParams.layers.split(','), function(routeLayer){
-      return routeLayer !== 'themecount' && routeLayer !== 'theme';
-    });
-    $stateParams.layers = layersArr.join(',');
-    $scope.setThemeQueryParam('none');
-  };
-
-  function ensureThemeCount() {
-    if ($stateParams.layers.indexOf('themecount') === -1 && $stateParams.layers.indexOf('theme') === -1) {
-      $stateParams.layers += ',themecount';
-    }
-  }
 
   $scope.setThemeQueryParam = function (theme) {
     $stateParams.theme = theme;
@@ -1964,7 +1933,7 @@ module.exports = angular.module('GeoAngular').controller('ThemeCtrl', function (
     $state.go(state, $stateParams);
   };
 
-  $scope.themeName = themeNameHash[$stateParams.theme] || 'Projects';
+  $scope.themeName = themeNameHash[$stateParams.theme] || 'All Countries';
 
   /*
    Handling Theme Menu Animations
