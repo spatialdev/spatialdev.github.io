@@ -20,31 +20,10 @@ vector.toGeoJSON = toGeoJSON;
 
 
 /**
- * This is updated by updateBBox. It is then used to query all
- * VectorProviders that use a bounding box to get additional
- * features.
- *
- * @type {string}
- */
-var bbox = vector.bbox = null;
-
-/**
  * Every resource that has been instantiated.
  * @type {Array}
  */
 var resources = vector.resources = [];
 debug.resources = resources;
 
-/**
- * Every resource with a bounding box fetching mechanism.
- * @type {Array}
- */
-var bboxResources = vector.bboxResources = [];
-debug.bboxResources = bboxResources;
-
-var bboxUrl = vector.bboxUrl = '';
-
 var centerLevel = vector.centerLevel = 0;
-
-
-

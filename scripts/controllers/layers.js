@@ -58,7 +58,6 @@ module.exports = angular.module('GeoAngular').controller('LayersCtrl', function(
     // We don't want to show layers that are basemaps, and we don't want to show the find func.
     if (  typeof LayerConfig[layerKey] === 'function'
        || layerKey === 'basemaps'
-       || layerKey === 'bbox'
        || LayerConfig[layerKey].type === 'basemap') {
 
       continue;
@@ -67,9 +66,6 @@ module.exports = angular.module('GeoAngular').controller('LayersCtrl', function(
     /**
      * Put layers in their respective categories.
      */
-//    if (LayerConfig[layerKey].type && LayerConfig[layerKey].type.toLowerCase() === 'bboxgeojson') {
-//      $scope.layersPanels.Boundaries[layerKey] = LayerConfig[layerKey];
-//    }
 //
 //    else if (LayerConfig[layerKey].type && LayerConfig[layerKey].type.toLowerCase() === 'geojson') {
 //      $scope.layersPanels.GeoJSON[layerKey] = LayerConfig[layerKey];

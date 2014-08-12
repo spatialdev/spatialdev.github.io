@@ -3,7 +3,7 @@
  *     on Mon Mar 17 2014
  */
 
-module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($scope, $rootScope, $state, $stateParams, leafletData, LayerConfig, VectorProvider) {
+module.exports = angular.module('GeoAngular').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, leafletData, LayerConfig, VectorProvider) {
   $scope.params = $stateParams;
 
   var lastLayersStr = '';
@@ -61,9 +61,9 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
       zoom: zoom
     };
 
-    broadcastBBox();
     lastLayersStr = layersStr;
   }
+
   redraw();
 
 
@@ -98,7 +98,7 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
   });
 
   //this takes in a WKT GeoJSON Extent geometry
-  $scope.zoomToExtent = function(extent){
+  $scope.zoomToExtent = function(extent) {
     delete $stateParams['zoom-extent'];
     $scope.bounds = {
       northEast: { lat: extent[2][1], lng: extent[2][0] },
@@ -108,86 +108,25 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
 
   //This take a leaflet bounds object and handles it.
   delete $stateParams['zoom-extent'];
-  $scope.zoomToBounds = function(bounds){
+  $scope.zoomToBounds = function(bounds) {
     $scope.bounds = { northEast: bounds.getNorthEast(), southWest: bounds.getSouthWest()};
   };
-
-
-
-    function broadcastBBox() {
-    //NH TODO Fixme. Find a better solution than a spin lock.
-    if (!wait) {
-      wait = true;
-      setTimeout(function(){
-        leafletData.getMap().then(function (map) {
-          //Get the MIN/MAX Tile ZYX extents.
-          //If they haven't chagned, then don't proceed.
-          var tileBounds = getCurrentTileBounds(map);
-          var zoom = map.getZoom();
-
-          $scope.zoom = zoom;
-          var minx = tileBounds.min.x;
-          var maxx = tileBounds.max.x;
-          var miny = tileBounds.min.y;
-          var maxy = tileBounds.max.y;
-
-          //Detect negative mins and set to 0
-          if(minx < 0) minx = 0;
-          if(miny < 0) miny = 0;
-
-          //Check for extreme values greater than the tile bounds
-          var extremeValue = Math.pow(2, zoom) - 1;
-
-          if(maxx > extremeValue) maxx = extremeValue;
-          if(maxy > extremeValue) maxy = extremeValue;
-
-          var str = zoom + "," +  minx + ',' +
-                                  maxx + ',' +
-                                  miny + ',' +
-                                  maxy;
-
-          VectorProvider.updateBBox(str);
-
-        });
-        wait = false;
-      }, 150);
-    }
-
-  }
-
-    /**
-     * Ripped From Leaflet TileLayer
-     * Calculate the Max/Min ZYX Tile bounds.
-     * Use those to snap BBox requests so we can cache.
-     */
-
-    function getCurrentTileBounds(map){
-        var bounds = map.getPixelBounds(),
-            tileSize = 256; //TODO
-
-        // tile coordinates range for the current view
-        var tileBounds = L.bounds(
-            bounds.min.divideBy(tileSize).floor(),
-            bounds.max.divideBy(tileSize).floor());
-
-        return tileBounds;
-    }
 
 
   /**
    * Native Leaflet Map Object
    */
-  leafletData.getMap().then(function (map) {
+  leafletData.getMap().then(function(map) {
     window.map = map;
-    map.on('moveend', function () { // move is good too
+    map.on('moveend', function() { // move is good too
       var c = map.getCenter();
       var lat = c.lat.toFixed(6);
       var lng = c.lng.toFixed(6);
       var zoom = map.getZoom().toString();
 
-      if (   $stateParams.lat  !== lat
-        || $stateParams.lng  !== lng
-        || $stateParams.zoom !== zoom ) {
+      if ( $stateParams.lat !== lat
+        || $stateParams.lng !== lng
+        || $stateParams.zoom !== zoom) {
 
         console.log('map: lat,lng,zoom !== $stateParams');
         $stateParams.lat = lat;
@@ -195,17 +134,16 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
         $stateParams.zoom = zoom;
         mapMoveEnd = true;
         $state.go($state.current.name, $stateParams);
-        broadcastBBox();
       }
     });
 
     //Connect the layout onresize end event
     try {
-        window.layout.panes.center.bind("layoutpaneonresize_end", function () {
-            map.invalidateSize();
-        });
-    }catch(e){
-        //Nothing
+      window.layout.panes.center.bind("layoutpaneonresize_end", function() {
+        map.invalidateSize();
+      });
+    } catch (e) {
+      //Nothing
     }
   });
 
@@ -213,7 +151,7 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
   var overlays = [];
 
   function drawOverlays() {
-    leafletData.getMap().then(function (map) {
+    leafletData.getMap().then(function(map) {
 
       for (var i = 0, len = overlayNames.length; i < len; ++i) {
         var overlayName = overlayNames[i];
@@ -224,7 +162,7 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
         }
 
         // remove the current layer that is not what should be that layer in the list
-        else if ( currOverlay && currOverlay._map ) {
+        else if (currOverlay && currOverlay._map) {
           if (currOverlay.destroyResource) currOverlay.destroyResource();
           map.removeLayer(currOverlay);
         }
@@ -232,7 +170,7 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
         // try for WMS (not a vector layer)
         // if things get more fancy with wms, it should get its own factory
         if (typeof LayerConfig[overlayName] === 'object'
-                    && LayerConfig[overlayName].type.toLowerCase() === 'wms') {
+          && LayerConfig[overlayName].type.toLowerCase() === 'wms') {
 
           var cfg = LayerConfig[overlayName];
           var layer = L.tileLayer.wms(cfg.url, {
@@ -246,7 +184,7 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
          * Tiles that are an overlay. OSM / Google / Mapnik tend to make tiles in this format.
          */
         else if (typeof LayerConfig[overlayName] === 'object'
-                          && LayerConfig[overlayName].type.toLowerCase() === 'xyz') {
+          && LayerConfig[overlayName].type.toLowerCase() === 'xyz') {
 
           var cfg = LayerConfig[overlayName];
           var layer = L.tileLayer(cfg.url, {
@@ -258,7 +196,7 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
          * TMS flips the y. GeoServer often serves this.
          */
         else if (typeof LayerConfig[overlayName] === 'object'
-                          && LayerConfig[overlayName].type.toLowerCase() === 'tms') {
+          && LayerConfig[overlayName].type.toLowerCase() === 'tms') {
           var cfg = LayerConfig[overlayName];
           var layer = L.tileLayer(cfg.url, {
             opacity: cfg.opacity || 0.5,
@@ -280,7 +218,7 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
 
       // there are more overlays left in the list, less layers specified in route
       // we need to remove those too.
-      for(var len2 = overlays.length; i < len2; ++i) {
+      for (var len2 = overlays.length; i < len2; ++i) {
         if (overlays[i].destroyResource) overlays[i].destroyResource();
         map.removeLayer(overlays[i]);
         delete overlays[i];
@@ -293,7 +231,7 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function ($s
    * Used privately to rebuild the theme count layer.
    */
   function resetThemeCount() {
-    leafletData.getMap().then(function (map) {
+    leafletData.getMap().then(function(map) {
       for (var j = 0, len = overlayNames.length; j < len; j++) {
         var nme = overlayNames[j];
         if (nme === 'themecount' || nme === 'theme') {

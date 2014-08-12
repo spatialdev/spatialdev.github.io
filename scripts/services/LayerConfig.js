@@ -216,22 +216,7 @@ module.exports = angular.module('GeoAngular').service('LayerConfig', function ()
     url: 'data/arc_region_extents.geojson'
   };
 
-
-  /**
-   * bbox
-   *
-   * This is universal to all layers, and bboxurl fetches the feature itinerary. This is in turn used to find the center
-   * feature for the breadcrumbs as well as fetch the features that apply to a BBoxGeoJSON object.
-   *
-   * @type {{bboxurl: *, centerurl: *}}
-   */
-  this.bbox = {
-    bboxurl: config.chubbsPath('services/custom/custom_operation?name=getidsbyextent&format=json&bbox=:bbox'),
-    // used to get the center feature. can get any feature you want by id
-    featurl: config.chubbsPath('services/custom/custom_operation?name=getfeaturesbyid&format=geojson&gadm_level=:level&ids=:ids')
-  };
-
-
+  
   /**
    * KML
    */
