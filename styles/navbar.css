@@ -1,6 +1,7 @@
 /* Logo */
 .logo {
     width: 60px;
+    height: 54px;
 }
 
 
@@ -100,6 +101,10 @@
 .NavigationTooltipContainer.bottom{
     position: absolute;
     bottom:0px;
+}
+
+.NavFlyoutGroup {
+    padding-top: 55px;
 }
 
 .flyout {
