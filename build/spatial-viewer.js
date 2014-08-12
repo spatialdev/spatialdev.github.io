@@ -200,6 +200,7 @@ require('./controllers/upload');
 require('./controllers/search');
 require('./controllers/export');
 
+
 },{"./controllers/basemaps":2,"./controllers/breadcrumbs":3,"./controllers/details":4,"./controllers/export":5,"./controllers/filters":6,"./controllers/info":7,"./controllers/layers":8,"./controllers/legend":9,"./controllers/main":10,"./controllers/map":11,"./controllers/navbar":12,"./controllers/search":13,"./controllers/side-view":14,"./controllers/stories":15,"./controllers/theme":16,"./controllers/upload":17,"./controllers/zoom-extent":18,"./services/Donuts":19,"./services/LayerConfig":20,"./services/StoriesConfig":21,"./services/Vector/VectorProvider":25}],2:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
