@@ -153,7 +153,7 @@
 <div ng-controller="StoriesCtrl" ng-class="{on: isParam('stories')}" class="navpanel container stories-container">
 
     <div class="row">
-        <button class="side-view-close btn btn-lg btn-danger" ng-click="toggleParam('stories')"><span
+        <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('stories')"><span
                 class="glyphicon glyphicon-chevron-left"></span></button>
         <div class="col-md-10 side-view-title-wrapper">
             <div class="title">STORIES</div>
@@ -285,7 +285,7 @@
 <div ng-controller="LayersCtrl" ng-class="{on: isParam('layers-panel')}" class="navpanel container layers-container">
 
     <div class="row">
-        <button class="side-view-close btn btn-lg btn-danger" ng-click="toggleParam('layers-panel')"><span
+        <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('layers-panel')"><span
                 class="glyphicon glyphicon-chevron-left"></span></button>
         <div class="col-md-8 side-view-title-wrapper">
             <div class="title">Map Layers</div>
@@ -400,7 +400,7 @@
 <!--Filters Panel-->
 <div ng-controller="FiltersCtrl" ng-class="{on: isParam('filters-panel')}" class="navpanel container filters-container">
     <div class="row">
-        <button class="side-view-close btn btn-lg btn-danger" ng-click="toggleParam('filters-panel')">
+        <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('filters-panel')">
             <span class="glyphicon glyphicon-chevron-left"></span>
         </button>
         <div class="col-md-10 side-view-title-wrapper">
@@ -437,7 +437,7 @@
                 <h4>Filter WHERE Clause</h4>
                 <textarea class="form-control" rows="6" placeholder="Create a custom where clause..."
                           ng-model="whereClause"></textarea>
-                <button ng-click="submitFilter()" type="button" class="btn btn-danger pull-right custom-filter-submit">
+                <button ng-click="submitFilter()" type="button" class="btn btn-primary pull-right custom-filter-submit">
                     Submit
                 </button>
             </div>
@@ -450,7 +450,7 @@
 <!--Legend Panel-->
 <div ng-controller="LegendCtrl" ng-class="{on: isParam('legend')}" class="navpanel container legend-container">
     <div class="row">
-        <button class="side-view-close btn btn-lg btn-danger" ng-click="toggleParam('legend')"><span
+        <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('legend')"><span
                 class="glyphicon glyphicon-chevron-left"></span></button>
         <div class="col-md-8 side-view-title-wrapper">
             <div class="title">Legend</div>
@@ -472,7 +472,7 @@
 <div ng-controller="BasemapsCtrl" ng-class="{on: isParam('basemaps')}" class="navpanel container basemaps-container">
 
     <div class="row">
-        <button class="side-view-close btn btn-lg btn-danger" ng-click="toggleParam('basemaps')"><span
+        <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('basemaps')"><span
                 class="glyphicon glyphicon-chevron-left"></span></button>
         <div class="col-md-7 side-view-title-wrapper">
             <div class="title">BASEMAPS</div>
@@ -510,7 +510,7 @@
 
 <!--Info Panel-->
 <div ng-controller="InfoCtrl" ng-class="{on: isParam('info')}" class="navpanel container">
-    <button class="side-view-close btn btn-lg btn-danger" ng-click="toggleParam('info')"><span
+    <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('info')"><span
             class="glyphicon glyphicon-chevron-left"></span></button>
     info.html
 </div>
@@ -528,7 +528,7 @@
 
 <!-- Upper Right Toolbar in Map -->
 <div id="MapUpperRightToolbarWrapper">
-    <div class="side-view-close btn btn-lg btn-danger" ng-click="toggleParam('zoom-extent')"><span
+    <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')"><span
             class="glyphicon glyphicon-chevron-down"></span></div>
     <div ng-controller="BreadcrumbsCtrl" class="breadcrumbs-container">
         <div class="world">
@@ -641,7 +641,7 @@
     </div>
     <div id="DetailsPanel">
         <div class="container auto">
-            <button class="side-view-close btn btn-lg btn-red btn-danger" ng-click="closeParam('details-panel')"><span
+            <button class="side-view-close btn btn-lg btn-red btn-primary" ng-click="closeParam('details-panel')"><span
                     class="glyphicon glyphicon-chevron-right"></span></button>
                             <span ng-show="details && feature.properties.salesforce">
                                 <a ng-click="showList()" class="back-link">< Back to List</a> ({{activeThemeItemIdx+1}} of {{activeThemeItemsList.length}})

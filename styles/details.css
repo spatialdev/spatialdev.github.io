@@ -30,7 +30,7 @@
 }
 
 #NextItem:hover, #PreviousItem:hover {
-    color: #ed1b2e;
+    color: #2D91CD;
 }
 
 #PreviousItem {
@@ -104,7 +104,7 @@
 }
 
 #DetailsNub {
-    color: #ed1b2e;
+    color: #23789B;
     padding: 20px;
     background-color: #fff;
     cursor:pointer;
@@ -112,7 +112,7 @@
 }
 
 .on #DetailsNub {
-    background-color: #ed1b23;
+    background-color: #2D91CD;
     color: #fff;
 }
 
@@ -135,7 +135,7 @@
 }
 
 #DetailsWrapper .side-view-close {
-    background-color: #EA2035;
+    background-color: #23789B;
     border-radius: 0;
     padding: 11px;
     font-size: 13px;
@@ -146,7 +146,7 @@
 }
 
 #DetailsWrapper .btn-red:focus {
-    outline: 5px auto #EA2035;
+    outline: 5px auto #2D91CD;
 }
 
 #DetailsWrapper .InnerContainer {
@@ -209,15 +209,15 @@
 }
 
 #DetailsPanel .nav-tabs a:hover {
-    color: #d2322d;
+    color: #2D91CD;
 }
 
 #DetailsPanel li.active > a {
-    color: #EA2035;
+    color: #23789B;
 }
 
 #DetailsPanel li.active > a:hover {
-    color: #d2322d;
+    color: #2D91CD;
 }
 
 .tooltip-inner {
