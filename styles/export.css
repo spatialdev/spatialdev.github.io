@@ -1,6 +1,6 @@
-#exportModal .redbox{
+#exportModal .bluebox {
     padding: 4px 7px;
-    background-color: #ff0000;
+    background-color: #23789B;
     color: #fff;
 }
 
@@ -24,8 +24,8 @@
     background: url(../images/check_on.jpg) no-repeat;
 }
 
-#exportModal .redbtn {
-    background-color: #ed1b2e;
+#exportModal .bluebtn {
+    background-color: #23789B;
     padding: 6px 25px;
     border-radius: 0px;
     color: #fff;
@@ -38,7 +38,7 @@
     margin-left: 26px;
 }
 
-#exportModal .redbtn .arrow {
+#exportModal .bluebtn .arrow {
     background: url(../images/explore_arrow.png) no-repeat;
     width: 28px;
     height: 28px;

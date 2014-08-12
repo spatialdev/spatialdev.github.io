@@ -628,7 +628,7 @@
 <!-- Right Hand Details Panel -->
 <div ng-controller="DetailsCtrl" id="DetailsWrapper" ng-class="{on: isParam('details-panel')}">
     <div id="DetailsButtonWrapper">
-        <div id="DetailsNub" class="btn btn-lg btn-red icon-11_infobox" ng-click="toggleParam('details-panel')">
+        <div id="DetailsNub" class="btn btn-lg btn-blue icon-11_infobox" ng-click="toggleParam('details-panel')">
         </div>
         <div id="PreviousItem" class="icon-9_arrow_left"
              ng-class="{flipOpen: (isParam('details-panel') && details && numThemeItems > 1)}"
@@ -641,7 +641,7 @@
     </div>
     <div id="DetailsPanel">
         <div class="container auto">
-            <button class="side-view-close btn btn-lg btn-red btn-primary" ng-click="closeParam('details-panel')"><span
+            <button class="side-view-close btn btn-lg btn-blue btn-primary" ng-click="closeParam('details-panel')"><span
                     class="glyphicon glyphicon-chevron-right"></span></button>
                             <span ng-show="details && feature.properties.salesforce">
                                 <a ng-click="showList()" class="back-link">< Back to List</a> ({{activeThemeItemIdx+1}} of {{activeThemeItemsList.length}})

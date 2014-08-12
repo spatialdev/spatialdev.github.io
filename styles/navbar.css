@@ -30,8 +30,12 @@
     position: absolute;
 }
 
-.NavButtonGroup button:hover, .NavButtonGroup button.on {
-    color: #ed1b2e!important;
+.NavButtonGroup button:hover {
+  color: #23789B!important;
+}
+
+.NavButtonGroup button.on {
+    color: #2D91CD!important;
 }
 
 
@@ -109,7 +113,7 @@
 
 .flyout {
     padding: 10px 25px;
-    background-color: #ed1b2e;
+    background-color: #23789B;
     color: #fff;
     text-transform: uppercase;
     font-family: oswaldregular;

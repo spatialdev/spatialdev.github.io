@@ -19,7 +19,7 @@
 }
 
 .layers-container div.layerGroupButton.active, .layers-container div.layerGroupButton:hover {
-    border-left: 4px solid red;
+    border-left: 4px solid #23789B;
     color: #333;
 }
 

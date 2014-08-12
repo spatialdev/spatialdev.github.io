@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form role="form">
-                <button class="side-view-close btn btn-lg btn-danger" data-dismiss="modal" aria-hidden="true">
+                <button class="side-view-close btn btn-lg btn-primary" data-dismiss="modal" aria-hidden="true">
                     <span class="glyphicon glyphicon glyphicon-remove"></span>
                 </button>
                 <div class="modal-header">
@@ -21,14 +21,14 @@
                     </div>
 
                     <div class="form-group permalink">
-                        <span class="redbox">1</span>
+                        <span class="bluebox">1</span>
                         <label for="routeUrl">PERMALINK</label>
                         <div>Please copy the link below.</div>
                         <input type="remoteUrl" class="form-control" id="routeUrl" ng-model="routeUrl" />
                     </div>
 
                     <div class="form-group exportImage">
-                        <span class="redbox">2</span>
+                        <span class="bluebox">2</span>
                         <label for="routeUrl">EXPORT AN IMAGE</label>
                         <div style="display:none;">What element(s) would you like to include in the exported image?</div>
 
@@ -84,7 +84,7 @@
                                         </tr>
                                     </table>
                                 </div>
-                                <div id="executeExportButton" class="redbtn">CREATE IMAGE NOW<div class="arrow"></div></div>
+                                <div id="executeExportButton" class="bluebtn">CREATE IMAGE NOW</div>
 
                                 <div id="exportOptionsContainer" class="exportOptionsContainer clearfix" style="display:none;">
                                     <div class="exportOptionsGroup">
@@ -107,7 +107,7 @@
                             <div class="imageOpenButton" style="display: none;">
                                 <div style="text-align: left;">Image rendering complete. Click 'Open Image' to view the image in a new tab, or click 'Reset' to return to the export window.</div>
                                 <div style="margin-top: 30px;">
-                                    <a href="#" target="_blank" class="btn btn-danger">Open Image</a>
+                                    <a href="#" target="_blank" class="btn btn-primary">Open Image</a>
                                     <button type="button" class="btn btn-default killOpenButton">Reset</button>
                                 </div>
                             </div>

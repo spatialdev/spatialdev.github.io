@@ -35,7 +35,7 @@
 }
 
 .side-view-close {
-    background-color: #EA2035;
+    background-color: #23789B;
     border-radius: 0;
     float: right;
     padding: 17px 19px;
@@ -80,19 +80,19 @@
 }
 
 .side-view .nav-tabs a:hover {
-    color: #d2322d;
+    color: #2D91CD;
 }
 
 .side-view li.active > a {
-    color: #EA2035;
+    color: #2D91CD;
 }
 
 .side-view li.active > a:hover {
-    color: #d2322d;
+    color: #2D91CD;
 }
 
 .side-view .btn:focus{
-    outline: 5px auto #EA2035;
+    outline: 5px auto #2D91CD;
 }
 
 .side-view label {
