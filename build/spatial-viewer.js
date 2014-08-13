@@ -3,7 +3,7 @@
  * This is the entry point of the application. We declare the main module here and then configure the main router
  * that creates corresponding views. The array parameter for module declares this module's dependencies.
  */
-var SpatialViewer = angular.module('SpatialViewer', ['angularFileUpload', 'ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'ui.router', 'ngAnimate', 'leaflet-directive', 'ui.bootstrap', 'ui.slider']);
+var SpatialViewer = angular.module('SpatialViewer', ['angularFileUpload', 'ngCookies', 'ngResource', 'ngSanitize', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'ui.slider']);
 
 SpatialViewer.run(function ($rootScope, $state, $stateParams) {
 
@@ -1441,7 +1441,7 @@ module.exports = angular.module('SpatialViewer').controller('MainCtrl', function
  *     on Mon Mar 17 2014
  */
 
-module.exports = angular.module('SpatialViewer').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, leafletData, LayerConfig, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, LayerConfig, VectorProvider) {
   var map = L.map('map');
 
   var lastLayersStr = '';

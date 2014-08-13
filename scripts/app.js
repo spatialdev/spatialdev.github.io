@@ -2,7 +2,7 @@
  * This is the entry point of the application. We declare the main module here and then configure the main router
  * that creates corresponding views. The array parameter for module declares this module's dependencies.
  */
-var SpatialViewer = angular.module('SpatialViewer', ['angularFileUpload', 'ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'ui.router', 'ngAnimate', 'leaflet-directive', 'ui.bootstrap', 'ui.slider']);
+var SpatialViewer = angular.module('SpatialViewer', ['angularFileUpload', 'ngCookies', 'ngResource', 'ngSanitize', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'ui.slider']);
 
 SpatialViewer.run(function ($rootScope, $state, $stateParams) {
 
