@@ -1445,6 +1445,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
   $scope.params = $stateParams;
 
   var lastLayersStr = '';
+  var lastBasemapUrl = null;
+
   $scope.blur = '';
 
   $scope.toggleState = function(stateName) {
@@ -1473,17 +1475,14 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     }
     overlayNames = layers.slice(1);
 
-    if (lastLayersStr !== layersStr) {
-      console.log('Setting layers.');
-      drawOverlays();
-
-      $scope.defaults = {
-        scrollWheelZoom: true
-      };
-
+    if (lastBasemapUrl !== basemapUrl) {
       $scope.tiles = {
         url: basemapUrl
       };
+    }
+
+    if (lastLayersStr !== layersStr) {
+      drawOverlays();
     }
 
     if (theme != $stateParams.theme || filters != $stateParams.filters) { // null and undefined should be ==
@@ -1499,6 +1498,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     };
 
     lastLayersStr = layersStr;
+    lastBasemapUrl = basemapUrl;
   }
 
   redraw();
