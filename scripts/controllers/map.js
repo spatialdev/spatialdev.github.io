@@ -51,7 +51,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     }
 
     if (theme != $stateParams.theme || filters != $stateParams.filters) { // null and undefined should be ==
-      resetThemeCount();
       theme = $stateParams.theme;
       filters = $stateParams.filters;
     }
@@ -230,24 +229,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
         delete overlays[i];
       }
 
-    });
-  }
-
-  /**
-   * Used privately to rebuild the theme count layer.
-   */
-  function resetThemeCount() {
-    leafletData.getMap().then(function(map) {
-      for (var j = 0, len = overlayNames.length; j < len; j++) {
-        var nme = overlayNames[j];
-        if (nme === 'themecount' || nme === 'theme') {
-          var oldLyr = overlays[j];
-          oldLyr.destroyResource();
-          map.removeLayer(oldLyr);
-          var newLyr = overlays[j] = VectorProvider.createResource(nme).getLayer();
-          newLyr.addTo(map);
-        }
-      }
     });
   }
 
