@@ -8,7 +8,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
 
   var lastLayersStr = '';
   $scope.blur = '';
-  $scope.grayout = ''; //use this class to gray out the map, such as when the country selector menu is active
 
   $scope.toggleState = function(stateName) {
     var state = $state.current.name !== stateName ? stateName : 'main';
@@ -24,11 +23,11 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     var lat = parseFloat($stateParams.lat)   || 0;
     var lng = parseFloat($stateParams.lng)   || 0;
     var zoom = parseFloat($stateParams.zoom) || 17;
-    layersStr = $stateParams.layers || LayerConfig.redcross.url;
+    layersStr = $stateParams.layers || LayerConfig.osmhot.url;
     var layers = layersStr.split(',');
 
     // first layer should always be treated as the basemap
-    var basemap = LayerConfig.find(layers[0]) || LayerConfig.redcross.url;
+    var basemap = LayerConfig.find(layers[0]) || LayerConfig.osmhot.url;
     if (typeof basemap === 'string') {
       var basemapUrl = basemap;
     } else {
@@ -100,16 +99,16 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
   //this takes in a WKT GeoJSON Extent geometry
   $scope.zoomToExtent = function(extent) {
     delete $stateParams['zoom-extent'];
-    $scope.bounds = {
-      northEast: { lat: extent[2][1], lng: extent[2][0] },
-      southWest: { lat: extent[0][1], lng: extent[0][0] }
-    };
+    map.fitBounds([
+      [extent[0][1], extent[0][0]],
+      [extent[2][1], extent[2][0]]
+    ]);
   };
 
   //This take a leaflet bounds object and handles it.
   delete $stateParams['zoom-extent'];
   $scope.zoomToBounds = function(bounds) {
-    $scope.bounds = { northEast: bounds.getNorthEast(), southWest: bounds.getSouthWest()};
+    map.fitBounds(bounds);
   };
 
 
