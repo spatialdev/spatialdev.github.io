@@ -8,6 +8,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
 
   var lastLayersStr = '';
   var lastBasemapUrl = null;
+  var basemapLayer = null;
 
   $scope.blur = '';
 
@@ -37,10 +38,12 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     }
     overlayNames = layers.slice(1);
 
-    if (lastBasemapUrl !== basemapUrl) {
-      $scope.tiles = {
-        url: basemapUrl
-      };
+    if (lastBasemapUrl !== basemapUrl && typeof map === 'object') {
+      if (basemapLayer) {
+        map.removeLayer(basemapLayer);
+      }
+      basemapLayer = L.tileLayer(basemapUrl);
+      basemapLayer.addTo(map);
     }
 
     if (lastLayersStr !== layersStr) {
