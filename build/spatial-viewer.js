@@ -1494,11 +1494,15 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
       filters = $stateParams.filters;
     }
 
-    $scope.center = {
+    var c = $scope.center = {
       lat: lat,
       lng: lng,
       zoom: zoom
     };
+
+    if (typeof map === 'object') {
+      map.setView([c.lat, c.lng], zoom);
+    }
 
     lastLayersStr = layersStr;
     lastBasemapUrl = basemapUrl;
