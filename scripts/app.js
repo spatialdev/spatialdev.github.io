@@ -2,9 +2,9 @@
  * This is the entry point of the application. We declare the main module here and then configure the main router
  * that creates corresponding views. The array parameter for module declares this module's dependencies.
  */
-var GeoAngular = angular.module('GeoAngular', ['angularFileUpload', 'ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'ui.router', 'ngAnimate', 'leaflet-directive', 'ui.bootstrap', 'ui.slider']);
+var SpatialViewer = angular.module('SpatialViewer', ['angularFileUpload', 'ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'ui.router', 'ngAnimate', 'leaflet-directive', 'ui.bootstrap', 'ui.slider']);
 
-GeoAngular.run(function ($rootScope, $state, $stateParams) {
+SpatialViewer.run(function ($rootScope, $state, $stateParams) {
 
   // It's very handy to add references to $state and $stateParams to the $rootScope
   // so that you can access them from any scope within your applications.For example,
@@ -94,7 +94,7 @@ GeoAngular.run(function ($rootScope, $state, $stateParams) {
 
 });
 
-GeoAngular.config(function ($stateProvider, $urlRouterProvider) {
+SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
     .when('/default', '/map@0,0,2(satellite,wa)')
     .when('/phl', '/map@11.759815,121.893311,6(satellite,phl)')
@@ -144,7 +144,7 @@ GeoAngular.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
-GeoAngular.directive('selectOnClick', function () {
+SpatialViewer.directive('selectOnClick', function () {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
@@ -156,7 +156,7 @@ GeoAngular.directive('selectOnClick', function () {
 });
 
 
-angular.module('GeoAngular').directive('myShow', function($animate) {
+angular.module('SpatialViewer').directive('myShow', function($animate) {
   return {
     scope: {
       'myShow': '=',

@@ -3,7 +3,7 @@
  *       on 4/17/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('UploadCtrl', function($scope, $http, $state, $stateParams, $upload) {
+module.exports = angular.module('SpatialViewer').controller('UploadCtrl', function($scope, $http, $state, $stateParams, $upload) {
 
   $scope.showAlert = false;
   $scope.showProgress = false;

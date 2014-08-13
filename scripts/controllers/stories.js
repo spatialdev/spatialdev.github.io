@@ -3,7 +3,7 @@
  *       on 3/26/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('StoriesCtrl', function($scope, $stateParams, StoriesConfig) {
+module.exports = angular.module('SpatialViewer').controller('StoriesCtrl', function($scope, $stateParams, StoriesConfig) {
   $scope.params = $stateParams;
 
   //Get Stories from config file and load them.
@@ -55,7 +55,7 @@ module.exports = angular.module('GeoAngular').controller('StoriesCtrl', function
 });
 
 
-angular.module('GeoAngular')
+angular.module('SpatialViewer')
   .filter('searchStoriesFilter', function () {
     return function (stories, $scope) {
       var outStories = [];

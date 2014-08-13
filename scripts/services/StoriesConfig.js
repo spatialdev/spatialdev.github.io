@@ -6,7 +6,7 @@
 /**
  * Config File for Stories Panel
  */
-module.exports = angular.module('GeoAngular').service('StoriesConfig', function () {
+module.exports = angular.module('SpatialViewer').service('StoriesConfig', function () {
 
   /**
    * Stories Panel List

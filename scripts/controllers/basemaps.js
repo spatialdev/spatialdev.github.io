@@ -3,7 +3,7 @@
  *       on 3/28/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('BasemapsCtrl', function($scope, $state, $stateParams, LayerConfig) {
+module.exports = angular.module('SpatialViewer').controller('BasemapsCtrl', function($scope, $state, $stateParams, LayerConfig) {
   $scope.basemaps = LayerConfig.basemaps;
 
   $scope.name = function (alias) {

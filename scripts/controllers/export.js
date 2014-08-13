@@ -3,7 +3,7 @@
  *       on 6/4/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('ExportCtrl', function($scope, $http, $state, $stateParams) {
+module.exports = angular.module('SpatialViewer').controller('ExportCtrl', function($scope, $http, $state, $stateParams) {
     console.log('ExportCtrl');
 
     $scope.export = function () {

@@ -3,7 +3,7 @@
  *       on 4/17/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('BreadcrumbsCtrl', function($scope, $rootScope, $state, $stateParams, $http, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('BreadcrumbsCtrl', function($scope, $rootScope, $state, $stateParams, $http, VectorProvider) {
 
   /**
    * Fixes Chrome Magnifying Glass Issue #206

@@ -5,7 +5,7 @@
  */
 
 
-module.exports = angular.module('GeoAngular').factory('Donuts', function () {
+module.exports = angular.module('SpatialViewer').factory('Donuts', function () {
 
   /**
    * Creates a D3 Donut that is located in the details panel.

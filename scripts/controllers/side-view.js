@@ -4,7 +4,7 @@
  *         on 4/16/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('SideViewCtrl', function($scope) {
+module.exports = angular.module('SpatialViewer').controller('SideViewCtrl', function($scope) {
 
   //resize function
   function resizeScrollablePanel() {

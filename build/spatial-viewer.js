@@ -3,9 +3,9 @@
  * This is the entry point of the application. We declare the main module here and then configure the main router
  * that creates corresponding views. The array parameter for module declares this module's dependencies.
  */
-var GeoAngular = angular.module('GeoAngular', ['angularFileUpload', 'ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'ui.router', 'ngAnimate', 'leaflet-directive', 'ui.bootstrap', 'ui.slider']);
+var SpatialViewer = angular.module('SpatialViewer', ['angularFileUpload', 'ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'ui.router', 'ngAnimate', 'leaflet-directive', 'ui.bootstrap', 'ui.slider']);
 
-GeoAngular.run(function ($rootScope, $state, $stateParams) {
+SpatialViewer.run(function ($rootScope, $state, $stateParams) {
 
   // It's very handy to add references to $state and $stateParams to the $rootScope
   // so that you can access them from any scope within your applications.For example,
@@ -95,7 +95,7 @@ GeoAngular.run(function ($rootScope, $state, $stateParams) {
 
 });
 
-GeoAngular.config(function ($stateProvider, $urlRouterProvider) {
+SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
     .when('/default', '/map@0,0,2(satellite,wa)')
     .when('/phl', '/map@11.759815,121.893311,6(satellite,phl)')
@@ -145,7 +145,7 @@ GeoAngular.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
-GeoAngular.directive('selectOnClick', function () {
+SpatialViewer.directive('selectOnClick', function () {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
@@ -157,7 +157,7 @@ GeoAngular.directive('selectOnClick', function () {
 });
 
 
-angular.module('GeoAngular').directive('myShow', function($animate) {
+angular.module('SpatialViewer').directive('myShow', function($animate) {
   return {
     scope: {
       'myShow': '=',
@@ -206,7 +206,7 @@ require('./controllers/export');
  *       on 3/28/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('BasemapsCtrl', function($scope, $state, $stateParams, LayerConfig) {
+module.exports = angular.module('SpatialViewer').controller('BasemapsCtrl', function($scope, $state, $stateParams, LayerConfig) {
   $scope.basemaps = LayerConfig.basemaps;
 
   $scope.name = function (alias) {
@@ -248,7 +248,7 @@ module.exports = angular.module('GeoAngular').controller('BasemapsCtrl', functio
  *       on 4/17/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('BreadcrumbsCtrl', function($scope, $rootScope, $state, $stateParams, $http, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('BreadcrumbsCtrl', function($scope, $rootScope, $state, $stateParams, $http, VectorProvider) {
 
   /**
    * Fixes Chrome Magnifying Glass Issue #206
@@ -360,7 +360,7 @@ module.exports = angular.module('GeoAngular').controller('BreadcrumbsCtrl', func
  *       on 4/9/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('DetailsCtrl', function ($scope, $rootScope, $state, $stateParams, $http, Donuts, $filter) {
+module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function ($scope, $rootScope, $state, $stateParams, $http, Donuts, $filter) {
 
   $scope.details = {};
 
@@ -871,7 +871,7 @@ module.exports = angular.module('GeoAngular').controller('DetailsCtrl', function
  *       on 6/4/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('ExportCtrl', function($scope, $http, $state, $stateParams) {
+module.exports = angular.module('SpatialViewer').controller('ExportCtrl', function($scope, $http, $state, $stateParams) {
     console.log('ExportCtrl');
 
     $scope.export = function () {
@@ -1153,7 +1153,7 @@ module.exports = angular.module('GeoAngular').controller('ExportCtrl', function(
  *       on 3/27/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('FiltersCtrl', function($scope, $http, $state, $stateParams) {
+module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', function($scope, $http, $state, $stateParams) {
   $scope.params = $stateParams;
   $scope.navTab = 'sectors';
 
@@ -1175,7 +1175,7 @@ module.exports = angular.module('GeoAngular').controller('FiltersCtrl', function
  *       on 3/27/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('InfoCtrl', function($scope) {
+module.exports = angular.module('SpatialViewer').controller('InfoCtrl', function($scope) {
   $scope.params = $stateParams;
 });
 },{}],8:[function(require,module,exports){
@@ -1184,7 +1184,7 @@ module.exports = angular.module('GeoAngular').controller('InfoCtrl', function($s
  *       on 3/27/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('LayersCtrl', function($scope, $state, $stateParams, LayerConfig, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('LayersCtrl', function($scope, $state, $stateParams, LayerConfig, VectorProvider) {
   $scope.params = $stateParams;
   $scope.zoom = parseInt($stateParams.zoom);
   $scope.navTab = 'contextual';
@@ -1355,7 +1355,7 @@ module.exports = angular.module('GeoAngular').controller('LayersCtrl', function(
  *       on 3/27/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('LegendCtrl', function($scope, LayerConfig, $stateParams) {
+module.exports = angular.module('SpatialViewer').controller('LegendCtrl', function($scope, LayerConfig, $stateParams) {
 
   $scope.$on('layers-update', function (evt, layers) {
     $scope.layers = [];
@@ -1397,7 +1397,7 @@ module.exports = angular.module('GeoAngular').controller('LegendCtrl', function(
 
 });
 },{}],10:[function(require,module,exports){
-module.exports = angular.module('GeoAngular').controller('MainCtrl', function($scope, $rootScope, $state, $stateParams, $location) {
+module.exports = angular.module('SpatialViewer').controller('MainCtrl', function($scope, $rootScope, $state, $stateParams, $location) {
   debug.$location = $location;
   localStorage.setItem('defaultRoute', $location.path());
 
@@ -1441,7 +1441,7 @@ module.exports = angular.module('GeoAngular').controller('MainCtrl', function($s
  *     on Mon Mar 17 2014
  */
 
-module.exports = angular.module('GeoAngular').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, leafletData, LayerConfig, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, leafletData, LayerConfig, VectorProvider) {
   $scope.params = $stateParams;
 
   var lastLayersStr = '';
@@ -1685,7 +1685,7 @@ module.exports = angular.module('GeoAngular').controller('MapCtrl', function($sc
 
 });
 },{}],12:[function(require,module,exports){
-module.exports = angular.module('GeoAngular').controller('NavBarCtrl', function($scope, $state, $stateParams) {
+module.exports = angular.module('SpatialViewer').controller('NavBarCtrl', function($scope, $state, $stateParams) {
   $scope.params = $stateParams;
 
 });
@@ -1696,7 +1696,7 @@ module.exports = angular.module('GeoAngular').controller('NavBarCtrl', function(
  *       on 5/21/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('SearchECOSCtrl', function($scope, $rootScope, $stateParams, $http, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('SearchECOSCtrl', function($scope, $rootScope, $stateParams, $http, VectorProvider) {
   console.log('SearchECOSCtrl');
   $scope.params = $stateParams;
 
@@ -1774,7 +1774,7 @@ module.exports = angular.module('GeoAngular').controller('SearchECOSCtrl', funct
  *         on 4/16/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('SideViewCtrl', function($scope) {
+module.exports = angular.module('SpatialViewer').controller('SideViewCtrl', function($scope) {
 
   //resize function
   function resizeScrollablePanel() {
@@ -1795,7 +1795,7 @@ module.exports = angular.module('GeoAngular').controller('SideViewCtrl', functio
  *       on 3/26/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('StoriesCtrl', function($scope, $stateParams, StoriesConfig) {
+module.exports = angular.module('SpatialViewer').controller('StoriesCtrl', function($scope, $stateParams, StoriesConfig) {
   $scope.params = $stateParams;
 
   //Get Stories from config file and load them.
@@ -1847,7 +1847,7 @@ module.exports = angular.module('GeoAngular').controller('StoriesCtrl', function
 });
 
 
-angular.module('GeoAngular')
+angular.module('SpatialViewer')
   .filter('searchStoriesFilter', function () {
     return function (stories, $scope) {
       var outStories = [];
@@ -1889,7 +1889,7 @@ angular.module('GeoAngular')
  *       on 5/6/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('ThemeCtrl', function ($scope, $rootScope, $state, $stateParams, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('ThemeCtrl', function ($scope, $rootScope, $state, $stateParams, VectorProvider) {
 
   var themeNameHash = $rootScope.themeNameHash = {
     all: 'All Countries',
@@ -1958,7 +1958,7 @@ module.exports = angular.module('GeoAngular').controller('ThemeCtrl', function (
  *       on 4/17/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('UploadCtrl', function($scope, $http, $state, $stateParams, $upload) {
+module.exports = angular.module('SpatialViewer').controller('UploadCtrl', function($scope, $http, $state, $stateParams, $upload) {
 
   $scope.showAlert = false;
   $scope.showProgress = false;
@@ -2065,7 +2065,7 @@ module.exports = angular.module('GeoAngular').controller('UploadCtrl', function(
  *       on 4/2/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('ZoomExtentCtrl', function($scope, $rootScope, $stateParams, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('ZoomExtentCtrl', function($scope, $rootScope, $stateParams, VectorProvider) {
   $scope.params = $stateParams;
 
   //Initialize the country selector menu by loading the json file and writing out the names into the panel
@@ -2108,7 +2108,7 @@ module.exports = angular.module('GeoAngular').controller('ZoomExtentCtrl', funct
  */
 
 
-module.exports = angular.module('GeoAngular').factory('Donuts', function () {
+module.exports = angular.module('SpatialViewer').factory('Donuts', function () {
 
   /**
    * Creates a D3 Donut that is located in the details panel.
@@ -2426,7 +2426,7 @@ module.exports = angular.module('GeoAngular').factory('Donuts', function () {
 /**
  * All of the layer names need to be lowercase.
  */
-module.exports = angular.module('GeoAngular').service('LayerConfig', function () {
+module.exports = angular.module('SpatialViewer').service('LayerConfig', function () {
 
   /**
    * Basemaps Panel List
@@ -2845,7 +2845,7 @@ module.exports = angular.module('GeoAngular').service('LayerConfig', function ()
 /**
  * Config File for Stories Panel
  */
-module.exports = angular.module('GeoAngular').service('StoriesConfig', function () {
+module.exports = angular.module('SpatialViewer').service('StoriesConfig', function () {
 
   /**
    * Stories Panel List
@@ -3143,7 +3143,7 @@ Resource.prototype.eachLayer = function (cb) {
  *       on 3/19/14.
  */
 
-module.exports = angular.module('GeoAngular').factory('VectorProvider', function ($rootScope, $location, $http, LayerConfig) {
+module.exports = angular.module('SpatialViewer').factory('VectorProvider', function ($rootScope, $location, $http, LayerConfig) {
 
   var vector = require('./vector');
   vector.setInjectors($rootScope, $location, $http, LayerConfig);

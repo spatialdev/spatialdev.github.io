@@ -3,7 +3,7 @@
  *       on 5/21/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('SearchECOSCtrl', function($scope, $rootScope, $stateParams, $http, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('SearchECOSCtrl', function($scope, $rootScope, $stateParams, $http, VectorProvider) {
   console.log('SearchECOSCtrl');
   $scope.params = $stateParams;
 

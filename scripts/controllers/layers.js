@@ -3,7 +3,7 @@
  *       on 3/27/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('LayersCtrl', function($scope, $state, $stateParams, LayerConfig, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('LayersCtrl', function($scope, $state, $stateParams, LayerConfig, VectorProvider) {
   $scope.params = $stateParams;
   $scope.zoom = parseInt($stateParams.zoom);
   $scope.navTab = 'contextual';

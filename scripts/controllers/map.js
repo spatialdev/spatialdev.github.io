@@ -3,7 +3,7 @@
  *     on Mon Mar 17 2014
  */
 
-module.exports = angular.module('GeoAngular').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, leafletData, LayerConfig, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, leafletData, LayerConfig, VectorProvider) {
   $scope.params = $stateParams;
 
   var lastLayersStr = '';

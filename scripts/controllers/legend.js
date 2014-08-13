@@ -3,7 +3,7 @@
  *       on 3/27/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('LegendCtrl', function($scope, LayerConfig, $stateParams) {
+module.exports = angular.module('SpatialViewer').controller('LegendCtrl', function($scope, LayerConfig, $stateParams) {
 
   $scope.$on('layers-update', function (evt, layers) {
     $scope.layers = [];

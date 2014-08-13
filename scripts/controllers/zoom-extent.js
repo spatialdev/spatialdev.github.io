@@ -4,7 +4,7 @@
  *       on 4/2/14.
  */
 
-module.exports = angular.module('GeoAngular').controller('ZoomExtentCtrl', function($scope, $rootScope, $stateParams, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('ZoomExtentCtrl', function($scope, $rootScope, $stateParams, VectorProvider) {
   $scope.params = $stateParams;
 
   //Initialize the country selector menu by loading the json file and writing out the names into the panel
