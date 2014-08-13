@@ -4,23 +4,24 @@
  */
 
 module.exports = angular.module('SpatialViewer').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, leafletData, LayerConfig, VectorProvider) {
-  $scope.params = $stateParams;
+  var map = L.map('map');
 
   var lastLayersStr = '';
   var lastBasemapUrl = null;
   var basemapLayer = null;
+  var layersStr = null;
+  var overlays = [];
+  var overlayNames = [];
+  var theme = null;
+  var filters = null;
 
+  $scope.params = $stateParams;
   $scope.blur = '';
 
   $scope.toggleState = function(stateName) {
     var state = $state.current.name !== stateName ? stateName : 'main';
     $state.go(state, $stateParams);
   };
-
-  var layersStr = null;
-  var overlayNames = [];
-  var theme = null;
-  var filters = null;
 
   function redraw() {
     var lat = parseFloat($stateParams.lat)   || 0;
@@ -118,118 +119,108 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
   };
 
 
-  /**
-   * Native Leaflet Map Object
-   */
-  leafletData.getMap().then(function(map) {
-    window.map = map;
-    map.on('moveend', function() { // move is good too
-      var c = map.getCenter();
-      var lat = c.lat.toFixed(6);
-      var lng = c.lng.toFixed(6);
-      var zoom = map.getZoom().toString();
+  window.map = map;
+  map.on('moveend', function() { // move is good too
+    var c = map.getCenter();
+    var lat = c.lat.toFixed(6);
+    var lng = c.lng.toFixed(6);
+    var zoom = map.getZoom().toString();
 
-      if ( $stateParams.lat !== lat
-        || $stateParams.lng !== lng
-        || $stateParams.zoom !== zoom) {
+    if ( $stateParams.lat !== lat
+      || $stateParams.lng !== lng
+      || $stateParams.zoom !== zoom) {
 
-        console.log('map: lat,lng,zoom !== $stateParams');
-        $stateParams.lat = lat;
-        $stateParams.lng = lng;
-        $stateParams.zoom = zoom;
-        mapMoveEnd = true;
-        $state.go($state.current.name, $stateParams);
-      }
-    });
-
-    //Connect the layout onresize end event
-    try {
-      window.layout.panes.center.bind("layoutpaneonresize_end", function() {
-        map.invalidateSize();
-      });
-    } catch (e) {
-      //Nothing
+      console.log('map: lat,lng,zoom !== $stateParams');
+      $stateParams.lat = lat;
+      $stateParams.lng = lng;
+      $stateParams.zoom = zoom;
+      mapMoveEnd = true;
+      $state.go($state.current.name, $stateParams);
     }
   });
 
+  //Connect the layout onresize end event
+  try {
+    window.layout.panes.center.bind("layoutpaneonresize_end", function() {
+      map.invalidateSize();
+    });
+  } catch (e) {
+    //Nothing
+  }
 
-  var overlays = [];
 
   function drawOverlays() {
-    leafletData.getMap().then(function(map) {
+    for (var i = 0, len = overlayNames.length; i < len; ++i) {
+      var overlayName = overlayNames[i];
+      var currOverlay = overlays[i];
 
-      for (var i = 0, len = overlayNames.length; i < len; ++i) {
-        var overlayName = overlayNames[i];
-        var currOverlay = overlays[i];
-
-        if (currOverlay && currOverlay.overlayName === overlayName) {
-          continue; // layer is already there, continue on!
-        }
-
-        // remove the current layer that is not what should be that layer in the list
-        else if (currOverlay && currOverlay._map) {
-          if (currOverlay.destroyResource) currOverlay.destroyResource();
-          map.removeLayer(currOverlay);
-        }
-
-        // try for WMS (not a vector layer)
-        // if things get more fancy with wms, it should get its own factory
-        if (typeof LayerConfig[overlayName] === 'object'
-          && LayerConfig[overlayName].type.toLowerCase() === 'wms') {
-
-          var cfg = LayerConfig[overlayName];
-          var layer = L.tileLayer.wms(cfg.url, {
-            format: cfg.format || 'image/png',
-            transparent: cfg.transparent || true,
-            layers: cfg.layers
-          });
-        }
-
-        /**
-         * Tiles that are an overlay. OSM / Google / Mapnik tend to make tiles in this format.
-         */
-        else if (typeof LayerConfig[overlayName] === 'object'
-          && LayerConfig[overlayName].type.toLowerCase() === 'xyz') {
-
-          var cfg = LayerConfig[overlayName];
-          var layer = L.tileLayer(cfg.url, {
-            opacity: cfg.opacity || 0.5
-          });
-        }
-
-        /**
-         * TMS flips the y. GeoServer often serves this.
-         */
-        else if (typeof LayerConfig[overlayName] === 'object'
-          && LayerConfig[overlayName].type.toLowerCase() === 'tms') {
-          var cfg = LayerConfig[overlayName];
-          var layer = L.tileLayer(cfg.url, {
-            opacity: cfg.opacity || 0.5,
-            tms: true
-          });
-        }
-
-        // if its not wms, its a vector layer
-        else {
-          var vecRes = VectorProvider.createResource(overlayName);
-          var layer = vecRes.getLayer();
-        }
-
-        layer.overlayName = overlayName;
-        layer.addTo(map);
-        overlays[i] = layer;
-
+      if (currOverlay && currOverlay.overlayName === overlayName) {
+        continue; // layer is already there, continue on!
       }
 
-      // there are more overlays left in the list, less layers specified in route
-      // we need to remove those too.
-      for (var len2 = overlays.length; i < len2; ++i) {
-        if (overlays[i].destroyResource) overlays[i].destroyResource();
-        map.removeLayer(overlays[i]);
-        delete overlays[i];
+      // remove the current layer that is not what should be that layer in the list
+      else if (currOverlay && currOverlay._map) {
+        if (currOverlay.destroyResource) currOverlay.destroyResource();
+        map.removeLayer(currOverlay);
       }
 
-    });
+      // try for WMS (not a vector layer)
+      // if things get more fancy with wms, it should get its own factory
+      if (typeof LayerConfig[overlayName] === 'object'
+        && LayerConfig[overlayName].type.toLowerCase() === 'wms') {
+
+        var cfg = LayerConfig[overlayName];
+        var layer = L.tileLayer.wms(cfg.url, {
+          format: cfg.format || 'image/png',
+          transparent: cfg.transparent || true,
+          layers: cfg.layers
+        });
+      }
+
+      /**
+       * Tiles that are an overlay. OSM / Google / Mapnik tend to make tiles in this format.
+       */
+      else if (typeof LayerConfig[overlayName] === 'object'
+        && LayerConfig[overlayName].type.toLowerCase() === 'xyz') {
+
+        var cfg = LayerConfig[overlayName];
+        var layer = L.tileLayer(cfg.url, {
+          opacity: cfg.opacity || 0.5
+        });
+      }
+
+      /**
+       * TMS flips the y. GeoServer often serves this.
+       */
+      else if (typeof LayerConfig[overlayName] === 'object'
+        && LayerConfig[overlayName].type.toLowerCase() === 'tms') {
+        var cfg = LayerConfig[overlayName];
+        var layer = L.tileLayer(cfg.url, {
+          opacity: cfg.opacity || 0.5,
+          tms: true
+        });
+      }
+
+      // if its not wms, its a vector layer
+      else {
+        var vecRes = VectorProvider.createResource(overlayName);
+        var layer = vecRes.getLayer();
+      }
+
+      layer.overlayName = overlayName;
+      layer.addTo(map);
+      overlays[i] = layer;
+
+    }
+
+    // there are more overlays left in the list, less layers specified in route
+    // we need to remove those too.
+    for (var len2 = overlays.length; i < len2; ++i) {
+      if (overlays[i].destroyResource) overlays[i].destroyResource();
+      map.removeLayer(overlays[i]);
+      delete overlays[i];
+    }
+
   }
 
 });
