@@ -1675,7 +1675,6 @@ module.exports = angular.module('SpatialViewer').controller('NavBarCtrl', functi
  */
 
 module.exports = angular.module('SpatialViewer').controller('SearchECOSCtrl', function($scope, $rootScope, $stateParams, $http, VectorProvider) {
-  console.log('SearchECOSCtrl');
   $scope.params = $stateParams;
 
   var url = config.chubbsPath('services/custom/custom_operation?name=doecostextsearch&format=json&text=:text');
