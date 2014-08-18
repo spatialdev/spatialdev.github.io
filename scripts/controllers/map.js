@@ -164,9 +164,35 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
         map.removeLayer(currOverlay);
       }
 
+      if (typeof LayerConfig[overlayName] === 'object'
+        && LayerConfig[overlayName].type.toLowerCase() === 'pbf') {
+
+        var cfg = LayerConfig[overlayName];
+        var layer = new L.TileLayer.PBFSource(cfg);
+        layer.addTo(map);
+
+        map.on('click', function(e) {
+          //Take the click event and pass it to the group layers.
+          pbfSource.onClick(e, function (evt) {
+            if (evt && evt.feature) {
+              console.log(['Clicked PBF Feature', evt.feature.properties]);
+            }
+          });
+        });
+
+        map.on('layerremove', function(removed) {
+          //This is the layer that was removed.
+          //If it is a TileLayer.PBFSource, then call a method to actually remove the children, too.
+          if(removed.layer.removeChildLayers){
+            removed.layer.removeChildLayers(map);
+          }
+        });
+
+      }
+
       // try for WMS (not a vector layer)
       // if things get more fancy with wms, it should get its own factory
-      if (typeof LayerConfig[overlayName] === 'object'
+      else if (typeof LayerConfig[overlayName] === 'object'
         && LayerConfig[overlayName].type.toLowerCase() === 'wms') {
 
         var cfg = LayerConfig[overlayName];
@@ -175,6 +201,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
           transparent: cfg.transparent || true,
           layers: cfg.layers
         });
+        layer.addTo(map);
       }
 
       /**
@@ -187,6 +214,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
         var layer = L.tileLayer(cfg.url, {
           opacity: cfg.opacity || 0.5
         });
+        layer.addTo(map);
       }
 
       /**
@@ -199,16 +227,17 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
           opacity: cfg.opacity || 0.5,
           tms: true
         });
+        layer.addTo(map);
       }
 
       // if its not wms, its a vector layer
       else {
         var vecRes = VectorProvider.createResource(overlayName);
         var layer = vecRes.getLayer();
+        layer.addTo(map);
       }
 
       layer.overlayName = overlayName;
-      layer.addTo(map);
       overlays[i] = layer;
 
     }
