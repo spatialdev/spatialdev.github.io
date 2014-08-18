@@ -1,4 +1,417 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var layer = module.exports = {};
+
+/**
+ * Basemaps Panel List
+ *
+ * List of basemaps that get shown in the Basemaps Panel. Edit this to add or remove
+ * basemaps that the user will see as choices. All basemaps, including ones not in this
+ * list, can still be manually referenced in the url. This is just for the User Interface.
+ */
+layer.basemaps = [
+  'osmhot',
+  'osm',
+  'satellite',
+  'ortho',
+  'toner',
+  'dark',
+  'github',
+  'mozilla',
+  'green',
+  'osmcycle',
+  'osmtransport',
+  'osmmapquest',
+  'natgeo',
+  'usgstopo',
+  'esritopo',
+  'ocean',
+  'lightgray',
+  'watercolor'
+];
+
+
+/**
+ * Basemaps
+ *
+ * All basemap aliases that can be referred to in the url. The corresponding
+ * path to the thumbnail in the Basemaps Panel should be:
+ *    images/{aliasName}.jpg
+ *
+ */
+
+layer.osmhot = {
+  url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+  name: 'Humanitarian OpenStreetMap',
+  type: 'basemap'
+};
+
+layer.redcross = {
+  url: 'https://{s}.tiles.mapbox.com/v3/americanredcross.hcji22de/{z}/{x}/{y}.png',
+  name: 'Red Cross',
+  type: 'basemap'
+};
+
+layer.satellite = {
+  url: 'https://{s}.tiles.mapbox.com/v3/examples.map-qfyrx5r8/{z}/{x}/{y}.png',
+  name: 'Mapbox Satellite',
+  type: 'basemap'
+};
+
+layer.mozilla = {
+  url: 'http://{s}.tiles.mapbox.com/v3/mozilla-webprod.e91ef8b3/{z}/{x}/{y}.png',
+  name: 'Mozilla',
+  type: 'basemap'
+};
+
+layer.github = {
+  url: 'http://{s}.tiles.mapbox.com/v3/github.map-xgq2svrz/{z}/{x}/{y}.png',
+  name: 'Github',
+  type: 'basemap'
+};
+
+layer.green = {
+  url: 'http://{s}.tiles.mapbox.com/v3/examples.map-3gisupiu/{z}/{x}/{y}.png',
+  name: 'Green Theme',
+  type: 'basemap'
+};
+
+layer.dark = {
+  url: 'http://{s}.tiles.mapbox.com/v3/spatialdev.map-c9z2cyef/{z}/{x}/{y}.png',
+  name: 'Dark Theme',
+  type: 'basemap'
+};
+
+layer.osm = {
+  url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+  name: 'Standard OpenStreetMap',
+  type: 'basemap'
+};
+
+layer.osmcycle = {
+  url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+  name: 'Cycle OpenStreetMap',
+  type: 'basemap'
+};
+
+layer.osmtransport = {
+  url: 'http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png',
+  name: 'Transport OpenStreetMap',
+  type: 'basemap'
+};
+
+layer.osmmapquest = {
+  url: 'http://otile3.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+  name: 'MapQuest OpenStreetMap',
+  type: 'basemap'
+};
+
+layer.natgeo = {
+  url: 'http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
+  name: 'National Geographic',
+  type: 'basemap'
+};
+
+layer.usgstopo = {
+  url: 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}',
+  name: 'USGS Topographic',
+  type: 'basemap'
+};
+
+layer.ortho = {
+  url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  name: 'Orthographic',
+  type: 'basemap'
+};
+
+layer.ocean = {
+  url: 'http://services.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
+  name: 'Ocean Bathymetric',
+  type: 'basemap'
+};
+
+layer.lightgray = {
+  url: 'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+  name: 'Light Gray',
+  type: 'basemap'
+};
+
+layer.esritopo = {
+  url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+  name: 'Esri Topographic',
+  type: 'basemap'
+};
+
+layer.toner = {
+  url: 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png',
+  name: 'Stamen Toner',
+  type: 'basemap'
+};
+
+layer.watercolor = {
+  url: 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
+  name: 'Stamen Watercolor',
+  type: 'basemap'
+};
+
+},{}],2:[function(require,module,exports){
+var layer = module.exports = {};
+
+/**
+ * CSV
+ */
+
+layer.ugandafsp = {
+  name: 'Uganda Financial Service Providers',
+  type: 'csv',
+  url: 'data/test/uganda.csv',
+  properties: {
+    legend: ''
+  }
+};
+
+layer.sampletracks = {
+  name: 'Sample GPS Tracks',
+  type: 'csv',
+  url: 'data/test/sample-tracks.csv',
+  properties: {
+    legend: ''
+  }
+};
+},{}],3:[function(require,module,exports){
+var layer = module.exports = {};
+
+/**
+ * GeoJSON
+ *
+ * Note: Specifying the properties extends the properties object of the retrieved GeoJSON.
+ * Styling adheres to the Github/Mapbox GeoJSON Styling Spec:
+ *
+ * https://help.github.com/articles/mapping-geojson-files-on-github
+ * https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0
+ *
+ */
+
+layer.usgsearthquake = {
+  type: 'geojson',
+  url: 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson',
+  properties: {
+    'title': 'USGS Realtime Earthquakes Feed (Week)'
+
+  }
+};
+
+layer.phl = {
+  type: 'geojson',
+  url: 'data/test/phl.geojson',
+  properties: {
+    "title": 'The Philippines',
+    "stroke": 'white',
+    "stroke-width": 2,
+    "dash-array": '3',
+    "stroke-opacity": 1,
+    "fill": "green",
+    "fill-opacity": 0.7,
+    legend: ""
+  }
+};
+
+layer.wa = {
+  type: 'geojson',
+  url: 'data/test/washington.geojson',
+  properties: {
+    title: 'Washington (State)',
+    fill: "#FFBE00",
+    legend: ""
+  }
+};
+
+layer.wafires = {
+  type: 'geojson',
+  url: 'data/test/state_wa_lrg_fires.geojson',
+  properties: {
+    "title": "Washington Fires",
+    "stroke": "#FF8800",
+    "stroke-width": 1,
+    "fill": "#FFBE00",
+    "fill-opacity": 0.5,
+    legend: ""
+  }
+};
+},{}],4:[function(require,module,exports){
+var layer = module.exports = {};
+
+/**
+ * KML
+ */
+
+layer.gdacs = {
+  name: 'GDACS: Global Disaster Alert and Coordination System',
+  type: 'kml',
+  url: 'http://www.gdacs.org/xml/gdacs.kml',
+  properties: {
+    legend: ''
+  }
+};
+
+layer.gdacstest = {
+  name: 'GDACS Test',
+  type: 'kml',
+  url: 'data/test/gdacs.kml',
+  properties: {
+    legend: ''
+  }
+};
+
+layer.earthquakes = {
+  name: 'USGS Earthquakes',
+  type: 'kml',
+  url: 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week_age.kml',
+  properties: {
+    legend: ''
+  }
+};
+
+layer.earthquakestest = {
+  name: 'USGS Earthquakes Test',
+  type: 'kml',
+  url: 'data/test/usgs-earthquakes.kml',
+  properties: {
+    legend: ''
+  }
+};
+},{}],5:[function(require,module,exports){
+var layer = module.exports = {};
+
+/**
+ * Other (Vector Provider attempts to figure out the vector type)
+ */
+layer.usoutline = 'http://eric.clst.org/wupl/Stuff/gz_2010_us_outline_20m.json';
+
+},{}],6:[function(require,module,exports){
+var layer = module.exports = {};
+
+},{}],7:[function(require,module,exports){
+var layer = module.exports = {};
+
+/**
+ * WMS
+ */
+
+layer.airtemp = {
+  name: 'NOAA Air Temperature',
+  type: 'wms',
+  url: 'http://nowcoast.noaa.gov/wms/com.esri.wms.Esrimap/obs',
+  transparent: true,      // default true
+  format: 'image/png',    // default 'image/png'
+  layers: 'OBS_MET_TEMP',
+  properties: {
+    legend: ""
+  }
+};
+
+// Not working??? works in QGIS. Most layers, however, don't even work in QGIS.
+layer.sanandreas = {
+  name: 'San Andreas Scenario ShakeMap M7.8 (1857 Rupture)',
+  type: 'wms',
+  url: 'http://lacrmt.sahanafoundation.org:8080/geoserver/wms?LAYERS=lacrmt%3Ainund2&',
+  transparent: false,
+  layers: 'lacrmt:sanandreas78',
+  properties: {
+    legend: ""
+  }
+};
+
+layer.landcover = {
+  name: 'MODIS Landcover 2009',
+  type: 'wms',
+  url: 'http://ags.servirlabs.net/ArcGIS/services/ReferenceNode/MODIS_Landcover_Type1_2009/MapServer/WMSServer',
+  layers: '0',
+  properties: {
+    legend: ""
+  }
+};
+
+layer.growingperiod = {
+  name: 'Average Length of Growing Period (days)',
+  type: 'wms',
+  url: 'http://apps.harvestchoice.org/arcgis/services/MapServices/cell_values_4/MapServer/WMSServer',
+  layers: '15',
+  properties: {
+    legend: ""
+  }
+};
+
+},{}],8:[function(require,module,exports){
+var layer = module.exports = {};
+
+/**
+ * XYZ
+ */
+layer.clouds = {
+  name: 'Cloud Cover',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png',
+  opacity: 0.5 // optional. opacity is 0.5 if not specified
+};
+
+layer.precipitation = {
+  name: 'Precipitation',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png',
+  opacity: 0.5
+};
+
+layer.precipitationclassic = {
+  name: 'Precipitation (Classic)',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/precipitation_cls/{z}/{x}/{y}.png',
+  opacity: 0.4
+};
+
+layer.rain = {
+  name: 'Rain',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/rain/{z}/{x}/{y}.png'
+};
+
+layer.rainclassic = {
+  name: 'Rain (Classic)',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/rain_cls/{z}/{x}/{y}.png'
+};
+
+layer.pressure = {
+  name: 'Pressure',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/pressure/{z}/{x}/{y}.png'
+};
+
+layer.pressurecontour = {
+  name: 'Pressure Contour',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/pressure_cntr/{z}/{x}/{y}.png',
+  opacity: 0.9
+};
+
+layer.temperature = {
+  name: 'Temperature',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/temp/{z}/{x}/{y}.png'
+};
+
+layer.wind = {
+  name: 'Wind',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/wind/{z}/{x}/{y}.png'
+};
+
+layer.snow = {
+  name: 'Snow',
+  type: 'xyz',
+  url: 'http://{s}.tile.openweathermap.org/map/snow/{z}/{x}/{y}.png'
+};
+
+},{}],9:[function(require,module,exports){
 /**
  * This is the entry point of the application. We declare the main module here and then configure the main router
  * that creates corresponding views. The array parameter for module declares this module's dependencies.
@@ -200,7 +613,7 @@ require('./controllers/upload');
 require('./controllers/search');
 require('./controllers/export');
 
-},{"./controllers/basemaps":2,"./controllers/breadcrumbs":3,"./controllers/details":4,"./controllers/export":5,"./controllers/filters":6,"./controllers/info":7,"./controllers/layers":8,"./controllers/legend":9,"./controllers/main":10,"./controllers/map":11,"./controllers/navbar":12,"./controllers/search":13,"./controllers/side-view":14,"./controllers/stories":15,"./controllers/theme":16,"./controllers/upload":17,"./controllers/zoom-extent":18,"./services/Donuts":19,"./services/LayerConfig":20,"./services/StoriesConfig":21,"./services/Vector/VectorProvider":25}],2:[function(require,module,exports){
+},{"./controllers/basemaps":10,"./controllers/breadcrumbs":11,"./controllers/details":12,"./controllers/export":13,"./controllers/filters":14,"./controllers/info":15,"./controllers/layers":16,"./controllers/legend":17,"./controllers/main":18,"./controllers/map":19,"./controllers/navbar":20,"./controllers/search":21,"./controllers/side-view":22,"./controllers/stories":23,"./controllers/theme":24,"./controllers/upload":25,"./controllers/zoom-extent":26,"./services/Donuts":27,"./services/LayerConfig":28,"./services/StoriesConfig":29,"./services/Vector/VectorProvider":33}],10:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 3/28/14.
@@ -242,7 +655,7 @@ module.exports = angular.module('SpatialViewer').controller('BasemapsCtrl', func
   };
 
 });
-},{}],3:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 4/17/14.
@@ -354,7 +767,7 @@ module.exports = angular.module('SpatialViewer').controller('BreadcrumbsCtrl', f
 
 });
 
-},{}],4:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 4/9/14.
@@ -865,7 +1278,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
 });
 
-},{}],5:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * Created by Ryan Whitley
  *       on 6/4/14.
@@ -1147,7 +1560,7 @@ module.exports = angular.module('SpatialViewer').controller('ExportCtrl', functi
     self._init();
 });
 
-},{}],6:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -1169,7 +1582,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
 });
 
-},{}],7:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -1178,7 +1591,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 module.exports = angular.module('SpatialViewer').controller('InfoCtrl', function($scope) {
   $scope.params = $stateParams;
 });
-},{}],8:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -1349,7 +1762,7 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
 
 });
 
-},{}],9:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -1396,7 +1809,7 @@ module.exports = angular.module('SpatialViewer').controller('LegendCtrl', functi
   });
 
 });
-},{}],10:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports = angular.module('SpatialViewer').controller('MainCtrl', function($scope, $rootScope, $state, $stateParams, $location) {
   debug.$location = $location;
   localStorage.setItem('defaultRoute', $location.path());
@@ -1435,7 +1848,7 @@ module.exports = angular.module('SpatialViewer').controller('MainCtrl', function
 
 });
 
-},{}],11:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *     on Mon Mar 17 2014
@@ -1662,13 +2075,13 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
   }
 
 });
-},{}],12:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 module.exports = angular.module('SpatialViewer').controller('NavBarCtrl', function($scope, $state, $stateParams) {
   $scope.params = $stateParams;
 
 });
 
-},{}],13:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 5/21/14.
@@ -1744,7 +2157,7 @@ module.exports = angular.module('SpatialViewer').controller('SearchECOSCtrl', fu
     };
 });
 
-},{}],14:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *        and Ryan Whitley      <rwhitley@spatialdev.com>
@@ -1766,7 +2179,7 @@ module.exports = angular.module('SpatialViewer').controller('SideViewCtrl', func
 
 });
 
-},{}],15:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/26/14.
@@ -1860,7 +2273,7 @@ angular.module('SpatialViewer')
       return outStories;
     };
   });
-},{}],16:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 5/6/14.
@@ -1929,7 +2342,7 @@ module.exports = angular.module('SpatialViewer').controller('ThemeCtrl', functio
    */
 
 });
-},{}],17:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 4/17/14.
@@ -2035,7 +2448,7 @@ module.exports = angular.module('SpatialViewer').controller('UploadCtrl', functi
 
 });
 
-},{}],18:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *        and Ryan Whitley      <rwhitley@spatialdev.com>
@@ -2077,7 +2490,7 @@ module.exports = angular.module('SpatialViewer').controller('ZoomExtentCtrl', fu
 
 });
 
-},{}],19:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *   and Rich Gwozdz <rgwozdz@spatialdev.com>
@@ -2394,7 +2807,7 @@ module.exports = angular.module('SpatialViewer').factory('Donuts', function () {
 
 });
 
-},{}],20:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/18/14.
@@ -2406,200 +2819,9 @@ module.exports = angular.module('SpatialViewer').factory('Donuts', function () {
 module.exports = angular.module('SpatialViewer').service('LayerConfig', function () {
 
   /**
-   * Basemaps Panel List
-   *
-   * List of basemaps that get shown in the Basemaps Panel. Edit this to add or remove
-   * basemaps that the user will see as choices. All basemaps, including ones not in this
-   * list, can still be manually referenced in the url. This is just for the User Interface.
+   * The layers specified in this main LayerConfig module are integral to SpatailViewer
+   * and should not be changed by the user.
    */
-  this.basemaps = [
-    'osmhot',
-    'osm',
-    'satellite',
-    'ortho',
-    'toner',
-    'dark',
-    'github',
-    'mozilla',
-    'green',
-    'osmcycle',
-    'osmtransport',
-    'osmmapquest',
-    'natgeo',
-    'usgstopo',
-    'esritopo',
-    'ocean',
-    'lightgray',
-    'watercolor'
-  ];
-
-
-  /**
-   * Basemaps
-   *
-   * All basemap aliases that can be referred to in the url. The corresponding
-   * path to the thumbnail in the Basemaps Panel should be:
-   *    images/{aliasName}.jpg
-   *
-   */
-
-  this.osmhot = {
-    url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-    name: 'Humanitarian OpenStreetMap',
-    type: 'basemap'
-  };
-  this.redcross = {
-    url: 'https://{s}.tiles.mapbox.com/v3/americanredcross.hcji22de/{z}/{x}/{y}.png',
-    name: 'Red Cross',
-    type: 'basemap'
-  };
-
-  this.satellite = {
-    url: 'https://{s}.tiles.mapbox.com/v3/examples.map-qfyrx5r8/{z}/{x}/{y}.png',
-    name: 'Mapbox Satellite',
-    type: 'basemap'
-  };
-  this.mozilla = {
-    url: 'http://{s}.tiles.mapbox.com/v3/mozilla-webprod.e91ef8b3/{z}/{x}/{y}.png',
-    name: 'Mozilla',
-    type: 'basemap'
-  };
-  this.github = {
-    url: 'http://{s}.tiles.mapbox.com/v3/github.map-xgq2svrz/{z}/{x}/{y}.png',
-    name: 'Github',
-    type: 'basemap'
-  };
-  this.green = {
-    url: 'http://{s}.tiles.mapbox.com/v3/examples.map-3gisupiu/{z}/{x}/{y}.png',
-    name: 'Green Theme',
-    type: 'basemap'
-  };
-  this.dark = {
-    url: 'http://{s}.tiles.mapbox.com/v3/spatialdev.map-c9z2cyef/{z}/{x}/{y}.png',
-    name: 'Dark Theme',
-    type: 'basemap'
-  };
-
-  this.osm = {
-    url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-    name: 'Standard OpenStreetMap',
-    type: 'basemap'
-  };
-  this.osmcycle = {
-    url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-    name: 'Cycle OpenStreetMap',
-    type: 'basemap'
-  };
-  this.osmtransport = {
-    url: 'http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png',
-    name: 'Transport OpenStreetMap',
-    type: 'basemap'
-  };
-  this.osmmapquest = {
-    url: 'http://otile3.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-    name: 'MapQuest OpenStreetMap',
-    type: 'basemap'
-  };
-
-  this.natgeo = {
-    url: 'http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
-    name: 'National Geographic',
-    type: 'basemap'
-  };
-  this.usgstopo = {
-    url: 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}',
-    name: 'USGS Topographic',
-    type: 'basemap'
-  };
-  this.ortho = {
-    url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    name: 'Orthographic',
-    type: 'basemap'
-  };
-  this.ocean = {
-    url: 'http://services.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
-    name: 'Ocean Bathymetric',
-    type: 'basemap'
-  };
-  this.lightgray = {
-    url: 'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-    name: 'Light Gray',
-    type: 'basemap'
-  };
-  this.esritopo = {
-    url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-    name: 'Esri Topographic',
-    type: 'basemap'
-  };
-
-  this.toner = {
-    url: 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png',
-    name: 'Stamen Toner',
-    type: 'basemap'
-  };
-  this.watercolor = {
-    url: 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
-    name: 'Stamen Watercolor',
-    type: 'basemap'
-  };
-
-
-  /**
-   * GeoJSON
-   *
-   * Note: Specifying the properties extends the properties object of the retrieved GeoJSON.
-   * Styling adheres to the Github/Mapbox GeoJSON Styling Spec:
-   *
-   * https://help.github.com/articles/mapping-geojson-files-on-github
-   * https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0
-   *
-   */
-  this.usgsearthquake = {
-    type: 'geojson',
-    url: 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson',
-    properties: {
-      'title': 'USGS Realtime Earthquakes Feed (Week)'
-
-    }
-  };
-
-  this.phl = {
-    type: 'geojson',
-    url: 'data/test/phl.geojson',
-    properties: {
-      "title": 'The Philippines',
-      "stroke": 'white',
-      "stroke-width": 2,
-      "dash-array": '3',
-      "stroke-opacity": 1,
-      "fill": "green",
-      "fill-opacity": 0.7,
-      legend: ""
-    }
-  };
-
-  this.wa = {
-    type: 'geojson',
-    url: 'data/test/washington.geojson',
-    properties: {
-      title: 'Washington (State)',
-      fill: "#FFBE00",
-      legend: ""
-    }
-  };
-
-  this.wafires = {
-    type: 'geojson',
-    url: 'data/test/state_wa_lrg_fires.geojson',
-    properties: {
-      "title": "Washington Fires",
-      "stroke": "#FF8800",
-      "stroke-width": 1,
-      "fill": "#FFBE00",
-      "fill-opacity": 0.5,
-      legend: ""
-    }
-  };
 
   //GADM country extents, level 0
   this.countryextents = {
@@ -2613,184 +2835,23 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
     url: 'data/arc_region_extents.geojson'
   };
 
-  
-  /**
-   * KML
-   */
-  this.gdacs = {
-    name: 'GDACS: Global Disaster Alert and Coordination System',
-    type: 'kml',
-    url: 'http://www.gdacs.org/xml/gdacs.kml',
-    properties: {
-      legend: ''
+  var configLayers = [
+    require('../../config/layers/basemaps.js'),
+    require('../../config/layers/csv.js'),
+    require('../../config/layers/geojson.js'),
+    require('../../config/layers/kml.js'),
+    require('../../config/layers/other.js'),
+    require('../../config/layers/pbf.js'),
+    require('../../config/layers/wms.js'),
+    require('../../config/layers/xyz.js')
+  ];
+
+  for (var i = 0, len = configLayers.length; i < len; i++) {
+    var cfg = configLayers[i];
+    for (var key in cfg) {
+      this[key] = cfg[key];
     }
-  };
-  this.gdacstest = {
-    name: 'GDACS Test',
-    type: 'kml',
-    url: 'data/test/gdacs.kml',
-    properties: {
-      legend: ''
-    }
-  };
-  this.earthquakes = {
-    name: 'USGS Earthquakes',
-    type: 'kml',
-    url: 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week_age.kml',
-    properties: {
-      legend: ''
-    }
-  };
-  this.earthquakestest = {
-    name: 'USGS Earthquakes Test',
-    type: 'kml',
-    url: 'data/test/usgs-earthquakes.kml',
-    properties: {
-      legend: ''
-    }
-  };
-
-
-  /**
-   * CSV
-   */
-  this.ugandafsp = {
-    name: 'Uganda Financial Service Providers',
-    type: 'csv',
-    url: 'data/test/uganda.csv',
-    properties: {
-      legend: ''
-    }
-  };
-  this.sampletracks = {
-    name: 'Sample GPS Tracks',
-    type: 'csv',
-    url: 'data/test/sample-tracks.csv',
-    properties: {
-      legend: ''
-    }
-  };
-
-
-  /**
-   * WMS
-   */
-  this.airtemp = {
-    name: 'NOAA Air Temperature',
-    type: 'wms',
-    url: 'http://nowcoast.noaa.gov/wms/com.esri.wms.Esrimap/obs',
-    transparent: true,      // default true
-    format: 'image/png',    // default 'image/png'
-    layers: 'OBS_MET_TEMP',
-    properties: {
-      legend: ""
-    }
-  };
-
-  // Not working??? works in QGIS. Most layers, however, don't even work in QGIS.
-  this.sanandreas = {
-    name: 'San Andreas Scenario ShakeMap M7.8 (1857 Rupture)',
-    type: 'wms',
-    url: 'http://lacrmt.sahanafoundation.org:8080/geoserver/wms?LAYERS=lacrmt%3Ainund2&',
-    transparent: false,
-    layers: 'lacrmt:sanandreas78',
-    properties: {
-      legend: ""
-    }
-  };
-
-  this.landcover = {
-    name: 'MODIS Landcover 2009',
-    type: 'wms',
-    url: 'http://ags.servirlabs.net/ArcGIS/services/ReferenceNode/MODIS_Landcover_Type1_2009/MapServer/WMSServer',
-    layers: '0',
-    properties: {
-      legend: ""
-    }
-  };
-
-  this.growingperiod = {
-    name: 'Average Length of Growing Period (days)',
-    type: 'wms',
-    url: 'http://apps.harvestchoice.org/arcgis/services/MapServices/cell_values_4/MapServer/WMSServer',
-    layers: '15',
-    properties: {
-      legend: ""
-    }
-  };
-
-  /**
-   * XYZ
-   */
-  this.clouds = {
-    name: 'Cloud Cover',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png',
-    opacity: 0.5 // optional. opacity is 0.5 if not specified
-  };
-
-  this.precipitation = {
-    name: 'Precipitation',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png',
-    opacity: 0.5
-  };
-
-  this.precipitationclassic = {
-    name: 'Precipitation (Classic)',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/precipitation_cls/{z}/{x}/{y}.png',
-    opacity: 0.4
-  };
-
-  this.rain = {
-    name: 'Rain',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/rain/{z}/{x}/{y}.png'
-  };
-
-  this.rainclassic = {
-    name: 'Rain (Classic)',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/rain_cls/{z}/{x}/{y}.png'
-  };
-
-  this.pressure = {
-    name: 'Pressure',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/pressure/{z}/{x}/{y}.png'
-  };
-
-  this.pressurecontour = {
-    name: 'Pressure Contour',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/pressure_cntr/{z}/{x}/{y}.png',
-    opacity: 0.9
-  };
-
-  this.temperature = {
-    name: 'Temperature',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/temp/{z}/{x}/{y}.png'
-  };
-
-  this.wind = {
-    name: 'Wind',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/wind/{z}/{x}/{y}.png'
-  };
-
-  this.snow = {
-    name: 'Snow',
-    type: 'xyz',
-    url: 'http://{s}.tile.openweathermap.org/map/snow/{z}/{x}/{y}.png'
-  };
-
-
-  /**
-   * Other (Vector Provider attempts to figure out the vector type)
-   */
-  this.usoutline = 'http://eric.clst.org/wupl/Stuff/gz_2010_us_outline_20m.json';
+  }
 
   /**
    * For layers, we try and get an alias for everything, so if it's a URL that
@@ -2813,7 +2874,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
 
 });
 
-},{}],21:[function(require,module,exports){
+},{"../../config/layers/basemaps.js":1,"../../config/layers/csv.js":2,"../../config/layers/geojson.js":3,"../../config/layers/kml.js":4,"../../config/layers/other.js":5,"../../config/layers/pbf.js":6,"../../config/layers/wms.js":7,"../../config/layers/xyz.js":8}],29:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/18/14.
@@ -2884,7 +2945,7 @@ module.exports = angular.module('SpatialViewer').service('StoriesConfig', functi
 
 });
 
-},{}],22:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -2948,7 +3009,7 @@ GeoJSON.prototype.getLayer = function() {
   return layer;
 };
 
-},{"./resource":27,"./vector":28}],23:[function(require,module,exports){
+},{"./resource":35,"./vector":36}],31:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -3019,7 +3080,7 @@ KML.prototype.eachLayer = function (cb) {
   });
 };
 
-},{"./resource":27,"./vector":28}],24:[function(require,module,exports){
+},{"./resource":35,"./vector":36}],32:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -3114,7 +3175,7 @@ Resource.prototype.eachLayer = function (cb) {
   this._geojsonLayer.eachLayer(cb);
 };
 
-},{"./vector":28}],25:[function(require,module,exports){
+},{"./vector":36}],33:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/19/14.
@@ -3179,7 +3240,7 @@ module.exports = angular.module('SpatialViewer').factory('VectorProvider', funct
 });
 
 
-},{"./GeoJSON":22,"./KML":23,"./Resource":24,"./csv":26,"./vector":28}],26:[function(require,module,exports){
+},{"./GeoJSON":30,"./KML":31,"./Resource":32,"./csv":34,"./vector":36}],34:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 6/3/14.
@@ -3483,9 +3544,9 @@ CSV.prototype.Base64 = {
 
 };
 
-},{"./resource":27,"./vector":28}],27:[function(require,module,exports){
-module.exports=require(24)
-},{"./vector":28}],28:[function(require,module,exports){
+},{"./resource":35,"./vector":36}],35:[function(require,module,exports){
+module.exports=require(32)
+},{"./vector":36}],36:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -3516,4 +3577,4 @@ debug.resources = resources;
 
 var centerLevel = vector.centerLevel = 0;
 
-},{}]},{},[1])
+},{}]},{},[9])
