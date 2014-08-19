@@ -293,7 +293,7 @@ var layer = module.exports = {};
 layer.gadm2014kenya = {
   type: 'pbf',
   name: 'GADM 2014 Kenya',
-  url: "http://localhost:3001/services/vector-tiles/gadm2014kenya/{z}/{x}/{y}.pbf",
+  url: "services/vector-tiles/gadm2014kenya/{z}/{x}/{y}.pbf",
   debug: false,
   clickableLayers: ['gadm0', 'gadm1', 'gadm2', 'gadm3', 'gadm4', 'gadm5'],
 
