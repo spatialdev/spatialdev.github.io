@@ -42,3 +42,16 @@ gists.fetch = function() {
 window.prevLayersStr = '';
 window.prevLevelStr = '';
 window.prevZoomStr = '';
+
+//Trying to get around PhantomJS limitations with Uint8Array
+if (window.Uint8Array !== void 0) {
+  try {
+    String.fromCharCode.apply(null, new Uint8Array([0]));
+  } catch(e) {
+    String.fromCharCode.apply = (function(fromCharCodeApply) {
+      return function(thisobj, args) {
+        return fromCharCodeApply.call(String.fromCharCode, thisobj, Array.prototype.slice.call(args));
+      }
+    })(String.fromCharCode.apply);
+  }
+}
