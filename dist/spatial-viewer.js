@@ -570,7 +570,7 @@ layer.gaul_fsp = {
 layer.cicos = {
   type: 'pbf',
   name: 'FSP Cico Points',
-  url: "http://localhost:3000/services/postgis/cicos_2013/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type",
+  url: "http://spatialserver.spatialdev.com/services/vector-tiles/FSPCicos2013/{z}/{x}/{y}.pbf",
   debug: false,
   clickableLayers: [],
 
@@ -589,7 +589,7 @@ layer.cicos = {
    * @returns {boolean}
    */
   filter: function(feature, context) {
-    return true;
+    return feature.properties.type != 'Mobile Money Agent';
   },
 
   /**
@@ -606,6 +606,16 @@ layer.cicos = {
       return layerName.replace('_label', '');
     }
     return layerName + '_label';
+  },
+
+  /**
+   * Specify which features should have a certain z index (integer).  Lower numbers will draw on 'the bottom'.
+   *
+   * @param feature - the PBFFeature that contains properties
+   */
+  zIndex: function(feature){
+    //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
+
   },
 
   styleFor: function(feature) {
@@ -2187,8 +2197,11 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
       });
 
       //Tell it to draw
-      pbffeature.draw(vtf, ctx);
+      //pbffeature.draw(vtf, ctx);
     }
+
+    //If a z-order function is specified, wait unitl all features have been iterated over until drawing (here)
+    self.redrawTile(ctx.id, ctx.zoom);
 
     for (var j = 0, len = self.featuresWithLabels.length; j < len; j++) {
       var feat = self.featuresWithLabels[j];
