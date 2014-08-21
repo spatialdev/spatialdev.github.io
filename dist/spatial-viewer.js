@@ -1062,7 +1062,7 @@ Protobuf.prototype.writeMessage = function(tag, protobuf) {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":49,"ieee754":10}],10:[function(require,module,exports){
+},{"buffer":50,"ieee754":10}],10:[function(require,module,exports){
 exports.read = function(buffer, offset, isLE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -1465,7 +1465,7 @@ VectorTileFeature.prototype.bbox = function() {
     return [x1, y1, x2, y2];
 };
 
-},{"point-geometry":11}],15:[function(require,module,exports){
+},{"point-geometry":16}],15:[function(require,module,exports){
 'use strict';
 
 var VectorTileFeature = require('./vectortilefeature.js');
@@ -1557,6 +1557,8 @@ VectorTileLayer.prototype.feature = function(i) {
 };
 
 },{"./vectortilefeature.js":14}],16:[function(require,module,exports){
+module.exports=require(11)
+},{}],17:[function(require,module,exports){
 /**
  * Created by Ryan Whitley, Daniel Duarte, and Nicholas Hallahan
  *    on 6/03/14.
@@ -1897,7 +1899,7 @@ function isClockwise(p){
 
 
 
-},{"./StaticLabel/StaticLabel.js":20}],17:[function(require,module,exports){
+},{"./StaticLabel/StaticLabel.js":21}],18:[function(require,module,exports){
 /**
  * Created by Ryan Whitley on 5/17/14.
  */
@@ -2110,7 +2112,7 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
   }
 });
 
-},{"./PBFFeature":16,"./PBFUtil":19}],18:[function(require,module,exports){
+},{"./PBFFeature":17,"./PBFUtil":20}],19:[function(require,module,exports){
 var VectorTile = require('vector-tile').VectorTile;
 var VectorTileFeature = require('vector-tile').VectorTileFeature;
 var VectorTileLayer = require('vector-tile').VectorTileLayer;
@@ -2396,7 +2398,7 @@ function parseVTFeatures(vtl){
   }
   return vtl;
 }
-},{"./PBFFeature":16,"./PBFLayer":17,"./PBFUtil":19,"pbf":9,"point-geometry":11,"vector-tile":12}],19:[function(require,module,exports){
+},{"./PBFFeature":17,"./PBFLayer":18,"./PBFUtil":20,"pbf":9,"point-geometry":11,"vector-tile":12}],20:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 8/15/14.
@@ -2421,7 +2423,7 @@ Util.getIDForLayerFeature = function(feature) {
 };
 
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 7/31/14.
@@ -2480,7 +2482,7 @@ StaticLabel.prototype.deselect = function() {
   if (linkedFeature.selected) linkedFeature.deselect();
   };
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
  * This is the entry point of the application. We declare the main module here and then configure the main router
  * that creates corresponding views. The array parameter for module declares this module's dependencies.
@@ -2683,7 +2685,7 @@ require('./controllers/search');
 require('./controllers/export');
 require('../lib/Leaflet.PBFLayer/src/PBFSource.js');
 
-},{"../lib/Leaflet.PBFLayer/src/PBFSource.js":18,"./controllers/basemaps":22,"./controllers/breadcrumbs":23,"./controllers/details":24,"./controllers/export":25,"./controllers/filters":26,"./controllers/info":27,"./controllers/layers":28,"./controllers/legend":29,"./controllers/main":30,"./controllers/map":31,"./controllers/navbar":32,"./controllers/search":33,"./controllers/side-view":34,"./controllers/stories":35,"./controllers/theme":36,"./controllers/upload":37,"./controllers/zoom-extent":38,"./services/Donuts":39,"./services/LayerConfig":40,"./services/StoriesConfig":41,"./services/Vector/VectorProvider":45}],22:[function(require,module,exports){
+},{"../lib/Leaflet.PBFLayer/src/PBFSource.js":19,"./controllers/basemaps":23,"./controllers/breadcrumbs":24,"./controllers/details":25,"./controllers/export":26,"./controllers/filters":27,"./controllers/info":28,"./controllers/layers":29,"./controllers/legend":30,"./controllers/main":31,"./controllers/map":32,"./controllers/navbar":33,"./controllers/search":34,"./controllers/side-view":35,"./controllers/stories":36,"./controllers/theme":37,"./controllers/upload":38,"./controllers/zoom-extent":39,"./services/Donuts":40,"./services/LayerConfig":41,"./services/StoriesConfig":42,"./services/Vector/VectorProvider":46}],23:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 3/28/14.
@@ -2725,7 +2727,7 @@ module.exports = angular.module('SpatialViewer').controller('BasemapsCtrl', func
   };
 
 });
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 4/17/14.
@@ -2837,7 +2839,7 @@ module.exports = angular.module('SpatialViewer').controller('BreadcrumbsCtrl', f
 
 });
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 4/9/14.
@@ -3348,7 +3350,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
 });
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * Created by Ryan Whitley
  *       on 6/4/14.
@@ -3630,7 +3632,7 @@ module.exports = angular.module('SpatialViewer').controller('ExportCtrl', functi
     self._init();
 });
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -3652,7 +3654,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
 });
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -3661,7 +3663,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 module.exports = angular.module('SpatialViewer').controller('InfoCtrl', function($scope) {
   $scope.params = $stateParams;
 });
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -3832,7 +3834,7 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
 
 });
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -3879,7 +3881,7 @@ module.exports = angular.module('SpatialViewer').controller('LegendCtrl', functi
   });
 
 });
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 module.exports = angular.module('SpatialViewer').controller('MainCtrl', function($scope, $rootScope, $state, $stateParams, $location) {
   debug.$location = $location;
   localStorage.setItem('defaultRoute', $location.path());
@@ -3918,7 +3920,7 @@ module.exports = angular.module('SpatialViewer').controller('MainCtrl', function
 
 });
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *     on Mon Mar 17 2014
@@ -4174,13 +4176,13 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
   }
 
 });
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 module.exports = angular.module('SpatialViewer').controller('NavBarCtrl', function($scope, $state, $stateParams) {
   $scope.params = $stateParams;
 
 });
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 5/21/14.
@@ -4256,7 +4258,7 @@ module.exports = angular.module('SpatialViewer').controller('SearchECOSCtrl', fu
     };
 });
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *        and Ryan Whitley      <rwhitley@spatialdev.com>
@@ -4278,7 +4280,7 @@ module.exports = angular.module('SpatialViewer').controller('SideViewCtrl', func
 
 });
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/26/14.
@@ -4372,7 +4374,7 @@ angular.module('SpatialViewer')
       return outStories;
     };
   });
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 5/6/14.
@@ -4441,7 +4443,7 @@ module.exports = angular.module('SpatialViewer').controller('ThemeCtrl', functio
    */
 
 });
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 4/17/14.
@@ -4547,7 +4549,7 @@ module.exports = angular.module('SpatialViewer').controller('UploadCtrl', functi
 
 });
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *        and Ryan Whitley      <rwhitley@spatialdev.com>
@@ -4589,7 +4591,7 @@ module.exports = angular.module('SpatialViewer').controller('ZoomExtentCtrl', fu
 
 });
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *   and Rich Gwozdz <rgwozdz@spatialdev.com>
@@ -4906,7 +4908,7 @@ module.exports = angular.module('SpatialViewer').factory('Donuts', function () {
 
 });
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/18/14.
@@ -4973,7 +4975,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
 
 });
 
-},{"../../config/layers/basemaps.js":1,"../../config/layers/csv.js":2,"../../config/layers/geojson.js":3,"../../config/layers/kml.js":4,"../../config/layers/other.js":5,"../../config/layers/pbf.js":6,"../../config/layers/wms.js":7,"../../config/layers/xyz.js":8}],41:[function(require,module,exports){
+},{"../../config/layers/basemaps.js":1,"../../config/layers/csv.js":2,"../../config/layers/geojson.js":3,"../../config/layers/kml.js":4,"../../config/layers/other.js":5,"../../config/layers/pbf.js":6,"../../config/layers/wms.js":7,"../../config/layers/xyz.js":8}],42:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/18/14.
@@ -5044,7 +5046,7 @@ module.exports = angular.module('SpatialViewer').service('StoriesConfig', functi
 
 });
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5108,7 +5110,7 @@ GeoJSON.prototype.getLayer = function() {
   return layer;
 };
 
-},{"./resource":47,"./vector":48}],43:[function(require,module,exports){
+},{"./resource":48,"./vector":49}],44:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5179,7 +5181,7 @@ KML.prototype.eachLayer = function (cb) {
   });
 };
 
-},{"./resource":47,"./vector":48}],44:[function(require,module,exports){
+},{"./resource":48,"./vector":49}],45:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5274,7 +5276,7 @@ Resource.prototype.eachLayer = function (cb) {
   this._geojsonLayer.eachLayer(cb);
 };
 
-},{"./vector":48}],45:[function(require,module,exports){
+},{"./vector":49}],46:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/19/14.
@@ -5339,7 +5341,7 @@ module.exports = angular.module('SpatialViewer').factory('VectorProvider', funct
 });
 
 
-},{"./GeoJSON":42,"./KML":43,"./Resource":44,"./csv":46,"./vector":48}],46:[function(require,module,exports){
+},{"./GeoJSON":43,"./KML":44,"./Resource":45,"./csv":47,"./vector":49}],47:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 6/3/14.
@@ -5643,9 +5645,9 @@ CSV.prototype.Base64 = {
 
 };
 
-},{"./resource":47,"./vector":48}],47:[function(require,module,exports){
-module.exports=require(44)
-},{"./vector":48}],48:[function(require,module,exports){
+},{"./resource":48,"./vector":49}],48:[function(require,module,exports){
+module.exports=require(45)
+},{"./vector":49}],49:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5676,7 +5678,7 @@ debug.resources = resources;
 
 var centerLevel = vector.centerLevel = 0;
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -6827,7 +6829,7 @@ function assert (test, message) {
   if (!test) throw new Error(message || 'Failed assertion')
 }
 
-},{"base64-js":50,"ieee754":51}],50:[function(require,module,exports){
+},{"base64-js":51,"ieee754":52}],51:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -6949,6 +6951,6 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 module.exports=require(10)
-},{}]},{},[21])
+},{}]},{},[22])
