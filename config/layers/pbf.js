@@ -280,7 +280,7 @@ layer.gaul_fsp = {
 layer.cicos = {
   type: 'pbf',
   name: 'FSP Cico Points',
-  url: "http://spatialserver.spatialdev.com/services/postgis/cicos_2013/geom/vector-tiles/{z}/{x}/{y}.pbf",
+  url: "http://localhost:3000/services/postgis/cicos_2013/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type",
   debug: false,
   clickableLayers: [],
 
@@ -326,7 +326,7 @@ layer.cicos = {
     switch (type) {
       case 1: //'Point'
         // unselected
-        style.color = '#ff0000';
+        style.color = CICO_Config[feature.properties.type].ClusterColor || '#3086AB';
         style.radius = 5;
         // selected
         selected.color = 'rgba(255,255,0,0.5)';
@@ -358,4 +358,154 @@ layer.cicos = {
     return style;
   }
 
+};
+
+// All possible CICO layer (combined from all countries)
+var CICO_Config = {
+  'Offsite ATMs': {
+    ClusterColor: '#3086AB',
+    InfoLabel: 'Offsite ATM',
+    Providers: null
+  },
+  'Bank Branches': {
+    ClusterColor: '#977C00',
+    InfoLabel: 'Bank Branch',
+    Providers: null
+  },
+  'MFIs': {
+    ClusterColor: '#9B242D',
+    InfoLabel: 'MFI',
+    Providers: null
+  },
+  'SACCOs': {
+    ClusterColor: '#cf8a57',
+    InfoLabel: 'SACCO',
+    Providers: null
+  },
+  'Mobile Money Agent': {
+    ClusterColor: '#8CB7C7',
+    InfoLabel: 'Mobile Money Agent',
+    Providers: null
+  },
+  'MDIs': {
+    ClusterColor: '#825D99',
+    InfoLabel: 'MDI',
+    Providers: null
+  },
+  'Credit Institution': {
+    ClusterColor: '#6CA76B',
+    InfoLabel: 'Credit Institution',
+    Providers: null
+  },
+  'MFBs': {
+    ClusterColor: '#825D99',
+    InfoLabel: 'MFB',
+    Providers: null
+  },
+  'Motor Parks': {
+    ClusterColor: '#bd85b3',
+    InfoLabel: 'Motor Parks',
+    Providers: null
+  },
+  'Mobile Network Operator Outlets': {
+    ClusterColor: '#a2a2a2',
+    InfoLabel: 'Mobile Network Operator Outlets',
+    Providers: null
+  },
+  'Post Offices': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Post Offices',
+    Providers: null
+  },
+  'Post Office': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Post Offices',
+    Providers: null
+  },
+  'Bus Stand': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Bus Stands',
+    Providers: null
+  },
+  'Bus Stands': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Bus Stands',
+    Providers: null
+  }
+
+
+  //Kenya
+  ,
+  'Insurance Providers': {
+    ClusterColor: '#3086AB',
+    InfoLabel: 'Insurance Providers',
+    Providers: null
+  },
+  'Money Transfer Service': {
+    ClusterColor: '#977C00',
+    InfoLabel: 'Money Transfer Service',
+    Providers: null
+  },
+  'Dev Finance': {
+    ClusterColor: '#9B242D',
+    InfoLabel: 'Dev Finance',
+    Providers: null
+  },
+  'Forex Bureaus': {
+    ClusterColor: '#cf8a57',
+    InfoLabel: 'Forex Bureaus',
+    Providers: null
+  },
+  'Cap Markets': {
+    ClusterColor: '#825D99',
+    InfoLabel: 'Cap Markets',
+    Providers: null
+  },
+  'Pension Providers': {
+    ClusterColor: '#a2a2a2',
+    InfoLabel: 'Pension Providers',
+    Providers: null
+  },
+  'Purchase Lease Factoring': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Purchase Lease Factoring',
+    Providers: null
+  },
+  'Bank Agent': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Bank Agent',
+    Providers: null
+  },
+  'Bank and Mortgage': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Banks and Mortgage',
+    Providers: null
+  },
+  'Commercial Bank': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Commercial Bank',
+    Providers: null
+  },
+  'PostBank': {
+    ClusterColor: '#bd85b3',
+    InfoLabel: 'Post Bank',
+    Providers: null
+  },
+
+  //Nigeria New Post Offices
+  'NIPOST Post Office': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'NIPOST Post Offices',
+    Providers: null
+  },
+  'NIPOST Post Shop': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'NIPOST Post Shops',
+    Providers: null
+  },
+  'NIPOST Postal Agency': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'NIPOST Postal Agencies',
+    Providers: null
+  }
 };

@@ -3,7 +3,7 @@
  *     on Mon Mar 17 2014
  */
 
-module.exports = angular.module('SpatialViewer').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, LayerConfig, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('MapCtrl', function ($scope, $rootScope, $state, $stateParams, LayerConfig, VectorProvider, $http) {
   var map = L.map('map');
 
   var lastLayersStr = '';
@@ -18,14 +18,14 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
   $scope.params = $stateParams;
   $scope.blur = '';
 
-  $scope.toggleState = function(stateName) {
+  $scope.toggleState = function (stateName) {
     var state = $state.current.name !== stateName ? stateName : 'main';
     $state.go(state, $stateParams);
   };
 
   function redraw() {
-    var lat = parseFloat($stateParams.lat)   || 0;
-    var lng = parseFloat($stateParams.lng)   || 0;
+    var lat = parseFloat($stateParams.lat) || 0;
+    var lng = parseFloat($stateParams.lng) || 0;
     var zoom = parseFloat($stateParams.zoom) || 17;
     layersStr = $stateParams.layers || LayerConfig.osmhot.url;
     var layers = layersStr.split(',');
@@ -76,7 +76,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
   /***
    * Broadcast Listeners.
    */
-  $scope.$on('route-update', function() {
+  $scope.$on('route-update', function () {
     if ($scope.blur === 'blur' && $state.current.name !== 'landing') {
       $scope.blur = '';
     }
@@ -86,12 +86,12 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     var zoom = c.zoom.toString();
     if (mapMoveEnd) {
       mapMoveEnd = false;
-    } else if (  $stateParams.lat     !== lat
-              || $stateParams.lng     !== lng
-              || $stateParams.zoom    !== zoom
-              || $stateParams.layers  !== layersStr
-              || $stateParams.theme   !== theme
-              || $stateParams.filters !== filters   ) {
+    } else if ($stateParams.lat !== lat
+      || $stateParams.lng !== lng
+      || $stateParams.zoom !== zoom
+      || $stateParams.layers !== layersStr
+      || $stateParams.theme !== theme
+      || $stateParams.filters !== filters) {
 
       console.log('map.js route-update Updating Map...');
       redraw();
@@ -99,12 +99,12 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
 
   });
 
-  $scope.$on('blur', function() {
+  $scope.$on('blur', function () {
     $scope.blur = 'blur';
   });
 
   //this takes in a WKT GeoJSON Extent geometry
-  $scope.zoomToExtent = function(extent) {
+  $scope.zoomToExtent = function (extent) {
     delete $stateParams['zoom-extent'];
     map.fitBounds([
       [extent[0][1], extent[0][0]],
@@ -114,19 +114,19 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
 
   //This take a leaflet bounds object and handles it.
   delete $stateParams['zoom-extent'];
-  $scope.zoomToBounds = function(bounds) {
+  $scope.zoomToBounds = function (bounds) {
     map.fitBounds(bounds);
   };
 
 
   window.map = map;
-  map.on('moveend', function() { // move is good too
+  map.on('moveend', function () { // move is good too
     var c = map.getCenter();
     var lat = c.lat.toFixed(6);
     var lng = c.lng.toFixed(6);
     var zoom = map.getZoom().toString();
 
-    if ( $stateParams.lat !== lat
+    if ($stateParams.lat !== lat
       || $stateParams.lng !== lng
       || $stateParams.zoom !== zoom) {
 
@@ -139,9 +139,53 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     }
   });
 
+  map.on('click', function (e) { // handle map click events
+    //Depending on what mode we're in and what we're showing...
+    //This is a test hard-coded for confetti mode.
+    var latlng = e.latlng;
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+
+    var wkt = "POINT(" + lng + " " + lat + ")";
+    var postArgs = { format: 'geojson', input_geometry: wkt, buffer_distance: 1000, name: "buffer" };
+    var url = "http://spatialserver.spatialdev.com/services/geoprocessing/geoprocessing_operation";
+
+    //Using this info, call spatial server with a radius and x,y as WKT to get nearby points.
+    $http.post(url, postArgs).success(function (result, status) {
+
+      if (!result || result.error) {
+        console.error('Unable to fetch feature: ' + result.error);
+        return;
+      }
+
+      //We have the buffer as geojson.  Send it to the point table to intersect
+      var tablePostArgs = {
+        returnfields: 'id,type,provider,photos',
+        format: 'geojson',
+        returnGeometry: 'yes',
+        intersects: JSON.stringify(result),
+        limit: 200 //add a limit of 200 so we don't get carried away
+      };
+      var pointUrl = "http://spatialserver.spatialdev.com/services/tables/cicos_2013/query";
+
+      $http.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+        //GeoJSON result of points
+        if (!points || points.error) {
+          console.error('Unable to fetch feature: ' + points.error);
+          return;
+        }
+
+        //point is a featurecollection. open the panel and show some stuff.
+        if(points && points.features && points.features.length > 0){
+            $rootScope.$broadcast('details', { feature: { properties: points.features[0].properties } });
+        }
+      });
+    });
+  });
+
   //Connect the layout onresize end event
   try {
-    window.layout.panes.center.bind("layoutpaneonresize_end", function() {
+    window.layout.panes.center.bind("layoutpaneonresize_end", function () {
       map.invalidateSize();
     });
   } catch (e) {
@@ -171,7 +215,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
         var layer = new L.TileLayer.PBFSource(cfg);
         layer.addTo(map);
 
-        map.on('click', function(e) {
+        map.on('click', function (e) {
           //Take the click event and pass it to the group layers.
           pbfSource.onClick(e, function (evt) {
             if (evt && evt.feature) {
@@ -180,10 +224,10 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
           });
         });
 
-        map.on('layerremove', function(removed) {
+        map.on('layerremove', function (removed) {
           //This is the layer that was removed.
           //If it is a TileLayer.PBFSource, then call a method to actually remove the children, too.
-          if(removed.layer.removeChildLayers){
+          if (removed.layer.removeChildLayers) {
             removed.layer.removeChildLayers(map);
           }
         });

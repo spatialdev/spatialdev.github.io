@@ -570,7 +570,7 @@ layer.gaul_fsp = {
 layer.cicos = {
   type: 'pbf',
   name: 'FSP Cico Points',
-  url: "http://spatialserver.spatialdev.com/services/postgis/cicos_2013/geom/vector-tiles/{z}/{x}/{y}.pbf",
+  url: "http://localhost:3000/services/postgis/cicos_2013/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type",
   debug: false,
   clickableLayers: [],
 
@@ -616,7 +616,7 @@ layer.cicos = {
     switch (type) {
       case 1: //'Point'
         // unselected
-        style.color = '#ff0000';
+        style.color = CICO_Config[feature.properties.type].ClusterColor || '#3086AB';
         style.radius = 5;
         // selected
         selected.color = 'rgba(255,255,0,0.5)';
@@ -648,6 +648,156 @@ layer.cicos = {
     return style;
   }
 
+};
+
+// All possible CICO layer (combined from all countries)
+var CICO_Config = {
+  'Offsite ATMs': {
+    ClusterColor: '#3086AB',
+    InfoLabel: 'Offsite ATM',
+    Providers: null
+  },
+  'Bank Branches': {
+    ClusterColor: '#977C00',
+    InfoLabel: 'Bank Branch',
+    Providers: null
+  },
+  'MFIs': {
+    ClusterColor: '#9B242D',
+    InfoLabel: 'MFI',
+    Providers: null
+  },
+  'SACCOs': {
+    ClusterColor: '#cf8a57',
+    InfoLabel: 'SACCO',
+    Providers: null
+  },
+  'Mobile Money Agent': {
+    ClusterColor: '#8CB7C7',
+    InfoLabel: 'Mobile Money Agent',
+    Providers: null
+  },
+  'MDIs': {
+    ClusterColor: '#825D99',
+    InfoLabel: 'MDI',
+    Providers: null
+  },
+  'Credit Institution': {
+    ClusterColor: '#6CA76B',
+    InfoLabel: 'Credit Institution',
+    Providers: null
+  },
+  'MFBs': {
+    ClusterColor: '#825D99',
+    InfoLabel: 'MFB',
+    Providers: null
+  },
+  'Motor Parks': {
+    ClusterColor: '#bd85b3',
+    InfoLabel: 'Motor Parks',
+    Providers: null
+  },
+  'Mobile Network Operator Outlets': {
+    ClusterColor: '#a2a2a2',
+    InfoLabel: 'Mobile Network Operator Outlets',
+    Providers: null
+  },
+  'Post Offices': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Post Offices',
+    Providers: null
+  },
+  'Post Office': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Post Offices',
+    Providers: null
+  },
+  'Bus Stand': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Bus Stands',
+    Providers: null
+  },
+  'Bus Stands': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Bus Stands',
+    Providers: null
+  }
+
+
+  //Kenya
+  ,
+  'Insurance Providers': {
+    ClusterColor: '#3086AB',
+    InfoLabel: 'Insurance Providers',
+    Providers: null
+  },
+  'Money Transfer Service': {
+    ClusterColor: '#977C00',
+    InfoLabel: 'Money Transfer Service',
+    Providers: null
+  },
+  'Dev Finance': {
+    ClusterColor: '#9B242D',
+    InfoLabel: 'Dev Finance',
+    Providers: null
+  },
+  'Forex Bureaus': {
+    ClusterColor: '#cf8a57',
+    InfoLabel: 'Forex Bureaus',
+    Providers: null
+  },
+  'Cap Markets': {
+    ClusterColor: '#825D99',
+    InfoLabel: 'Cap Markets',
+    Providers: null
+  },
+  'Pension Providers': {
+    ClusterColor: '#a2a2a2',
+    InfoLabel: 'Pension Providers',
+    Providers: null
+  },
+  'Purchase Lease Factoring': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Purchase Lease Factoring',
+    Providers: null
+  },
+  'Bank Agent': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Bank Agent',
+    Providers: null
+  },
+  'Bank and Mortgage': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Banks and Mortgage',
+    Providers: null
+  },
+  'Commercial Bank': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'Commercial Bank',
+    Providers: null
+  },
+  'PostBank': {
+    ClusterColor: '#bd85b3',
+    InfoLabel: 'Post Bank',
+    Providers: null
+  },
+
+  //Nigeria New Post Offices
+  'NIPOST Post Office': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'NIPOST Post Offices',
+    Providers: null
+  },
+  'NIPOST Post Shop': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'NIPOST Post Shops',
+    Providers: null
+  },
+  'NIPOST Postal Agency': {
+    ClusterColor: '#80ad7b',
+    InfoLabel: 'NIPOST Postal Agencies',
+    Providers: null
+  }
 };
 },{}],7:[function(require,module,exports){
 var layer = module.exports = {};
@@ -1999,7 +2149,7 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
       } else {
         getIDForLayerFeature = Util.getIDForLayerFeature;
       }
-      var uniqueID = self.options.getIDForLayerFeature(vtf);
+      var uniqueID = self.options.getIDForLayerFeature(vtf) || i;
       var pbffeature = self.features[uniqueID];
 
       //Create a new PBFFeature if one doesn't already exist for this feature.
@@ -3926,7 +4076,7 @@ module.exports = angular.module('SpatialViewer').controller('MainCtrl', function
  *     on Mon Mar 17 2014
  */
 
-module.exports = angular.module('SpatialViewer').controller('MapCtrl', function($scope, $rootScope, $state, $stateParams, LayerConfig, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('MapCtrl', function ($scope, $rootScope, $state, $stateParams, LayerConfig, VectorProvider, $http) {
   var map = L.map('map');
 
   var lastLayersStr = '';
@@ -3941,14 +4091,14 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
   $scope.params = $stateParams;
   $scope.blur = '';
 
-  $scope.toggleState = function(stateName) {
+  $scope.toggleState = function (stateName) {
     var state = $state.current.name !== stateName ? stateName : 'main';
     $state.go(state, $stateParams);
   };
 
   function redraw() {
-    var lat = parseFloat($stateParams.lat)   || 0;
-    var lng = parseFloat($stateParams.lng)   || 0;
+    var lat = parseFloat($stateParams.lat) || 0;
+    var lng = parseFloat($stateParams.lng) || 0;
     var zoom = parseFloat($stateParams.zoom) || 17;
     layersStr = $stateParams.layers || LayerConfig.osmhot.url;
     var layers = layersStr.split(',');
@@ -3999,7 +4149,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
   /***
    * Broadcast Listeners.
    */
-  $scope.$on('route-update', function() {
+  $scope.$on('route-update', function () {
     if ($scope.blur === 'blur' && $state.current.name !== 'landing') {
       $scope.blur = '';
     }
@@ -4009,12 +4159,12 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     var zoom = c.zoom.toString();
     if (mapMoveEnd) {
       mapMoveEnd = false;
-    } else if (  $stateParams.lat     !== lat
-              || $stateParams.lng     !== lng
-              || $stateParams.zoom    !== zoom
-              || $stateParams.layers  !== layersStr
-              || $stateParams.theme   !== theme
-              || $stateParams.filters !== filters   ) {
+    } else if ($stateParams.lat !== lat
+      || $stateParams.lng !== lng
+      || $stateParams.zoom !== zoom
+      || $stateParams.layers !== layersStr
+      || $stateParams.theme !== theme
+      || $stateParams.filters !== filters) {
 
       console.log('map.js route-update Updating Map...');
       redraw();
@@ -4022,12 +4172,12 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
 
   });
 
-  $scope.$on('blur', function() {
+  $scope.$on('blur', function () {
     $scope.blur = 'blur';
   });
 
   //this takes in a WKT GeoJSON Extent geometry
-  $scope.zoomToExtent = function(extent) {
+  $scope.zoomToExtent = function (extent) {
     delete $stateParams['zoom-extent'];
     map.fitBounds([
       [extent[0][1], extent[0][0]],
@@ -4037,19 +4187,19 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
 
   //This take a leaflet bounds object and handles it.
   delete $stateParams['zoom-extent'];
-  $scope.zoomToBounds = function(bounds) {
+  $scope.zoomToBounds = function (bounds) {
     map.fitBounds(bounds);
   };
 
 
   window.map = map;
-  map.on('moveend', function() { // move is good too
+  map.on('moveend', function () { // move is good too
     var c = map.getCenter();
     var lat = c.lat.toFixed(6);
     var lng = c.lng.toFixed(6);
     var zoom = map.getZoom().toString();
 
-    if ( $stateParams.lat !== lat
+    if ($stateParams.lat !== lat
       || $stateParams.lng !== lng
       || $stateParams.zoom !== zoom) {
 
@@ -4062,9 +4212,53 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     }
   });
 
+  map.on('click', function (e) { // handle map click events
+    //Depending on what mode we're in and what we're showing...
+    //This is a test hard-coded for confetti mode.
+    var latlng = e.latlng;
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+
+    var wkt = "POINT(" + lng + " " + lat + ")";
+    var postArgs = { format: 'geojson', input_geometry: wkt, buffer_distance: 1000, name: "buffer" };
+    var url = "http://spatialserver.spatialdev.com/services/geoprocessing/geoprocessing_operation";
+
+    //Using this info, call spatial server with a radius and x,y as WKT to get nearby points.
+    $http.post(url, postArgs).success(function (result, status) {
+
+      if (!result || result.error) {
+        console.error('Unable to fetch feature: ' + result.error);
+        return;
+      }
+
+      //We have the buffer as geojson.  Send it to the point table to intersect
+      var tablePostArgs = {
+        returnfields: 'id,type,provider,photos',
+        format: 'geojson',
+        returnGeometry: 'yes',
+        intersects: JSON.stringify(result),
+        limit: 200 //add a limit of 200 so we don't get carried away
+      };
+      var pointUrl = "http://spatialserver.spatialdev.com/services/tables/cicos_2013/query";
+
+      $http.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+        //GeoJSON result of points
+        if (!points || points.error) {
+          console.error('Unable to fetch feature: ' + points.error);
+          return;
+        }
+
+        //point is a featurecollection. open the panel and show some stuff.
+        if(points && points.features && points.features.length > 0){
+            $rootScope.$broadcast('details', { feature: { properties: points.features[0].properties } });
+        }
+      });
+    });
+  });
+
   //Connect the layout onresize end event
   try {
-    window.layout.panes.center.bind("layoutpaneonresize_end", function() {
+    window.layout.panes.center.bind("layoutpaneonresize_end", function () {
       map.invalidateSize();
     });
   } catch (e) {
@@ -4094,7 +4288,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
         var layer = new L.TileLayer.PBFSource(cfg);
         layer.addTo(map);
 
-        map.on('click', function(e) {
+        map.on('click', function (e) {
           //Take the click event and pass it to the group layers.
           pbfSource.onClick(e, function (evt) {
             if (evt && evt.feature) {
@@ -4103,10 +4297,10 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
           });
         });
 
-        map.on('layerremove', function(removed) {
+        map.on('layerremove', function (removed) {
           //This is the layer that was removed.
           //If it is a TileLayer.PBFSource, then call a method to actually remove the children, too.
-          if(removed.layer.removeChildLayers){
+          if (removed.layer.removeChildLayers) {
             removed.layer.removeChildLayers(map);
           }
         });
