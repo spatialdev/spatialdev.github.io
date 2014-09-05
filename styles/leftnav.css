@@ -1,0 +1,39 @@
+.logo_BG {
+    background-color: rgb(155, 35, 44);
+    position: absolute;
+    left: -1px;
+    top: 0px;
+    width: 60px;
+    height: 109px;
+    z-index: 59;
+}
+
+.logo_BG .logo_font{
+    font-family: DIN-Medium, DIN, Times, serif;
+    color:white;
+    margin-top: 32px;
+}
+
+.logo_BG .logo_font a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.logo_BG .logo_font .fsp {
+    margin:0px;
+    text-align: center;
+    font-size:20px;
+    line-height: 20px;
+}
+
+.logo_BG .logo_font .maps {
+    margin: 0px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 11px;
+    font-family: DIN;
+
+}
+
+
+
