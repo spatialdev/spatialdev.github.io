@@ -27,11 +27,11 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function(
     var lat = parseFloat($stateParams.lat)   || 0;
     var lng = parseFloat($stateParams.lng)   || 0;
     var zoom = parseFloat($stateParams.zoom) || 17;
-    layersStr = $stateParams.layers || LayerConfig.osmhot.url;
+    layersStr = $stateParams.layers || LayerConfig.osm.url;
     var layers = layersStr.split(',');
 
     // first layer should always be treated as the basemap
-    var basemap = LayerConfig.find(layers[0]) || LayerConfig.osmhot.url;
+    var basemap = LayerConfig.find(layers[0]) || LayerConfig.osm.url;
     if (typeof basemap === 'string') {
       var basemapUrl = basemap;
     } else {
