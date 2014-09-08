@@ -1,0 +1,33 @@
+.left-section{
+margin-right:10px;
+}
+
+.glyphicon:empty {
+  width: 1em;
+  color:#fff;
+
+}
+
+#MapUpperRightToolbarWrapper > div {
+    float: left;
+    background-color: #f1efec;
+    color: #252525;
+    text-transform: uppercase;
+    padding: 7px 25px;
+    font-size: 15px;
+    font-family: DIN-Bold;
+    cursor: pointer;
+
+}
+
+#MapUpperRightToolbarWrapper .btn{
+    border-radius: 0px;
+    border: 0px;
+    background-color: #9b232c;
+    padding: 11px;
+    font-size: 11px;
+}
+
+#MapUpperRightToolbarWrapper div.light {
+    background-color: #f1efec;
+}
