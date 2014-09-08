@@ -79,10 +79,10 @@
             <i class="icon-3_map_layers"></i>
         </button>
 
-        <button type="button" class="btn btn-default" ng-mouseenter="isLegendActive = isNotParam('legend')"
-                ng-mouseleave="isLegendActive=false"
-                ng-click="toggleParam('legend')"
-                ng-class="{on: isParam('legend')}">
+        <button type="button" class="btn btn-default" ng-mouseenter="isStoriesActive = isNotParam('stories')"
+                ng-mouseleave="isStoriesActive=false"
+                ng-click="toggleParam('stories')"
+                ng-class="{on: isParam('stories')}">
             <i class="icon-5_legend"></i>
         </button>
         <button type="button" class="btn btn-default" ng-mouseenter="isInfoActive = isNotParam('info')"
@@ -104,16 +104,16 @@
         <div id="FlyoutLogoPlaceHolder"></div>
         <!-- the container for the sliding nav button tooltips -->
         <div class="NavFlyoutGroup">
+            <div class="flyout" ng-class="{on: isLayersActive}">
+                Map Layers
+            </div>
             <div class="flyout" ng-class="{on: isStoriesActive}">
                 Stories
             </div>
-            <div class="flyout" ng-class="{on: isLayersActive}">
-                Layers
+            <div class="flyout" ng-class="{on: isInfoActive}">
+                Info
             </div>
-            <div class="flyout" ng-class="{on: isFiltersActive}">
-                Filters
-            </div>
-            <div class="flyout" ng-class="{on: isLegendActive}">
+            <div class="flyout" ng-class="{on: isLegendActive}" style="visibility: hidden;">
                 Legend
             </div>
             <div class="flyout" ng-class="{on: isBasemapsActive}">
@@ -525,7 +525,7 @@
             class="glyphicon glyphicon-chevron-down"></span></div>
     <div class="left-section" ng-controller="BreadcrumbsCtrl" class="breadcrumbs-container">
         <div class="world">
-            <div class="bc" ng-click="zoomToWorld()">World</div>
+            <div class="bc" ng-click="zoomToWorld()">Kenya</div>
         </div>
         <div class="stack">
             <div class="icon-10_arrow_right" ng-show="levelarc"></div>

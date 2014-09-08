@@ -1,5 +1,5 @@
 .logo_BG {
-    background-color: rgb(155, 35, 44);
+    background-color: #9b232c;
     position: absolute;
     left: -1px;
     top: 0px;
@@ -42,6 +42,31 @@
 .left-nav-earth{
     border-bottom: none !important;
     margin-top: 55px;
+}
+
+.NavFlyoutGroup {
+    padding-top: 61px;
+    width: 167px;
+
+}
+
+
+.flyout {
+    padding: 10px 25px;
+    background-color: #9b232c;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: DIN;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    height: 61px;
+    -moz-box-shadow: inset 15px -2px 17px -17px #000000;
+    -webkit-box-shadow: inset 15px -2px 17px -17px #000000;
+    box-shadow: inset 15px -2px 17px -17px #000000;
+    /* margin-left: -250px; */
+    /* visibility: hidden; */
+    line-height: 42px;
 }
 
 
