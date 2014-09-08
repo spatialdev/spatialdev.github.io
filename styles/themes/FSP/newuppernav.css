@@ -8,9 +8,20 @@
 
 }
 
+.upper-inline-nowrap {
+    white-space: nowrap;
+    padding: 7px 0px 0px 0px;
+}
+
+.upper-icon-upload {
+    float: left;
+    font-size: 20px;
+    padding: 5px 4px 1px 4px;
+}
+
 #MapUpperRightToolbarWrapper > div {
     float: left;
-    background-color: #f1efec;
+    background-color: #fff;
     color: #252525;
     text-transform: uppercase;
     padding: 7px 25px;
@@ -29,5 +40,17 @@
 }
 
 #MapUpperRightToolbarWrapper div.light {
-    background-color: #f1efec;
+    background-color: #fff;
+    font-family: DIN-Medium;
+    color: #404040;
+    padding: 1px 49px 0px 9px;
+
 }
+
+#MapUpperRightToolbarWrapper .search {
+    font-size: 20px;
+    padding: 5px 14px 2px 16px;
+    background-color: #f1efec;
+    height:35px;
+}
+
