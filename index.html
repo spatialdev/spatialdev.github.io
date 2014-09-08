@@ -38,7 +38,9 @@
     <link rel="stylesheet" href="styles/search.css">
     <link rel="stylesheet" href="lib/featurelabel/featurelabel.css">
     <link rel="stylesheet" href="lib/Leaflet.PBFLayer/src/StaticLabel/label.css">
-    <link rel="stylesheet" href="styles/leftnav.css">
+    <link rel="stylesheet" href="styles/themes/FSP/leftnav.css">
+    <link rel="stylesheet" href="styles/themes/FSP/uppernav.css">
+
 
 
     <!--font-family: 'Open Sans', sans-serif;-->
@@ -67,12 +69,8 @@
     </div>
 
     <div class="NavButtonGroup btn-group">
-        <button type="button" class="btn btn-default" ng-mouseenter="isStoriesActive = isNotParam('stories')"
-                ng-mouseleave="isStoriesActive = false"
-                ng-click="toggleParam('stories')"
-                ng-click="toggleParam('stories')"
-                ng-class="{on: isParam('stories')}">
-            <i class="icon-2_stories"></i>
+        <button type="button" class="btn btn-default blank-button" >
+
         </button>
         <button type="button" class="btn btn-default" ng-mouseenter="isLayersActive = isNotParam('layers-panel')"
                 ng-mouseleave="isLayersActive=false"
@@ -80,24 +78,27 @@
                 ng-class="{on: isParam('layers-panel')}">
             <i class="icon-3_map_layers"></i>
         </button>
-        <button type="button" class="btn btn-default" ng-mouseenter="isFiltersActive = isNotParam('filters-panel')"
-                ng-mouseleave="isFiltersActive=false"
-                ng-click="toggleParam('filters-panel')"
-                ng-class="{on: isParam('filters-panel')}">
-            <i class="icon-4_filters"></i>
-        </button>
+
         <button type="button" class="btn btn-default" ng-mouseenter="isLegendActive = isNotParam('legend')"
                 ng-mouseleave="isLegendActive=false"
                 ng-click="toggleParam('legend')"
                 ng-class="{on: isParam('legend')}">
             <i class="icon-5_legend"></i>
         </button>
-        <button type="button" class="btn btn-default" ng-mouseenter="isBasemapsActive = isNotParam('basemaps')"
+        <button type="button" class="btn btn-default" ng-mouseenter="isInfoActive = isNotParam('info')"
+                ng-mouseleave="isInfoActive=false"
+                ng-click="toggleParam('info')"
+                ng-class="{on: isParam('info')}">
+            <i class="icon-1_info"></i>
+        </button>
+        <button type="button" class="btn btn-default left-nav-earth" ng-mouseenter="isBasemapsActive = isNotParam('basemaps')"
                 ng-mouseleave="isBasemapsActive=false"
                 ng-click="toggleParam('basemaps')"
                 ng-class="{on: isParam('basemaps')}">
             <i class="icon-6_basemaps"></i>
         </button>
+
+
     </div>
     <div class="NavigationTooltipContainer main">
         <div id="FlyoutLogoPlaceHolder"></div>
@@ -126,7 +127,7 @@
                 ng-mouseleave="isInfoActive=false"
                 ng-click="toggleParam('info')"
                 ng-class="{on: isParam('info')}">
-            <i class="icon-1_info"></i>
+            <i class="icon-29_export"></i>
         </button>
     </div>
     <div class="NavigationTooltipContainer bottom">
@@ -522,7 +523,7 @@
 <div id="MapUpperRightToolbarWrapper">
     <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')"><span
             class="glyphicon glyphicon-chevron-down"></span></div>
-    <div ng-controller="BreadcrumbsCtrl" class="breadcrumbs-container">
+    <div class="left-section" ng-controller="BreadcrumbsCtrl" class="breadcrumbs-container">
         <div class="world">
             <div class="bc" ng-click="zoomToWorld()">World</div>
         </div>

@@ -35,5 +35,13 @@
 
 }
 
+.blank-button{
+    height: 61px;
+}
+
+.left-nav-earth{
+    border-bottom: none !important;
+    margin-top: 55px;
+}
 
 
