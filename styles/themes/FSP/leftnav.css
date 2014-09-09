@@ -69,28 +69,6 @@
     visibility: hidden;
     line-height: 42px;
     white-space: nowrap;
+
 }
 
-.side-view-close {
-    background-color: #9b232c;
-}
-
-.side-view li.active > a {
-    color: #9b232c;
-}
-
-.side-view li.active > a:hover {
-    color: #9b232c;
-}
-
-.side-view .nav-tabs a:hover {
-    color: #9b232c;
-}
-
-.btn-primary {
-    border-color: #9b232c;
-}
-
-.NavButtonGroup button:hover {
-    color: #9b232c!important;
-}
