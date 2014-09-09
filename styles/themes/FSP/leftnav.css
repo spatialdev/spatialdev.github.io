@@ -46,7 +46,8 @@
 
 
 .NavFlyoutGroup {
-    padding-top: 0px;
+    padding-top: 61px;
+    /*width: 167px;*/
 
 }
 
@@ -92,8 +93,4 @@
 
 .NavButtonGroup button:hover {
     color: #9b232c!important;
-}
-
-.NavButtonGroup, .NavFlyoutGroup {
-    margin-top: 162px;
 }
