@@ -1,0 +1,73 @@
+.on #DetailsNub {
+    background-color: #f1efec;
+    color: #9b232c;
+}
+
+
+/* NavBar Flyout Tooltips */
+.NavigationTooltipContainer-right {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.NavigationTooltipContainer-right{
+    left: -145px;
+}
+
+.NavigationTooltipContainer-right.main{
+    top: 0;
+    height: 100%;
+}
+
+.NavFlyoutGroup-right {
+    margin: 0px;
+    padding: 0px;
+}
+
+#DetailsWrapper .side-view-close {
+    background-color: #9b232c;
+}
+
+#DetailsNub {
+    color: #3c3c3c;
+    padding: 13px 16px 10px 16px;
+    width: 59px;
+    font-size: 26px;
+    margin-left:0px;
+}
+
+#DetailsButtonWrapper button:hover{
+    color: #9b232c!important;
+}
+
+#DetailsButtonWrapper {
+    width: 59px;
+}
+
+.NavFlyoutGroup-right {
+    padding-top: 0px;
+}
+
+.right-icon-gap{
+    margin-bottom:15px;
+}
+
+.flyout-right {
+    padding: 10px 25px;
+    background-color: #9b232c;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: DIN;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    height: 62px;
+    -moz-box-shadow: inset 15px -2px 17px -17px #000000;
+    -webkit-box-shadow: inset 15px -2px 17px -17px #000000;
+    box-shadow: inset 15px -2px 17px -17px #000000;
+    /* margin-left: -250px; */
+    /* visibility: hidden; */
+    line-height: 42px;
+    white-space: nowrap;
+}

@@ -40,6 +40,8 @@
     <link rel="stylesheet" href="lib/Leaflet.PBFLayer/src/StaticLabel/label.css">
     <link rel="stylesheet" href="styles/themes/FSP/leftnav.css">
     <link rel="stylesheet" href="styles/themes/FSP/newuppernav.css">
+    <link rel="stylesheet" href="styles/themes/FSP/rightnav.css">
+
 
 
 
@@ -565,7 +567,7 @@
     <div class="search icon-12_search" ng-click="toggleParam('search-panel')"></div>
 
 </div>
-    </div>
+
 
 </div>
 
@@ -631,9 +633,19 @@
 
 <!-- Right Hand Details Panel -->
 <div ng-controller="DetailsCtrl" id="DetailsWrapper" ng-class="{on: isParam('details-panel')}">
-<div id="DetailsButtonWrapper">
-    <div id="DetailsNub" class="btn btn-lg btn-blue icon-11_infobox" ng-click="toggleParam('details-panel')">
-    </div>
+
+<div id="DetailsButtonWrapper" class="btn-group">
+
+    <button id="DetailsNub" type="button" class="btn right-icon-gap" ng-click="toggleParam('details-panel')">
+        <i class="icon-11_infobox"></i>
+    </button>
+    <button id="DetailsNub" type="button" class="btn" ng-click="toggleParam('details-panel')">
+        <i class="icon-11_infobox"></i>
+    </button>
+    <button id="DetailsNub" type="button" class="btn" ng-click="toggleParam('details-panel')">
+        <i class="icon-11_infobox"></i>
+    </button>
+
     <div id="PreviousItem" class="icon-9_arrow_left"
          ng-class="{flipOpen: (isParam('details-panel') && details && numThemeItems > 1)}"
          ng-click="prevThemeItem()">
@@ -859,6 +871,20 @@
 
 </div>
 </div>
+<div class="NavigationTooltipContainer-right main">
+    <div class="NavFlyoutGroup-right">
+        <div class="flyout-right right-icon-gap" ng-class="{on: isLayersActive}">
+            Overview
+        </div>
+        <div class="flyout-right" ng-class="{on: isLayersActive}">
+            Overview
+        </div>
+        <div class="flyout-right" ng-class="{on: isLayersActive}">
+            Overview
+        </div>
+    </div>
+</div>
+
 </div>
 </div>
 <div ui-view="upload"></div>

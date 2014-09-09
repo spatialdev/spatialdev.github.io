@@ -64,8 +64,8 @@
     -moz-box-shadow: inset 15px -2px 17px -17px #000000;
     -webkit-box-shadow: inset 15px -2px 17px -17px #000000;
     box-shadow: inset 15px -2px 17px -17px #000000;
-    margin-left: -250px;
-    visibility: hidden;
+    /*margin-left: -250px;*/
+    /*visibility: hidden;*/
     line-height: 42px;
     white-space: nowrap;
 }
@@ -97,3 +97,12 @@
 .NavButtonGroup, .NavFlyoutGroup {
     margin-top: 162px;
 }
+
+#NavBar {
+    background: none;
+}
+
+.NavButtonGroup button.on {
+    color: #9b232c!important;
+}
+
