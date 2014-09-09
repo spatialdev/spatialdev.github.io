@@ -61,7 +61,7 @@
 
     <div class="logo_BG">
         <div class="logo_font">
-            <a href="index.html">
+            <a href="#/default">
                 <div class="fsp">FSP</div>
                 <div class="maps">MAPS</div>
             </a>
@@ -69,9 +69,7 @@
     </div>
 
     <div class="NavButtonGroup btn-group">
-        <button type="button" class="btn btn-default blank-button" >
 
-        </button>
         <button type="button" class="btn btn-default" ng-mouseenter="isLayersActive = isNotParam('layers-panel')"
                 ng-mouseleave="isLayersActive=false"
                 ng-click="toggleParam('layers-panel')"
@@ -123,19 +121,23 @@
 
     </div>
     <div class="NavButtonGroup btn-group bottom">
-        <button type="button" class="btn btn-default" ng-mouseenter="isInfoActive = isNotParam('info')"
-                ng-mouseleave="isInfoActive=false"
-                ng-click="toggleParam('info')"
-                ng-class="{on: isParam('info')}">
+        <button type="button" class="btn btn-default">
+
+                <!--ng-mouseenter="isInfoActive = isNotParam('info')"-->
+                <!--ng-mouseleave="isInfoActive=false"-->
+                <!--ng-click="toggleParam('info')"-->
+                <!--ng-class="{on: isParam('info')}"-->
+
             <i class="icon-29_export"></i>
         </button>
     </div>
     <div class="NavigationTooltipContainer bottom">
-        <div class="NavFlyoutGroup">
-            <div class="flyout" ng-class="{on: isInfoActive}">
-                Info
-            </div>
-        </div>
+        <!--<div class="NavFlyoutGroup">-->
+            <!--<div class="flyout">-->
+                <!--ng-class="{on: isInfoActive}">-->
+                <!--Info-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
 <!-- MapCtrl is the center (center) panel controlled by the jQuery Layout plugin, and is also where the map lives. -->
@@ -552,10 +554,19 @@
     </div>
 
     <div class="light" ui-sref="upload(params)">
-        Upload Data
+        <div> <i class="icon-30_download upper-icon-upload"></i> </div>
+        <div class="upper-inline-nowrap">Upload Data</div>
     </div>
-    <div class="light export" ui-sref="export(params)">Export</div>
+
+    <div class="light export" ui-sref="export(params)">
+       <div> <i class="icon-29_export upper-icon-upload"></i></div>
+        <div class="upper-inline-nowrap">Export</div>
+    </div>
     <div class="search icon-12_search" ng-click="toggleParam('search-panel')"></div>
+
+</div>
+    </div>
+
 </div>
 
 <!-- Region / Country Selector Panel -->
@@ -615,7 +626,7 @@
 
 
 <!-- Bottom Right Theme Selector -->
-<div ui-view="theme"></div>
+<!--<div ui-view="theme"></div>-->
 
 
 <!-- Right Hand Details Panel -->
