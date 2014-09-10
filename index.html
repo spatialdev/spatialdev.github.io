@@ -656,16 +656,28 @@
     </div>
 </div>
 <div id="DetailsPanel">
-<div class="container auto">
-<button class="side-view-close btn btn-lg btn-blue btn-primary" ng-click="closeParam('details-panel')"><span
+
+<div class="row">
+    <button class="side-view-close btn btn-lg btn-blue btn-primary" ng-click="closeParam('details-panel')"><span
         class="glyphicon glyphicon-chevron-right"></span></button>
                             <span ng-show="details && feature.properties.salesforce">
                                 <a ng-click="showList()" class="back-link">< Back to List</a> ({{activeThemeItemIdx+1}} of {{activeThemeItemsList.length}})
                             </span>
 
-<div class="title">
-    {{title}}
+<div class="col-md-8 side-view-title-wrapper full-width">
+    <div class="title">
+        {{title}}
+    </div>
 </div>
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a class="a-nav-tab" ng-click="navTab='contextual'" data-toggle="tab">Country Overview</a></li>
+        <li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Access Points</a></li>
+    </ul>
+
+
+</div>
+
 
 <ul ng-show="details.requestsForAssistance || details.indicators || details.risks || details.statuses"
     class="nav nav-tabs">
@@ -681,9 +693,9 @@
 </ul>
 
 <div class="InnerContainer scrollable">
-    <div class="heading" ng-show="alertUserToClick">
-        Please click on a badge or feature to see details...
-    </div>
+    <!--<div class="heading" ng-show="alertUserToClick">-->
+        <!--Please click on a badge or feature to see details...-->
+    <!--</div>-->
     <!-- Repeater Here to List out Headings and List Items -->
     <div class="section scrollable" my-show="itemsList" after-show="createDonuts()"
          ng-repeat="(themeName, themeItems) in groupings">
@@ -870,7 +882,8 @@
 <div ui-view="details"></div>
 
 </div>
-</div>
+
+
 <div class="NavigationTooltipContainer-right main">
     <div class="NavFlyoutGroup-right">
         <div class="flyout-right right-icon-gap" ng-class="{on: isLayersActive}">

@@ -27,6 +27,8 @@
 
 #DetailsWrapper .side-view-close {
     background-color: #9b232c;
+    top: -88px;
+    right: 0px;
 }
 
 #DetailsNub {
@@ -67,21 +69,46 @@
     -moz-box-shadow: inset 15px -2px 17px -17px #000000;
     -webkit-box-shadow: inset 15px -2px 17px -17px #000000;
     box-shadow: inset 15px -2px 17px -17px #000000;
-    /* margin-left: -250px; */
-    /* visibility: hidden; */
+     margin-left: -250px;
+     visibility: hidden;
     line-height: 42px;
     white-space: nowrap;
 }
 
 #DetailsPanel {
     float: left;
+    padding: 0px 10px 10px;
+    background-color: #F2F2F2;
+    width: 457px;
+    margin-top: -88px;
+    border: 1px solid #d3d3d3;
+    height:100%;
+}
+
+#OverviewPanel {
+    float: left;
     padding: 14px 10px 10px;
     background-color: #F2F2F2;
-    width: 458px;
+    width: 457px;
     margin-top: -88px;
     border: 1px solid #d3d3d3;
 }
 
 #DetailsWrapper {
     right: -457px;
+    height:100%;
+}
+
+#DetailsWrapper.on {
+    height:100%;
+}
+
+.row {
+    background-color:#bababa;
+    margin-left: -11px;
+
+}
+
+.full-width{
+    width:100%;
 }
