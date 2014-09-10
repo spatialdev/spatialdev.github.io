@@ -32,9 +32,10 @@
 #DetailsNub {
     color: #3c3c3c;
     padding: 13px 16px 10px 16px;
-    width: 59px;
+    width: 61px;
     font-size: 26px;
     margin-left:0px;
+    background-color:#f1efec;
 }
 
 #DetailsButtonWrapper button:hover{
@@ -42,7 +43,7 @@
 }
 
 #DetailsButtonWrapper {
-    width: 59px;
+    width: 61px;
 }
 
 .NavFlyoutGroup-right {
@@ -70,4 +71,17 @@
     /* visibility: hidden; */
     line-height: 42px;
     white-space: nowrap;
+}
+
+#DetailsPanel {
+    float: left;
+    padding: 14px 10px 10px;
+    background-color: #F2F2F2;
+    width: 458px;
+    margin-top: -88px;
+    border: 1px solid #d3d3d3;
+}
+
+#DetailsWrapper {
+    right: -457px;
 }
