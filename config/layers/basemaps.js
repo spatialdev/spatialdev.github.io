@@ -8,7 +8,7 @@ var layer = module.exports = {};
  * list, can still be manually referenced in the url. This is just for the User Interface.
  */
 layer.basemaps = [
-  'osmhot',
+  //'osmhot', //RW - this constantly causes the entire page to delay loading while it is waiting for c.tiles.openstreetmap.fr to load.
   'osm',
   'satellite',
   'ortho',
@@ -38,11 +38,11 @@ layer.basemaps = [
  *
  */
 
-layer.osmhot = {
-  url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-  name: 'Humanitarian OpenStreetMap',
-  type: 'basemap'
-};
+//layer.osmhot = {
+//  url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+//  name: 'Humanitarian OpenStreetMap',
+//  type: 'basemap'
+//};
 
 layer.redcross = {
   url: 'https://{s}.tiles.mapbox.com/v3/americanredcross.hcji22de/{z}/{x}/{y}.png',

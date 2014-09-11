@@ -299,7 +299,8 @@ layer.cicos = {
    * @returns {boolean}
    */
   filter: function(feature, context) {
-    return feature.properties.type != 'Mobile Money Agent';
+    //return feature.properties.type != 'Mobile Money Agent';
+    return true;
   },
 
   /**
@@ -323,21 +324,41 @@ layer.cicos = {
    *
    * @param feature - the PBFFeature that contains properties
    */
-  zIndex: function(feature){
+  layerOrdering: function(feature){
     //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
-
+    if(feature && feature.properties){
+      feature.properties.zIndex = CICO_Config[feature.properties.type].zIndex || 5;
+    }
   },
 
   styleFor: function(feature) {
     var style = {};
     var selected = style.selected = {};
+    var pointRadius = 1;
+
+    function ScaleDependentPointRadius(zoom){
+      //Set point radius based on zoom
+      var pointRadius = 1;
+      if(zoom >= 0 && zoom <= 7){
+        pointRadius = 1;
+      }
+      else if(zoom > 7 && zoom <= 10){
+        pointRadius = 3;
+      }
+      else if(zoom > 10){
+        pointRadius = 4;
+      }
+
+      return pointRadius;
+    }
+
 
     var type = feature.type;
     switch (type) {
       case 1: //'Point'
         // unselected
         style.color = CICO_Config[feature.properties.type].ClusterColor || '#3086AB';
-        style.radius = 5;
+        style.radius = ScaleDependentPointRadius;
         // selected
         selected.color = 'rgba(255,255,0,0.5)';
         selected.radius = 5;
@@ -375,72 +396,86 @@ var CICO_Config = {
   'Offsite ATMs': {
     ClusterColor: '#3086AB',
     InfoLabel: 'Offsite ATM',
-    Providers: null
+    Providers: null,
+    zIndex: 3
   },
   'Bank Branches': {
     ClusterColor: '#977C00',
     InfoLabel: 'Bank Branch',
-    Providers: null
+    Providers: null,
+    zIndex: 2
   },
   'MFIs': {
     ClusterColor: '#9B242D',
     InfoLabel: 'MFI',
-    Providers: null
+    Providers: null,
+    zIndex: 1
   },
   'SACCOs': {
     ClusterColor: '#cf8a57',
     InfoLabel: 'SACCO',
-    Providers: null
+    Providers: null,
+    zIndex: 10
   },
   'Mobile Money Agent': {
     ClusterColor: '#8CB7C7',
     InfoLabel: 'Mobile Money Agent',
-    Providers: null
+    Providers: null,
+    zIndex: -1
   },
   'MDIs': {
     ClusterColor: '#825D99',
     InfoLabel: 'MDI',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Credit Institution': {
     ClusterColor: '#6CA76B',
     InfoLabel: 'Credit Institution',
-    Providers: null
+    Providers: null,
+    zIndex: 5
   },
   'MFBs': {
     ClusterColor: '#825D99',
     InfoLabel: 'MFB',
-    Providers: null
+    Providers: null,
+    zIndex: 7
   },
   'Motor Parks': {
     ClusterColor: '#bd85b3',
     InfoLabel: 'Motor Parks',
-    Providers: null
+    Providers: null,
+    zIndex: 7
   },
   'Mobile Network Operator Outlets': {
     ClusterColor: '#a2a2a2',
     InfoLabel: 'Mobile Network Operator Outlets',
-    Providers: null
+    Providers: null,
+    zIndex: 0
   },
   'Post Offices': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Post Offices',
-    Providers: null
+    Providers: null,
+    zIndex: 5
   },
   'Post Office': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Post Offices',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Bus Stand': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Bus Stands',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Bus Stands': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Bus Stands',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   }
 
 
@@ -449,73 +484,87 @@ var CICO_Config = {
   'Insurance Providers': {
     ClusterColor: '#3086AB',
     InfoLabel: 'Insurance Providers',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Money Transfer Service': {
     ClusterColor: '#977C00',
     InfoLabel: 'Money Transfer Service',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Dev Finance': {
     ClusterColor: '#9B242D',
     InfoLabel: 'Dev Finance',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Forex Bureaus': {
     ClusterColor: '#cf8a57',
     InfoLabel: 'Forex Bureaus',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Cap Markets': {
     ClusterColor: '#825D99',
     InfoLabel: 'Cap Markets',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Pension Providers': {
     ClusterColor: '#a2a2a2',
     InfoLabel: 'Pension Providers',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Purchase Lease Factoring': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Purchase Lease Factoring',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Bank Agent': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Bank Agent',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Bank and Mortgage': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Banks and Mortgage',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'Commercial Bank': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Commercial Bank',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'PostBank': {
     ClusterColor: '#bd85b3',
     InfoLabel: 'Post Bank',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
 
   //Nigeria New Post Offices
   'NIPOST Post Office': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'NIPOST Post Offices',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'NIPOST Post Shop': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'NIPOST Post Shops',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   },
   'NIPOST Postal Agency': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'NIPOST Postal Agencies',
-    Providers: null
+    Providers: null,
+    zIndex: 6
   }
 };
