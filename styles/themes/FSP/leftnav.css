@@ -1,0 +1,112 @@
+.logo_BG {
+    background-color: #9b232c;
+    position: absolute;
+    left: -1px;
+    top: 0px;
+    width: 60px;
+    height: 109px;
+    z-index: 59;
+}
+
+.logo_BG .logo_font{
+    font-family: DIN-Medium, DIN, Times, serif;
+    color:white;
+    margin-top: 32px;
+}
+
+.logo_BG .logo_font a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.logo_BG .logo_font .fsp {
+    margin:0px;
+    text-align: center;
+    font-size:20px;
+    line-height: 20px;
+}
+
+.logo_BG .logo_font .maps {
+    margin: 0px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 11px;
+    font-family: DIN;
+
+}
+
+.blank-button{
+    height: 61px;
+}
+
+.left-nav-earth{
+    border-bottom: none !important;
+    margin-top: 55px;
+}
+
+
+.NavFlyoutGroup {
+    padding-top: 0px;
+
+}
+
+
+.flyout {
+    padding: 10px 25px;
+    background-color: #9b232c;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: DIN;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    height: 61px;
+    -moz-box-shadow: inset 15px -2px 17px -17px #000000;
+    -webkit-box-shadow: inset 15px -2px 17px -17px #000000;
+    box-shadow: inset 15px -2px 17px -17px #000000;
+    /*margin-left: -250px;*/
+    /*visibility: hidden;*/
+    line-height: 42px;
+    white-space: nowrap;
+}
+
+.side-view-close {
+    background-color: #9b232c;
+}
+
+.side-view li.active > a {
+    color: #9b232c;
+}
+
+.side-view li.active > a:hover {
+    color: #9b232c;
+}
+
+.side-view .nav-tabs a:hover {
+    color: #9b232c;
+}
+
+.btn-primary {
+    border-color: #9b232c;
+}
+
+.NavButtonGroup button:hover {
+    color: #9b232c!important;
+}
+
+.NavButtonGroup, .NavFlyoutGroup {
+    margin-top: 162px;
+}
+
+#NavBar {
+    background: none;
+}
+
+.NavButtonGroup button.on {
+    color: #9b232c!important;
+}
+
+.topnav-button {
+    margin-right: -15px;
+}
+

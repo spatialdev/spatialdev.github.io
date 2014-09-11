@@ -30,7 +30,7 @@
 }
 
 #NextItem:hover, #PreviousItem:hover {
-    color: #2D91CD;
+    color: #9b232c;
 }
 
 #PreviousItem {
@@ -112,7 +112,7 @@
 }
 
 .on #DetailsNub {
-    background-color: #2D91CD;
+    background-color: #9b232c;
     color: #fff;
 }
 
@@ -146,7 +146,7 @@
 }
 
 #DetailsWrapper .btn-blue:focus {
-    outline: 5px auto #2D91CD;
+    outline: 5px auto #9b232c;
 }
 
 #DetailsWrapper .InnerContainer {
@@ -209,7 +209,7 @@
 }
 
 #DetailsPanel .nav-tabs a:hover {
-    color: #2D91CD;
+    color: #9b232c;
 }
 
 #DetailsPanel li.active > a {
@@ -217,7 +217,7 @@
 }
 
 #DetailsPanel li.active > a:hover {
-    color: #2D91CD;
+    color: #9b232c;
 }
 
 .tooltip-inner {

@@ -1,13 +1,8 @@
-/* Logo */
 .logo {
     width: 60px;
     height: 54px;
 }
 
-
-/*End Logo*/
-
-/* NavBar & Buttons */
 #NavBar{
     background: url(../images/navbar_stripes.png) repeat-y;
     overflow: visible;
@@ -38,12 +33,9 @@
     color: #2D91CD!important;
 }
 
-
-
 .NavButtonGroup button.on {
     background-color: #fff;
 }
-
 
 .NavButtonGroup button {
     padding: 13px 16px 10px 16px;
@@ -127,6 +119,7 @@
     margin-left: -250px;
     visibility: hidden;
     line-height: 42px;
+
 }
 
 

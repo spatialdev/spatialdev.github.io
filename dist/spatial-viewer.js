@@ -9,7 +9,7 @@ var layer = module.exports = {};
  * list, can still be manually referenced in the url. This is just for the User Interface.
  */
 layer.basemaps = [
-  //'osmhot', //RW - this constantly causes the entire page to delay loading while it is waiting for c.tiles.openstreetmap.fr to load.
+  'osmhot',
   'osm',
   'satellite',
   'ortho',
@@ -39,11 +39,11 @@ layer.basemaps = [
  *
  */
 
-//layer.osmhot = {
-//  url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-//  name: 'Humanitarian OpenStreetMap',
-//  type: 'basemap'
-//};
+layer.osmhot = {
+  url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+  name: 'Humanitarian OpenStreetMap',
+  type: 'basemap'
+};
 
 layer.redcross = {
   url: 'https://{s}.tiles.mapbox.com/v3/americanredcross.hcji22de/{z}/{x}/{y}.png',
@@ -293,7 +293,7 @@ var layer = module.exports = {};
 layer.gadm2014kenya = {
   type: 'pbf',
   name: 'GADM 2014 Kenya',
-  url: "/services/vector-tiles/gadm2014kenya/{z}/{x}/{y}.pbf",
+  url: "http://spatialserver.spatialdev.com/services/vector-tiles/gadm2014kenya/{z}/{x}/{y}.pbf",
   debug: false,
   clickableLayers: ['gadm0', 'gadm1', 'gadm2', 'gadm3', 'gadm4', 'gadm5'],
 
@@ -589,8 +589,7 @@ layer.cicos = {
    * @returns {boolean}
    */
   filter: function(feature, context) {
-    //return feature.properties.type != 'Mobile Money Agent';
-    return true;
+    return feature.properties.type != 'Mobile Money Agent';
   },
 
   /**
@@ -614,41 +613,21 @@ layer.cicos = {
    *
    * @param feature - the PBFFeature that contains properties
    */
-  layerOrdering: function(feature){
+  zIndex: function(feature){
     //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
-    if(feature && feature.properties){
-      feature.properties.zIndex = CICO_Config[feature.properties.type].zIndex || 5;
-    }
+
   },
 
   styleFor: function(feature) {
     var style = {};
     var selected = style.selected = {};
-    var pointRadius = 1;
-
-    function ScaleDependentPointRadius(zoom){
-      //Set point radius based on zoom
-      var pointRadius = 1;
-      if(zoom >= 0 && zoom <= 7){
-        pointRadius = 1;
-      }
-      else if(zoom > 7 && zoom <= 10){
-        pointRadius = 3;
-      }
-      else if(zoom > 10){
-        pointRadius = 4;
-      }
-
-      return pointRadius;
-    }
-
 
     var type = feature.type;
     switch (type) {
       case 1: //'Point'
         // unselected
         style.color = CICO_Config[feature.properties.type].ClusterColor || '#3086AB';
-        style.radius = ScaleDependentPointRadius;
+        style.radius = 5;
         // selected
         selected.color = 'rgba(255,255,0,0.5)';
         selected.radius = 5;
@@ -686,86 +665,72 @@ var CICO_Config = {
   'Offsite ATMs': {
     ClusterColor: '#3086AB',
     InfoLabel: 'Offsite ATM',
-    Providers: null,
-    zIndex: 3
+    Providers: null
   },
   'Bank Branches': {
     ClusterColor: '#977C00',
     InfoLabel: 'Bank Branch',
-    Providers: null,
-    zIndex: 2
+    Providers: null
   },
   'MFIs': {
     ClusterColor: '#9B242D',
     InfoLabel: 'MFI',
-    Providers: null,
-    zIndex: 1
+    Providers: null
   },
   'SACCOs': {
     ClusterColor: '#cf8a57',
     InfoLabel: 'SACCO',
-    Providers: null,
-    zIndex: 10
+    Providers: null
   },
   'Mobile Money Agent': {
     ClusterColor: '#8CB7C7',
     InfoLabel: 'Mobile Money Agent',
-    Providers: null,
-    zIndex: -1
+    Providers: null
   },
   'MDIs': {
     ClusterColor: '#825D99',
     InfoLabel: 'MDI',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Credit Institution': {
     ClusterColor: '#6CA76B',
     InfoLabel: 'Credit Institution',
-    Providers: null,
-    zIndex: 5
+    Providers: null
   },
   'MFBs': {
     ClusterColor: '#825D99',
     InfoLabel: 'MFB',
-    Providers: null,
-    zIndex: 7
+    Providers: null
   },
   'Motor Parks': {
     ClusterColor: '#bd85b3',
     InfoLabel: 'Motor Parks',
-    Providers: null,
-    zIndex: 7
+    Providers: null
   },
   'Mobile Network Operator Outlets': {
     ClusterColor: '#a2a2a2',
     InfoLabel: 'Mobile Network Operator Outlets',
-    Providers: null,
-    zIndex: 0
+    Providers: null
   },
   'Post Offices': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Post Offices',
-    Providers: null,
-    zIndex: 5
+    Providers: null
   },
   'Post Office': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Post Offices',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Bus Stand': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Bus Stands',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Bus Stands': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Bus Stands',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   }
 
 
@@ -774,88 +739,74 @@ var CICO_Config = {
   'Insurance Providers': {
     ClusterColor: '#3086AB',
     InfoLabel: 'Insurance Providers',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Money Transfer Service': {
     ClusterColor: '#977C00',
     InfoLabel: 'Money Transfer Service',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Dev Finance': {
     ClusterColor: '#9B242D',
     InfoLabel: 'Dev Finance',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Forex Bureaus': {
     ClusterColor: '#cf8a57',
     InfoLabel: 'Forex Bureaus',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Cap Markets': {
     ClusterColor: '#825D99',
     InfoLabel: 'Cap Markets',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Pension Providers': {
     ClusterColor: '#a2a2a2',
     InfoLabel: 'Pension Providers',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Purchase Lease Factoring': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Purchase Lease Factoring',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Bank Agent': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Bank Agent',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Bank and Mortgage': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Banks and Mortgage',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'Commercial Bank': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'Commercial Bank',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'PostBank': {
     ClusterColor: '#bd85b3',
     InfoLabel: 'Post Bank',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
 
   //Nigeria New Post Offices
   'NIPOST Post Office': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'NIPOST Post Offices',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'NIPOST Post Shop': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'NIPOST Post Shops',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   },
   'NIPOST Postal Agency': {
     ClusterColor: '#80ad7b',
     InfoLabel: 'NIPOST Postal Agencies',
-    Providers: null,
-    zIndex: 6
+    Providers: null
   }
 };
 },{}],7:[function(require,module,exports){
@@ -1271,7 +1222,7 @@ Protobuf.prototype.writeMessage = function(tag, protobuf) {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":51,"ieee754":10}],10:[function(require,module,exports){
+},{"buffer":50,"ieee754":10}],10:[function(require,module,exports){
 exports.read = function(buffer, offset, isLE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -1851,6 +1802,59 @@ PBFFeature.prototype.getPathsForTile = function(canvasID, zoom) {
   return this.tiles[zoom][canvasID].paths;
 };
 
+//Given a specific tile's geometry array, see if there is both a geometry that covers the entire tile, and also other geometry.
+//if this is the case, then the geom that covers the entire tile probably shouldn't be shown.
+//This does the wrong thing.  This makes the map only render the portion of the tile that is the donut.  The rest of the paths for that tile are empty.
+//Fix it.
+function removeDonutsFromGeomArray(geomArray) {
+  if (geomArray.length <= 1) {
+    return geomArray;
+  }
+  else {
+    //More than one geom for this tile.  See if any are full coverage
+    //var extremeX, extremeY, bufferSize, magicNumber = 16;
+    var coords = [];
+
+    for (var gidx in geomArray) {
+      var geom = geomArray[gidx];
+
+      //Assumption: Full coverage geometries aren't more than 6 vertices
+      //if more than 6, ignore
+      if (geom.length <= 6 && geom.length > 3) {
+        for (var pidx in geom) {
+          var point = geom[pidx];
+
+          //The tiles i've seen that are completely covered, but also have holes have a geometry part that contains 6 vertices (some are duplicated for some reason)
+          //They look like { x: -128, y: 4224 }, { x: -128, y: -128 }, {x: -128, y: -128 }, {x: 4224, y: -128 }, { x: 4224, y: 4224 }, { x: -128, y: 4224}
+          //This will probably change based on the 'buffer' specified when the vector tile cache was created.  In this case the buffer is 8px (Mapnik grabs 8 px of geometry past the tile boundaries).
+          //Combined with the magic number of 16 used to inflate all of the tile coordinates, this results in 8 * 16 (128) of extra margin around the outside of the tile, which is why we have coordinates of -128 and 4224 (4224 = 256 * 16).
+          //We don't know the value of the buffer (I don't think) since it is a property set when the tiles are created.
+          //So, just look for sets of values outside of 4096 (which is 256 * 16).  However, this will need to be updated as the magic 16 number can also be changed
+
+//          if (pidx == 0) {
+//            extremeX = point.x;
+//            extremeY = point.y;
+//
+//          }
+//          else {
+//            //In a full-coverage array, all of the values should be the tile size * magicNumber (16) + the buffer size * 16.  So they should all equal all of the max possible values for that buffer size.
+//            if(point.x)
+//          }
+
+          //Just keep track of the ABS of the coords. at the end, there should only be 2 if this is a full coverage tile
+          if (coords.indexOf(point.x) == -1) coords.push(point.x);
+          if (coords.indexOf(point.y) == -1) coords.push(point.y);
+        }
+
+        //Now, if the coords array is of length 2, AND there are other geometries defined, then remove this from the geom array
+        if (coords.length == 2)  geomArray.splice(gidx, 1);
+      }
+    }
+
+    return geomArray;
+  }
+}
+
 PBFFeature.prototype.addTileFeature = function(vtf, ctx) {
 
   //Store the parts of the feature for a particular zoom level
@@ -1910,29 +1914,19 @@ PBFFeature.prototype.on = function(eventType, callback) {
 PBFFeature.prototype._drawPoint = function(ctx, coordsArray, style) {
   if (!style) return;
 
-
   var part = this.tiles[ctx.zoom][ctx.id];
-
-  var radius = 1;
-  if (typeof style.radius === 'function') {
-    radius = style.radius(ctx.zoom); //Allows for scale dependent rednering
-  }
-  else{
-    radius = style.radius;
-  }
 
   var p = this._tilePoint(coordsArray[0][0]);
   var c = ctx.canvas;
   var g = c.getContext('2d');
   g.beginPath();
   g.fillStyle = style.color;
-  g.arc(p.x, p.y, radius, 0, Math.PI * 2);
+  g.arc(p.x, p.y, style.radius, 0, Math.PI * 2);
   g.closePath();
   g.fill();
   g.restore();
   part.paths.push([p]);
 };
-
 
 PBFFeature.prototype._drawStaticLabel = function(ctx, coordsArray, style) {
   if (!style) return;
@@ -1946,8 +1940,6 @@ PBFFeature.prototype._drawStaticLabel = function(ctx, coordsArray, style) {
 
   this.staticLabel = new StaticLabel(this, ctx, latLng, style);
 };
-
-
 
 /**
  * Projects a vector tile point to the Spherical Mercator pixel space for a given zoom level.
@@ -2067,7 +2059,7 @@ function isClockwise(p){
 
 
 
-},{"./StaticLabel/StaticLabel.js":22}],18:[function(require,module,exports){
+},{"./StaticLabel/StaticLabel.js":21}],18:[function(require,module,exports){
 /**
  * Created by Ryan Whitley on 5/17/14.
  */
@@ -2108,7 +2100,6 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
     this.visible = true;
     this.features = {};
     this.featuresWithLabels = [];
-    this.zIndexSortOrder = [];
   },
 
   drawTile: function(canvas, tilePoint, zoom) {
@@ -2139,46 +2130,10 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
   _draw: function(ctx) {
     //Draw is handled by the parent PBFSource object
   },
-  getCanvas: function(parentCtx){
-    //This gets called if a vector tile feature has already been parsed.
-    //We've already got the geom, just get on with the drawing.
-    //Need a way to pluck a canvas element from this layer given the parent layer's id.
-    //Wait for it to get loaded before proceeding.
-    var tilePoint = parentCtx.tile;
-    var ctx = this._tiles[tilePoint.x + ":" + tilePoint.y];
-
-    if(ctx){
-      parentCtx.canvas = ctx;
-      this.redrawTile(parentCtx.id, parentCtx.zoom);
-      return;
-    }
-
-    var self = this;
-
-    //This is a timer that will wait for a criterion to return true.
-    //If not true within the timeout duration, it will move on.
-    waitFor(function () {
-        ctx = self._tiles[tilePoint.x + ":" + tilePoint.y];
-        if(ctx) {
-          return true;
-        }
-      },
-      function(){
-        //When it finishes, do this.
-        ctx = self._tiles[tilePoint.x + ":" + tilePoint.y];
-        parentCtx.canvas = ctx;
-        self.redrawTile(parentCtx.id, parentCtx.zoom, parentCtx);
-
-      }, //when done, go to next flow
-      2000); //The Timeout milliseconds.  After this, give up and move on
-
-  },
 
   parseVectorTileLayer: function(vtl, ctx) {
     var self = this;
     var tilePoint = ctx.tile;
-
-    //See if we can pluck the same tile from this local tile layer
     ctx.canvas = self._tiles[tilePoint.x + ":" + tilePoint.y];
 
     //Clear tile -- TODO: Add flag so this only happens when a layer is being turned back on after being hidden
@@ -2196,11 +2151,6 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
       var filter = self.options.filter;
       if (typeof filter === 'function') {
         if ( filter(vtf, ctx) === false ) continue;
-      }
-
-      var layerOrdering = self.options.layerOrdering;
-      if (typeof layerOrdering === 'function') {
-        layerOrdering(vtf, ctx); //Applies a custom property to the feature, which is used after we're thru iterating to sort
       }
 
       var getIDForLayerFeature;
@@ -2228,7 +2178,7 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
       }
 
       //Associate & Save this feature with this tile for later
-      if(ctx && ctx.id) self._canvasIDToFeaturesForZoom[ctx.id]['features'].push(pbffeature);
+      self._canvasIDToFeaturesForZoom[ctx.id]['features'].push(pbffeature);
 
       //Subscribe to style changes for feature
       pbffeature.on("styleChanged", function(parts) {
@@ -2251,25 +2201,14 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
     }
 
     //If a z-order function is specified, wait unitl all features have been iterated over until drawing (here)
-    /**
-     * Apply sorting (zIndex) on feature if there is a function defined in the options object
-     * of TileLayer.PBFSource.js
-     */
-    var layerOrdering = self.options.layerOrdering;
-    if (layerOrdering) {
-      //We've assigned the custom zIndex property when iterating above.  Now just sort.
-      self.zIndexSortOrder = Object.keys(this.features).sort(function(a, b) {
-        return -(self.features[b].properties.zIndex - self.features[a].properties.zIndex)
-      });
-    }
-
-    self.redrawTile(ctx.id, ctx.zoom, ctx);
+    self.redrawTile(ctx.id, ctx.zoom);
 
     for (var j = 0, len = self.featuresWithLabels.length; j < len; j++) {
       var feat = self.featuresWithLabels[j];
       debug.feat = feat;
 
     }
+
   },
 
   // NOTE: a placeholder for a function that, given a feature, returns a style object used to render the feature itself
@@ -2312,30 +2251,13 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
     ctx.canvas.width = ctx.canvas.width;
   },
 
-  redrawTile: function(canvasID, zoom, ctx) {
+  redrawTile: function(canvasID, zoom) {
     //Get the features for this tile, and redraw them.
     var features = this._canvasIDToFeaturesForZoom[canvasID]['features'];
-
-    //if z-index function is specified, sort the features so they draw in the correct order, bottom points draw first.
-    if(this.zIndexSortOrder && this.zIndexSortOrder.length > 0){
-      //Loop in specific order
-      for (var i = 0; i < this.zIndexSortOrder.length; i++) {
-        var id = this.zIndexSortOrder[i];
-        var feature = features[id];
-        var tileInfo;
-        if(feature){
-          tileInfo = feature.getTileInfo(canvasID, zoom);
-          if(tileInfo) feature.draw(tileInfo.vtf, ctx);
-        }
-      }
-    }
-    else{
-      //Just loop already
-      for (var i = 0; i < features.length; i++) {
-        var feature = features[i];
-        var tileInfo = feature.getTileInfo(canvasID, zoom);
-        feature.draw(tileInfo.vtf, ctx);
-      }
+    for (var i = 0; i < features.length; i++) {
+      var feature = features[i];
+      var tileInfo = feature.getTileInfo(canvasID, zoom);
+      feature.draw(tileInfo.vtf, tileInfo.ctx);
     }
   },
 
@@ -2351,346 +2273,9 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
     var linkName = this.pbfSource.layerLink(this.name);
     return this.pbfSource.layers[linkName];
   }
-
 });
 
-/**
- * See https://github.com/ariya/phantomjs/blob/master/examples/waitfor.js
- *
- * Wait until the test condition is true or a timeout occurs. Useful for waiting
- * on a server response or for a ui change (fadeIn, etc.) to occur.
- *
- * @param testFx javascript condition that evaluates to a boolean,
- * it can be passed in as a string (e.g.: "1 == 1" or "$('#bar').is(':visible')" or
- * as a callback function.
- * @param onReady what to do when testFx condition is fulfilled,
- * it can be passed in as a string (e.g.: "1 == 1" or "$('#bar').is(':visible')" or
- * as a callback function.
- * @param timeOutMillis the max amount of time to wait. If not specified, 3 sec is used.
- */
-function waitFor(testFx, onReady, timeOutMillis) {
-  var maxtimeOutMillis = timeOutMillis ? timeOutMillis : 3000, //< Default Max Timout is 3s
-    start = new Date().getTime(),
-    condition = (typeof (testFx) === "string" ? eval(testFx) : testFx()), //< defensive code
-    interval = setInterval(function () {
-      if ((new Date().getTime() - start < maxtimeOutMillis) && !condition) {
-        // If not time-out yet and condition not yet fulfilled
-        condition = (typeof (testFx) === "string" ? eval(testFx) : testFx()); //< defensive code
-      } else {
-        if (!condition) {
-          // If condition still not fulfilled (timeout but condition is 'false')
-          console.log("'waitFor()' timeout");
-          clearInterval(interval); //< Stop this interval
-          typeof (onReady) === "string" ? eval(onReady) : onReady('timeout'); //< Do what it's supposed to do once the condition is fulfilled
-        } else {
-          // Condition fulfilled (timeout and/or condition is 'true')
-          console.log("'waitFor()' finished in " + (new Date().getTime() - start) + "ms.");
-          clearInterval(interval); //< Stop this interval
-          typeof (onReady) === "string" ? eval(onReady) : onReady('success'); //< Do what it's supposed to do once the condition is fulfilled
-        }
-      }
-    }, 50); //< repeat check every 50ms
-};
-},{"./PBFFeature":17,"./PBFUtil":21}],19:[function(require,module,exports){
-/**
- * Created by Ryan Whitley on 9/8/14.
- */
-/** Forked from https://gist.github.com/DGuidi/1716010 **/
-
-
-var Util = require('./PBFUtil');
-
-module.exports = L.TileLayer.PBFPointLayer = L.TileLayer.Canvas.extend({
-
-  options: {
-    debug: false,
-    isHiddenLayer: false,
-    getIDForLayerFeature: function() {},
-    tileSize: 256
-  },
-
-  _featureIsClicked: {},
-
-  _isPointInPoly: function(pt, poly) {
-    if(poly && poly.length) {
-     for (var c = false, i = -1, l = poly.length, j = l - 1; ++i < l; j = i)
-        ((poly[i].y <= pt.y && pt.y < poly[j].y) || (poly[j].y <= pt.y && pt.y < poly[i].y))
-        && (pt.x < (poly[j].x - poly[i].x) * (pt.y - poly[i].y) / (poly[j].y - poly[i].y) + poly[i].x)
-        && (c = !c);
-      return c;
-    }
-  },
-
-  initialize: function(pbfSource, options) {
-    var self = this;
-    self.pbfSource = pbfSource;
-    L.Util.setOptions(this, options);
-
-    this.styleFor = options.styleFor;
-    this.name = options.name;
-
-    this.visible = true;
-    this.features = {};
-    this.featuresWithLabels = [];
-    this.zIndexSortOrder = [];
-  },
-
-  drawTile: function(canvas, tilePoint, zoom) {
-
-    var ctx = {
-      canvas: canvas,
-      tile: tilePoint,
-      zoom: zoom,
-      tileSize: this.options.tileSize
-    };
-
-    ctx.id = Util.getContextID(ctx);
-
-    if (!this.features) {
-      this.features = {};
-    }
-
-  },
-
-  _draw: function(ctx) {
-    //Draw is handled by the parent PBFSource object
-  },
-  getCanvas: function(parentCtx, vtl){
-    //Need a way to pluck a canvas element from this layer given the parent layer's id.
-    //Wait for it to get loaded before proceeding.
-    var tilePoint = parentCtx.tile;
-    var ctx = this._tiles[tilePoint.x + ":" + tilePoint.y];
-
-    if(ctx){
-      parentCtx.canvas = ctx;
-      this.parseVectorTileLayer(vtl, parentCtx);
-      return;
-    }
-
-    var self = this;
-
-    //This is a timer that will wait for a criterion to return true.
-    //If not true within the timeout duration, it will move on.
-    waitFor(function () {
-        ctx = self._tiles[tilePoint.x + ":" + tilePoint.y];
-        if(ctx) {
-          return true;
-        }
-      },
-      function(){
-        //When it finishes, do this.
-        ctx = self._tiles[tilePoint.x + ":" + tilePoint.y];
-        parentCtx.canvas = ctx;
-        self.parseVectorTileLayer(vtl, parentCtx);
-
-      }, //when done, go to next flow
-      2000); //The Timeout milliseconds.  After this, give up and move on
-
-  },
-
-  parseVectorTileLayer: function(vtl, ctx) {
-    var self = this;
-    var tilePoint = ctx.tile;
-
-    //See if we can pluck the same tile from this local tile layer
-    ctx.canvas = self._tiles[tilePoint.x + ":" + tilePoint.y];
-
-    //Clear tile -- TODO: Add flag so this only happens when a layer is being turned back on after being hidden
-    if(ctx.canvas) ctx.canvas.width = ctx.canvas.width;
-
-    var features = this.features = vtl.parsedFeatures;
-    for (var i = 0, len = features.length; i < len; i++) {
-      var vtf = features[i] //vector tile feature
-
-      if(i === 0){
-        // how much we divide the coordinate from the vector tile
-        this.divisor = vtf.extent / ctx.tileSize;
-        this.extent = vtf.extent;
-        this.tileSize = ctx.tileSize;
-      }
-
-      /**
-       * Apply filter on feature if there is one. Defined in the options object
-       * of TileLayer.PBFSource.js
-       */
-      var filter = self.options.filter;
-      if (typeof filter === 'function') {
-        if ( filter(vtf, ctx) === false ) continue;
-      }
-
-      var layerOrdering = self.options.layerOrdering;
-      if (typeof layerOrdering === 'function') {
-        layerOrdering(vtf, ctx); //Applies a custom property to the feature, which is used after we're thru iterating to sort
-      }
-    }
-
-    //If a z-order function is specified, wait unitl all features have been iterated over until drawing (here)
-    /**
-     * Apply sorting (zIndex) on feature if there is a function defined in the options object
-     * of TileLayer.PBFSource.js
-     */
-    var layerOrdering = self.options.layerOrdering;
-    if (layerOrdering) {
-      //We've assigned the custom zIndex property when iterating above.  Now just sort.
-      self.zIndexSortOrder = Object.keys(this.features).sort(function(a, b) {
-        return -(self.features[b].properties.zIndex - self.features[a].properties.zIndex)
-      });
-    }
-
-    self.redrawTile(ctx.id, ctx.zoom, ctx);
-
-    for (var j = 0, len = self.featuresWithLabels.length; j < len; j++) {
-      var feat = self.featuresWithLabels[j];
-      debug.feat = feat;
-
-    }
-  },
-
-  // NOTE: a placeholder for a function that, given a feature, returns a style object used to render the feature itself
-  styleFor: function(feature) {
-    // override with your code
-  },
-
-  //This is the old way.  It works, but is slow for mouseover events.  Fine for click events.
-  handleClickEvent: function(evt, cb) {
-    //Click happened on the GroupLayer (Manager) and passed it here
-    var tileID = evt.tileID.split(":").slice(1, 3).join(":");
-    var canvas = this._tiles[tileID];
-    if(!canvas) (cb(evt)); //break out
-    var x = evt.layerPoint.x - canvas._leaflet_pos.x;
-    var y = evt.layerPoint.y - canvas._leaflet_pos.y;
-
-    var tilePoint = {x: x, y: y};
-    var features = this._canvasIDToFeaturesForZoom[evt.tileID].features; //Switch this.  Not storing this for point.
-    for (var i = 0; i < features.length; i++) {
-      var feature = features[i];
-      var paths = feature.getPathsForTile(evt.tileID, this._map.getZoom());
-      for (var j = 0; j < paths.length; j++) {
-        if (this._isPointInPoly(tilePoint, paths[j])) {
-          if (feature.toggleEnabled) {
-            feature.toggle();
-          }
-          evt.feature = feature;
-          cb(evt);
-          return;
-        }
-      }
-    }
-    //no match
-    //return evt with empty feature
-    evt.feature = null;
-    cb(evt);
-  },
-
-  clearTile: function(ctx) {
-    ctx.canvas.width = ctx.canvas.width;
-  },
-
-  redrawTile: function(canvasID, zoom, ctx) {
-    //Get the features for this tile, and redraw them.
-    var features = this.features;
-
-    //if z-index function is specified, sort the features so they draw in the correct order, bottom points draw first.
-    if(this.zIndexSortOrder && this.zIndexSortOrder.length > 0){
-      //Loop in specific order
-      for (var i = 0; i < this.zIndexSortOrder.length; i++) {
-        var id = this.zIndexSortOrder[i];
-        var feature = features[id];
-        if(feature){
-          this.drawPoint(ctx, feature.coordinates, this.styleFor(feature));
-        }
-      }
-    }
-    else{
-      //Just loop already
-      for (var i = 0; i < features.length; i++) {
-        var feature = features[i];
-        this.drawPoint(ctx, feature.coordinates, this.styleFor(feature));
-      }
-    }
-
-    //Remove features
-    this.features = {};
-  },
-
-  linkedLayer: function() {
-    var linkName = this.pbfSource.layerLink(this.name);
-    return this.pbfSource.layers[linkName];
-  },
-
-  drawPoint: function(ctx, coordsArray, style) {
-    if (!style) return;
-
-    var radius = 1;
-    if (typeof style.radius === 'function') {
-      radius = style.radius(ctx.zoom); //Allows for scale dependent rednering
-    }
-    else {
-      radius = style.radius;
-    }
-
-    var p = this._tilePoint(coordsArray[0][0]);
-    var c = ctx.canvas;
-    var g = c.getContext('2d');
-    g.beginPath();
-    g.fillStyle = style.color;
-    g.arc(p.x, p.y, radius, 0, Math.PI * 2);
-    g.closePath();
-    g.fill();
-    g.restore();
-  },
-  /**
-   * Takes a coordinate from a vector tile and turns it into a Leaflet Point.
-   *
-   * @param ctx
-   * @param coords
-   * @returns {eGeomType.Point}
-   * @private
-   */
-   _tilePoint: function(coords) {
-     return new L.Point(coords.x / this.divisor, coords.y / this.divisor);
-   }
-
-});
-
-/**
- * See https://github.com/ariya/phantomjs/blob/master/examples/waitfor.js
- *
- * Wait until the test condition is true or a timeout occurs. Useful for waiting
- * on a server response or for a ui change (fadeIn, etc.) to occur.
- *
- * @param testFx javascript condition that evaluates to a boolean,
- * it can be passed in as a string (e.g.: "1 == 1" or "$('#bar').is(':visible')" or
- * as a callback function.
- * @param onReady what to do when testFx condition is fulfilled,
- * it can be passed in as a string (e.g.: "1 == 1" or "$('#bar').is(':visible')" or
- * as a callback function.
- * @param timeOutMillis the max amount of time to wait. If not specified, 3 sec is used.
- */
-function waitFor(testFx, onReady, timeOutMillis) {
-  var maxtimeOutMillis = timeOutMillis ? timeOutMillis : 3000, //< Default Max Timout is 3s
-    start = new Date().getTime(),
-    condition = (typeof (testFx) === "string" ? eval(testFx) : testFx()), //< defensive code
-    interval = setInterval(function () {
-      if ((new Date().getTime() - start < maxtimeOutMillis) && !condition) {
-        // If not time-out yet and condition not yet fulfilled
-        condition = (typeof (testFx) === "string" ? eval(testFx) : testFx()); //< defensive code
-      } else {
-        if (!condition) {
-          // If condition still not fulfilled (timeout but condition is 'false')
-          console.log("'waitFor()' timeout");
-          clearInterval(interval); //< Stop this interval
-          typeof (onReady) === "string" ? eval(onReady) : onReady('timeout'); //< Do what it's supposed to do once the condition is fulfilled
-        } else {
-          // Condition fulfilled (timeout and/or condition is 'true')
-          console.log("'waitFor()' finished in " + (new Date().getTime() - start) + "ms.");
-          clearInterval(interval); //< Stop this interval
-          typeof (onReady) === "string" ? eval(onReady) : onReady('success'); //< Do what it's supposed to do once the condition is fulfilled
-        }
-      }
-    }, 50); //< repeat check every 50ms
-};
-},{"./PBFUtil":21}],20:[function(require,module,exports){
+},{"./PBFFeature":17,"./PBFUtil":20}],19:[function(require,module,exports){
 var VectorTile = require('vector-tile').VectorTile;
 var VectorTileFeature = require('vector-tile').VectorTileFeature;
 var VectorTileLayer = require('vector-tile').VectorTileLayer;
@@ -2700,7 +2285,6 @@ var Point = require('point-geometry');
 var Util = require('./PBFUtil');
 var PBFFeature = require('./PBFFeature');
 L.TileLayer.PBFLayer = require('./PBFLayer');
-L.TileLayer.PBFPointLayer = require('./PBFPointLayer');
 
 
 module.exports = L.TileLayer.PBFSource = L.TileLayer.Canvas.extend({
@@ -2733,11 +2317,6 @@ module.exports = L.TileLayer.PBFSource = L.TileLayer.Canvas.extend({
     this.styleFor = options.styleFor;
 
     this.layerLink = options.layerLink;
-
-    this._eventHandlers = {};
-
-    this._tilesToProcess = 0; //store the max number of tiles to be loaded.  Later, we can use this count to count down PBF loading.
-
   },
 
   onAdd: function(map) {
@@ -2764,9 +2343,6 @@ module.exports = L.TileLayer.PBFSource = L.TileLayer.Canvas.extend({
       tileSize: this.options.tileSize
     };
 
-    //Capture the max number of the tiles to load here. this._tilesToProcess is an internal number we use to know when we've finished requesting PBFs.
-    if(this._tilesToProcess < this._tilesToLoad) this._tilesToProcess = this._tilesToLoad;
-
     var id = ctx.id = Util.getContextID(ctx);
     this.activeTiles[id] = ctx;
 
@@ -2779,17 +2355,17 @@ module.exports = L.TileLayer.PBFSource = L.TileLayer.Canvas.extend({
   },
 
   setOpacity:function(opacity) {
-    this._setVisibleLayersStyle('opacity',opacity);
+	  this._setVisibleLayersStyle('opacity',opacity);
   },
-
+  
   setZIndex:function(zIndex) {
-    this._setVisibleLayersStyle('zIndex',zIndex);
+	  this._setVisibleLayersStyle('zIndex',zIndex);
   },
-
+  
   _setVisibleLayersStyle:function(style, value) {
-    for(var key in this.layers) {
-      this.layers[key]._tileContainer.style[style] = value;
-    }
+	  for(var key in this.layers) {
+		  this.layers[key]._tileContainer.style[style] = value;
+	  }
   },
 
   _drawDebugInfo: function(ctx) {
@@ -2811,14 +2387,15 @@ module.exports = L.TileLayer.PBFSource = L.TileLayer.Canvas.extend({
     var self = this;
 
     //This works to skip fetching and processing tiles if they've already been processed.
-    var vectorTile = this.processedTiles[ctx.zoom][ctx.id];
-    //if we've already parsed it, don't get it again.
-    if(vectorTile){
-      console.log("Skipping fetching " + ctx.id);
-      self.parseVectorTile(parseVT(vectorTile), ctx, true);
-      self.reduceTilesToProcessCount();
-      return;
-    }
+    //But is causes unintended consequences - it seems the processing functions following this are called before ctx.canvas has been created, so there are lots of "canavs doesn't exist errors".
+    //For this to work, it needs to be in synch with the creation of the actual canvii.
+//    var vectorTile = this.processedTiles[ctx.zoom][ctx.id];
+//    //if we've already parsed it, don't get it again.
+//    if(vectorTile){
+//      console.log("Skipping fetching " + ctx.id);
+//      self.parseVectorTile(parseVT(vectorTile), ctx);
+//      return;
+//    }
 
     if (!this.options.url) return;
     var url = self.options.url.replace("{z}", ctx.zoom).replace("{x}", ctx.tile.x).replace("{y}", ctx.tile.y);
@@ -2826,9 +2403,6 @@ module.exports = L.TileLayer.PBFSource = L.TileLayer.Canvas.extend({
     var xhr = new XMLHttpRequest();
     xhr.onload = function() {
       if (xhr.status == "200") {
-
-        if(!xhr.response) return;
-
         var arrayBuffer = new Uint8Array(xhr.response);
         var buf = new Protobuf(arrayBuffer);
         var vt = new VectorTile(buf);
@@ -2847,50 +2421,33 @@ module.exports = L.TileLayer.PBFSource = L.TileLayer.Canvas.extend({
     xhr.open('GET', url, true); //async is true
     xhr.responseType = 'arraybuffer';
     xhr.send();
-
-    //either way, reduce the count of tilesToProcess tiles here
-    self.reduceTilesToProcessCount();
   },
 
-  reduceTilesToProcessCount: function(){
-    this._tilesToProcess--;
-    if(!this._tilesToProcess){
-      //Trigger event letting us know that all PBFs have been loaded and processed (or 404'd).
-      if(this._eventHandlers["PBFLoad"]) this._eventHandlers["PBFLoad"]();
-    }
-  },
 
-  parseVectorTile: function(vt, ctx, parsed) {
+  parseVectorTile: function(vt, ctx) {
     var self = this;
 
     for (var key in vt.layers) {
       var lyr = vt.layers[key];
       if (!self.layers[key]) {
-        //Create PBFLayer or PBFPointLayer for user
-        self.layers[key] = self.createPBFLayer(key, lyr.parsedFeatures[0].type || null);
+        //Create PBFLayer for user
+        self.layers[key] = self.createPBFLayer(key);
       }
 
       //If layer is marked as visible, examine the contents.
       if (self.layers[key].visible === true) {
-        if(parsed){
-          //We've already parsed it.  Go get canvas and draw.
-          self.layers[key].getCanvas(ctx, lyr);
-        }else{
-          self.layers[key].parseVectorTileLayer(lyr, ctx);
-
-          //if we have a reasonable amount of features inside, lets store it in memory.  Otherwise, fetch every time to avoid memory pileup.
-          if(lyr.parsedFeatures.length < 25){
-            this.processedTiles[ctx.zoom][ctx.id] = vt;
-          }
-        }
+        self.layers[key].parseVectorTileLayer(lyr, ctx);
       }
     }
 
     //Make sure manager layer is always in front
     this.bringToFront();
+
+    this.processedTiles[ctx.zoom][ctx.id] = vt;
+
   },
 
-  createPBFLayer: function(key, type) {
+  createPBFLayer: function(key) {
     var self = this;
 
     var getIDForLayerFeature;
@@ -2900,30 +2457,13 @@ module.exports = L.TileLayer.PBFSource = L.TileLayer.Canvas.extend({
       getIDForLayerFeature = Util.getIDForLayerFeature;
     }
 
-    //Take the layer and create a new PBFLayer or PBFPointLayer if one doesn't exist.
-    var layer;
-
-    if(type === 1){
-      //Point Layer
-      layer = new L.TileLayer.PBFPointLayer(self, {
-        getIDForLayerFeature: getIDForLayerFeature,
-        filter: self.options.filter,
-        layerOrdering: self.options.layerOrdering,
-        styleFor: self.styleFor,
-        name: key,
-        asynch: true
-      }).addTo(self._map);
-    }else{
-      //Polygon/Line Layer
-      layer = new L.TileLayer.PBFLayer(self, {
-        getIDForLayerFeature: getIDForLayerFeature,
-        filter: self.options.filter,
-        layerOrdering: self.options.layerOrdering,
-        styleFor: self.styleFor,
-        name: key,
-        asynch: true
-      }).addTo(self._map);
-    }
+    //Take the layer and create a new PBFLayer if one doesn't exist.
+    var layer = new L.TileLayer.PBFLayer(self, {
+      getIDForLayerFeature: getIDForLayerFeature,
+      filter: self.options.filter,
+      styleFor: self.styleFor,
+      name: key
+    }).addTo(self._map);
 
     return layer;
   },
@@ -2956,7 +2496,7 @@ module.exports = L.TileLayer.PBFSource = L.TileLayer.Canvas.extend({
     }
   },
 
-  bind: function(eventType, callback) {
+  on: function(eventType, callback) {
     this._eventHandlers[eventType] = callback;
   },
 
@@ -3021,8 +2561,7 @@ function parseVTFeatures(vtl){
   }
   return vtl;
 }
-
-},{"./PBFFeature":17,"./PBFLayer":18,"./PBFPointLayer":19,"./PBFUtil":21,"pbf":9,"point-geometry":11,"vector-tile":12}],21:[function(require,module,exports){
+},{"./PBFFeature":17,"./PBFLayer":18,"./PBFUtil":20,"pbf":9,"point-geometry":11,"vector-tile":12}],20:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 8/15/14.
@@ -3047,7 +2586,7 @@ Util.getIDForLayerFeature = function(feature) {
 };
 
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 7/31/14.
@@ -3106,7 +2645,7 @@ StaticLabel.prototype.deselect = function() {
   if (linkedFeature.selected) linkedFeature.deselect();
   };
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
  * This is the entry point of the application. We declare the main module here and then configure the main router
  * that creates corresponding views. The array parameter for module declares this module's dependencies.
@@ -3309,7 +2848,7 @@ require('./controllers/search');
 require('./controllers/export');
 require('../lib/Leaflet.PBFLayer/src/PBFSource.js');
 
-},{"../lib/Leaflet.PBFLayer/src/PBFSource.js":20,"./controllers/basemaps":24,"./controllers/breadcrumbs":25,"./controllers/details":26,"./controllers/export":27,"./controllers/filters":28,"./controllers/info":29,"./controllers/layers":30,"./controllers/legend":31,"./controllers/main":32,"./controllers/map":33,"./controllers/navbar":34,"./controllers/search":35,"./controllers/side-view":36,"./controllers/stories":37,"./controllers/theme":38,"./controllers/upload":39,"./controllers/zoom-extent":40,"./services/Donuts":41,"./services/LayerConfig":42,"./services/StoriesConfig":43,"./services/Vector/VectorProvider":47}],24:[function(require,module,exports){
+},{"../lib/Leaflet.PBFLayer/src/PBFSource.js":19,"./controllers/basemaps":23,"./controllers/breadcrumbs":24,"./controllers/details":25,"./controllers/export":26,"./controllers/filters":27,"./controllers/info":28,"./controllers/layers":29,"./controllers/legend":30,"./controllers/main":31,"./controllers/map":32,"./controllers/navbar":33,"./controllers/search":34,"./controllers/side-view":35,"./controllers/stories":36,"./controllers/theme":37,"./controllers/upload":38,"./controllers/zoom-extent":39,"./services/Donuts":40,"./services/LayerConfig":41,"./services/StoriesConfig":42,"./services/Vector/VectorProvider":46}],23:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 3/28/14.
@@ -3351,7 +2890,7 @@ module.exports = angular.module('SpatialViewer').controller('BasemapsCtrl', func
   };
 
 });
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 4/17/14.
@@ -3463,7 +3002,7 @@ module.exports = angular.module('SpatialViewer').controller('BreadcrumbsCtrl', f
 
 });
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 4/9/14.
@@ -3974,7 +3513,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
 });
 
-},{}],27:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * Created by Ryan Whitley
  *       on 6/4/14.
@@ -4256,7 +3795,7 @@ module.exports = angular.module('SpatialViewer').controller('ExportCtrl', functi
     self._init();
 });
 
-},{}],28:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -4278,7 +3817,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
 });
 
-},{}],29:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -4287,7 +3826,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 module.exports = angular.module('SpatialViewer').controller('InfoCtrl', function($scope) {
   $scope.params = $stateParams;
 });
-},{}],30:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -4458,7 +3997,7 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
 
 });
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -4505,7 +4044,7 @@ module.exports = angular.module('SpatialViewer').controller('LegendCtrl', functi
   });
 
 });
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 module.exports = angular.module('SpatialViewer').controller('MainCtrl', function($scope, $rootScope, $state, $stateParams, $location) {
   debug.$location = $location;
   localStorage.setItem('defaultRoute', $location.path());
@@ -4544,7 +4083,7 @@ module.exports = angular.module('SpatialViewer').controller('MainCtrl', function
 
 });
 
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *     on Mon Mar 17 2014
@@ -4574,11 +4113,11 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     var lat = parseFloat($stateParams.lat) || 0;
     var lng = parseFloat($stateParams.lng) || 0;
     var zoom = parseFloat($stateParams.zoom) || 17;
-    layersStr = $stateParams.layers || LayerConfig.satellite.url;
+    layersStr = $stateParams.layers || LayerConfig.osm.url;
     var layers = layersStr.split(',');
 
     // first layer should always be treated as the basemap
-    var basemap = LayerConfig.find(layers[0]) || LayerConfig.satellite.url;
+    var basemap = LayerConfig.find(layers[0]) || LayerConfig.osm.url;
     if (typeof basemap === 'string') {
       var basemapUrl = basemap;
     } else {
@@ -4844,13 +4383,13 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
   }
 
 });
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 module.exports = angular.module('SpatialViewer').controller('NavBarCtrl', function($scope, $state, $stateParams) {
   $scope.params = $stateParams;
 
 });
 
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 5/21/14.
@@ -4926,7 +4465,7 @@ module.exports = angular.module('SpatialViewer').controller('SearchECOSCtrl', fu
     };
 });
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *        and Ryan Whitley      <rwhitley@spatialdev.com>
@@ -4948,7 +4487,7 @@ module.exports = angular.module('SpatialViewer').controller('SideViewCtrl', func
 
 });
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/26/14.
@@ -5042,7 +4581,7 @@ angular.module('SpatialViewer')
       return outStories;
     };
   });
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 5/6/14.
@@ -5111,7 +4650,7 @@ module.exports = angular.module('SpatialViewer').controller('ThemeCtrl', functio
    */
 
 });
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 4/17/14.
@@ -5217,7 +4756,7 @@ module.exports = angular.module('SpatialViewer').controller('UploadCtrl', functi
 
 });
 
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *        and Ryan Whitley      <rwhitley@spatialdev.com>
@@ -5259,7 +4798,7 @@ module.exports = angular.module('SpatialViewer').controller('ZoomExtentCtrl', fu
 
 });
 
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *   and Rich Gwozdz <rgwozdz@spatialdev.com>
@@ -5576,7 +5115,7 @@ module.exports = angular.module('SpatialViewer').factory('Donuts', function () {
 
 });
 
-},{}],42:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/18/14.
@@ -5643,7 +5182,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
 
 });
 
-},{"../../config/layers/basemaps.js":1,"../../config/layers/csv.js":2,"../../config/layers/geojson.js":3,"../../config/layers/kml.js":4,"../../config/layers/other.js":5,"../../config/layers/pbf.js":6,"../../config/layers/wms.js":7,"../../config/layers/xyz.js":8}],43:[function(require,module,exports){
+},{"../../config/layers/basemaps.js":1,"../../config/layers/csv.js":2,"../../config/layers/geojson.js":3,"../../config/layers/kml.js":4,"../../config/layers/other.js":5,"../../config/layers/pbf.js":6,"../../config/layers/wms.js":7,"../../config/layers/xyz.js":8}],42:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/18/14.
@@ -5714,7 +5253,7 @@ module.exports = angular.module('SpatialViewer').service('StoriesConfig', functi
 
 });
 
-},{}],44:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5778,7 +5317,7 @@ GeoJSON.prototype.getLayer = function() {
   return layer;
 };
 
-},{"./resource":49,"./vector":50}],45:[function(require,module,exports){
+},{"./resource":48,"./vector":49}],44:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5849,7 +5388,7 @@ KML.prototype.eachLayer = function (cb) {
   });
 };
 
-},{"./resource":49,"./vector":50}],46:[function(require,module,exports){
+},{"./resource":48,"./vector":49}],45:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5944,7 +5483,7 @@ Resource.prototype.eachLayer = function (cb) {
   this._geojsonLayer.eachLayer(cb);
 };
 
-},{"./vector":50}],47:[function(require,module,exports){
+},{"./vector":49}],46:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/19/14.
@@ -6009,7 +5548,7 @@ module.exports = angular.module('SpatialViewer').factory('VectorProvider', funct
 });
 
 
-},{"./GeoJSON":44,"./KML":45,"./Resource":46,"./csv":48,"./vector":50}],48:[function(require,module,exports){
+},{"./GeoJSON":43,"./KML":44,"./Resource":45,"./csv":47,"./vector":49}],47:[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 6/3/14.
@@ -6313,9 +5852,9 @@ CSV.prototype.Base64 = {
 
 };
 
-},{"./resource":49,"./vector":50}],49:[function(require,module,exports){
-module.exports=require(46)
-},{"./vector":50}],50:[function(require,module,exports){
+},{"./resource":48,"./vector":49}],48:[function(require,module,exports){
+module.exports=require(45)
+},{"./vector":49}],49:[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -6346,7 +5885,7 @@ debug.resources = resources;
 
 var centerLevel = vector.centerLevel = 0;
 
-},{}],51:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -7497,7 +7036,7 @@ function assert (test, message) {
   if (!test) throw new Error(message || 'Failed assertion')
 }
 
-},{"base64-js":52,"ieee754":53}],52:[function(require,module,exports){
+},{"base64-js":51,"ieee754":52}],51:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -7619,6 +7158,6 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],53:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 module.exports=require(10)
-},{}]},{},[23])
+},{}]},{},[22])

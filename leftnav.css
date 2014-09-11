@@ -1,0 +1,10 @@
+.logo_BG {
+    background-color: rgb(155, 35, 44);
+    position: absolute;
+    left: -1px;
+    top: 0px;
+    width: 60px;
+    height: 103px;
+    z-index: 59;
+}
+
