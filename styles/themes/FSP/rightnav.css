@@ -1,6 +1,7 @@
 .on #DetailsNub {
     background-color: #f1efec;
     color: #9b232c;
+    padding:0px;
 }
 
 
@@ -31,10 +32,11 @@
     right: 0px;
 }
 
-#DetailsNub {
+#DetailsNub{
     color: #3c3c3c;
     padding: 13px 16px 10px 16px;
     width: 61px;
+    height:61px;
     font-size: 26px;
     margin-left:0px;
     background-color:#f1efec;
@@ -46,6 +48,7 @@
 
 #DetailsButtonWrapper {
     width: 61px;
+    margin-top: 45px;
 }
 
 .NavFlyoutGroup-right {
@@ -103,12 +106,36 @@
     height:100%;
 }
 
-.row {
-    background-color:#bababa;
+.row-rightnav {
+    background-color:#f1efec;
     margin-left: -11px;
 
 }
 
 .full-width{
     width:100%;
+}
+
+#DetailsPanel .title {
+    font-size: 20px;
+    font-family: Din-Medium;
+    text-transform: uppercase;
+    color: #9b232c;
+    margin-bottom: 15px;
+}
+
+.first-nav-tab{
+    margin-left: 10px;
+}
+
+#DetailsPanel .nav-tabs a {
+    font-family: Din-Regular;
+}
+
+.info-svg{
+    margin-left: 5px;
+}
+
+.no-padding{
+    padding:0px;
 }

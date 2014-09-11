@@ -637,13 +637,13 @@
 <div id="DetailsButtonWrapper" class="btn-group">
 
     <button id="DetailsNub" type="button" class="btn right-icon-gap" ng-click="toggleParam('details-panel')">
-        <i class="icon-11_infobox"></i>
+        <img class="info-svg" src="styles/svg/icon_info.svg" alt="Analysis">
     </button>
     <button id="DetailsNub" type="button" class="btn" ng-click="toggleParam('details-panel')">
-        <i class="icon-11_infobox"></i>
+        <img class="info-svg" src="styles/svg/icon_analysis.svg" alt="Analysis">
     </button>
     <button id="DetailsNub" type="button" class="btn" ng-click="toggleParam('details-panel')">
-        <i class="icon-11_infobox"></i>
+        <img class="info-svg" src="styles/svg/icon_popupInfo.svg" alt="Analysis">
     </button>
 
     <div id="PreviousItem" class="icon-9_arrow_left"
@@ -657,7 +657,7 @@
 </div>
 <div id="DetailsPanel">
 
-<div class="row">
+<div class="row-rightnav">
     <button class="side-view-close btn btn-lg btn-blue btn-primary" ng-click="closeParam('details-panel')"><span
         class="glyphicon glyphicon-chevron-right"></span></button>
                             <span ng-show="details && feature.properties.salesforce">
@@ -671,8 +671,11 @@
 </div>
 
     <ul class="nav nav-tabs">
-        <li class="active"><a class="a-nav-tab" ng-click="navTab='contextual'" data-toggle="tab">Country Overview</a></li>
+        <li class="active first-nav-tab"><a class="a-nav-tab" ng-click="navTab='contextual'" data-toggle="tab">Country Overview</a></li>
         <li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Access Points</a></li>
+        <li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Access Lorem</a></li>
+
+
     </ul>
 
 
@@ -692,7 +695,8 @@
            data-toggle="tab">Health</a></li>
 </ul>
 
-<div class="InnerContainer scrollable">
+<div class="row-rightnav">
+    <div class="InnerContainer scrollable">
     <!--<div class="heading" ng-show="alertUserToClick">-->
         <!--Please click on a badge or feature to see details...-->
     <!--</div>-->
@@ -870,7 +874,7 @@
     </div>
 
 </div>
-
+</div>
 <div class="details-bottom-buttons pull-right" ng-show="!contextualLayer && !itemsList">
     <button type="button" class="btn btn-default btn-xs" ng-click="toggleMoreLess()">Show {{moreLess}}
         Details
