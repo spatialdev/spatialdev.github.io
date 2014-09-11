@@ -34,12 +34,13 @@
 
 #DetailsNub{
     color: #3c3c3c;
-    padding: 13px 16px 10px 16px;
+    /*padding: 13px 16px 10px 16px;*/
     width: 61px;
     height:61px;
     font-size: 26px;
     margin-left:0px;
     background-color:#f1efec;
+    padding:0px;
 }
 
 #DetailsButtonWrapper button:hover{
@@ -134,8 +135,26 @@
 
 .info-svg{
     margin-left: 5px;
+    margin-left: 5px;
+    margin-top: 6px;
 }
 
-.no-padding{
+.analysis-svg {
+    margin-left: 5px;
+    margin-left: 0px;
+    margin-top: 6px;
+    width: 39px;
+}
+
+.iconpopup-svg {
+    width:41px;
+    margin-top: 3px;
+}
+
+.svg:hover {
+    fill:#9b232c;
+}
+
+#DetailsNub .no-padding{
     padding:0px;
 }
