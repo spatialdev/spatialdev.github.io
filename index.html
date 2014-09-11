@@ -636,9 +636,21 @@
 
 <div id="DetailsButtonWrapper" class="btn-group">
 
-    <button id="DetailsNub" type="button" class="no-padding btn right-icon-gap" ng-click="toggleParam('details-panel')">
+    <!--<button type="button" class="btn btn-default"-->
+            <!--ng-mouseenter="isLayersActive = isNotParam('layers-panel')"-->
+            <!--ng-mouseleave="isLayersActive=false"-->
+            <!--ng-click="toggleParam('layers-panel')"-->
+            <!--ng-class="{on: isParam('layers-panel')}">-->
+        <!--<i class="icon-3_map_layers"></i>-->
+    <!--</button>-->
+
+    <button id="DetailsNub" type="button" class="no-padding btn right-icon-gap"
+            ng-click="toggleParam('overview-panel')"
+            ng-mouseenter="isOverviewActive = isNotParam('overview-panel')"
+            ng-mouseleave="isOverviewActive = false">
         <img class="svg info-svg" src="styles/svg/icon_info.svg" alt="Analysis">
     </button>
+
     <button id="DetailsNub" type="button" class="btn" ng-click="toggleParam('details-panel')">
         <img class="svg analysis-svg" src="styles/svg/icon_analysis.svg" alt="Analysis">
     </button>
@@ -695,7 +707,7 @@
            data-toggle="tab">Health</a></li>
 </ul>
 
-<div class="row-rightnav">
+<div class="row-rightinfo">
     <div class="InnerContainer scrollable">
     <!--<div class="heading" ng-show="alertUserToClick">-->
         <!--Please click on a badge or feature to see details...-->
@@ -704,9 +716,7 @@
     <div class="section scrollable" my-show="itemsList" after-show="createDonuts()"
          ng-repeat="(themeName, themeItems) in groupings">
 
-
         <div id="details-donut">
-
         </div>
 
         <div class="heading">{{themeName}}</div>
@@ -890,7 +900,7 @@
 
 <div class="NavigationTooltipContainer-right main">
     <div class="NavFlyoutGroup-right">
-        <div class="flyout-right right-icon-gap" ng-class="{on: isLayersActive}">
+        <div class="flyout-right right-icon-gap" ng-class="{on: isOverviewActive}">
             Overview
         </div>
         <div class="flyout-right" ng-class="{on: isLayersActive}">

@@ -8,7 +8,7 @@
 /* NavBar Flyout Tooltips */
 .NavigationTooltipContainer-right {
     position: absolute;
-    z-index: 1;
+    z-index: 0;
     overflow: hidden;
 }
 
@@ -19,6 +19,7 @@
 .NavigationTooltipContainer-right.main{
     top: 0;
     height: 100%;
+    margin-top: 44px;
 }
 
 .NavFlyoutGroup-right {
@@ -50,6 +51,7 @@
 #DetailsButtonWrapper {
     width: 61px;
     margin-top: 45px;
+    z-index:1;
 }
 
 .NavFlyoutGroup-right {
@@ -73,10 +75,16 @@
     -moz-box-shadow: inset 15px -2px 17px -17px #000000;
     -webkit-box-shadow: inset 15px -2px 17px -17px #000000;
     box-shadow: inset 15px -2px 17px -17px #000000;
-     margin-left: -250px;
+     margin-left: 250px;
      visibility: hidden;
     line-height: 42px;
     white-space: nowrap;
+}
+
+.flyout-right.on {
+    -webkit-transition: all .5s ease;
+    visibility: visible;
+    margin-left: -255px;
 }
 
 #DetailsPanel {
@@ -110,7 +118,12 @@
 .row-rightnav {
     background-color:#f1efec;
     margin-left: -11px;
+}
 
+.row-rightinfo {
+    background-color:#fff;
+    margin-left: -11px;
+    height:100%;
 }
 
 .full-width{

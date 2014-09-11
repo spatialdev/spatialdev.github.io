@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/SpatialDev/Documents/spatialviewer/config/layers/basemaps.js":[function(require,module,exports){
 var layer = module.exports = {};
 
 /**
@@ -153,7 +153,7 @@ layer.watercolor = {
   type: 'basemap'
 };
 
-},{}],2:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/config/layers/csv.js":[function(require,module,exports){
 var layer = module.exports = {};
 
 /**
@@ -177,7 +177,7 @@ layer.sampletracks = {
     legend: ''
   }
 };
-},{}],3:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/config/layers/geojson.js":[function(require,module,exports){
 var layer = module.exports = {};
 
 /**
@@ -237,7 +237,7 @@ layer.wafires = {
     legend: ""
   }
 };
-},{}],4:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/config/layers/kml.js":[function(require,module,exports){
 var layer = module.exports = {};
 
 /**
@@ -279,7 +279,7 @@ layer.earthquakestest = {
     legend: ''
   }
 };
-},{}],5:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/config/layers/other.js":[function(require,module,exports){
 var layer = module.exports = {};
 
 /**
@@ -287,7 +287,7 @@ var layer = module.exports = {};
  */
 layer.usoutline = 'http://eric.clst.org/wupl/Stuff/gz_2010_us_outline_20m.json';
 
-},{}],6:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/config/layers/pbf.js":[function(require,module,exports){
 var layer = module.exports = {};
 
 layer.gadm2014kenya = {
@@ -809,7 +809,8 @@ var CICO_Config = {
     Providers: null
   }
 };
-},{}],7:[function(require,module,exports){
+
+},{}],"/Users/SpatialDev/Documents/spatialviewer/config/layers/wms.js":[function(require,module,exports){
 var layer = module.exports = {};
 
 /**
@@ -860,7 +861,7 @@ layer.growingperiod = {
   }
 };
 
-},{}],8:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/config/layers/xyz.js":[function(require,module,exports){
 var layer = module.exports = {};
 
 /**
@@ -930,7 +931,7 @@ layer.snow = {
   url: 'http://{s}.tile.openweathermap.org/map/snow/{z}/{x}/{y}.png'
 };
 
-},{}],9:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/pbf/index.js":[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -1222,7 +1223,7 @@ Protobuf.prototype.writeMessage = function(tag, protobuf) {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":50,"ieee754":10}],10:[function(require,module,exports){
+},{"buffer":"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/buffer/index.js","ieee754":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/pbf/node_modules/ieee754/index.js"}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/pbf/node_modules/ieee754/index.js":[function(require,module,exports){
 exports.read = function(buffer, offset, isLE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -1308,7 +1309,7 @@ exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],11:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/point-geometry/index.js":[function(require,module,exports){
 'use strict';
 
 module.exports = Point;
@@ -1441,12 +1442,12 @@ Point.convert = function (a) {
     return a;
 };
 
-},{}],12:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/index.js":[function(require,module,exports){
 module.exports.VectorTile = require('./lib/vectortile.js');
 module.exports.VectorTileFeature = require('./lib/vectortilefeature.js');
 module.exports.VectorTileLayer = require('./lib/vectortilelayer.js');
 
-},{"./lib/vectortile.js":13,"./lib/vectortilefeature.js":14,"./lib/vectortilelayer.js":15}],13:[function(require,module,exports){
+},{"./lib/vectortile.js":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/lib/vectortile.js","./lib/vectortilefeature.js":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/lib/vectortilefeature.js","./lib/vectortilelayer.js":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/lib/vectortilelayer.js"}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/lib/vectortile.js":[function(require,module,exports){
 'use strict';
 
 var VectorTileLayer = require('./vectortilelayer');
@@ -1484,7 +1485,7 @@ VectorTile.prototype.readLayer = function() {
     return layer;
 };
 
-},{"./vectortilelayer":15}],14:[function(require,module,exports){
+},{"./vectortilelayer":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/lib/vectortilelayer.js"}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/lib/vectortilefeature.js":[function(require,module,exports){
 'use strict';
 
 var Point = require('point-geometry');
@@ -1625,7 +1626,7 @@ VectorTileFeature.prototype.bbox = function() {
     return [x1, y1, x2, y2];
 };
 
-},{"point-geometry":16}],15:[function(require,module,exports){
+},{"point-geometry":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/node_modules/point-geometry/index.js"}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/lib/vectortilelayer.js":[function(require,module,exports){
 'use strict';
 
 var VectorTileFeature = require('./vectortilefeature.js');
@@ -1716,9 +1717,140 @@ VectorTileLayer.prototype.feature = function(i) {
     return new VectorTileFeature(this._buffer, end, this.extent, this._keys, this._values);
 };
 
-},{"./vectortilefeature.js":14}],16:[function(require,module,exports){
-module.exports=require(11)
-},{}],17:[function(require,module,exports){
+},{"./vectortilefeature.js":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/lib/vectortilefeature.js"}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/node_modules/point-geometry/index.js":[function(require,module,exports){
+'use strict';
+
+module.exports = Point;
+
+function Point(x, y) {
+    this.x = x;
+    this.y = y;
+}
+
+Point.prototype = {
+    clone: function() { return new Point(this.x, this.y); },
+
+    add:     function(p) { return this.clone()._add(p);     },
+    sub:     function(p) { return this.clone()._sub(p);     },
+    mult:    function(k) { return this.clone()._mult(k);    },
+    div:     function(k) { return this.clone()._div(k);     },
+    rotate:  function(a) { return this.clone()._rotate(a);  },
+    matMult: function(m) { return this.clone()._matMult(m); },
+    unit:    function() { return this.clone()._unit(); },
+    perp:    function() { return this.clone()._perp(); },
+    round:   function() { return this.clone()._round(); },
+
+    mag: function() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    },
+
+    equals: function(p) {
+        return this.x === p.x &&
+               this.y === p.y;
+    },
+
+    dist: function(p) {
+        return Math.sqrt(this.distSqr(p));
+    },
+
+    distSqr: function(p) {
+        var dx = p.x - this.x,
+            dy = p.y - this.y;
+        return dx * dx + dy * dy;
+    },
+
+    angle: function() {
+        return Math.atan2(this.y, this.x);
+    },
+
+    angleTo: function(b) {
+        return Math.atan2(this.y - b.y, this.x - b.x);
+    },
+
+    angleWith: function(b) {
+        return this.angleWithSep(b.x, b.y);
+    },
+
+    // Find the angle of the two vectors, solving the formula for the cross product a x b = |a||b|sin(θ) for θ.
+    angleWithSep: function(x, y) {
+        return Math.atan2(
+            this.x * y - this.y * x,
+            this.x * x + this.y * y);
+    },
+
+    _matMult: function(m) {
+        var x = m[0] * this.x + m[1] * this.y,
+            y = m[2] * this.x + m[3] * this.y;
+        this.x = x;
+        this.y = y;
+        return this;
+    },
+
+    _add: function(p) {
+        this.x += p.x;
+        this.y += p.y;
+        return this;
+    },
+
+    _sub: function(p) {
+        this.x -= p.x;
+        this.y -= p.y;
+        return this;
+    },
+
+    _mult: function(k) {
+        this.x *= k;
+        this.y *= k;
+        return this;
+    },
+
+    _div: function(k) {
+        this.x /= k;
+        this.y /= k;
+        return this;
+    },
+
+    _unit: function() {
+        this._div(this.mag());
+        return this;
+    },
+
+    _perp: function() {
+        var y = this.y;
+        this.y = this.x;
+        this.x = -y;
+        return this;
+    },
+
+    _rotate: function(angle) {
+        var cos = Math.cos(angle),
+            sin = Math.sin(angle),
+            x = cos * this.x - sin * this.y,
+            y = sin * this.x + cos * this.y;
+        this.x = x;
+        this.y = y;
+        return this;
+    },
+
+    _round: function() {
+        this.x = Math.round(this.x);
+        this.y = Math.round(this.y);
+        return this;
+    }
+};
+
+// constructs Point from an array if necessary
+Point.convert = function (a) {
+    if (a instanceof Point) {
+        return a;
+    }
+    if (Array.isArray(a)) {
+        return new Point(a[0], a[1]);
+    }
+    return a;
+};
+
+},{}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFFeature.js":[function(require,module,exports){
 /**
  * Created by Ryan Whitley, Daniel Duarte, and Nicholas Hallahan
  *    on 6/03/14.
@@ -2059,7 +2191,7 @@ function isClockwise(p){
 
 
 
-},{"./StaticLabel/StaticLabel.js":21}],18:[function(require,module,exports){
+},{"./StaticLabel/StaticLabel.js":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/StaticLabel/StaticLabel.js"}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFLayer.js":[function(require,module,exports){
 /**
  * Created by Ryan Whitley on 5/17/14.
  */
@@ -2197,11 +2329,8 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
       });
 
       //Tell it to draw
-      //pbffeature.draw(vtf, ctx);
+      pbffeature.draw(vtf, ctx);
     }
-
-    //If a z-order function is specified, wait unitl all features have been iterated over until drawing (here)
-    self.redrawTile(ctx.id, ctx.zoom);
 
     for (var j = 0, len = self.featuresWithLabels.length; j < len; j++) {
       var feat = self.featuresWithLabels[j];
@@ -2275,7 +2404,7 @@ module.exports = L.TileLayer.PBFLayer = L.TileLayer.Canvas.extend({
   }
 });
 
-},{"./PBFFeature":17,"./PBFUtil":20}],19:[function(require,module,exports){
+},{"./PBFFeature":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFFeature.js","./PBFUtil":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFUtil.js"}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFSource.js":[function(require,module,exports){
 var VectorTile = require('vector-tile').VectorTile;
 var VectorTileFeature = require('vector-tile').VectorTileFeature;
 var VectorTileLayer = require('vector-tile').VectorTileLayer;
@@ -2561,7 +2690,7 @@ function parseVTFeatures(vtl){
   }
   return vtl;
 }
-},{"./PBFFeature":17,"./PBFLayer":18,"./PBFUtil":20,"pbf":9,"point-geometry":11,"vector-tile":12}],20:[function(require,module,exports){
+},{"./PBFFeature":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFFeature.js","./PBFLayer":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFLayer.js","./PBFUtil":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFUtil.js","pbf":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/pbf/index.js","point-geometry":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/point-geometry/index.js","vector-tile":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/node_modules/vector-tile/index.js"}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFUtil.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 8/15/14.
@@ -2586,7 +2715,7 @@ Util.getIDForLayerFeature = function(feature) {
 };
 
 
-},{}],21:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/StaticLabel/StaticLabel.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 7/31/14.
@@ -2645,7 +2774,7 @@ StaticLabel.prototype.deselect = function() {
   if (linkedFeature.selected) linkedFeature.deselect();
   };
 
-},{}],22:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/app.js":[function(require,module,exports){
 /**
  * This is the entry point of the application. We declare the main module here and then configure the main router
  * that creates corresponding views. The array parameter for module declares this module's dependencies.
@@ -2675,6 +2804,10 @@ SpatialViewer.run(function ($rootScope, $state, $stateParams) {
     }
     return true;
   };
+
+
+
+
 
   $rootScope.isNotParam = function(paramName) {
     var bool = $stateParams[paramName];
@@ -2848,7 +2981,7 @@ require('./controllers/search');
 require('./controllers/export');
 require('../lib/Leaflet.PBFLayer/src/PBFSource.js');
 
-},{"../lib/Leaflet.PBFLayer/src/PBFSource.js":19,"./controllers/basemaps":23,"./controllers/breadcrumbs":24,"./controllers/details":25,"./controllers/export":26,"./controllers/filters":27,"./controllers/info":28,"./controllers/layers":29,"./controllers/legend":30,"./controllers/main":31,"./controllers/map":32,"./controllers/navbar":33,"./controllers/search":34,"./controllers/side-view":35,"./controllers/stories":36,"./controllers/theme":37,"./controllers/upload":38,"./controllers/zoom-extent":39,"./services/Donuts":40,"./services/LayerConfig":41,"./services/StoriesConfig":42,"./services/Vector/VectorProvider":46}],23:[function(require,module,exports){
+},{"../lib/Leaflet.PBFLayer/src/PBFSource.js":"/Users/SpatialDev/Documents/spatialviewer/lib/Leaflet.PBFLayer/src/PBFSource.js","./controllers/basemaps":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/basemaps.js","./controllers/breadcrumbs":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/breadcrumbs.js","./controllers/details":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/details.js","./controllers/export":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/export.js","./controllers/filters":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/filters.js","./controllers/info":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/info.js","./controllers/layers":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/layers.js","./controllers/legend":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/legend.js","./controllers/main":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/main.js","./controllers/map":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/map.js","./controllers/navbar":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/navbar.js","./controllers/search":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/search.js","./controllers/side-view":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/side-view.js","./controllers/stories":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/stories.js","./controllers/theme":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/theme.js","./controllers/upload":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/upload.js","./controllers/zoom-extent":"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/zoom-extent.js","./services/Donuts":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Donuts.js","./services/LayerConfig":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/LayerConfig.js","./services/StoriesConfig":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/StoriesConfig.js","./services/Vector/VectorProvider":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/VectorProvider.js"}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/basemaps.js":[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 3/28/14.
@@ -2890,7 +3023,7 @@ module.exports = angular.module('SpatialViewer').controller('BasemapsCtrl', func
   };
 
 });
-},{}],24:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/breadcrumbs.js":[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 4/17/14.
@@ -3002,7 +3135,7 @@ module.exports = angular.module('SpatialViewer').controller('BreadcrumbsCtrl', f
 
 });
 
-},{}],25:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/details.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 4/9/14.
@@ -3513,7 +3646,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
 });
 
-},{}],26:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/export.js":[function(require,module,exports){
 /**
  * Created by Ryan Whitley
  *       on 6/4/14.
@@ -3795,7 +3928,7 @@ module.exports = angular.module('SpatialViewer').controller('ExportCtrl', functi
     self._init();
 });
 
-},{}],27:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/filters.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -3817,7 +3950,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
 });
 
-},{}],28:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/info.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -3826,7 +3959,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 module.exports = angular.module('SpatialViewer').controller('InfoCtrl', function($scope) {
   $scope.params = $stateParams;
 });
-},{}],29:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/layers.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -3997,7 +4130,7 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
 
 });
 
-},{}],30:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/legend.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/27/14.
@@ -4044,7 +4177,7 @@ module.exports = angular.module('SpatialViewer').controller('LegendCtrl', functi
   });
 
 });
-},{}],31:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/main.js":[function(require,module,exports){
 module.exports = angular.module('SpatialViewer').controller('MainCtrl', function($scope, $rootScope, $state, $stateParams, $location) {
   debug.$location = $location;
   localStorage.setItem('defaultRoute', $location.path());
@@ -4083,7 +4216,7 @@ module.exports = angular.module('SpatialViewer').controller('MainCtrl', function
 
 });
 
-},{}],32:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/map.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *     on Mon Mar 17 2014
@@ -4383,13 +4516,13 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
   }
 
 });
-},{}],33:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/navbar.js":[function(require,module,exports){
 module.exports = angular.module('SpatialViewer').controller('NavBarCtrl', function($scope, $state, $stateParams) {
   $scope.params = $stateParams;
 
 });
 
-},{}],34:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/search.js":[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 5/21/14.
@@ -4465,7 +4598,7 @@ module.exports = angular.module('SpatialViewer').controller('SearchECOSCtrl', fu
     };
 });
 
-},{}],35:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/side-view.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *        and Ryan Whitley      <rwhitley@spatialdev.com>
@@ -4487,7 +4620,7 @@ module.exports = angular.module('SpatialViewer').controller('SideViewCtrl', func
 
 });
 
-},{}],36:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/stories.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/26/14.
@@ -4581,7 +4714,7 @@ angular.module('SpatialViewer')
       return outStories;
     };
   });
-},{}],37:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/theme.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 5/6/14.
@@ -4650,7 +4783,7 @@ module.exports = angular.module('SpatialViewer').controller('ThemeCtrl', functio
    */
 
 });
-},{}],38:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/upload.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 4/17/14.
@@ -4756,7 +4889,7 @@ module.exports = angular.module('SpatialViewer').controller('UploadCtrl', functi
 
 });
 
-},{}],39:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/controllers/zoom-extent.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *        and Ryan Whitley      <rwhitley@spatialdev.com>
@@ -4798,7 +4931,7 @@ module.exports = angular.module('SpatialViewer').controller('ZoomExtentCtrl', fu
 
 });
 
-},{}],40:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Donuts.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *   and Rich Gwozdz <rgwozdz@spatialdev.com>
@@ -5115,7 +5248,7 @@ module.exports = angular.module('SpatialViewer').factory('Donuts', function () {
 
 });
 
-},{}],41:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/LayerConfig.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/18/14.
@@ -5182,7 +5315,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
 
 });
 
-},{"../../config/layers/basemaps.js":1,"../../config/layers/csv.js":2,"../../config/layers/geojson.js":3,"../../config/layers/kml.js":4,"../../config/layers/other.js":5,"../../config/layers/pbf.js":6,"../../config/layers/wms.js":7,"../../config/layers/xyz.js":8}],42:[function(require,module,exports){
+},{"../../config/layers/basemaps.js":"/Users/SpatialDev/Documents/spatialviewer/config/layers/basemaps.js","../../config/layers/csv.js":"/Users/SpatialDev/Documents/spatialviewer/config/layers/csv.js","../../config/layers/geojson.js":"/Users/SpatialDev/Documents/spatialviewer/config/layers/geojson.js","../../config/layers/kml.js":"/Users/SpatialDev/Documents/spatialviewer/config/layers/kml.js","../../config/layers/other.js":"/Users/SpatialDev/Documents/spatialviewer/config/layers/other.js","../../config/layers/pbf.js":"/Users/SpatialDev/Documents/spatialviewer/config/layers/pbf.js","../../config/layers/wms.js":"/Users/SpatialDev/Documents/spatialviewer/config/layers/wms.js","../../config/layers/xyz.js":"/Users/SpatialDev/Documents/spatialviewer/config/layers/xyz.js"}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/StoriesConfig.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/18/14.
@@ -5253,7 +5386,7 @@ module.exports = angular.module('SpatialViewer').service('StoriesConfig', functi
 
 });
 
-},{}],43:[function(require,module,exports){
+},{}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/GeoJSON.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5317,7 +5450,7 @@ GeoJSON.prototype.getLayer = function() {
   return layer;
 };
 
-},{"./resource":48,"./vector":49}],44:[function(require,module,exports){
+},{"./resource":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/resource.js","./vector":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/vector.js"}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/KML.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5388,7 +5521,7 @@ KML.prototype.eachLayer = function (cb) {
   });
 };
 
-},{"./resource":48,"./vector":49}],45:[function(require,module,exports){
+},{"./resource":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/resource.js","./vector":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/vector.js"}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/Resource.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5483,7 +5616,7 @@ Resource.prototype.eachLayer = function (cb) {
   this._geojsonLayer.eachLayer(cb);
 };
 
-},{"./vector":49}],46:[function(require,module,exports){
+},{"./vector":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/vector.js"}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/VectorProvider.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 3/19/14.
@@ -5548,7 +5681,7 @@ module.exports = angular.module('SpatialViewer').factory('VectorProvider', funct
 });
 
 
-},{"./GeoJSON":43,"./KML":44,"./Resource":45,"./csv":47,"./vector":49}],47:[function(require,module,exports){
+},{"./GeoJSON":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/GeoJSON.js","./KML":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/KML.js","./Resource":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/Resource.js","./csv":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/csv.js","./vector":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/vector.js"}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/csv.js":[function(require,module,exports){
 /**
  * Created by Ryan Whitley <rwhitley@spatialdev.com>
  *       on 6/3/14.
@@ -5852,9 +5985,102 @@ CSV.prototype.Base64 = {
 
 };
 
-},{"./resource":48,"./vector":49}],48:[function(require,module,exports){
-module.exports=require(45)
-},{"./vector":49}],49:[function(require,module,exports){
+},{"./resource":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/resource.js","./vector":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/vector.js"}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/resource.js":[function(require,module,exports){
+/**
+ * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
+ *       on 6/3/14.
+ */
+
+var resources = require('./vector').resources;
+var $http = require('./vector').$http;
+
+module.exports = Resource;
+
+/**
+ * All VectorProvider resources are children of this class.
+ * @param config
+ * @constructor
+ */
+function Resource(config) {
+  resources.push(this);
+  this._config = config;
+  this._url = null;
+  if (typeof config === 'object') {
+    this._url = config.url;
+  } else {
+    this._url = config;
+  }
+
+  this._eachLayerCallback = null;
+  this._geojsonLayer = null;
+}
+
+
+/**
+ * Fetches data from the given url of a resource.
+ * Subclasses then handle the callback accordingly.
+ *
+ * Needs to also try to get a resource via the Chubbs
+ * proxy.
+ *
+ * @param cb
+ */
+Resource.prototype.fetch = function(cb) {
+  var proxyPath = config.proxyPath(this._url);
+  $http.get(this._url, {cache: true}).success(function (data, status) {
+    cb(data);
+  }).error(function() {
+    // trying proxy
+    $http.get(proxyPath, {cache: true}).success(function (data, status) {
+      cb(data);
+    }).error(function() {
+      console.error("Unable to fetch from: " + proxyPath);
+    });
+  });
+
+};
+
+
+/**
+ * Returns the Leaflet GeoJSON Layer associated with the
+ * Resource or creates a new one.
+ *
+ * @returns {null|*}
+ */
+Resource.prototype.getLayer = function () {
+  if (typeof this._geojsonLayer !== 'undefined' && this._geojsonLayer !== null) {
+    return this._geojsonLayer;
+  }
+
+  this._geojsonLayer = L.geoJson(this._geojson || null, {
+    style: function(feature) {
+      if (typeof feature.properties.styleFn === 'function') {
+        return feature.properties.styleFn(feature.properties);
+      }
+      return L.mapbox.simplestyle.style(feature);
+    },
+    pointToLayer: function(feature, latlon) {
+      if (!feature.properties) feature.properties = {};
+      if (feature.properties.scale) {
+        return L.circleMarker(latlon, {
+          fillColor: feature.properties.color || '#FF0000',
+          radius: 20 * feature.properties.scale
+        });
+      }
+      return L.mapbox.marker.style(feature, latlon);
+    }
+  }).eachLayer(this._eachLayerCallback);
+
+
+  return this._geojsonLayer;
+};
+
+Resource.prototype.eachLayer = function (cb) {
+  this._eachLayerCallback = cb;
+  this._geojsonLayer.eachLayer(cb);
+};
+
+},{"./vector":"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/vector.js"}],"/Users/SpatialDev/Documents/spatialviewer/scripts/services/Vector/vector.js":[function(require,module,exports){
 /**
  * Created by Nicholas Hallahan <nhallahan@spatialdev.com>
  *       on 6/3/14.
@@ -5885,7 +6111,7 @@ debug.resources = resources;
 
 var centerLevel = vector.centerLevel = 0;
 
-},{}],50:[function(require,module,exports){
+},{}],"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/buffer/index.js":[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -5902,22 +6128,35 @@ exports.INSPECT_MAX_BYTES = 50
 Buffer.poolSize = 8192
 
 /**
- * If `Buffer._useTypedArrays`:
+ * If `TYPED_ARRAY_SUPPORT`:
  *   === true    Use Uint8Array implementation (fastest)
- *   === false   Use Object implementation (compatible down to IE6)
+ *   === false   Use Object implementation (most compatible, even IE6)
+ *
+ * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
+ * Opera 11.6+, iOS 4.2+.
+ *
+ * Note:
+ *
+ * - Implementation must support adding new properties to `Uint8Array` instances.
+ *   Firefox 4-29 lacked support, fixed in Firefox 30+.
+ *   See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
+ *
+ *  - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
+ *
+ *  - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
+ *    incorrect length in some situations.
+ *
+ * We detect these buggy browsers and set `TYPED_ARRAY_SUPPORT` to `false` so they will
+ * get the Object implementation, which is slower but will work correctly.
  */
-Buffer._useTypedArrays = (function () {
-  // Detect if browser supports Typed Arrays. Supported browsers are IE 10+, Firefox 4+,
-  // Chrome 7+, Safari 5.1+, Opera 11.6+, iOS 4.2+. If the browser does not support adding
-  // properties to `Uint8Array` instances, then that's the same as no `Uint8Array` support
-  // because we need to be able to add all the node Buffer API methods. This is an issue
-  // in Firefox 4-29. Now fixed: https://bugzilla.mozilla.org/show_bug.cgi?id=695438
+var TYPED_ARRAY_SUPPORT = (function () {
   try {
     var buf = new ArrayBuffer(0)
     var arr = new Uint8Array(buf)
     arr.foo = function () { return 42 }
-    return 42 === arr.foo() &&
-        typeof arr.subarray === 'function' // Chrome 9-10 lack `subarray`
+    return 42 === arr.foo() && // typed array instances can be augmented
+        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
+        new Uint8Array(1).subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
   } catch (e) {
     return false
   }
@@ -5941,28 +6180,23 @@ function Buffer (subject, encoding, noZero) {
 
   var type = typeof subject
 
-  // Workaround: node's base64 implementation allows for non-padded strings
-  // while base64-js does not.
-  if (encoding === 'base64' && type === 'string') {
-    subject = stringtrim(subject)
-    while (subject.length % 4 !== 0) {
-      subject = subject + '='
-    }
-  }
-
   // Find the length
   var length
   if (type === 'number')
-    length = coerce(subject)
-  else if (type === 'string')
+    length = subject > 0 ? subject >>> 0 : 0
+  else if (type === 'string') {
+    if (encoding === 'base64')
+      subject = base64clean(subject)
     length = Buffer.byteLength(subject, encoding)
-  else if (type === 'object')
-    length = coerce(subject.length) // assume that object is array-like
-  else
+  } else if (type === 'object' && subject !== null) { // assume object is array-like
+    if (subject.type === 'Buffer' && isArray(subject.data))
+      subject = subject.data
+    length = +subject.length > 0 ? Math.floor(+subject.length) : 0
+  } else
     throw new Error('First argument needs to be a number, array or string.')
 
   var buf
-  if (Buffer._useTypedArrays) {
+  if (TYPED_ARRAY_SUPPORT) {
     // Preferred: Return an augmented `Uint8Array` instance for best performance
     buf = Buffer._augment(new Uint8Array(length))
   } else {
@@ -5973,7 +6207,7 @@ function Buffer (subject, encoding, noZero) {
   }
 
   var i
-  if (Buffer._useTypedArrays && typeof subject.byteLength === 'number') {
+  if (TYPED_ARRAY_SUPPORT && typeof subject.byteLength === 'number') {
     // Speed optimization -- use set if we're copying from a typed array
     buf._set(subject)
   } else if (isArrayish(subject)) {
@@ -5987,7 +6221,7 @@ function Buffer (subject, encoding, noZero) {
     }
   } else if (type === 'string') {
     buf.write(subject, 0, encoding)
-  } else if (type === 'number' && !Buffer._useTypedArrays && !noZero) {
+  } else if (type === 'number' && !TYPED_ARRAY_SUPPORT && !noZero) {
     for (i = 0; i < length; i++) {
       buf[i] = 0
     }
@@ -6019,7 +6253,7 @@ Buffer.isEncoding = function (encoding) {
 }
 
 Buffer.isBuffer = function (b) {
-  return !!(b !== null && b !== undefined && b._isBuffer)
+  return !!(b != null && b._isBuffer)
 }
 
 Buffer.byteLength = function (str, encoding) {
@@ -6294,7 +6528,7 @@ Buffer.prototype.copy = function (target, target_start, start, end) {
 
   var len = end - start
 
-  if (len < 100 || !Buffer._useTypedArrays) {
+  if (len < 100 || !TYPED_ARRAY_SUPPORT) {
     for (var i = 0; i < len; i++) {
       target[i + target_start] = this[i + start]
     }
@@ -6366,10 +6600,29 @@ function utf16leSlice (buf, start, end) {
 
 Buffer.prototype.slice = function (start, end) {
   var len = this.length
-  start = clamp(start, len, 0)
-  end = clamp(end, len, len)
+  start = ~~start
+  end = end === undefined ? len : ~~end
 
-  if (Buffer._useTypedArrays) {
+  if (start < 0) {
+    start += len;
+    if (start < 0)
+      start = 0
+  } else if (start > len) {
+    start = len
+  }
+
+  if (end < 0) {
+    end += len
+    if (end < 0)
+      end = 0
+  } else if (end > len) {
+    end = len
+  }
+
+  if (end < start)
+    end = start
+
+  if (TYPED_ARRAY_SUPPORT) {
     return Buffer._augment(this.subarray(start, end))
   } else {
     var sliceLen = end - start
@@ -6828,7 +7081,7 @@ Buffer.prototype.inspect = function () {
  */
 Buffer.prototype.toArrayBuffer = function () {
   if (typeof Uint8Array !== 'undefined') {
-    if (Buffer._useTypedArrays) {
+    if (TYPED_ARRAY_SUPPORT) {
       return (new Buffer(this)).buffer
     } else {
       var buf = new Uint8Array(this.length)
@@ -6904,28 +7157,21 @@ Buffer._augment = function (arr) {
   return arr
 }
 
+var INVALID_BASE64_RE = /[^+\/0-9A-z]/g
+
+function base64clean (str) {
+  // Node strips out invalid characters like \n and \t from the string, base64-js does not
+  str = stringtrim(str).replace(INVALID_BASE64_RE, '')
+  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
+  while (str.length % 4 !== 0) {
+    str = str + '='
+  }
+  return str
+}
+
 function stringtrim (str) {
   if (str.trim) return str.trim()
   return str.replace(/^\s+|\s+$/g, '')
-}
-
-// slice(start, end)
-function clamp (index, len, defaultValue) {
-  if (typeof index !== 'number') return defaultValue
-  index = ~~index;  // Coerce to integer.
-  if (index >= len) return len
-  if (index >= 0) return index
-  index += len
-  if (index >= 0) return index
-  return 0
-}
-
-function coerce (length) {
-  // Coerce length to a number (possibly NaN), round up
-  // in case it's fractional (e.g. 123.456) then do a
-  // double negate to coerce a NaN to 0. Easy, right?
-  length = ~~Math.ceil(+length)
-  return length < 0 ? 0 : length
 }
 
 function isArray (subject) {
@@ -7036,7 +7282,7 @@ function assert (test, message) {
   if (!test) throw new Error(message || 'Failed assertion')
 }
 
-},{"base64-js":51,"ieee754":52}],51:[function(require,module,exports){
+},{"base64-js":"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib/b64.js","ieee754":"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/buffer/node_modules/ieee754/index.js"}],"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib/b64.js":[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -7158,6 +7404,90 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],52:[function(require,module,exports){
-module.exports=require(10)
-},{}]},{},[22])
+},{}],"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/buffer/node_modules/ieee754/index.js":[function(require,module,exports){
+exports.read = function(buffer, offset, isLE, mLen, nBytes) {
+  var e, m,
+      eLen = nBytes * 8 - mLen - 1,
+      eMax = (1 << eLen) - 1,
+      eBias = eMax >> 1,
+      nBits = -7,
+      i = isLE ? (nBytes - 1) : 0,
+      d = isLE ? -1 : 1,
+      s = buffer[offset + i];
+
+  i += d;
+
+  e = s & ((1 << (-nBits)) - 1);
+  s >>= (-nBits);
+  nBits += eLen;
+  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8);
+
+  m = e & ((1 << (-nBits)) - 1);
+  e >>= (-nBits);
+  nBits += mLen;
+  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8);
+
+  if (e === 0) {
+    e = 1 - eBias;
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity);
+  } else {
+    m = m + Math.pow(2, mLen);
+    e = e - eBias;
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen);
+};
+
+exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c,
+      eLen = nBytes * 8 - mLen - 1,
+      eMax = (1 << eLen) - 1,
+      eBias = eMax >> 1,
+      rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0),
+      i = isLE ? 0 : (nBytes - 1),
+      d = isLE ? 1 : -1,
+      s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0;
+
+  value = Math.abs(value);
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0;
+    e = eMax;
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2);
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--;
+      c *= 2;
+    }
+    if (e + eBias >= 1) {
+      value += rt / c;
+    } else {
+      value += rt * Math.pow(2, 1 - eBias);
+    }
+    if (value * c >= 2) {
+      e++;
+      c /= 2;
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0;
+      e = eMax;
+    } else if (e + eBias >= 1) {
+      m = (value * c - 1) * Math.pow(2, mLen);
+      e = e + eBias;
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen);
+      e = 0;
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8);
+
+  e = (e << mLen) | m;
+  eLen += mLen;
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8);
+
+  buffer[offset + i - d] |= s * 128;
+};
+
+},{}]},{},["/Users/SpatialDev/Documents/spatialviewer/scripts/app.js"]);

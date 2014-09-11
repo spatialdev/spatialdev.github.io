@@ -28,6 +28,10 @@ SpatialViewer.run(function ($rootScope, $state, $stateParams) {
     return true;
   };
 
+
+
+
+
   $rootScope.isNotParam = function(paramName) {
     var bool = $stateParams[paramName];
     if (!bool) {
