@@ -41,8 +41,7 @@
     <link rel="stylesheet" href="styles/themes/FSP/leftnav.css">
     <link rel="stylesheet" href="styles/themes/FSP/newuppernav.css">
     <link rel="stylesheet" href="styles/themes/FSP/rightnav.css">
-
-
+    <link rel="stylesheet" href="styles/themes/FSP/fonts.css">
 
 
     <!--font-family: 'Open Sans', sans-serif;-->
@@ -301,6 +300,7 @@
         <ul class="nav nav-tabs">
             <li class="active"><a class="a-nav-tab" ng-click="navTab='contextual'" data-toggle="tab">Map Layers</a></li>
             <li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Uploaded Data</a></li>
+
         </ul>
 
         <!-- Tab panes -->
@@ -644,18 +644,21 @@
         <!--<i class="icon-3_map_layers"></i>-->
     <!--</button>-->
 
-    <button id="DetailsNub" type="button" class="no-padding btn right-icon-gap"
-            ng-click="toggleParam('overview-panel')"
-            ng-mouseenter="isOverviewActive = isNotParam('overview-panel')"
-            ng-mouseleave="isOverviewActive = false">
+    <button id="DetailsNub" type="button" class="no-padding btn right-icon-gap">
         <img class="svg info-svg" src="styles/svg/icon_info.svg" alt="Analysis">
     </button>
 
-    <button id="DetailsNub" type="button" class="btn" ng-click="toggleParam('details-panel')">
-        <img class="svg analysis-svg" src="styles/svg/icon_analysis.svg" alt="Analysis">
-    </button>
-    <button id="DetailsNub" type="button" class="btn" ng-click="toggleParam('details-panel')">
+    <button id="DetailsNub" type="button" class="btn"
+            ng-click="toggleParam('details-panel')"
+            ng-mouseenter="isOverviewActive = isNotParam('details-panel')"
+            ng-mouseleave="isOverviewActive = false"
+            >
+
         <img class="svg iconpopup-svg" src="styles/svg/icon_popupInfo.svg" alt="Analysis">
+    </button>
+
+    <button id="DetailsNub" type="button" class="btn">
+        <img class="svg analysis-svg" src="styles/svg/icon_analysis.svg" alt="Analysis">
     </button>
 
     <div id="PreviousItem" class="icon-9_arrow_left"
@@ -683,12 +686,12 @@
 </div>
 
     <ul class="nav nav-tabs">
-        <li class="active first-nav-tab"><a class="a-nav-tab" ng-click="navTab='contextual'" data-toggle="tab">Country Overview</a></li>
-        <li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Access Points</a></li>
-        <li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Access Lorem</a></li>
-
-
+        <li class="active first-nav-tab"><a class="a-nav-tab" ng-click="navTab='coverview'" data-toggle="tab">Country Overview</a></li>
+        <li><a class="a-nav-tab" ng-click="navTab='apoints'" data-toggle="tab">Access Points</a></li>
+        <li><a class="a-nav-tab" ng-click="navTab='alorem'" data-toggle="tab">Access Lorem</a></li>
     </ul>
+
+    <!-- Tab panes -->
 
 
 </div>
@@ -900,13 +903,13 @@
 
 <div class="NavigationTooltipContainer-right main">
     <div class="NavFlyoutGroup-right">
-        <div class="flyout-right right-icon-gap" ng-class="{on: isOverviewActive}">
+        <div class="flyout-right right-icon-gap">
             Overview
         </div>
-        <div class="flyout-right" ng-class="{on: isLayersActive}">
+        <div class="flyout-right" ng-class="{on: isOverviewActive}">
             Overview
         </div>
-        <div class="flyout-right" ng-class="{on: isLayersActive}">
+        <div class="flyout-right">
             Overview
         </div>
     </div>

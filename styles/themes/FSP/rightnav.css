@@ -3,7 +3,12 @@
     color: #9b232c;
     padding:0px;
 }
-
+.on #DetailsNub .iconpopup-svg.svg{
+    background-color: #f1efec;
+    color: #9b232c;
+    padding:0px;
+    fill:#9b232c;
+}
 
 /* NavBar Flyout Tooltips */
 .NavigationTooltipContainer-right {
@@ -19,7 +24,7 @@
 .NavigationTooltipContainer-right.main{
     top: 0;
     height: 100%;
-    margin-top: 44px;
+    margin-top: 45px;
 }
 
 .NavFlyoutGroup-right {
@@ -71,20 +76,22 @@
     font-size: 20px;
     text-align: center;
     cursor: pointer;
-    height: 62px;
-    -moz-box-shadow: inset 15px -2px 17px -17px #000000;
-    -webkit-box-shadow: inset 15px -2px 17px -17px #000000;
-    box-shadow: inset 15px -2px 17px -17px #000000;
-     margin-left: 250px;
-     visibility: hidden;
+    height: 61px;
+    -moz-box-shadow: inset -15px -2px 17px -17px #000000;
+    -webkit-box-shadow: inset -15px -2px 17px -17px #000000;
+    box-shadow: inset -15px -2px 17px -17px #000000;
+    margin-left: 206px;
+    visibility: hidden;
     line-height: 42px;
     white-space: nowrap;
 }
 
+
 .flyout-right.on {
     -webkit-transition: all .5s ease;
     visibility: visible;
-    margin-left: -255px;
+    position: absolute;
+    margin: 0px;
 }
 
 #DetailsPanel {
