@@ -26,7 +26,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
   function redraw() {
     var lat = parseFloat($stateParams.lat) || 0;
     var lng = parseFloat($stateParams.lng) || 0;
-    var zoom = parseFloat($stateParams.zoom) || 17;
+    var zoom = parseFloat($stateParams.zoom) || 8;
     layersStr = $stateParams.layers || LayerConfig.osm.url;
     var layers = layersStr.split(',');
 
@@ -62,15 +62,13 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
       zoom: zoom
     };
 
-    if (typeof map === 'object') {
+    if (typeof map === 'object' && (c.lat != 0 && c.lng !=0)) {
       map.setView([c.lat, c.lng], zoom);
     }
 
     lastLayersStr = layersStr;
     lastBasemapUrl = basemapUrl;
   }
-
-  redraw();
 
 
   /***
@@ -80,7 +78,21 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     if ($scope.blur === 'blur' && $state.current.name !== 'landing') {
       $scope.blur = '';
     }
-    var c = $scope.center;
+    var c;
+    if(!$scope.center){
+      var lat = parseFloat($stateParams.lat)   || 0;
+      var lng = parseFloat($stateParams.lng)   || 0;
+      var zoom = parseFloat($stateParams.zoom) || 8;
+
+      c = $scope.center = {
+        lat: lat,
+        lng: lng,
+        zoom: zoom
+      };
+    }
+    else{
+      c = $scope.center;
+    }
     var lat = c.lat.toFixed(6);
     var lng = c.lng.toFixed(6);
     var zoom = c.zoom.toString();
