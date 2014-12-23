@@ -100,9 +100,11 @@ SpatialViewer.run(function ($rootScope, $state, $stateParams) {
 
 SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
-    .when('/default', '/map@0,0,2(satellite,wa)')
+    .when('/default', '/map@' + config.COUNTRIES.India.MapCenter.Latitude + "," +config.COUNTRIES.India.MapCenter.Longitude + ","
+  + config.COUNTRIES.India.MapZoom + '(satellite,wa)')
     .when('/phl', '/map@11.759815,121.893311,6(satellite,phl)')
-    .otherwise(localStorage.getItem('defaultRoute') || '/map@0,0,2(satellite)');
+    .otherwise(localStorage.getItem('defaultRoute') || '/map@'+config.COUNTRIES.India.MapCenter.Latitude+','
+      +config.COUNTRIES.India.MapCenter.Longitude+','+config.COUNTRIES.India.MapZoom+'(satellite,wa)');
 
   $stateProvider
     .state('main', {
@@ -185,6 +187,8 @@ require('./services/LayerConfig');
 require('./services/StoriesConfig');
 require('./services/Vector/VectorProvider');
 require('./services/Donuts');
+require('./factories/india');
+require('./factories/kenya');
 require('./controllers/main');
 require('./controllers/map');
 require('./controllers/details');
@@ -202,4 +206,5 @@ require('./controllers/theme');
 require('./controllers/upload');
 require('./controllers/search');
 require('./controllers/export');
+require('./controllers/countryselect');
 require('../lib/Leaflet.PBFLayer/src/PBFSource.js');

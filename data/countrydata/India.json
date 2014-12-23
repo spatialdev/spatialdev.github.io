@@ -1,0 +1,9 @@
+{
+    "CountryName": "India",
+        "MapCenter": {
+            "Latitude": 26,
+            "Longitude": 85
+        },
+        "MapZoom": 6
+
+}
