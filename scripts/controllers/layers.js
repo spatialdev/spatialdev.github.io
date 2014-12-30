@@ -3,10 +3,13 @@
  *       on 3/27/14.
  */
 
-module.exports = angular.module('SpatialViewer').controller('LayersCtrl', function($scope, $state, $stateParams, LayerConfig, VectorProvider) {
+module.exports = angular.module('SpatialViewer').controller('LayersCtrl', function($http, $scope, $state, $stateParams, LayerConfig,
+                                                                                   VectorProvider, SectorFactory) {
   $scope.params = $stateParams;
   $scope.zoom = parseInt($stateParams.zoom);
   $scope.navTab = 'contextual';
+
+  $scope.sectors = SectorFactory.Sectors[0];
 
   debug.LayerConfig = LayerConfig;
 
@@ -24,22 +27,18 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
   });
 
   $scope.layersPanels = {
-//    'Boundaries': {},
-//    'GeoJSON': {},
-//    'KML': {},
-//    'CSV': {},
-//    'WMS': {},
+    //'Boundaries': {},
+    //'GeoJSON': {},
+    //'KML': {},
+    //'CSV': {},
+    //'WMS': {},
     'Contextual layers:': {}
   };
-
 
   for (var layerKey in LayerConfig) {
 
     // We don't want to show layers that are basemaps, and we don't want to show the find func.
-    if (  typeof LayerConfig[layerKey] === 'function'
-       || layerKey === 'basemaps'
-       || LayerConfig[layerKey].type === 'basemap') {
-
+    if (  typeof LayerConfig[layerKey] === 'function' || layerKey === 'basemaps' || LayerConfig[layerKey].type === 'basemap') {
       continue;
     }
 

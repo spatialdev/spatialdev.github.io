@@ -27,19 +27,20 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
 
   var configLayers = [
     require('../../config/layers/basemaps.js'),
-    require('../../config/layers/csv.js'),
-    require('../../config/layers/geojson.js'),
-    require('../../config/layers/kml.js'),
-    require('../../config/layers/other.js'),
-    require('../../config/layers/pbf.js'),
-    require('../../config/layers/wms.js'),
-    require('../../config/layers/xyz.js')
+    //require('../../config/layers/csv.js'),
+    //require('../../config/layers/geojson.js'),
+    //require('../../config/layers/kml.js'),
+    //require('../../config/layers/other.js'),
+    require('../../config/layers/pbf.js')
+    //require('../../config/layers/wms.js'),
+    //require('../../config/layers/xyz.js')
   ];
 
-  for (var i = 0, len = configLayers.length; i < len; i++) {
+  for (var i = 0, len = configLayers.length;  i < len; i++) {
     var cfg = configLayers[i];
     for (var key in cfg) {
       this[key] = cfg[key];
+      //console.log(this[key]);
     }
   }
 

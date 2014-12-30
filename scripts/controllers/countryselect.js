@@ -3,17 +3,21 @@
  *       on 12/18/14.
  */
 
-module.exports = angular.module('SpatialViewer').controller('CountrySelect', function($scope, IndiaFactory, KenyaFactory) {
-
+module.exports = angular.module('SpatialViewer').controller('CountrySelect', function($http, $scope, IndiaFactory, SectorFactory, KenyaFactory,
+                                                                                      UgandaFactory, BangladeshFactory, TanzaniaFactory, NigeriaFactory) {
     var SelectCountry = {
         default:'India',
-        countryNames: ['India','Bangladesh','Uganda','Kenya','Tanzania']
+        countryNames: ['Bangladesh','Uganda','Kenya','Nigeria','Tanzania','India']
     };
 
-    $scope.selection = "India";
+    var names = SelectCountry.countryNames;
 
+    $scope.selection = 'India';
+
+    //Users Selected Country
     $scope.chooseCountry = function(selected){
         $scope.selection = selected;
+        SectorFactory.setCountry($scope.selection);
     };
 
     $scope.zoomToCountry = function () {
@@ -29,6 +33,7 @@ module.exports = angular.module('SpatialViewer').controller('CountrySelect', fun
             eval(cname+"Factory").CountryData.MapZoom);
     };
 
+    // Alias for Selected Country object
     this.country = SelectCountry;
 
 });

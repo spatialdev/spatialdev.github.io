@@ -20,21 +20,12 @@ config.salesforceUrl = "https://na14.salesforce.com";
  * @type {{India: {MapCenter: {Latitude: number, Longitude: number}}}}
  */
 
-config.COUNTRIES = {
-  'India': {
+config.MapLocation = {
     MapCenter: {
       Latitude: 26,
       Longitude: 85
     },
     MapZoom: 6
-  },
-  'Kenya': {
-    MapCenter: {
-      Latitude: 0.57128,
-      Longitude: 37.789536
-  },
-    MapZoom: 6
-  }
 };
 
 /**

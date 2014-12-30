@@ -29,9 +29,6 @@ SpatialViewer.run(function ($rootScope, $state, $stateParams) {
   };
 
 
-
-
-
   $rootScope.isNotParam = function(paramName) {
     var bool = $stateParams[paramName];
     if (!bool) {
@@ -100,11 +97,11 @@ SpatialViewer.run(function ($rootScope, $state, $stateParams) {
 
 SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
-    .when('/default', '/map@' + config.COUNTRIES.India.MapCenter.Latitude + "," +config.COUNTRIES.India.MapCenter.Longitude + ","
-  + config.COUNTRIES.India.MapZoom + '(satellite,wa)')
-    .when('/phl', '/map@11.759815,121.893311,6(satellite,phl)')
-    .otherwise(localStorage.getItem('defaultRoute') || '/map@'+config.COUNTRIES.India.MapCenter.Latitude+','
-      +config.COUNTRIES.India.MapCenter.Longitude+','+config.COUNTRIES.India.MapZoom+'(satellite,wa)');
+    .when('/default', '/map@' + config.MapLocation.MapCenter.Latitude + "," +config.MapLocation.MapCenter.Longitude + ","
+  + config.MapLocation.MapZoom + '(osm,IndiaCICOS)')
+    .when('/phl', '/map@11.759815,121.893311,6(osm,IndiaCICOS)')
+    .otherwise(localStorage.getItem('defaultRoute') || '/map@'+config.MapLocation.MapCenter.Latitude+','
+      +config.MapLocation.MapCenter.Longitude+','+config.MapLocation.MapZoom+'(osm,IndiaCICOS)');
 
   $stateProvider
     .state('main', {
@@ -182,13 +179,17 @@ angular.module('SpatialViewer').directive('myShow', function($animate) {
   }
 });
 
-
 require('./services/LayerConfig');
 require('./services/StoriesConfig');
 require('./services/Vector/VectorProvider');
 require('./services/Donuts');
 require('./factories/india');
+require('./factories/nigeria');
 require('./factories/kenya');
+require('./factories/uganda');
+require('./factories/tanzania');
+require('./factories/bangladesh');
+require('./factories/sectordata');
 require('./controllers/main');
 require('./controllers/map');
 require('./controllers/details');
@@ -207,4 +208,4 @@ require('./controllers/upload');
 require('./controllers/search');
 require('./controllers/export');
 require('./controllers/countryselect');
-require('../lib/Leaflet.PBFLayer/src/PBFSource.js');
+require('../lib/Leaflet.MapboxVectorTile/src/MVTSource.js');

@@ -5,7 +5,6 @@
 
 module.exports = angular.module('SpatialViewer').controller('MapCtrl', function ($scope, $rootScope, $state, $stateParams, LayerConfig, VectorProvider, $http) {
   var map = L.map('map');
-
   var lastLayersStr = '';
   var lastBasemapUrl = null;
   var basemapLayer = null;
@@ -224,12 +223,12 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         && LayerConfig[overlayName].type.toLowerCase() === 'pbf') {
 
         var cfg = LayerConfig[overlayName];
-        var layer = new L.TileLayer.PBFSource(cfg);
+        var layer = new L.TileLayer.MVTSource(cfg);
         layer.addTo(map);
 
         map.on('click', function (e) {
           //Take the click event and pass it to the group layers.
-          pbfSource.onClick(e, function (evt) {
+          layer.onClick(e, function (evt) {
             if (evt && evt.feature) {
               console.log(['Clicked PBF Feature', evt.feature.properties]);
             }
@@ -238,7 +237,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
         map.on('layerremove', function (removed) {
           //This is the layer that was removed.
-          //If it is a TileLayer.PBFSource, then call a method to actually remove the children, too.
+          //If it is a TileLayer.MVTSource, then call a method to actually remove the children, too.
           if (removed.layer.removeChildLayers) {
             removed.layer.removeChildLayers(map);
           }
