@@ -9,7 +9,10 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
   $scope.zoom = parseInt($stateParams.zoom);
   $scope.navTab = 'contextual';
 
-  $scope.sectors = SectorFactory.Sectors[0];
+  $scope.FinancialSector = SectorFactory.Financial;
+  $scope.HealthSector = SectorFactory.Health;
+  $scope.AggSector = SectorFactory.Agg;
+  $scope.LibrarySector = SectorFactory.Library;
 
   debug.LayerConfig = LayerConfig;
 

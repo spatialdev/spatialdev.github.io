@@ -1,11 +1,10 @@
 module.exports = angular.module('SpatialViewer').factory('SectorFactory', function($http) {
 
     var service = {};
-    var SectorTypes = [];
     var Financial = [];
-    var Health = [];
-    var Agg = [];
     var Library = [];
+    var Agg = [];
+    var Health = [];
     var countryname = '';
 
     service.getJson = function() {
@@ -13,10 +12,12 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
             $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
                 success(function (data) {
                     for (var i = 0; i < data.features.length; i++) {
-                        Financial[i] = {
-                            "type": data.features[i].properties.type,
-                            "count": data.features[i].properties.count_type
-                        };
+                        Financial.push(
+                            {
+                                "type": data.features[i].properties.type,
+                                "count": data.features[i].properties.count_type
+                            }
+                    );
                     }
                 }).
                 error(function (data) {
@@ -25,10 +26,10 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
             $http.get('http://spatialserver.spatialdev.com/services/tables/health_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
                 success(function (data) {
                     for (var i = 0; i < data.features.length; i++) {
-                        Health[i] = {
+                        Health.push({
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type
-                        };
+                        });
                     }
                 }).
                 error(function (data) {
@@ -37,22 +38,24 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
             $http.get('http://spatialserver.spatialdev.com/services/tables/agriculture_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
                 success(function (data) {
                     for (var i = 0; i < data.features.length; i++) {
-                        Agg[i] = {
+                        Agg.push({
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type
-                        };
+                        });
                     }
+                    SectorTypes.push(Agg);
+
                 }).
                 error(function (data) {
                     alert(data);
                 });
-            $http.get('http://spatialserver.spatialdev.com/services/tables/health_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
+            $http.get('http://spatialserver.spatialdev.com/services/tables/library_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
                 success(function (data) {
                     for (var i = 0; i < data.features.length; i++) {
-                        Library[i] = {
+                        Library.push({
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type
-                        };
+                        });
                     }
                 }).
                 error(function (data) {
@@ -68,9 +71,11 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
         this.getJson();
     }
 
-    SectorTypes[0] = Financial;
 
-    service.Sectors = SectorTypes;
+    service.Financial = Financial;
+    service.Agg = Agg;
+    service.Library = Library;
+    service.Health = Health;
 
     return service;
 

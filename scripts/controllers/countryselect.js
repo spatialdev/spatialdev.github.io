@@ -13,6 +13,7 @@ module.exports = angular.module('SpatialViewer').controller('CountrySelect', fun
     var names = SelectCountry.countryNames;
 
     $scope.selection = 'India';
+    SectorFactory.setCountry($scope.selection);
 
     //Users Selected Country
     $scope.chooseCountry = function(selected){

@@ -306,15 +306,32 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
-                        <li class="active"><a class="a-nav-tab" ng-click="navTab='contextual'" data-toggle="tab">Map
-                            Layers</a></li>
-                        <li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Uploaded Data</a></li>
+                        <li class="active">
+                            <a class="a-nav-tab" ng-click="navTab='financial'" data-toggle="tab">
+                                Financial
+                            </a>
+                        </li>
+                        <li>
+                            <a class="a-nav-tab" ng-click="navTab='health'" data-toggle="tab">
+                                Health
+                            </a>
+                        </li>
+                        <li>
+                            <a class="a-nav-tab" ng-click="navTab='library'" data-toggle="tab">
+                                Library
+                            </a>
+                        </li>
+                        <li>
+                            <a class="a-nav-tab" ng-click="navTab='agg'" data-toggle="tab">
+                                Agriculture
+                            </a>
+                        </li>
 
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content scrollable">
-                        <div ng-class="{active: navTab==='contextual'}" class="tab-pane">
+                        <div ng-class="{active: navTab==='financial'}" class="tab-pane">
 
                             <!--<h4>Administrative boundary levels:</h4>-->
 
@@ -368,43 +385,51 @@
                             <!--</div>-->
 
                             <div ng-repeat="(panelName, panel) in layersPanels">
-                                <h4>{{panelName}}</h4>
-                                <label class="checkbox" ng-repeat="(layerKey, layer) in panel">
-                                    <input type="checkbox" ng-model="layer.active"
-                                           ng-change="toggleMapLayer(layerKey, layer)">
-                                    {{layer.name || layer.properties.title || layerKey}}
+                                <!--<h4>{{panelName}}</h4>-->
+                                <!--<label class="checkbox" ng-repeat="(layerKey, layer) in panel">-->
+                                    <!--<input type="checkbox" ng-model="layer.active"-->
+                                           <!--ng-change="toggleMapLayer(layerKey, layer)">-->
+                                    <!--{{layer.name || layer.properties.title || layerKey}}-->
+                                <!--</label>-->
+                            </div>
+                            <!--<H4>sector types</H4>-->
+                            <div ng-repeat="names in FinancialSector">
+                                <label class="checkbox">
+                                    <input type="checkbox">
+                                        {{names.type}} ({{names.count}})
                                 </label>
                             </div>
-                            <H4>sector types</H4>
-                            <p ng-repeat="names in sectors">
-                                {{names.type}} ({{names.count}}) :
-                            </p>
 
                             <br/>
                         </div>
-                        <div ng-class="{active: navTab==='uploaded'}" class="tab-pane">
-                            <div ng-show="numGists===0">
-                                <br/>
-
-                                <p>
-                                    This is a list of spatial data layers you have uploaded to Github.
-                                </p>
-
-                                <p>
-                                    You haven't uploaded any data yet. Click on the <a ui-sref="upload(params)">Upload
-                                    Data</a>
-                                    button on the top right menu for more information.
-                                </p>
+                        <div ng-class="{active: navTab==='health'}" class="tab-pane">
+                            <div ng-repeat="names in HealthSector">
+                                <label class="checkbox">
+                                    <input type="checkbox">
+                                    {{names.type}} ({{names.count}})
+                                </label>
                             </div>
-                            <div ng-show="numGists>0">
-                                <h4>Layers hosted on Github:</h4>
-                                <label class="checkbox" ng-repeat="gist in gists">
-                                    <input type="checkbox" ng-model="gist.active"
-                                           ng-change="toggleMapLayer(gist.url, gist)">
-                                    {{gist.name}} (<a href="{{gist.htmlUrl}}" target="_blank">View on Github</a>)
+
+                        </div>
+
+                        <div ng-class="{active: navTab==='library'}" class="tab-pane">
+                            <div ng-repeat="names in LibrarySector">
+                                <label class="checkbox">
+                                    <input type="checkbox">
+                                    {{names.type}} ({{names.count}})
                                 </label>
                             </div>
                         </div>
+
+                        <div ng-class="{active: navTab==='agg'}" class="tab-pane">
+                            <div ng-repeat="names in AggSector">
+                                <label class="checkbox">
+                                    <input type="checkbox">
+                                    {{names.type}} ({{names.count}})
+                                </label>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
