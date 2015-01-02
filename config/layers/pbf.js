@@ -401,7 +401,6 @@ layer.IndiaCICOS = {
 
   getIDForLayerFeature: function (feature) {
     return feature.properties.id;
-
   },
 
   /**
@@ -472,7 +471,7 @@ layer.IndiaCICOS = {
   switch (type) {
     case 1: //'Point'
             // unselected
-      style.color = '#3086AB';
+      style.color = CICO_Config[feature.properties.type].color;
       style.radius = ScaleDependentPointRadius;
       // selected
       selected.color = 'rgba(255,255,0,0.5)';
@@ -508,58 +507,58 @@ layer.IndiaCICOS = {
     //If nearby tool (or any tool) is active, then abort.
     //if(_FSP.ToolMaster.activeTool.active == true) return;
 
-    var buffer = _FSP.ConfettiLoader.clickToBuffer(evt);
-
-    //If all are unchecked, then exit out of here
-    if(Object.keys(_FSP.LayerListBuilder.GetFilterObject()).length == 0) return;
-
-    _FSP.TableBuilder.scrapeCICOSelections();
-
-    //We have the buffer as geojson.  Send it to the point table to intersect
-    var tablePostArgs = {
-      returnfields: 'lat,lng,name,assoc_bank,assoc_business,form_submitted,type,id,photos',
-      format: 'geojson',
-      where: _FSP.ProximityTool.buildCICOQueryExpression(_FSP.TableBuilder.CICOSelections),
-      returnGeometry: 'yes',
-      intersects: buffer,
-      limit: 200 //add a limit of 200 so we don't get carried away
-    };
-    var pointUrl = "http://spatialserver.spatialdev.com/services/tables/cicos_2014/query";
-
-    $.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
-      //GeoJSON result of points
-      if (!points || points.error) {
-        console.error('Unable to fetch feature: ' + points.error);
-        return;
-      }
-
-      //point is a featurecollection. open the panel and show some stuff.
-      if (points && points.features && points.features.length > 0) {
-        var html = _FSP.PopupBuilder.addResults(points.features, _FSP.Config.CICO_LAYERS, 'fsp', function (currentPoint) {
-          if (currentPoint) {
-            //Highlight point.
-            var layers = pbfSource.getLayers();
-            if (layers) {
-              var layer = layers[Object.keys(layers)[0]]; //Cico layer
-              if (layer) {
-                //try to pluck vtf
-                _FSP.MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
-                if (_FSP.MapBuilder.selectedConfetti) {
-                  //Set feature to be big and high z-index
-                  _FSP.MapBuilder.selectedConfetti.select();
-                  if (_FSP.MapBuilder.previouslySelectedConfetti) _FSP.MapBuilder.previouslySelectedConfetti.deselect();
-                  _FSP.MapBuilder.previouslySelectedConfetti = _FSP.MapBuilder.selectedConfetti;
-                }
-              }
-            }
-          }
-        });
-        if(html){
-          openCICODetails(html);
-        }
-      }
-    });
-
+  //  var buffer = _FSP.ConfettiLoader.clickToBuffer(evt);
+  //
+  //  //If all are unchecked, then exit out of here
+  //  if(Object.keys(_FSP.LayerListBuilder.GetFilterObject()).length == 0) return;
+  //
+  //  _FSP.TableBuilder.scrapeCICOSelections();
+  //
+  //  //We have the buffer as geojson.  Send it to the point table to intersect
+  //  var tablePostArgs = {
+  //    returnfields: 'lat,lng,name,assoc_bank,assoc_business,form_submitted,type,id,photos',
+  //    format: 'geojson',
+  //    where: _FSP.ProximityTool.buildCICOQueryExpression(_FSP.TableBuilder.CICOSelections),
+  //    returnGeometry: 'yes',
+  //    intersects: buffer,
+  //    limit: 200 //add a limit of 200 so we don't get carried away
+  //  };
+  //  var pointUrl = "http://spatialserver.spatialdev.com/services/tables/cicos_2014/query";
+  //
+  //  $.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+  //    //GeoJSON result of points
+  //    if (!points || points.error) {
+  //      console.error('Unable to fetch feature: ' + points.error);
+  //      return;
+  //    }
+  //
+  //    //point is a featurecollection. open the panel and show some stuff.
+  //    if (points && points.features && points.features.length > 0) {
+  //      var html = _FSP.PopupBuilder.addResults(points.features, _FSP.Config.CICO_LAYERS, 'fsp', function (currentPoint) {
+  //        if (currentPoint) {
+  //          //Highlight point.
+  //          var layers = pbfSource.getLayers();
+  //          if (layers) {
+  //            var layer = layers[Object.keys(layers)[0]]; //Cico layer
+  //            if (layer) {
+  //              //try to pluck vtf
+  //              _FSP.MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
+  //              if (_FSP.MapBuilder.selectedConfetti) {
+  //                //Set feature to be big and high z-index
+  //                _FSP.MapBuilder.selectedConfetti.select();
+  //                if (_FSP.MapBuilder.previouslySelectedConfetti) _FSP.MapBuilder.previouslySelectedConfetti.deselect();
+  //                _FSP.MapBuilder.previouslySelectedConfetti = _FSP.MapBuilder.selectedConfetti;
+  //              }
+  //            }
+  //          }
+  //        }
+  //      });
+  //      if(html){
+  //        openCICODetails(html);
+  //      }
+  //    }
+  //  });
+  //
   }
 
 };
@@ -567,177 +566,196 @@ layer.IndiaCICOS = {
 // All possible CICO layer (combined from all countries)
 var CICO_Config = {
   'Offsite ATMs': {
-    ClusterColor: '#3086AB',
-    InfoLabel: 'Offsite ATM',
-    Providers: null,
-    zIndex: 3
+    color: '#a4c78c',
+    infoLabel: 'Offsite ATM',
+    providers: null,
+    zIndex: 6
   },
   'Bank Branches': {
-    ClusterColor: '#977C00',
-    InfoLabel: 'Bank Branch',
-    Providers: null,
-    zIndex: 2
+    color: '#977C00',
+    infoLabel: 'Bank Branch',
+    providers: null,
+    zIndex: 5
   },
   'MFIs': {
-    ClusterColor: '#9B242D',
-    InfoLabel: 'MFI',
-    Providers: null,
-    zIndex: 1
+    color: '#977c00',
+    infoLabel: 'MFI',
+    providers: null,
+    zIndex: 7
   },
   'SACCOs': {
-    ClusterColor: '#cf8a57',
-    InfoLabel: 'SACCO',
-    Providers: null,
+    color: '#cf8a57',
+    infoLabel: 'SACCO',
+    providers: null,
     zIndex: 10
   },
   'Mobile Money Agent': {
-    ClusterColor: '#8CB7C7',
-    InfoLabel: 'Mobile Money Agent',
-    Providers: null,
+    color: '#8CB7C7',
+    infoLabel: 'Mobile Money Agent',
+    providers: null,
     zIndex: -1
   },
   'MDIs': {
-    ClusterColor: '#825D99',
-    InfoLabel: 'MDI',
-    Providers: null,
+    color: '#825D99',
+    infoLabel: 'MDI',
+    providers: null,
     zIndex: 6
   },
   'Credit Institution': {
-    ClusterColor: '#6CA76B',
-    InfoLabel: 'Credit Institution',
-    Providers: null,
+    color: '#6CA76B',
+    infoLabel: 'Credit Institution',
+    providers: null,
     zIndex: 5
   },
   'MFBs': {
-    ClusterColor: '#825D99',
-    InfoLabel: 'MFB',
-    Providers: null,
+    color: '#825D99',
+    infoLabel: 'MFB',
+    providers: null,
     zIndex: 7
   },
   'Motor Parks': {
-    ClusterColor: '#bd85b3',
-    InfoLabel: 'Motor Parks',
-    Providers: null,
+    color: '#bd85b3',
+    infoLabel: 'Motor Parks',
+    providers: null,
     zIndex: 7
   },
   'Mobile Network Operator Outlets': {
-    ClusterColor: '#a2a2a2',
-    InfoLabel: 'Mobile Network Operator Outlets',
-    Providers: null,
+    color: '#a2a2a2',
+    infoLabel: 'Mobile Network Operator Outlets',
+    providers: null,
     zIndex: 0
   },
   'Post Offices': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'Post Offices',
-    Providers: null,
-    zIndex: 5
+    color: '#FFFF00',
+    infoLabel: 'Post Offices',
+    providers: null,
+    zIndex: 4
   },
   'Post Office': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'Post Offices',
-    Providers: null,
+    color: '#80ad7b',
+    infoLabel: 'Post Offices',
+    providers: null,
     zIndex: 6
   },
   'Bus Stand': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'Bus Stands',
-    Providers: null,
+    color: '#80ad7b',
+    infoLabel: 'Bus Stands',
+    providers: null,
     zIndex: 6
   },
   'Bus Stands': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'Bus Stands',
-    Providers: null,
+    color: '#80ad7b',
+    infoLabel: 'Bus Stands',
+    providers: null,
     zIndex: 6
-  }
-
+  },
 
   //Kenya
-  ,
   'Insurance Providers': {
-    ClusterColor: '#3086AB',
-    InfoLabel: 'Insurance Providers',
-    Providers: null,
+    color: '#3086AB',
+    infoLabel: 'Insurance providers',
+    providers: null,
     zIndex: 6
   },
   'Money Transfer Service': {
-    ClusterColor: '#977C00',
-    InfoLabel: 'Money Transfer Service',
-    Providers: null,
+    color: '#977C00',
+    infoLabel: 'Money Transfer Service',
+    providers: null,
     zIndex: 6
   },
   'Dev Finance': {
-    ClusterColor: '#9B242D',
-    InfoLabel: 'Dev Finance',
-    Providers: null,
+    color: '#9B242D',
+    infoLabel: 'Dev Finance',
+    providers: null,
     zIndex: 6
   },
   'Forex Bureaus': {
-    ClusterColor: '#cf8a57',
-    InfoLabel: 'Forex Bureaus',
-    Providers: null,
+    color: '#cf8a57',
+    infoLabel: 'Forex Bureaus',
+    providers: null,
     zIndex: 6
   },
   'Cap Markets': {
-    ClusterColor: '#825D99',
-    InfoLabel: 'Cap Markets',
-    Providers: null,
+    color: '#825D99',
+    infoLabel: 'Cap Markets',
+    providers: null,
     zIndex: 6
   },
   'Pension Providers': {
-    ClusterColor: '#a2a2a2',
-    InfoLabel: 'Pension Providers',
-    Providers: null,
+    color: '#a2a2a2',
+    infoLabel: 'Pension providers',
+    providers: null,
     zIndex: 6
   },
   'Purchase Lease Factoring': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'Purchase Lease Factoring',
-    Providers: null,
+    color: '#80ad7b',
+    infoLabel: 'Purchase Lease Factoring',
+    providers: null,
     zIndex: 6
   },
   'Bank Agent': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'Bank Agent',
-    Providers: null,
+    color: '#80ad7b',
+    infoLabel: 'Bank Agent',
+    providers: null,
     zIndex: 6
   },
   'Bank and Mortgage': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'Banks and Mortgage',
-    Providers: null,
+    color: '#80ad7b',
+    infoLabel: 'Banks and Mortgage',
+    providers: null,
     zIndex: 6
   },
   'Commercial Bank': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'Commercial Bank',
-    Providers: null,
-    zIndex: 6
+    color: '#9b242d',
+    infoLabel: 'Commercial Bank',
+    providers: null,
+    zIndex: 3
   },
+
   'PostBank': {
-    ClusterColor: '#bd85b3',
-    InfoLabel: 'Post Bank',
-    Providers: null,
+    color: '#bd85b3',
+    infoLabel: 'Post Bank',
+    providers: null,
     zIndex: 6
   },
 
   //Nigeria New Post Offices
   'NIPOST Post Office': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'NIPOST Post Offices',
-    Providers: null,
+    color: '#80ad7b',
+    infoLabel: 'NIPOST Post Offices',
+    providers: null,
     zIndex: 6
   },
   'NIPOST Post Shop': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'NIPOST Post Shops',
-    Providers: null,
+    color: '#80ad7b',
+    infoLabel: 'NIPOST Post Shops',
+    providers: null,
     zIndex: 6
   },
   'NIPOST Postal Agency': {
-    ClusterColor: '#80ad7b',
-    InfoLabel: 'NIPOST Postal Agencies',
-    Providers: null,
+    color: '#80ad7b',
+    infoLabel: 'NIPOST Postal Agencies',
+    providers: null,
     zIndex: 6
+  },
+
+  //India
+  'Postal Outlets': {
+    color: '#ce6b29',
+    infoLabel: 'Postal Outlets',
+    providers: null,
+    zIndex: 3
+  },
+  'Commercial Banks': {
+    color: '#3086ab',
+    infoLabel: 'Commercial Banks',
+    providers: null,
+    zIndex: 2
+  },
+  'Bank Customer Service Points': {
+    color: '#9b242d',
+    infoLabel: 'Bank Customer Service Points',
+    providers: null,
+    zIndex: 4
   }
 };

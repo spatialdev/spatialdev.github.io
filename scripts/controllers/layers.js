@@ -156,6 +156,9 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
 
   };
 
+  $scope.alertnow = function(){
+    alert("test");
+  };
 
   $scope.listGists = function () {
     $scope.gists = gists.fetch();

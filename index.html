@@ -395,7 +395,7 @@
                             <!--<H4>sector types</H4>-->
                             <div ng-repeat="names in FinancialSector">
                                 <label class="checkbox">
-                                    <input type="checkbox">
+                                    <input type="checkbox" ng-model="val" ng-change="alertnow()">
                                         {{names.type}} ({{names.count}})
                                 </label>
                             </div>
