@@ -13,6 +13,37 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
   $scope.HealthSector = SectorFactory.Health;
   $scope.AggSector = SectorFactory.Agg;
   $scope.LibrarySector = SectorFactory.Library;
+  $scope.checkedBool = "Check All";
+  $scope.SelectedTab = 'financial';
+
+  // Get selected tab
+  $scope.setSelectedSector = function(selection){
+    $scope.SelectedTab = selection;
+  }
+
+  // Check/Uncheck All click events
+  $scope.checkAll = function () {
+    if ($scope.selectedAll) {
+      $scope.selectedAll = false;
+      $scope.checkedBool = "Check All";
+    } else {
+      $scope.selectedAll = true;
+      $scope.checkedBool = "Uncheck All";
+    }
+
+    switch($scope.SelectedTab) {
+      case 'financial':
+        angular.forEach($scope.FinancialSector, function (names) {names.Selected = $scope.selectedAll;});
+      case 'health':
+        angular.forEach($scope.HealthSector, function (names) {names.Selected = $scope.selectedAll;});
+      case 'agg':
+        angular.forEach($scope.AggSector, function (names) {names.Selected = $scope.selectedAll;});
+      case 'library':
+        angular.forEach($scope.LibrarySector, function (names) {names.Selected = $scope.selectedAll;});
+      default:
+        angular.forEach($scope.FinancialSector, function (names) {names.Selected = $scope.selectedAll;});
+    }
+  };
 
   debug.LayerConfig = LayerConfig;
 

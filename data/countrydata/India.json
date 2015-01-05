@@ -5,7 +5,7 @@
         "Longitude": 85
     },
     "MapZoom": 6,
-    "FinancialBlastURL": "http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype",
+    "FinancialBlastURL": "http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype",
     "LibraryBlastURL": "http://spatialserver.spatialdev.com/services/tables/library_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype",
     "HealthBlastURL": "http://spatialserver.spatialdev.com/services/tables/health_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype",
     "AggBlastURL": "http://spatialserver.spatialdev.com/services/tables/agriculture_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype"

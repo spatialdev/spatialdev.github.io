@@ -5,11 +5,11 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
     var Library = [];
     var Agg = [];
     var Health = [];
-    var countryname = '';
+    var countryname = 'India';
 
     service.getJson = function() {
         if (countryname == 'India') {
-            $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27%20and%20state%3D%27Bihar%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
+            $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
                 success(function (data) {
                     for (var i = 0; i < data.features.length; i++) {
                         Financial.push(
@@ -43,7 +43,6 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                             "count": data.features[i].properties.count_type
                         });
                     }
-                    SectorTypes.push(Agg);
 
                 }).
                 error(function (data) {
@@ -65,17 +64,18 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
             alert('No country Selected');
         }
     }
+    service.getJson();
 
     service.setCountry = function(country){
         countryname = country;
         this.getJson();
     }
 
-
     service.Financial = Financial;
     service.Agg = Agg;
     service.Library = Library;
     service.Health = Health;
+    service.selectedCountry = countryname;
 
     return service;
 

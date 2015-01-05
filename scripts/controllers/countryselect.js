@@ -12,13 +12,14 @@ module.exports = angular.module('SpatialViewer').controller('CountrySelect', fun
 
     var names = SelectCountry.countryNames;
 
-    $scope.selection = 'India';
-    SectorFactory.setCountry($scope.selection);
+    $scope.selection = SelectCountry.default;
+    SectorFactory.selectedCountry = $scope.selection;
 
     //Users Selected Country
     $scope.chooseCountry = function(selected){
         $scope.selection = selected;
-        SectorFactory.setCountry($scope.selection);
+        SectorFactory.selectedCountry = $scope.selection;
+        //SectorFactory.setCountry($scope.selection);
     };
 
     $scope.zoomToCountry = function () {
