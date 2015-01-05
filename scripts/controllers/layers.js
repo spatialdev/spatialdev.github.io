@@ -13,35 +13,73 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
   $scope.HealthSector = SectorFactory.Health;
   $scope.AggSector = SectorFactory.Agg;
   $scope.LibrarySector = SectorFactory.Library;
-  $scope.checkedBool = "Check All";
+  $scope.checkedBool = "Uncheck All";
   $scope.SelectedTab = 'financial';
 
   // Get selected tab
   $scope.setSelectedSector = function(selection){
     $scope.SelectedTab = selection;
+    console.log(selection);
   }
+
+  // Check box are checked by default
+  $scope.FinancialSector.selectedAll = true;
+  $scope.HealthSector.selectedAll = true;
+  $scope.AggSector.selectedAll = true;
+  $scope.LibrarySector.selectedAll = true;
+
 
   // Check/Uncheck All click events
   $scope.checkAll = function () {
-    if ($scope.selectedAll) {
-      $scope.selectedAll = false;
-      $scope.checkedBool = "Check All";
-    } else {
-      $scope.selectedAll = true;
-      $scope.checkedBool = "Uncheck All";
-    }
-
     switch($scope.SelectedTab) {
       case 'financial':
-        angular.forEach($scope.FinancialSector, function (names) {names.Selected = $scope.selectedAll;});
+        if ($scope.FinancialSector.selectedAll) {
+          $scope.FinancialSector.selectedAll = false;
+          $scope.checkedBool = "Check All";
+        } else {
+          $scope.FinancialSector.selectedAll = true;
+          $scope.checkedBool = "Uncheck All";
+        }
+        angular.forEach($scope.FinancialSector, function (names) {names.selected = $scope.FinancialSector.selectedAll;});
+        break;
+
       case 'health':
-        angular.forEach($scope.HealthSector, function (names) {names.Selected = $scope.selectedAll;});
+        if ($scope.HealthSector.selectedAll) {
+          $scope.HealthSector.selectedAll = false;
+          $scope.checkedBool = "Check All";
+        } else {
+          $scope.HealthSector.selectedAll = true;
+          $scope.checkedBool = "Uncheck All";
+        }
+        angular.forEach($scope.HealthSector, function (names) {
+          names.selected = $scope.HealthSector.selectedAll;
+        });
+        break;
+
       case 'agg':
-        angular.forEach($scope.AggSector, function (names) {names.Selected = $scope.selectedAll;});
+        if ($scope.AggSector.selectedAll) {
+          $scope.AggSector.selectedAll = false;
+          $scope.checkedBool = "Check All";
+        } else {
+          $scope.AggSector.selectedAll = true;
+          $scope.checkedBool = "Uncheck All";
+        }
+        angular.forEach($scope.AggSector, function (names) {names.selected = $scope.AggSector.selectedAll;});
+        break;
+
       case 'library':
-        angular.forEach($scope.LibrarySector, function (names) {names.Selected = $scope.selectedAll;});
+        if ($scope.LibrarySector.selectedAll) {
+          $scope.LibrarySector.selectedAll = false;
+          $scope.checkedBool = "Check All";
+        } else {
+          $scope.LibrarySector.selectedAll = true;
+          $scope.checkedBool = "Uncheck All";
+        }
+        angular.forEach($scope.LibrarySector, function (names) {names.selected = $scope.LibrarySector.selectedAll;});
+        break;
       default:
-        angular.forEach($scope.FinancialSector, function (names) {names.Selected = $scope.selectedAll;});
+        angular.forEach($scope.FinancialSector, function (names) {names.selected = $scope.selectedAll;});
+            break;
     }
   };
 

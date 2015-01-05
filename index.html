@@ -393,29 +393,25 @@
                                 <!--</label>-->
                             </div>
                             <!--<H4>sector types</H4>-->
-                            <div>
-                                <label class="checkbox">
-                                    <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="checkAll()">
-                                        {{checkedBool}}
-                                </label>
-
-                                <label ng-repeat="names in FinancialSector" class="checkbox">
-                                    <input type="checkbox" ng-model="names.Selected">
-                                        {{names.type}} ({{names.count}})
-                                </label>
-                            </div>
-
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="checkAll()">
+                                    {{checkedBool}}
+                            </label>
+                            <label ng-repeat="names in FinancialSector" class="checkbox">
+                                <input type="checkbox" ng-model="names.selected" ng-init="names.selected = true">
+                                    {{names.type}} ({{names.count}})
+                            </label>
                             <br/>
                         </div>
                         <div ng-class="{active: navTab==='health'}" class="tab-pane">
                             <div>
                                 <label class="checkbox">
-                                    <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="checkAll()">
+                                    <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="checkAll()">
                                     {{checkedBool}}
                                 </label>
 
                                 <label ng-repeat="names in HealthSector" class="checkbox">
-                                    <input type="checkbox" ng-model="names.Selected">
+                                    <input type="checkbox" ng-model="names.selected" ng-init="names.selected=true">
                                     {{names.type}} ({{names.count}})
                                 </label>
                             </div>
@@ -423,26 +419,28 @@
                         <div ng-class="{active: navTab==='library'}" class="tab-pane">
                             <div>
                                 <label class="checkbox">
-                                    <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="checkAll()">
+                                    <input type="checkbox" ng-model="LibrarySector.selectedAll" ng-click="checkAll()">
                                     {{checkedBool}}
                                 </label>
 
                                 <label ng-repeat="names in LibrarySector" class="checkbox">
-                                    <input type="checkbox" ng-model="names.Selected">
+                                    <input type="checkbox" ng-model="names.selected" ng-init="names.selected=true">
                                     {{names.type}} ({{names.count}})
                                 </label>
                             </div>
                         </div>
                         <div ng-class="{active: navTab==='agg'}" class="tab-pane">
-                            <label class="checkbox">
-                                <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="checkAll()">
-                                {{checkedBool}}
-                            </label>
+                            <div>
+                                <label class="checkbox">
+                                    <input type="checkbox" ng-model="AggSector.selectedAll" ng-click="checkAll()">
+                                    {{checkedBool}}
+                                </label>
 
-                            <label ng-repeat="names in AggSector" class="checkbox">
-                                <input type="checkbox" ng-model="names.Selected">
-                                {{names.type}} ({{names.count}})
-                            </label>
+                                <label ng-repeat="names in AggSector" class="checkbox">
+                                    <input type="checkbox" ng-model="names.selected" ng-init="names.selected=true">
+                                    {{names.type}} ({{names.count}})
+                                </label>
+                            </div>
                         </div>
 
                     </div>
