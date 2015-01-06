@@ -192,8 +192,6 @@ require('./factories/bangladesh');
 require('./factories/sectordata');
 require('./factories/CICOFilter');
 require('./factories/HealthFilter');
-require('./factories/LibraryFilter');
-require('./factories/AggFilter');
 require('./controllers/main');
 require('./controllers/map');
 require('./controllers/details');

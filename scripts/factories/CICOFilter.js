@@ -1,6 +1,6 @@
 /**
  * Created by Daniel Baah <dbaah@spatialdev.com>
- *       on 1/6/15.
+ *       on 12/22/14.
  */
 
 module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', function () {
