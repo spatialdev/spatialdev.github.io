@@ -70,7 +70,12 @@
         </div>
 
         <div class="NavButtonGroup btn-group">
-
+            <button type="button" class="btn btn-default" ng-mouseenter="isStoriesActive = isNotParam('stories')"
+                    ng-mouseleave="isStoriesActive=false"
+                    ng-click="toggleParam('stories')"
+                    ng-class="{on: isParam('stories')}">
+                <i class="icon-5_legend"></i>
+            </button>
             <button type="button" class="btn btn-default" ng-mouseenter="isLayersActive = isNotParam('layers-panel')"
                     ng-mouseleave="isLayersActive=false"
                     ng-click="toggleParam('layers-panel')"
@@ -78,11 +83,11 @@
                 <i class="icon-3_map_layers"></i>
             </button>
 
-            <button type="button" class="btn btn-default" ng-mouseenter="isStoriesActive = isNotParam('stories')"
-                    ng-mouseleave="isStoriesActive=false"
-                    ng-click="toggleParam('stories')"
-                    ng-class="{on: isParam('stories')}">
-                <i class="icon-5_legend"></i>
+            <button type="button" class="btn btn-default" ng-mouseenter="isFiltersActive = isNotParam('filters-panel')"
+                    ng-mouseleave="isFiltersActive=false"
+                    ng-click="toggleParam('filters-panel')"
+                    ng-class="{on: isParam('filters-panel')}">
+                <i class="icon-4_filters"></i>
             </button>
             <button type="button" class="btn btn-default" ng-mouseenter="isInfoActive = isNotParam('info')"
                     ng-mouseleave="isInfoActive=false"
@@ -104,16 +109,16 @@
             <div id="FlyoutLogoPlaceHolder"></div>
             <!-- the container for the sliding nav button tooltips -->
             <div class="NavFlyoutGroup">
-                <div class="flyout" ng-class="{on: isLayersActive}">
-                    Map Layers
-                </div>
                 <div class="flyout" ng-class="{on: isStoriesActive}">
                     Stories
                 </div>
-                <div class="flyout" ng-class="{on: isInfoActive}">
-                    Info
+                <div class="flyout" ng-class="{on: isLayersActive}">
+                    Layers
                 </div>
-                <div class="flyout" ng-class="{on: isLegendActive}" style="visibility: hidden;">
+                <div class="flyout" ng-class="{on: isFiltersActive}">
+                    Filters
+                </div>
+                <div class="flyout" ng-class="{on: isLegendActive}">
                     Legend
                 </div>
                 <div class="flyout" ng-class="{on: isBasemapsActive}">
@@ -307,7 +312,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a class="a-nav-tab" ng-click="navTab='contextual'; setSelectedSector(navTab)" data-toggle="tab">
+                            <a class="a-nav-tab" ng-click="navTab='financial'; setSelectedSector(navTab)" data-toggle="tab">
                                 Financial
                             </a>
                         </li>
@@ -331,79 +336,79 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content scrollable" >
-                        <div ng-class="{active: navTab==='contextual'}" class="tab-pane active">
+                        <!--<div ng-class="{active: navTab==='financial'}" class="tab-pane active">-->
 
-                            <!--<h4>Administrative boundary levels:</h4>-->
+                            <!--&lt;!&ndash;<h4>Administrative boundary levels:</h4>&ndash;&gt;-->
 
-                            <!--<div class="radio">-->
-                                <!--<label>-->
-                                    <!--<input type="radio" ng-model="gadmLevel" value="auto">-->
-                                    <!--Automatic-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="radio">-->
-                                <!--<label>-->
-                                    <!--<input type="radio" ng-model="gadmLevel" value="-1">-->
-                                    <!--ARC - American Red Cross Regions-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="radio">-->
-                                <!--<label>-->
-                                    <!--<input type="radio" ng-model="gadmLevel" value="0">-->
-                                    <!--0. Countries-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="radio">-->
-                                <!--<label ng-class="{'disabled-radio-label': zoom < 6}">-->
-                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 6" value="1">-->
-                                    <!--1. State / Province-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="radio">-->
-                                <!--<label ng-class="{'disabled-radio-label': zoom < 8}">-->
-                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 8" value="2">-->
-                                    <!--2. County-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="radio">-->
-                                <!--<label ng-class="{'disabled-radio-label': zoom < 9}">-->
-                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 9" value="3">-->
-                                    <!--3. Level 3-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="radio">-->
-                                <!--<label ng-class="{'disabled-radio-label': zoom < 11}">-->
-                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 11" value="4">-->
-                                    <!--4. Level 4-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="radio">-->
-                                <!--<label ng-class="{'disabled-radio-label': zoom < 13}">-->
-                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 13" value="5">-->
-                                    <!--5. Level 5-->
-                                <!--</label>-->
-                            <!--</div>-->
+                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" value="auto">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;Automatic&ndash;&gt;-->
+                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" value="-1">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;ARC - American Red Cross Regions&ndash;&gt;-->
+                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" value="0">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;0. Countries&ndash;&gt;-->
+                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 6}">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 6" value="1">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;1. State / Province&ndash;&gt;-->
+                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 8}">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 8" value="2">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;2. County&ndash;&gt;-->
+                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 9}">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 9" value="3">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;3. Level 3&ndash;&gt;-->
+                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 11}">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 11" value="4">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;4. Level 4&ndash;&gt;-->
+                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 13}">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 13" value="5">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;5. Level 5&ndash;&gt;-->
+                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                            <div ng-repeat="(panelName, panel) in layersPanels">
-                                <!--<h4>{{panelName}}</h4>-->
-                                <!--<label class="checkbox" ng-repeat="(layerKey, layer) in panel">-->
-                                    <!--<input type="checkbox" ng-model="layer.active"-->
-                                           <!--ng-change="toggleMapLayer(layerKey, layer)">-->
-                                    <!--{{layer.name || layer.properties.title || layerKey}}-->
-                                <!--</label>-->
-                            </div>
-                            <!--<H4>sector types</H4>-->
-                            <label class="checkbox">
-                                <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="filterCICO()">
-                                    {{checkedBool}}
-                            </label>
-                            <label ng-repeat="names in FinancialSector" class="checkbox">
-                                <input type="checkbox" ng-model="names.selected"
-                                       ng-click="setCICOSelection(names.type, !names.selected)">
-                                    {{names.type}} ({{names.count}})
-                            </label>
-                            <br/>
-                        </div>
+                            <!--<div ng-repeat="(panelName, panel) in layersPanels">-->
+                                <!--&lt;!&ndash;<h4>{{panelName}}</h4>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label class="checkbox" ng-repeat="(layerKey, layer) in panel">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<input type="checkbox" ng-model="layer.active"&ndash;&gt;-->
+                                           <!--&lt;!&ndash;ng-change="toggleMapLayer(layerKey, layer)">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;{{layer.name || layer.properties.title || layerKey}}&ndash;&gt;-->
+                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<H4>sector types</H4>&ndash;&gt;-->
+                            <!--<label class="checkbox">-->
+                                <!--<input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="filterCICO()">-->
+                                    <!--{{checkedBool}}-->
+                            <!--</label>-->
+                            <!--<label ng-repeat="names in FinancialSector" class="checkbox">-->
+                                <!--<input type="checkbox" ng-model="names.selected"-->
+                                       <!--ng-click="setCICOSelection(names.type, !names.selected)">-->
+                                    <!--{{names.type}} ({{names.count}})-->
+                            <!--</label>-->
+                            <!--<br/>-->
+                        <!--</div>-->
                         <div ng-class="{active: navTab==='health'}" id="health" class="tab-pane" ng-click="filterHealth()">
                             <div>
                                 <label class="checkbox">
@@ -465,32 +470,53 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
-                        <li class="active"><a class="a-nav-tab" ng-click="navTab='sectors'"
-                                              data-toggle="tab">Sectors</a></li>
-                        <li><a class="a-nav-tab" ng-click="navTab='date'" data-toggle="tab">Date</a></li>
-                        <li><a class="a-nav-tab" ng-click="navTab='status'" data-toggle="tab">Status</a></li>
-                        <li><a class="a-nav-tab" ng-click="navTab='budget'" data-toggle="tab">Budget</a></li>
-                        <li><a class="a-nav-tab" ng-click="navTab='custom'" data-toggle="tab">Custom</a></li>
+                        <li class="active"><a class="a-nav-tab" ng-click="navTab='financial'; setSelectedSector(navTab)" data-toggle="tab">Financial</a></li>
+
+                        <li><a class="a-nav-tab" ng-click="navTab='health'; setSelectedSector(navTab)" data-toggle="tab">Health</a></li>
+
+                        <li><a class="a-nav-tab" ng-click="navTab='library'; setSelectedSector(navTab)" data-toggle="tab">Library</a></li>
+
+                        <li><a class="a-nav-tab" ng-click="navTab='agriculture'; setSelectedSector(navTab)" data-toggle="tab">Agriculture</a></li>
+
+                        <!--<li><a class="a-nav-tab" ng-click="navTab='custom'" data-toggle="tab">Custom</a></li>-->
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content scrollable">
-                        <div ng-class="{active: navTab==='sectors'}" class="tab-pane" id="sectors-filter">
-                            Put something in here for a sectors filter...
+                        <div ng-class="{active: navTab==='financial'}" class="tab-pane" id="sectors-filter">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="filterCICO()">
+                                {{checkedBool}}
+                            </label>
+                            <label ng-repeat="names in FinancialSector" class="checkbox">
+                                <input type="checkbox" ng-model="names.selected"
+                                       ng-click="setCICOSelection(names.type, !names.selected)">
+                                {{names.type}} ({{names.count}})
+                            </label>
                         </div>
-                        <div ng-class="{active: navTab==='date'}" class="tab-pane" id="date-filter">
-                            Put something in here for a date filter...
+                        <div ng-class="{active: navTab==='health'}" id="date-filter" class="tab-pane" >
+                            <div>
+                                <label class="checkbox">
+                                    <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth()">
+                                    {{checkedBool}}
+                                </label>
+
+                                <label ng-repeat="names in HealthSector" class="checkbox">
+                                    <input type="checkbox" ng-model="names.selected"
+                                           ng-click="setHealthSelection(names.type, !names.selected)">
+                                    {{names.type}} ({{names.count}})
+                                </label>
+                            </div>
                         </div>
-                        <div ng-class="{active: navTab==='status'}" class="tab-pane" id="status-filter">
+                        <div ng-class="{active: navTab==='library'}" class="tab-pane" id="status-filter">
                             Put something in here for a status filter...
                         </div>
-                        <div ng-class="{active: navTab==='budget'}" class="tab-pane" id="budget-filter">
+                        <div ng-class="{active: navTab==='agriculture'}" class="tab-pane" id="budget-filter">
                             Put something in here for a budget filter...
                         </div>
                         <div ng-class="{active: navTab==='custom'}" class="tab-pane" id="custom-filter">
                             <h4>Filter WHERE Clause</h4>
-                <textarea class="form-control" rows="6" placeholder="Create a custom where clause..."
-                          ng-model="whereClause"></textarea>
+                            <textarea class="form-control" rows="6" placeholder="Create a custom where clause..." ng-model="whereClause"></textarea>
                             <button ng-click="submitFilter()" type="button"
                                     class="btn btn-primary pull-right custom-filter-submit">
                                 Submit

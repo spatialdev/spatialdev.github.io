@@ -11,7 +11,6 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
 
   $scope.FinancialSector = SectorFactory.Financial;
   $scope.FinancialSelections = [];
-
   $scope.HealthSector = SectorFactory.Health;
   $scope.AggSector = SectorFactory.Agg;
   $scope.LibrarySector = SectorFactory.Library;
@@ -28,7 +27,7 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
   // Get selected tab
   $scope.setSelectedSector = function(selection){
     $scope.SelectedTab = selection;
-  }
+  };
 
   $scope.filterCICO = function(){
     CICOFilterFactory.checkAll($scope.FinancialSector,$scope.SelectedTab,$scope.FinancialSector.selectedAll);
@@ -41,8 +40,7 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
   };
 
 
-
-  // Get selected sector from checkbox
+  // Handle filter clicks
   $scope.setCICOSelection = function(sector, checked){
     // Set selected value for each sector based on checkbox
     for(var i=0;i<$scope.FinancialSector.length;i++) {
@@ -51,10 +49,14 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
         break;
       }
     }
-    
-    console.log(sector + " " + checked);
-    console.log($scope.FinancialSelections);
 
+    // Save selected Filters into array
+    $scope.FinancialSelections = [];
+    for(var i=0;i<$scope.FinancialSector.length;i++){
+      if($scope.FinancialSector[i].selected == true){
+        $scope.FinancialSelections.push($scope.FinancialSector[i].type);
+      }
+    }
   };
 
   debug.LayerConfig = LayerConfig;
