@@ -14,7 +14,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   $scope.AggSector = SectorFactory.Agg;
   $scope.LibrarySector = SectorFactory.Library;
 
-
   // Check box are checked by default
   $scope.FinancialSector.selectedAll = true;
   $scope.HealthSector.selectedAll = true;
@@ -31,21 +30,20 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   // Handle Check/Uncheck All filters
   $scope.filterCICO = function(){
     CICOFilterFactory.checkAll($scope.FinancialSector,$scope.SelectedTab,$scope.FinancialSector.selectedAll);
-    //$scope.checkedBool = CICOFilterFactory.checkBool;
+    $scope.checkedBool = CICOFilterFactory.checkBool;
   };
   $scope.filterHealth = function(){
     HealthFilterFactory.checkAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
-    //$scope.checkedBool = HealthFilterFactory.checkBool;
+    $scope.checkedBool = HealthFilterFactory.checkBool;
   };
   $scope.filterLibrary = function(){
     LibraryFilterFactory.checkAll($scope.LibrarySector,$scope.SelectedTab,$scope.LibrarySector.selectedAll);
-    //$scope.checkedBool = HealthFilterFactory.checkBool;
+    $scope.checkedBool = LibraryFilterFactory.checkBool;
   };
   $scope.filterAgg = function(){
     AggFilterFactory.checkAll($scope.AggSector,$scope.SelectedTab,$scope.AggSector.selectedAll);
-    //$scope.checkedBool = HealthFilterFactory.checkBool;
+    $scope.checkedBool = AggFilterFactory.checkBool;
   };
-
 
   // Handle filters clicks events
   $scope.setCICOSelection = function(sector, checked){
@@ -124,7 +122,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     console.log($scope.AggSelections);
   };
-
 
   $scope.submitFilter = function () {
     $stateParams.filters = $scope.whereClause;

@@ -14,9 +14,11 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                 if (selectall) {
                     selectall = false;
                     service.checkBool = "Check All";
+                    console.log(service.checkBool);
                 } else {
                     selectall = true;
                     service.checkBool = "Uncheck All";
+                    console.log(service.checkBool);
                 }
                 angular.forEach(sector, function (names) {
                     names.selected = selectall;
