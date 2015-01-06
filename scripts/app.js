@@ -190,6 +190,8 @@ require('./factories/uganda');
 require('./factories/tanzania');
 require('./factories/bangladesh');
 require('./factories/sectordata');
+require('./factories/CICOFilter');
+require('./factories/HealthFilter');
 require('./controllers/main');
 require('./controllers/map');
 require('./controllers/details');

@@ -4,17 +4,25 @@
  */
 
 module.exports = angular.module('SpatialViewer').controller('LayersCtrl', function($http, $scope, $state, $stateParams, LayerConfig,
-                                                                                   VectorProvider, SectorFactory) {
+                                                                                   VectorProvider, SectorFactory, CICOFilterFactory,HealthFilterFactory) {
   $scope.params = $stateParams;
   $scope.zoom = parseInt($stateParams.zoom);
   $scope.navTab = 'contextual';
 
   $scope.FinancialSector = SectorFactory.Financial;
+  $scope.FinancialSelections = [];
+
   $scope.HealthSector = SectorFactory.Health;
   $scope.AggSector = SectorFactory.Agg;
   $scope.LibrarySector = SectorFactory.Library;
-  $scope.checkedBool = "Uncheck All";
 
+
+  // Check box are checked by default
+  $scope.FinancialSector.selectedAll = true;
+  $scope.HealthSector.selectedAll = true;
+  $scope.AggSector.selectedAll = true;
+  $scope.LibrarySector.selectedAll = true;
+  $scope.checkedBool = "Uncheck All";
   $scope.SelectedTab = 'financial';
 
   // Get selected tab
@@ -22,76 +30,20 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
     $scope.SelectedTab = selection;
   }
 
-  // Check box are checked by default
-  $scope.FinancialSector.selectedAll = true;
-  $scope.HealthSector.selectedAll = true;
-  $scope.AggSector.selectedAll = true;
-  $scope.LibrarySector.selectedAll = true;
-
-
-  // Check/Uncheck All click events
-  $scope.checkAll = function () {
-    switch($scope.SelectedTab) {
-      case 'financial':
-        if ($scope.FinancialSector.selectedAll) {
-          $scope.FinancialSector.selectedAll = false;
-          $scope.checkedBool = "Check All";
-        } else {
-          $scope.FinancialSector.selectedAll = true;
-          $scope.checkedBool = "Uncheck All";
-        }
-        angular.forEach($scope.FinancialSector, function (names) {
-          names.selected = $scope.FinancialSector.selectedAll;
-          //console.log(names.type + ": " + names.selected)
-        });
-        break;
-
-      case 'health':
-        if ($scope.HealthSector.selectedAll) {
-          $scope.HealthSector.selectedAll = false;
-          $scope.checkedBool = "Check All";
-        } else {
-          $scope.HealthSector.selectedAll = true;
-          $scope.checkedBool = "Uncheck All";
-        }
-        angular.forEach($scope.HealthSector, function (names) {
-          names.selected = $scope.HealthSector.selectedAll;
-        });
-        break;
-
-      case 'agg':
-        if ($scope.AggSector.selectedAll) {
-          $scope.AggSector.selectedAll = false;
-          $scope.checkedBool = "Check All";
-        } else {
-          $scope.AggSector.selectedAll = true;
-          $scope.checkedBool = "Uncheck All";
-        }
-        angular.forEach($scope.AggSector, function (names) {names.selected = $scope.AggSector.selectedAll;});
-        break;
-
-      case 'library':
-        if ($scope.LibrarySector.selectedAll) {
-          $scope.LibrarySector.selectedAll = false;
-          $scope.checkedBool = "Check All";
-        } else {
-          $scope.LibrarySector.selectedAll = true;
-          $scope.checkedBool = "Uncheck All";
-        }
-        angular.forEach($scope.LibrarySector, function (names) {names.selected = $scope.LibrarySector.selectedAll;});
-        break;
-      default:
-        angular.forEach($scope.FinancialSector, function (names) {names.selected = $scope.selectedAll;});
-            break;
-    }
+  $scope.filterCICO = function(){
+    CICOFilterFactory.checkAll($scope.FinancialSector,$scope.SelectedTab,$scope.FinancialSector.selectedAll);
+    $scope.checkedBool = CICOFilterFactory.checkBool;
   };
 
-  $scope.setSector = function(sector, checked){
+  $scope.filterHealth = function(){
+    HealthFilterFactory.checkAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
+    //$scope.checkedBool = HealthFilterFactory.checkBool;
+  };
 
-    //angular.forEach($scope.FinancialSector, function (names) {
-    //  names.selected = checked;
-    //});
 
+
+  // Get selected sector from checkbox
+  $scope.setCICOSelection = function(sector, checked){
     // Set selected value for each sector based on checkbox
     for(var i=0;i<$scope.FinancialSector.length;i++) {
       if(sector == $scope.FinancialSector[i].type) {
@@ -99,10 +51,11 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
         break;
       }
     }
-
+    
     console.log(sector + " " + checked);
+    console.log($scope.FinancialSelections);
 
-  }
+  };
 
   debug.LayerConfig = LayerConfig;
 

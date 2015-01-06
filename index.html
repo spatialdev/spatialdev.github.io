@@ -307,7 +307,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a class="a-nav-tab" ng-click="navTab='financial'; setSelectedSector(navTab)" data-toggle="tab">
+                            <a class="a-nav-tab" ng-click="navTab='contextual'; setSelectedSector(navTab)" data-toggle="tab">
                                 Financial
                             </a>
                         </li>
@@ -331,7 +331,7 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content scrollable" >
-                        <div ng-class="{active: navTab==='financial'}" id="#financial" class="tab-pane">
+                        <div ng-class="{active: navTab==='contextual'}" class="tab-pane active">
 
                             <!--<h4>Administrative boundary levels:</h4>-->
 
@@ -394,25 +394,26 @@
                             </div>
                             <!--<H4>sector types</H4>-->
                             <label class="checkbox">
-                                <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="checkAll()">
+                                <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="filterCICO()">
                                     {{checkedBool}}
                             </label>
                             <label ng-repeat="names in FinancialSector" class="checkbox">
                                 <input type="checkbox" ng-model="names.selected"
-                                       ng-click="setSector(names.type, !names.selected)">
+                                       ng-click="setCICOSelection(names.type, !names.selected)">
                                     {{names.type}} ({{names.count}})
                             </label>
                             <br/>
                         </div>
-                        <div ng-class="{active: navTab==='health'}" id="health" class="tab-pane">
+                        <div ng-class="{active: navTab==='health'}" id="health" class="tab-pane" ng-click="filterHealth()">
                             <div>
                                 <label class="checkbox">
-                                    <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="checkAll()">
+                                    <input type="checkbox" ng-model="HealthSector.selectedAll" >
                                     {{checkedBool}}
                                 </label>
 
                                 <label ng-repeat="names in HealthSector" class="checkbox">
-                                    <input type="checkbox" ng-model="names.selected" >
+                                    <input type="checkbox" ng-model="names.selected"
+                                           ng-click="setHealthSelection(names.type, !names.selected)">
                                     {{names.type}} ({{names.count}})
                                 </label>
                             </div>
@@ -420,7 +421,7 @@
                         <div ng-class="{active: navTab==='library'}" id="library" class="tab-pane">
                             <div>
                                 <label class="checkbox">
-                                    <input type="checkbox" ng-model="LibrarySector.selectedAll" ng-click="checkAll()">
+                                    <input type="checkbox" ng-model="LibrarySector.selectedAll" >
                                     {{checkedBool}}
                                 </label>
 
@@ -433,7 +434,7 @@
                         <div ng-class="{active: navTab==='agg'}" id="agg" class="tab-pane">
                             <div>
                                 <label class="checkbox">
-                                    <input type="checkbox" ng-model="AggSector.selectedAll" ng-click="checkAll()">
+                                    <input type="checkbox" ng-model="AggSector.selectedAll" >
                                     {{checkedBool}}
                                 </label>
 
