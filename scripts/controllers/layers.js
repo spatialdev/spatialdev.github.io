@@ -14,12 +14,12 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
   $scope.AggSector = SectorFactory.Agg;
   $scope.LibrarySector = SectorFactory.Library;
   $scope.checkedBool = "Uncheck All";
+
   $scope.SelectedTab = 'financial';
 
   // Get selected tab
   $scope.setSelectedSector = function(selection){
     $scope.SelectedTab = selection;
-    console.log(selection);
   }
 
   // Check box are checked by default
@@ -40,7 +40,10 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
           $scope.FinancialSector.selectedAll = true;
           $scope.checkedBool = "Uncheck All";
         }
-        angular.forEach($scope.FinancialSector, function (names) {names.selected = $scope.FinancialSector.selectedAll;});
+        angular.forEach($scope.FinancialSector, function (names) {
+          names.selected = $scope.FinancialSector.selectedAll;
+          //console.log(names.type + ": " + names.selected)
+        });
         break;
 
       case 'health':
@@ -82,6 +85,24 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
             break;
     }
   };
+
+  $scope.setSector = function(sector, checked){
+
+    //angular.forEach($scope.FinancialSector, function (names) {
+    //  names.selected = checked;
+    //});
+
+    // Set selected value for each sector based on checkbox
+    for(var i=0;i<$scope.FinancialSector.length;i++) {
+      if(sector == $scope.FinancialSector[i].type) {
+        $scope.FinancialSector[i].selected = checked;
+        break;
+      }
+    }
+
+    console.log(sector + " " + checked);
+
+  }
 
   debug.LayerConfig = LayerConfig;
 

@@ -15,7 +15,8 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                         Financial.push(
                             {
                                 "type": data.features[i].properties.type,
-                                "count": data.features[i].properties.count_type
+                                "count": data.features[i].properties.count_type,
+                                "selected": true
                             }
                     );
                     }
@@ -28,7 +29,8 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                     for (var i = 0; i < data.features.length; i++) {
                         Health.push({
                             "type": data.features[i].properties.type,
-                            "count": data.features[i].properties.count_type
+                            "count": data.features[i].properties.count_type,
+                            "selected": true
                         });
                     }
                 }).
@@ -40,7 +42,8 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                     for (var i = 0; i < data.features.length; i++) {
                         Agg.push({
                             "type": data.features[i].properties.type,
-                            "count": data.features[i].properties.count_type
+                            "count": data.features[i].properties.count_type,
+                            "selected": true
                         });
                     }
 
@@ -53,7 +56,8 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                     for (var i = 0; i < data.features.length; i++) {
                         Library.push({
                             "type": data.features[i].properties.type,
-                            "count": data.features[i].properties.count_type
+                            "count": data.features[i].properties.count_type,
+                            "selected": true
                         });
                     }
                 }).

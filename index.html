@@ -330,8 +330,8 @@
                     </ul>
 
                     <!-- Tab panes -->
-                    <div class="tab-content scrollable">
-                        <div ng-class="{active: navTab==='financial'}" class="tab-pane">
+                    <div class="tab-content scrollable" >
+                        <div ng-class="{active: navTab==='financial'}" id="#financial" class="tab-pane">
 
                             <!--<h4>Administrative boundary levels:</h4>-->
 
@@ -398,12 +398,13 @@
                                     {{checkedBool}}
                             </label>
                             <label ng-repeat="names in FinancialSector" class="checkbox">
-                                <input type="checkbox" ng-model="names.selected" ng-init="names.selected = true">
+                                <input type="checkbox" ng-model="names.selected"
+                                       ng-click="setSector(names.type, !names.selected)">
                                     {{names.type}} ({{names.count}})
                             </label>
                             <br/>
                         </div>
-                        <div ng-class="{active: navTab==='health'}" class="tab-pane">
+                        <div ng-class="{active: navTab==='health'}" id="health" class="tab-pane">
                             <div>
                                 <label class="checkbox">
                                     <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="checkAll()">
@@ -411,12 +412,12 @@
                                 </label>
 
                                 <label ng-repeat="names in HealthSector" class="checkbox">
-                                    <input type="checkbox" ng-model="names.selected" ng-init="names.selected=true">
+                                    <input type="checkbox" ng-model="names.selected" >
                                     {{names.type}} ({{names.count}})
                                 </label>
                             </div>
                         </div>
-                        <div ng-class="{active: navTab==='library'}" class="tab-pane">
+                        <div ng-class="{active: navTab==='library'}" id="library" class="tab-pane">
                             <div>
                                 <label class="checkbox">
                                     <input type="checkbox" ng-model="LibrarySector.selectedAll" ng-click="checkAll()">
@@ -429,7 +430,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div ng-class="{active: navTab==='agg'}" class="tab-pane">
+                        <div ng-class="{active: navTab==='agg'}" id="agg" class="tab-pane">
                             <div>
                                 <label class="checkbox">
                                     <input type="checkbox" ng-model="AggSector.selectedAll" ng-click="checkAll()">
@@ -442,7 +443,6 @@
                                 </label>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
