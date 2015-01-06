@@ -6,24 +6,20 @@
  *       on 1/6/15.
  */
 
-module.exports = angular.module('SpatialViewer').factory('HealthFilterFactory', function () {
+module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', function () {
 
     var service = {};
 
-    service.checkAll = function (sector, selection, selectall) {
+    service.checkAll = function (sector, selection,selectall) {
 
         switch(selection) {
-            case 'health':
+            case 'agriculture':
                 if (selectall) {
                     selectall = false;
                     service.checkBool = "Check All";
-                    console.log("factory: " + service.checkBool);
-                    console.log("factory: " + selectall);
                 } else {
                     selectall = true;
                     service.checkBool = "Uncheck All";
-                    console.log("factory: " + service.checkBool);
-                    console.log("factory: " + selectall);
                 }
                 angular.forEach(sector, function (names) {
                     names.selected = selectall;
@@ -31,6 +27,8 @@ module.exports = angular.module('SpatialViewer').factory('HealthFilterFactory', 
                 break;
         }
     };
+
+
 
     return service;
 

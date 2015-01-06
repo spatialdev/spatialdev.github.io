@@ -3,61 +3,10 @@
  *       on 3/27/14.
  */
 
-module.exports = angular.module('SpatialViewer').controller('LayersCtrl', function($http, $scope, $state, $stateParams, LayerConfig,
-                                                                                   VectorProvider, SectorFactory, CICOFilterFactory,HealthFilterFactory) {
+module.exports = angular.module('SpatialViewer').controller('LayersCtrl', function($scope, $state, $stateParams, LayerConfig, VectorProvider) {
   $scope.params = $stateParams;
   $scope.zoom = parseInt($stateParams.zoom);
   $scope.navTab = 'contextual';
-
-  $scope.FinancialSector = SectorFactory.Financial;
-  $scope.FinancialSelections = [];
-  $scope.HealthSector = SectorFactory.Health;
-  $scope.AggSector = SectorFactory.Agg;
-  $scope.LibrarySector = SectorFactory.Library;
-
-
-  // Check box are checked by default
-  $scope.FinancialSector.selectedAll = true;
-  $scope.HealthSector.selectedAll = true;
-  $scope.AggSector.selectedAll = true;
-  $scope.LibrarySector.selectedAll = true;
-  $scope.checkedBool = "Uncheck All";
-  $scope.SelectedTab = 'financial';
-
-  // Get selected tab
-  $scope.setSelectedSector = function(selection){
-    $scope.SelectedTab = selection;
-  };
-
-  $scope.filterCICO = function(){
-    CICOFilterFactory.checkAll($scope.FinancialSector,$scope.SelectedTab,$scope.FinancialSector.selectedAll);
-    $scope.checkedBool = CICOFilterFactory.checkBool;
-  };
-
-  $scope.filterHealth = function(){
-    HealthFilterFactory.checkAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
-    //$scope.checkedBool = HealthFilterFactory.checkBool;
-  };
-
-
-  // Handle filter clicks
-  $scope.setCICOSelection = function(sector, checked){
-    // Set selected value for each sector based on checkbox
-    for(var i=0;i<$scope.FinancialSector.length;i++) {
-      if(sector == $scope.FinancialSector[i].type) {
-        $scope.FinancialSector[i].selected = checked;
-        break;
-      }
-    }
-
-    // Save selected Filters into array
-    $scope.FinancialSelections = [];
-    for(var i=0;i<$scope.FinancialSector.length;i++){
-      if($scope.FinancialSector[i].selected == true){
-        $scope.FinancialSelections.push($scope.FinancialSector[i].type);
-      }
-    }
-  };
 
   debug.LayerConfig = LayerConfig;
 
@@ -75,18 +24,22 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
   });
 
   $scope.layersPanels = {
-    //'Boundaries': {},
-    //'GeoJSON': {},
-    //'KML': {},
-    //'CSV': {},
-    //'WMS': {},
+//    'Boundaries': {},
+//    'GeoJSON': {},
+//    'KML': {},
+//    'CSV': {},
+//    'WMS': {},
     'Contextual layers:': {}
   };
+
 
   for (var layerKey in LayerConfig) {
 
     // We don't want to show layers that are basemaps, and we don't want to show the find func.
-    if (  typeof LayerConfig[layerKey] === 'function' || layerKey === 'basemaps' || LayerConfig[layerKey].type === 'basemap') {
+    if (  typeof LayerConfig[layerKey] === 'function'
+        || layerKey === 'basemaps'
+        || LayerConfig[layerKey].type === 'basemap') {
+
       continue;
     }
 
@@ -188,7 +141,7 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
     if (layer.active === true) {
       $scope.mapLayers.push(layerKey);
 
-    // remove layer
+      // remove layer
     } else {
       $scope.mapLayers = $.grep($scope.mapLayers, function(routeLayer){
         return routeLayer !== layerKey;
@@ -201,9 +154,6 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
 
   };
 
-  $scope.alertnow = function(){
-    alert("test");
-  };
 
   $scope.listGists = function () {
     $scope.gists = gists.fetch();

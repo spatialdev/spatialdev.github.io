@@ -4,14 +4,13 @@
  */
 
 module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', function($scope, $http, $state, $stateParams,
-                                                                                    SectorFactory, CICOFilterFactory,HealthFilterFactory) {
+                                                                                    SectorFactory, CICOFilterFactory,HealthFilterFactory,
+                                                                                    LibraryFilterFactory, AggFilterFactory) {
   $scope.params = $stateParams;
   $scope.navTab = 'financial';
 
   $scope.FinancialSector = SectorFactory.Financial;
-  $scope.FinancialSelections = [];
   $scope.HealthSector = SectorFactory.Health;
-  $scope.HealthSelections = [];
   $scope.AggSector = SectorFactory.Agg;
   $scope.LibrarySector = SectorFactory.Library;
 
@@ -29,18 +28,26 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.SelectedTab = selection;
   };
 
+  // Handle Check/Uncheck All filters
   $scope.filterCICO = function(){
     CICOFilterFactory.checkAll($scope.FinancialSector,$scope.SelectedTab,$scope.FinancialSector.selectedAll);
     //$scope.checkedBool = CICOFilterFactory.checkBool;
   };
-
   $scope.filterHealth = function(){
     HealthFilterFactory.checkAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
-    $scope.checkedBool = HealthFilterFactory.checkBool;
+    //$scope.checkedBool = HealthFilterFactory.checkBool;
+  };
+  $scope.filterLibrary = function(){
+    LibraryFilterFactory.checkAll($scope.LibrarySector,$scope.SelectedTab,$scope.LibrarySector.selectedAll);
+    //$scope.checkedBool = HealthFilterFactory.checkBool;
+  };
+  $scope.filterAgg = function(){
+    AggFilterFactory.checkAll($scope.AggSector,$scope.SelectedTab,$scope.AggSector.selectedAll);
+    //$scope.checkedBool = HealthFilterFactory.checkBool;
   };
 
 
-  // Handle filter clicks
+  // Handle filters clicks events
   $scope.setCICOSelection = function(sector, checked){
     // Set selected value for each sector based on checkbox
     for(var i=0;i<$scope.FinancialSector.length;i++) {
@@ -78,6 +85,44 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     }
 
     console.log($scope.HealthSelections);
+  };
+  $scope.setLibrarySelection = function(sector, checked){
+    // Set selected value for each sector based on checkbox
+    for(var i=0;i<$scope.LibrarySector.length;i++) {
+      if(sector == $scope.LibrarySector[i].type) {
+        $scope.LibrarySector[i].selected = checked;
+        break;
+      }
+      console.log(sector + ": " + checked);
+    }
+    // Save selected Filters into array
+    $scope.LibrarySelections = [];
+    for(var i=0;i<$scope.LibrarySector.length;i++){
+      if($scope.LibrarySector[i].selected == true){
+        $scope.LibrarySelections.push($scope.LibrarySector[i].type);
+      }
+    }
+
+    console.log($scope.LibrarySelections);
+  };
+  $scope.setAggSelection = function(sector, checked){
+    // Set selected value for each sector based on checkbox
+    for(var i=0;i<$scope.AggSector.length;i++) {
+      if(sector == $scope.AggSector[i].type) {
+        $scope.AggSector[i].selected = checked;
+        break;
+      }
+      console.log(sector + ": " + checked);
+    }
+    // Save selected Filters into array
+    $scope.AggSelections = [];
+    for(var i=0;i<$scope.AggSector.length;i++){
+      if($scope.AggSector[i].selected == true){
+        $scope.AggSelections.push($scope.AggSector[i].type);
+      }
+    }
+
+    console.log($scope.AggSelections);
   };
 
 
