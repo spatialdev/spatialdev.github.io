@@ -294,10 +294,8 @@
             </div>
             <!-- End Stories Panel-->
 
-
             <!--Layers Panel-->
-            <div ng-controller="LayersCtrl" ng-class="{on: isParam('layers-panel')}"
-                 class="navpanel container layers-container">
+            <div ng-controller="LayersCtrl" ng-class="{on: isParam('layers-panel')}" class="navpanel container layers-container">
 
                 <div class="row">
                     <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('layers-panel')"><span
@@ -311,141 +309,92 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a class="a-nav-tab" ng-click="navTab='financial'; setSelectedSector(navTab)" data-toggle="tab">
-                                Financial
-                            </a>
-                        </li>
-                        <li>
-                            <a class="a-nav-tab" ng-click="navTab='health'; setSelectedSector(navTab)" data-toggle="tab">
-                                Health
-                            </a>
-                        </li>
-                        <li>
-                            <a class="a-nav-tab" ng-click="navTab='library'; setSelectedSector(navTab)" data-toggle="tab">
-                                Library
-                            </a>
-                        </li>
-                        <li>
-                            <a class="a-nav-tab" ng-click="navTab='agg'; setSelectedSector(navTab)" data-toggle="tab">
-                                Agriculture
-                            </a>
-                        </li>
-
+                        <li class="active"><a class="a-nav-tab" ng-click="navTab='contextual'" data-toggle="tab">Map Layers</a></li>
+                        <li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Uploaded Data</a></li>
                     </ul>
 
                     <!-- Tab panes -->
-                    <div class="tab-content scrollable" >
-                        <!--<div ng-class="{active: navTab==='financial'}" class="tab-pane active">-->
+                    <div class="tab-content scrollable">
+                        <div ng-class="{active: navTab==='contextual'}" class="tab-pane">
 
-                            <!--&lt;!&ndash;<h4>Administrative boundary levels:</h4>&ndash;&gt;-->
+                            <h4>Administrative boundary levels:</h4>
 
-                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" value="auto">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;Automatic&ndash;&gt;-->
-                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" value="-1">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;ARC - American Red Cross Regions&ndash;&gt;-->
-                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" value="0">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;0. Countries&ndash;&gt;-->
-                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 6}">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 6" value="1">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;1. State / Province&ndash;&gt;-->
-                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 8}">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 8" value="2">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;2. County&ndash;&gt;-->
-                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 9}">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 9" value="3">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;3. Level 3&ndash;&gt;-->
-                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 11}">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 11" value="4">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;4. Level 4&ndash;&gt;-->
-                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="radio">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label ng-class="{'disabled-radio-label': zoom < 13}">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 13" value="5">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;5. Level 5&ndash;&gt;-->
-                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-                            <!--<div ng-repeat="(panelName, panel) in layersPanels">-->
-                                <!--&lt;!&ndash;<h4>{{panelName}}</h4>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label class="checkbox" ng-repeat="(layerKey, layer) in panel">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="checkbox" ng-model="layer.active"&ndash;&gt;-->
-                                           <!--&lt;!&ndash;ng-change="toggleMapLayer(layerKey, layer)">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;{{layer.name || layer.properties.title || layerKey}}&ndash;&gt;-->
-                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                            <!--</div>-->
-                            <!--&lt;!&ndash;<H4>sector types</H4>&ndash;&gt;-->
-                            <!--<label class="checkbox">-->
-                                <!--<input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="filterCICO()">-->
-                                    <!--{{checkedBool}}-->
-                            <!--</label>-->
-                            <!--<label ng-repeat="names in FinancialSector" class="checkbox">-->
-                                <!--<input type="checkbox" ng-model="names.selected"-->
-                                       <!--ng-click="setCICOSelection(names.type, !names.selected)">-->
-                                    <!--{{names.type}} ({{names.count}})-->
-                            <!--</label>-->
-                            <!--<br/>-->
-                        <!--</div>-->
-                        <div ng-class="{active: navTab==='health'}" id="health" class="tab-pane" ng-click="filterHealth()">
-                            <div>
-                                <label class="checkbox">
-                                    <input type="checkbox" ng-model="HealthSector.selectedAll" >
-                                    {{checkedBool}}
-                                </label>
-
-                                <label ng-repeat="names in HealthSector" class="checkbox">
-                                    <input type="checkbox" ng-model="names.selected"
-                                           ng-click="setHealthSelection(names.type, !names.selected)">
-                                    {{names.type}} ({{names.count}})
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="gadmLevel" value="auto">
+                                    Automatic
                                 </label>
                             </div>
-                        </div>
-                        <div ng-class="{active: navTab==='library'}" id="library" class="tab-pane">
-                            <div>
-                                <label class="checkbox">
-                                    <input type="checkbox" ng-model="LibrarySector.selectedAll" >
-                                    {{checkedBool}}
-                                </label>
-
-                                <label ng-repeat="names in LibrarySector" class="checkbox">
-                                    <input type="checkbox" ng-model="names.selected" ng-init="names.selected=true">
-                                    {{names.type}} ({{names.count}})
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="gadmLevel" value="-1">
+                                    ARC - American Red Cross Regions
                                 </label>
                             </div>
-                        </div>
-                        <div ng-class="{active: navTab==='agg'}" id="agg" class="tab-pane">
-                            <div>
-                                <label class="checkbox">
-                                    <input type="checkbox" ng-model="AggSector.selectedAll" >
-                                    {{checkedBool}}
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="gadmLevel" value="0">
+                                    0. Countries
                                 </label>
+                            </div>
+                            <div class="radio">
+                                <label ng-class="{'disabled-radio-label': zoom < 6}">
+                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 6" value="1">
+                                    1. State / Province
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label ng-class="{'disabled-radio-label': zoom < 8}">
+                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 8" value="2">
+                                    2. County
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label ng-class="{'disabled-radio-label': zoom < 9}">
+                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 9" value="3">
+                                    3. Level 3
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label ng-class="{'disabled-radio-label': zoom < 11}">
+                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 11" value="4">
+                                    4. Level 4
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label ng-class="{'disabled-radio-label': zoom < 13}">
+                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 13" value="5">
+                                    5. Level 5
+                                </label>
+                            </div>
 
-                                <label ng-repeat="names in AggSector" class="checkbox">
-                                    <input type="checkbox" ng-model="names.selected" ng-init="names.selected=true">
-                                    {{names.type}} ({{names.count}})
+                            <div ng-repeat="(panelName, panel) in layersPanels">
+                                <h4>{{panelName}}</h4>
+                                <label class="checkbox" ng-repeat="(layerKey, layer) in panel">
+                                    <input type="checkbox" ng-model="layer.active" ng-change="toggleMapLayer(layerKey, layer)">
+                                    {{layer.name || layer.properties.title || layerKey}}
+                                </label>
+                            </div>
+                            <br/>
+                        </div>
+                        <div ng-class="{active: navTab==='uploaded'}" class="tab-pane">
+                            <div ng-show="numGists===0">
+                                <br/>
+
+                                <p>
+                                    This is a list of spatial data layers you have uploaded to Github.
+                                </p>
+
+                                <p>
+                                    You haven't uploaded any data yet. Click on the <a ui-sref="upload(params)">Upload Data</a>
+                                    button on the top right menu for more information.
+                                </p>
+                            </div>
+                            <div ng-show="numGists>0">
+                                <h4>Layers hosted on Github:</h4>
+                                <label class="checkbox" ng-repeat="gist in gists">
+                                    <input type="checkbox" ng-model="gist.active" ng-change="toggleMapLayer(gist.url, gist)">
+                                    {{gist.name}} (<a href="{{gist.htmlUrl}}" target="_blank">View on Github</a>)
                                 </label>
                             </div>
                         </div>
@@ -470,13 +419,17 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
-                        <li class="active"><a class="a-nav-tab" ng-click="navTab='financial'; setSelectedSector(navTab)" data-toggle="tab">Financial</a></li>
+                        <li class="active"><a class="a-nav-tab" ng-click="navTab='financial'; setSelectedSector(navTab)"
+                                              data-toggle="tab">Financial</a></li>
 
-                        <li><a class="a-nav-tab" ng-click="navTab='health'; setSelectedSector(navTab)" data-toggle="tab">Health</a></li>
+                        <li><a class="a-nav-tab" ng-click="navTab='health'; setSelectedSector(navTab)"
+                               data-toggle="tab">Health</a></li>
 
-                        <li><a class="a-nav-tab" ng-click="navTab='library'; setSelectedSector(navTab)" data-toggle="tab">Library</a></li>
+                        <li><a class="a-nav-tab" ng-click="navTab='library'; setSelectedSector(navTab)"
+                               data-toggle="tab">Library</a></li>
 
-                        <li><a class="a-nav-tab" ng-click="navTab='agriculture'; setSelectedSector(navTab)" data-toggle="tab">Agriculture</a></li>
+                        <li><a class="a-nav-tab" ng-click="navTab='agriculture'; setSelectedSector(navTab)"
+                               data-toggle="tab">Agriculture</a></li>
 
                         <!--<li><a class="a-nav-tab" ng-click="navTab='custom'" data-toggle="tab">Custom</a></li>-->
                     </ul>
@@ -494,29 +447,56 @@
                                 {{names.type}} ({{names.count}})
                             </label>
                         </div>
-                        <div ng-class="{active: navTab==='health'}" id="date-filter" class="tab-pane" >
+
+                        <div ng-class="{active: navTab==='health'}" id="sectors-filter" class="tab-pane">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth()">
+                                {{checkedBool}}
+                            </label>
+
+                            <label ng-repeat="names in HealthSector" class="checkbox">
+                                <input type="checkbox" ng-model="names.selected"
+                                       ng-click="setHealthSelection(names.type, !names.selected)">
+                                {{names.type}} ({{names.count}})
+                            </label>
+                        </div>
+                        <div ng-class="{active: navTab==='library'}" id="sectors-filter" class="tab-pane">
                             <div>
                                 <label class="checkbox">
-                                    <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth()">
+                                    <input type="checkbox" ng-model="LibrarySector.selectedAll"
+                                           ng-click="filterLibrary()">
                                     {{checkedBool}}
                                 </label>
 
-                                <label ng-repeat="names in HealthSector" class="checkbox">
+                                <label ng-repeat="names in LibrarySector" class="checkbox">
                                     <input type="checkbox" ng-model="names.selected"
-                                           ng-click="setHealthSelection(names.type, !names.selected)">
+                                           ng-click="setLibrarySelection(names.type, !names.selected)">
                                     {{names.type}} ({{names.count}})
                                 </label>
                             </div>
                         </div>
-                        <div ng-class="{active: navTab==='library'}" class="tab-pane" id="status-filter">
-                            Put something in here for a status filter...
+
+                        <div ng-class="{active: navTab==='agriculture'}" id="sectors-filter" class="tab-pane">
+
+                            <div>
+                                <label class="checkbox">
+                                    <input type="checkbox" ng-model="AggSector.selectedAll"
+                                           ng-click="filterAgg()">
+                                    {{checkedBool}}
+                                </label>
+
+                                <label ng-repeat="names in AggSector" class="checkbox">
+                                    <input type="checkbox" ng-model="names.selected"
+                                           ng-click="setAggSelection(names.type, !names.selected)">
+                                    {{names.type}} ({{names.count}})
+                                </label>
+                            </div>
                         </div>
-                        <div ng-class="{active: navTab==='agriculture'}" class="tab-pane" id="budget-filter">
-                            Put something in here for a budget filter...
-                        </div>
+
                         <div ng-class="{active: navTab==='custom'}" class="tab-pane" id="custom-filter">
                             <h4>Filter WHERE Clause</h4>
-                            <textarea class="form-control" rows="6" placeholder="Create a custom where clause..." ng-model="whereClause"></textarea>
+                            <textarea class="form-control" rows="6" placeholder="Create a custom where clause..."
+                                      ng-model="whereClause"></textarea>
                             <button ng-click="submitFilter()" type="button"
                                     class="btn btn-primary pull-right custom-filter-submit">
                                 Submit
@@ -618,7 +598,7 @@
             <div id="MapUpperRightToolbarWrapper">
                 <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')"><span
                         class="glyphicon glyphicon-chevron-down"></span></div>
-                <div class="left-section countryselect"  class="breadcrumbs-container">
+                <div class="left-section countryselect" class="breadcrumbs-container">
                     <div ng-click="switchCountry(selection)" class="world countrytext">
                         {{selection}}
                     </div>
