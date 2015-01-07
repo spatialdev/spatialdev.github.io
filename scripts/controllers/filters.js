@@ -130,7 +130,19 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   };
 
   $scope.clearAllFilters = function () {
-
+    $scope.FinancialSector.selectedAll = false;
+    $scope.HealthSector.selectedAll = false;
+    $scope.AggSector.selectedAll = false;
+    $scope.LibrarySector.selectedAll = false;
+    
+    CICOFilterFactory.clearAll($scope.FinancialSector,$scope.SelectedTab,$scope.FinancialSector.selectedAll);
+    $scope.checkedBool = CICOFilterFactory.checkBool;
+    HealthFilterFactory.clearAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
+    $scope.checkedBool = HealthFilterFactory.checkBool;
+    LibraryFilterFactory.clearAll($scope.LibrarySector,$scope.SelectedTab,$scope.LibrarySector.selectedAll);
+    $scope.checkedBool = LibraryFilterFactory.checkBool;
+    AggFilterFactory.clearAll($scope.AggSector,$scope.SelectedTab,$scope.AggSector.selectedAll);
+    $scope.checkedBool = AggFilterFactory.checkBool;
   };
 
 });
