@@ -121,6 +121,7 @@ module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', fun
 
         if (!selectall) {
             selectall = false;
+            service.selectall = false;
             service.checkBool = "Check All";
         }
         angular.forEach(sector, function (names) {

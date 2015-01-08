@@ -41,7 +41,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.checkedBool = CICOFilterFactory.checkBool;
     $scope.CICOSector.selectedAll = CICOFilterFactory.selectall;
 
-    // Toggle health sector later
+    // Toggle cicos sector later
     if($scope.CICOSector.selectedAll == true){
       $scope.CICOLayer.active = true;
     } else {
@@ -195,19 +195,33 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   };
 
   $scope.clearAllFilters = function () {
-    $scope.CICOSector.selectedAll = false;
     $scope.HealthSector.selectedAll = false;
     $scope.AggSector.selectedAll = false;
     $scope.LibrarySector.selectedAll = false;
 
-    CICOFilterFactory.clearAll($scope.CICOSector,$scope.SelectedTab,$scope.CICOSector.selectedAll);
-    $scope.checkedBool = CICOFilterFactory.checkBool;
+    $scope.scrapeCICOSelection();
+
     HealthFilterFactory.clearAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
     $scope.checkedBool = HealthFilterFactory.checkBool;
+
     LibraryFilterFactory.clearAll($scope.LibrarySector,$scope.SelectedTab,$scope.LibrarySector.selectedAll);
     $scope.checkedBool = LibraryFilterFactory.checkBool;
+
     AggFilterFactory.clearAll($scope.AggSector,$scope.SelectedTab,$scope.AggSector.selectedAll);
     $scope.checkedBool = AggFilterFactory.checkBool;
+  };
+
+  $scope.scrapeCICOSelection = function(){
+    $scope.CICOSector.selectedAll = false;
+    CICOFilterFactory.clearAll($scope.CICOSector,$scope.SelectedTab,$scope.CICOSector.selectedAll);
+    $scope.checkedBool = CICOFilterFactory.checkBool;
+    $scope.CICOSector.selectedAll = CICOFilterFactory.selectall;
+    $scope.CICOLayer.active = false;
+    $scope.removeMapLayer('CICOS', $scope.CICOLayer);
+
+    console.log("Checked Bool: " + $scope.checkedBool);
+    console.log("Selected All: " + $scope.CICOSector.selectedAll);
+    console.log("Active? " +  $scope.CICOLayer.active );
   };
 
   $scope.gadmLevel = $stateParams.level || 'auto';
@@ -296,6 +310,24 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $state.go(state, $stateParams);
 
   };
+
+  $scope.removeMapLayer = function (layerKey, layer) {
+
+    // add layer
+    if (layer.active === false) {
+
+      $scope.mapLayers = $.grep($scope.mapLayers, function(routeLayer){
+        return routeLayer !== layerKey;
+      });
+      console.log("Not active");
+    }
+
+    $stateParams.layers = $scope.mapLayers.join(',');
+    var state = $state.current.name || 'main';
+    $state.go(state, $stateParams);
+
+  };
+
 
   $scope.listGists = function () {
     $scope.gists = gists.fetch();

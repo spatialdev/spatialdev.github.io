@@ -68,6 +68,7 @@ module.exports = angular.module('SpatialViewer').factory('LibraryFilterFactory',
 
         if (!selectall) {
             selectall = false;
+            service.selectall = false;
             service.checkBool = "Check All";
         }
         angular.forEach(sector, function (names) {
