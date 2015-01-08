@@ -389,7 +389,7 @@ layer.cicos = {
 
 };
 
-layer.IndiaCICOS = {
+layer.CICOS = {
   url: "http://spatialserver.spatialdev.com/services/postgis/cicos_2014/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type,id",
   type: 'pbf',
   debug: false,
@@ -563,7 +563,7 @@ layer.IndiaCICOS = {
 
 };
 
-layer.Library = {
+layer.library = {
   url: "http://spatialserver.spatialdev.com/services/postgis/library_2014/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type,id",
   debug: false,
   type: 'pbf',
@@ -905,7 +905,7 @@ layer.health =  {
 
 };
 
-layer.Agriculture = {
+layer.agriculture = {
   url: "http://spatialserver.spatialdev.com/services/postgis/agriculture_2014/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type,id",
   debug: false,
   type: "pbf",

@@ -7,22 +7,26 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                                                                                     SectorFactory, CICOFilterFactory,HealthFilterFactory,
                                                                                     LibraryFilterFactory, AggFilterFactory, LayerConfig) {
   $scope.params = $stateParams;
-  $scope.navTab = 'financial';
+  $scope.navTab = 'CICOS';
 
   $scope.HealthLayer = HealthFilterFactory.Layer;
+  $scope.AggLayer = AggFilterFactory.Layer;
+  $scope.LibraryLayer = LibraryFilterFactory.Layer;
+  $scope.CICOLayer = CICOFilterFactory.Layer;
 
-  $scope.FinancialSector = SectorFactory.Financial;
+
+  $scope.CICOSector = SectorFactory.CICOs;
   $scope.HealthSector = SectorFactory.Health;
   $scope.AggSector = SectorFactory.Agg;
   $scope.LibrarySector = SectorFactory.Library;
 
   // Check box are checked by default
-  $scope.FinancialSector.selectedAll = true;
+  $scope.CICOSector.selectedAll = false;
   $scope.HealthSector.selectedAll = false;
-  $scope.AggSector.selectedAll = true;
-  $scope.LibrarySector.selectedAll = true;
+  $scope.AggSector.selectedAll = false;
+  $scope.LibrarySector.selectedAll = false;
   $scope.checkedBool = "Check All";
-  $scope.SelectedTab = 'financial';
+  $scope.SelectedTab = 'CICOS';
 
   // Get selected tab
   $scope.setSelectedSector = function(selection){
@@ -32,16 +36,33 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
   // Handle Check/Uncheck All filters
   $scope.filterCICO = function(){
-    CICOFilterFactory.checkAll($scope.FinancialSector,$scope.SelectedTab,$scope.FinancialSector.selectedAll);
+    CICOFilterFactory.checkAll($scope.CICOSector,$scope.SelectedTab,$scope.CICOSector.selectedAll);
+    // set scope variables to mirror factory properties
     $scope.checkedBool = CICOFilterFactory.checkBool;
+    $scope.CICOSector.selectedAll = CICOFilterFactory.selectall;
+
+    // Toggle health sector later
+    if($scope.CICOSector.selectedAll == true){
+      $scope.CICOLayer.active = true;
+    } else {
+      $scope.CICOLayer.active = false
+    }
+
+    console.log("Checked Bool: " + $scope.checkedBool);
+    console.log("Selected All: " + $scope.CICOSector.selectedAll);
+    console.log("Active? " +  $scope.CICOLayer.active );
+
   };
 
   $scope.filterHealth = function(){
 
+    // Run check all from Health Factory
     HealthFilterFactory.checkAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
+    // set scope variables to mirror factory properties
     $scope.checkedBool = HealthFilterFactory.checkBool;
     $scope.HealthSector.selectedAll = HealthFilterFactory.selectall;
 
+   // Toggle health sector later
     if($scope.HealthSector.selectedAll == true){
       $scope.HealthLayer.active = true;
     } else {
@@ -56,31 +77,58 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   $scope.filterLibrary = function(){
     LibraryFilterFactory.checkAll($scope.LibrarySector,$scope.SelectedTab,$scope.LibrarySector.selectedAll);
     $scope.checkedBool = LibraryFilterFactory.checkBool;
+    $scope.LibrarySector.selectedAll = LibraryFilterFactory.selectall;
+
+    // Toggle agg sector later
+    if($scope.LibrarySector.selectedAll == true){
+      $scope.LibraryLayer.active = true;
+    } else {
+      $scope.LibraryLayer.active = false
+    }
+
+    console.log("Checked Bool: " + $scope.checkedBool);
+    console.log("Selected All: " + $scope.LibrarySector.selectedAll);
+    console.log("Active? " +  $scope.LibraryLayer.active );
+
   };
+
   $scope.filterAgg = function(){
     AggFilterFactory.checkAll($scope.AggSector,$scope.SelectedTab,$scope.AggSector.selectedAll);
     $scope.checkedBool = AggFilterFactory.checkBool;
+    $scope.AggSector.selectedAll = AggFilterFactory.selectall;
+
+    // Toggle agg sector later
+    if($scope.AggSector.selectedAll == true){
+      $scope.AggLayer.active = true;
+    } else {
+      $scope.AggLayer.active = false
+    }
+
+    console.log("Checked Bool: " + $scope.checkedBool);
+    console.log("Selected All: " + $scope.AggSector.selectedAll);
+    console.log("Active? " +  $scope.AggLayer.active );
+
   };
 
   // Handle filters clicks events
   $scope.setCICOSelection = function(sector, checked){
     // Set selected value for each sector based on checkbox
-    for(var i=0;i<$scope.FinancialSector.length;i++) {
-      if(sector == $scope.FinancialSector[i].type) {
-        $scope.FinancialSector[i].selected = checked;
+    for(var i=0;i<$scope.CICOSector.length;i++) {
+      if(sector == $scope.CICOSector[i].type) {
+        $scope.CICOSector[i].selected = checked;
         break;
       }
       console.log(sector + ": " + checked);
     }
     // Save selected Filters into array
-    $scope.FinancialSelections = [];
-    for(var i=0;i<$scope.FinancialSector.length;i++){
-      if($scope.FinancialSector[i].selected == true){
-        $scope.FinancialSelections.push($scope.FinancialSector[i].type);
+    $scope.CICOSelections = [];
+    for(var i=0;i<$scope.CICOSector.length;i++){
+      if($scope.CICOSector[i].selected == true){
+        $scope.CICOSelections.push($scope.CICOSector[i].type);
       }
     }
 
-    console.log($scope.FinancialSelections);
+    console.log($scope.CICOSelections);
   };
   $scope.setHealthSelection = function(sector, checked){
     // Set selected value for each sector based on checkbox
@@ -147,12 +195,12 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   };
 
   $scope.clearAllFilters = function () {
-    $scope.FinancialSector.selectedAll = false;
+    $scope.CICOSector.selectedAll = false;
     $scope.HealthSector.selectedAll = false;
     $scope.AggSector.selectedAll = false;
     $scope.LibrarySector.selectedAll = false;
 
-    CICOFilterFactory.clearAll($scope.FinancialSector,$scope.SelectedTab,$scope.FinancialSector.selectedAll);
+    CICOFilterFactory.clearAll($scope.CICOSector,$scope.SelectedTab,$scope.CICOSector.selectedAll);
     $scope.checkedBool = CICOFilterFactory.checkBool;
     HealthFilterFactory.clearAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
     $scope.checkedBool = HealthFilterFactory.checkBool;
@@ -174,32 +222,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     console.log("zoom: " + $stateParams.zoom);
     $scope.zoom = parseInt($stateParams.zoom);
   });
-  $scope.layersPanels = {
-    'Contextual layers:': {}
-  };
-
-  for (var layerKey in LayerConfig) {
-
-    // We don't want to show layers that are basemaps, and we don't want to show the find func.
-    if (  typeof LayerConfig[layerKey] === 'function'
-        || layerKey === 'basemaps'
-        || LayerConfig[layerKey].type === 'basemap') {
-
-      continue;
-    }
-    $scope.layersPanels['Contextual layers:'][layerKey] = keyToObj(layerKey);
-
-  }
-
-  function keyToObj(key) {
-    val = LayerConfig[layerKey];
-    if (typeof val === 'string') {
-      return {
-        url: val
-      };
-    }
-    return val;
-  }
 
   //NH TODO: Not yet fully implemented - possible extra feature...
   /**
@@ -212,7 +234,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
    * When the route changes, we should see what layers we have on there and have the layers
    * in the panels checked accordingly.
    */
-
   $scope.$on('layers-update', function(evt, layers) {
 
     // github gists

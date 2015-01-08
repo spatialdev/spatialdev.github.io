@@ -419,7 +419,7 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
-                        <li class="active"><a class="a-nav-tab" ng-click="navTab='financial'; setSelectedSector(navTab)"
+                        <li class="active"><a class="a-nav-tab" ng-click="navTab='CICOS'; setSelectedSector(navTab)"
                                               data-toggle="tab">Financial</a></li>
 
                         <li><a class="a-nav-tab" ng-click="navTab='health'; setSelectedSector(navTab)"
@@ -436,12 +436,13 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content scrollable">
-                        <div ng-class="{active: navTab==='financial'}" class="tab-pane" id="sectors-filter">
+                        <div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">
                             <label class="checkbox">
-                                <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="filterCICO()">
+                                <input type="checkbox" ng-model="FinancialSector.selectedAll" ng-click="filterCICO();
+                                toggleMapLayer(navTab, CICOLayer)">
                                 {{checkedBool}}
                             </label>
-                            <label ng-repeat="names in FinancialSector" class="checkbox">
+                            <label ng-repeat="names in CICOSector" class="checkbox">
                                 <input type="checkbox" ng-model="names.selected"
                                        ng-click="setCICOSelection(names.type, !names.selected)">
                                 {{names.type}} ({{names.count}})
@@ -450,7 +451,8 @@
 
                         <div ng-class="{active: navTab==='health'}" id="sectors-filter" class="tab-pane">
                             <label class="checkbox">
-                                <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth();toggleMapLayer(navTab, HealthLayer)">
+                                <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth();
+                                toggleMapLayer(navTab, HealthLayer)">
                                 {{checkedBool}}
                             </label>
 
@@ -465,7 +467,7 @@
                             <div>
                                 <label class="checkbox">
                                     <input type="checkbox" ng-model="LibrarySector.selectedAll"
-                                           ng-click="filterLibrary()">
+                                           ng-click="filterLibrary(); toggleMapLayer(navTab, LibraryLayer)">
                                     {{checkedBool}}
                                 </label>
 
@@ -482,7 +484,7 @@
                             <div>
                                 <label class="checkbox">
                                     <input type="checkbox" ng-model="AggSector.selectedAll"
-                                           ng-click="filterAgg()">
+                                           ng-click="filterAgg(); toggleMapLayer(navTab, AggLayer)">
                                     {{checkedBool}}
                                 </label>
 

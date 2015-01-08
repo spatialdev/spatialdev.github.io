@@ -375,15 +375,23 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
     service.checkAll = function (sector, selection,selectall) {
 
         switch(selection) {
-            case 'financial':
+            case 'CICOS':
                 if (selectall) {
                     selectall = false;
+                    service.selectall = false;
                     service.checkBool = "Check All";
                     console.log(service.checkBool);
+                    console.log("factory check bool: " + service.checkBool);
+                    console.log("factory selected all: " + selectall);
+                    console.log("service selected all: " + service.selectall);
                 } else {
                     selectall = true;
+                    service.selectall = true;
                     service.checkBool = "Uncheck All";
                     console.log(service.checkBool);
+                    console.log("factory check bool: " + service.checkBool);
+                    console.log("factory selected all: " + selectall);
+                    console.log("service selected all: " + service.selectall);
                 }
                 angular.forEach(sector, function (names) {
                     names.selected = selectall;
