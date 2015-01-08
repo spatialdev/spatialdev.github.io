@@ -30,7 +30,7 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                         Health.push({
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type,
-                            "selected": true
+                            "selected": false
                         });
                     }
                 }).

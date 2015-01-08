@@ -18,10 +18,10 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
   // Check box are checked by default
   $scope.FinancialSector.selectedAll = true;
-  $scope.HealthSector.selectedAll = true;
+  $scope.HealthSector.selectedAll = false;
   $scope.AggSector.selectedAll = true;
   $scope.LibrarySector.selectedAll = true;
-  $scope.checkedBool = "Uncheck All";
+  $scope.checkedBool = "Check All";
   $scope.SelectedTab = 'financial';
 
   // Get selected tab
@@ -35,15 +35,24 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     CICOFilterFactory.checkAll($scope.FinancialSector,$scope.SelectedTab,$scope.FinancialSector.selectedAll);
     $scope.checkedBool = CICOFilterFactory.checkBool;
   };
+
   $scope.filterHealth = function(){
+
     HealthFilterFactory.checkAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
     $scope.checkedBool = HealthFilterFactory.checkBool;
+    $scope.HealthSector.selectedAll = HealthFilterFactory.selectall;
+
     if($scope.HealthSector.selectedAll == true){
-      $scope.HealthLayer.active = true; } else {
+      $scope.HealthLayer.active = true;
+    } else {
       $scope.HealthLayer.active = false
     }
+
+    console.log("Checked Bool: " + $scope.checkedBool);
+    console.log("Selected All: " + $scope.HealthSector.selectedAll);
     console.log("Active? " +  $scope.HealthLayer.active );
   };
+
   $scope.filterLibrary = function(){
     LibraryFilterFactory.checkAll($scope.LibrarySector,$scope.SelectedTab,$scope.LibrarySector.selectedAll);
     $scope.checkedBool = LibraryFilterFactory.checkBool;

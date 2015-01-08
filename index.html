@@ -450,7 +450,7 @@
 
                         <div ng-class="{active: navTab==='health'}" id="sectors-filter" class="tab-pane">
                             <label class="checkbox">
-                                <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="toggleMapLayer(navTab, HealthLayer);filterHealth()">
+                                <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth();toggleMapLayer(navTab, HealthLayer)">
                                 {{checkedBool}}
                             </label>
 
