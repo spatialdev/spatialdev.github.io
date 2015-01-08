@@ -146,7 +146,6 @@ SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
 
 });
 
-
 SpatialViewer.directive('selectOnClick', function () {
   return {
     restrict: 'A',
@@ -158,6 +157,24 @@ SpatialViewer.directive('selectOnClick', function () {
   };
 });
 
+/**
+ * percent filter
+ * https://gist.github.com/jeffjohnson9046/9470800
+ */
+SpatialViewer.filter('percentage', ['$filter', function ($filter) {
+  return function (input, decimals) {
+    return $filter('number')(input * 100, decimals) + '%';
+  };
+}]);
+/**
+ *  capitalize filter
+ *  http://codepen.io/WinterJoey/pen/sfFaK
+ */
+SpatialViewer.filter('capitalize', function() {
+  return function(input, all) {
+    return (!!input) ? input.replace(/([^\W_]+[^\s-]*) */g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : '';
+  }
+});
 
 angular.module('SpatialViewer').directive('myShow', function($animate) {
   return {

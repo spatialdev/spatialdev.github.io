@@ -3,9 +3,11 @@
  *       on 4/9/14.
  */
 
-module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function ($scope, $rootScope, $state, $stateParams, $http, Donuts, $filter) {
-
+module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function (IndiaFactory,$scope, $rootScope, $state, $stateParams, $http, Donuts,
+                                                                                     $filter) {
   $scope.details = {};
+
+  $scope.navTab = 'countryoverview';
 
   $scope.salesforceUrl = config.salesforceUrl;
 
@@ -234,7 +236,8 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
   };
 
   //Init selectedFeatureTitle property
-  $scope.title= "Feature Details";
+  $scope.QuickStats = IndiaFactory.India.QuickStats;
+  $scope.title= "Overview - Bihar & Uttar Pradesh";
 
   $scope.toggleState = function(stateName) {
     var state = $state.current.name !== stateName ? stateName : 'main';

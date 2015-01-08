@@ -32,7 +32,6 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
     'Contextual layers:': {}
   };
 
-
   for (var layerKey in LayerConfig) {
 
     // We don't want to show layers that are basemaps, and we don't want to show the find func.
@@ -86,7 +85,6 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
    */
   $scope.nomadLayers = {};
 
-
   /**
    * When the route changes, we should see what layers we have on there and have the layers
    * in the panels checked accordingly.
@@ -134,7 +132,6 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
     }
   });
 
-
   $scope.toggleMapLayer = function (layerKey, layer) {
 
     // add layer
@@ -153,7 +150,6 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
     $state.go(state, $stateParams);
 
   };
-
 
   $scope.listGists = function () {
     $scope.gists = gists.fetch();

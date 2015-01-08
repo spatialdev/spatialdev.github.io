@@ -450,7 +450,7 @@
 
                         <div ng-class="{active: navTab==='health'}" id="sectors-filter" class="tab-pane">
                             <label class="checkbox">
-                                <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth()">
+                                <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="toggleMapLayer(navTab, HealthLayer);filterHealth()">
                                 {{checkedBool}}
                             </label>
 
@@ -726,6 +726,7 @@
                      ng-click="nextThemeItem()">
                 </div>
             </div>
+
             <div id="DetailsPanel">
 
                 <div class="row-rightnav">
@@ -772,7 +773,30 @@
                 </ul>
 
                 <div class="row-rightinfo">
-                    <div class="InnerContainer scrollable">
+                    <div class="InnerContainer" style="height:100%;">
+                        <div class="CountryOverview">
+                            <div ng-class="{active: navTab==='coverview'}">
+                                <div class="OverviewTitle">Total Population (2010):</div>
+                                <div class="statistic">{{QuickStats.totalPopulation | number}}</div>
+                                <div class="OverviewTitle">Total Population within 5Km of all access points:</div>
+                                <div class="statistic">
+                                    {{QuickStats.within5Km | percentage:1}}
+                                    <div class="mini">({{QuickStats.totpop5km | number:0}})</div>
+                                </div>
+                                <div class="OverviewTitle">Rural Population Percentage:</div>
+                                <div class="statistic">{{QuickStats.ruralPct | percentage:1}}
+                                    <div class="mini">({{QuickStats.ruralpop | number}})</div>
+                                </div>
+                                <div class="OverviewTitle">Urban Population Percentage:</div>
+                                <div class="statistic">{{QuickStats.urbanPct | percentage:1}}
+                                    <div class="mini">({{QuickStats.urbanpop | number}})</div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
                         <!--<div class="heading" ng-show="alertUserToClick">-->
                         <!--Please click on a badge or feature to see details...-->
                         <!--</div>-->
@@ -965,7 +989,6 @@
                 <div ui-view="details"></div>
 
             </div>
-
 
             <div class="NavigationTooltipContainer-right main">
                 <div class="NavFlyoutGroup-right">

@@ -23,16 +23,24 @@ module.exports = angular.module('SpatialViewer').controller('CountrySelect', fun
     };
 
     $scope.zoomToCountry = function () {
-        map.setView([IndiaFactory.CountryData.MapCenter.Latitude,
-            IndiaFactory.CountryData.MapCenter.Longitude],
-            IndiaFactory.CountryData.MapZoom);
+        map.setView([IndiaFactory.India.MapCenter.Latitude,
+            IndiaFactory.India.MapCenter.Longitude],
+            IndiaFactory.India.MapZoom);
     };
 
     $scope.switchCountry = function (selected) {
         var cname = selected;
-        map.setView([eval(cname+"Factory").CountryData.MapCenter.Latitude,
-            eval(cname+"Factory").CountryData.MapCenter.Longitude],
-            eval(cname+"Factory").CountryData.MapZoom);
+        console.log(cname);
+
+        if(cname !== "India") {
+            map.setView([eval(cname + "Factory")[cname].MapCenter.Latitude,
+                    eval(cname + "Factory")[cname].MapCenter.Longitude],
+                eval(cname + "Factory")[cname].MapZoom);
+        } else {
+            map.setView([eval(cname + "Factory")[cname].MapCenter.Latitude,
+                    eval(cname + "Factory")[cname].MapCenter.Longitude,
+                eval(cname + "Factory")[cname].MapZoom]);
+        }
     };
 
     // Alias for Selected Country object

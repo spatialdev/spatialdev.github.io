@@ -28,6 +28,14 @@ config.MapLocation = {
     MapZoom: 6
 };
 
+config.QuickStats = {
+  totalPopulation: 299931126,
+  urbanPct: .087,
+  ruralPct: .913,
+  within5Km: .9201,
+  ruralpop: 273830901,
+  urbanpop: 26100225
+};
 /**
  * These are the details initially shown for projects.
  * Clicking on the Show More Details button will show the rest.

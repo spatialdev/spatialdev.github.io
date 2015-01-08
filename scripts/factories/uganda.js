@@ -10,7 +10,7 @@ module.exports = angular.module('SpatialViewer').factory('UgandaFactory', functi
 
     $http.get('data/countrydata/Uganda.json').
         success(function(data) {
-            service.CountryData = data;
+            service.Uganda = data;
         }).
         error(function(data) {
             alert(data);
