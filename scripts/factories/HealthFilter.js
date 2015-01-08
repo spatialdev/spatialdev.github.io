@@ -113,6 +113,9 @@ module.exports = angular.module('SpatialViewer').factory('HealthFilterFactory', 
             selectall = false;
             service.selectall = false;
             service.checkBool = "Check All";
+            console.log("Health factory check bool: " + service.checkBool);
+            console.log("Health factory selected all: " + selectall);
+            console.log("Health service selected all: " + service.selectall);
         }
         angular.forEach(sector, function (names) {
             names.selected = selectall;

@@ -48,9 +48,9 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
       $scope.CICOLayer.active = false
     }
 
-    console.log("Checked Bool: " + $scope.checkedBool);
-    console.log("Selected All: " + $scope.CICOSector.selectedAll);
-    console.log("Active? " +  $scope.CICOLayer.active );
+    console.log("CICO Checked Bool: " + $scope.checkedBool);
+    console.log("CICO Selected All: " + $scope.CICOSector.selectedAll);
+    console.log("CICO Active? " +  $scope.CICOLayer.active );
 
   };
 
@@ -195,33 +195,41 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   };
 
   $scope.clearAllFilters = function () {
-    $scope.HealthSector.selectedAll = false;
-    $scope.AggSector.selectedAll = false;
-    $scope.LibrarySector.selectedAll = false;
-
-    $scope.scrapeCICOSelection();
-
-    HealthFilterFactory.clearAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
-    $scope.checkedBool = HealthFilterFactory.checkBool;
-
-    LibraryFilterFactory.clearAll($scope.LibrarySector,$scope.SelectedTab,$scope.LibrarySector.selectedAll);
-    $scope.checkedBool = LibraryFilterFactory.checkBool;
-
-    AggFilterFactory.clearAll($scope.AggSector,$scope.SelectedTab,$scope.AggSector.selectedAll);
-    $scope.checkedBool = AggFilterFactory.checkBool;
+    //$scope.AggSector.selectedAll = false;
+    //$scope.LibrarySector.selectedAll = false;
+    //
+    //$scope.scrapeCICOSelection();
+    //$scope.scrapeHealthSelection();
+    //
+    //LibraryFilterFactory.clearAll($scope.LibrarySector,$scope.SelectedTab,$scope.LibrarySector.selectedAll);
+    //$scope.checkedBool = LibraryFilterFactory.checkBool;
+    //AggFilterFactory.clearAll($scope.AggSector,$scope.SelectedTab,$scope.AggSector.selectedAll);
+    //$scope.checkedBool = AggFilterFactory.checkBool;
   };
 
   $scope.scrapeCICOSelection = function(){
     $scope.CICOSector.selectedAll = false;
+    $scope.CICOLayer.active = false;
     CICOFilterFactory.clearAll($scope.CICOSector,$scope.SelectedTab,$scope.CICOSector.selectedAll);
     $scope.checkedBool = CICOFilterFactory.checkBool;
     $scope.CICOSector.selectedAll = CICOFilterFactory.selectall;
-    $scope.CICOLayer.active = false;
-    $scope.removeMapLayer('CICOS', $scope.CICOLayer);
 
-    console.log("Checked Bool: " + $scope.checkedBool);
-    console.log("Selected All: " + $scope.CICOSector.selectedAll);
-    console.log("Active? " +  $scope.CICOLayer.active );
+    console.log("CICO Checked Bool: " + $scope.checkedBool);
+    console.log("CICO Selected All: " + $scope.CICOSector.selectedAll);
+    console.log("CICO Active? " +  $scope.CICOLayer.active );
+  };
+
+  $scope.scrapeHealthSelection = function(){
+    $scope.HealthSector.selectedAll = false;
+    $scope.HealthLayer.active = false;
+    HealthFilterFactory.clearAll($scope.HealthSector,$scope.SelectedTab,$scope.HealthSector.selectedAll);
+    $scope.checkedBool = HealthFilterFactory.checkBool;
+    $scope.HealthSector.selectedAll = HealthFilterFactory.selectall;
+
+    console.log("Health Checked Bool: " + $scope.checkedBool);
+    console.log("Health Selected All: " + $scope.HealthSector.selectedAll);
+    console.log("Health Active? " +  $scope.HealthLayer.active );
+
   };
 
   $scope.gadmLevel = $stateParams.level || 'auto';
@@ -313,7 +321,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
   $scope.removeMapLayer = function (layerKey, layer) {
 
-    // add layer
+    // remove layer
     if (layer.active === false) {
 
       $scope.mapLayers = $.grep($scope.mapLayers, function(routeLayer){

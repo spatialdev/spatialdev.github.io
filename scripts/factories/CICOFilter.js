@@ -381,17 +381,17 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                     service.selectall = false;
                     service.checkBool = "Check All";
                     console.log(service.checkBool);
-                    console.log("factory check bool: " + service.checkBool);
-                    console.log("factory selected all: " + selectall);
-                    console.log("service selected all: " + service.selectall);
+                    console.log("CICO factory check bool: " + service.checkBool);
+                    console.log("CICO factory selected all: " + selectall);
+                    console.log("CICO service selected all: " + service.selectall);
                 } else {
                     selectall = true;
                     service.selectall = true;
                     service.checkBool = "Uncheck All";
                     console.log(service.checkBool);
-                    console.log("factory check bool: " + service.checkBool);
-                    console.log("factory selected all: " + selectall);
-                    console.log("service selected all: " + service.selectall);
+                    console.log("CICO factory check bool: " + service.checkBool);
+                    console.log("CICO factory selected all: " + selectall);
+                    console.log("CICO service selected all: " + service.selectall);
                 }
                 angular.forEach(sector, function (names) {
                     names.selected = selectall;
@@ -406,9 +406,9 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
             selectall = false;
             service.selectall = false;
             service.checkBool = "Check All";
-            console.log("factory check bool: " + service.checkBool);
-            console.log("factory selected all: " + selectall);
-            console.log("service selected all: " + service.selectall);
+            console.log("CICO factory check bool: " + service.checkBool);
+            console.log("CICO factory selected all: " + selectall);
+            console.log("CICO service selected all: " + service.selectall);
         }
         angular.forEach(sector, function (names) {
             names.selected = selectall;
