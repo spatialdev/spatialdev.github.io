@@ -3,7 +3,7 @@
  *       on 3/27/14.
  */
 
-module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', function($scope, $http, $state, $stateParams,
+module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', function($scope, $http, $state, $stateParams, $rootScope,
                                                                                     SectorFactory, CICOFilterFactory,HealthFilterFactory,
                                                                                     LibraryFilterFactory, AggFilterFactory, LayerConfig) {
   $scope.params = $stateParams;
@@ -31,7 +31,8 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   // Get selected tab
   $scope.setSelectedSector = function(selection){
     $scope.SelectedTab = selection;
-    //$scope.HealthLayer.active = true
+    console.log("filter: " + $scope.SelectedTab);
+    SectorFactory.setSelectedTab(selection);
   };
 
   // Handle Check/Uncheck All filters

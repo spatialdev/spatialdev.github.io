@@ -3,8 +3,8 @@
  *       on 4/9/14.
  */
 
-module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function (IndiaFactory,$scope, $rootScope, $state, $stateParams, $http, Donuts,
-                                                                                     $filter) {
+module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function ($scope, $rootScope, $state, $stateParams, $http, SectorFactory,
+                                                                                     Donuts, $filter, IndiaFactory) {
   $scope.details = {};
 
   $scope.navTab = 'countryoverview';
@@ -238,6 +238,48 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
   //Init selectedFeatureTitle property
   $scope.QuickStats = IndiaFactory.India.QuickStats;
   $scope.title= "Overview - Bihar & Uttar Pradesh";
+
+
+  // Set sector total on page load
+  $scope.$watch(function(){
+    return SectorFactory.CICOsTotal;
+  },function(){
+    $scope.sectortotal = SectorFactory.CICOsTotal;
+  });
+
+  // Watch for change in selected Sector
+  $scope.$watch(function setSelectedSector() {
+    return SectorFactory.SelectedTab;
+  }, function() {
+    $scope.selectedTab = SectorFactory.SelectedTab;
+
+    switch($scope.selectedTab){
+      case 'agriculture':
+        $scope.APData = SectorFactory.Agg;
+        $scope.sectortotal = SectorFactory.AggTotal;
+        console.log("case: agriculture");
+        break;
+      case 'CICOS':
+        $scope.APData = SectorFactory.CICOs;
+        $scope.sectortotal = SectorFactory.CICOsTotal;
+        console.log("case: CICOS");
+        break;
+      case 'health':
+        $scope.APData = SectorFactory.Health;
+        $scope.sectortotal = SectorFactory.HealthTotal;
+        console.log("case: Health");
+        break;
+      case 'library':
+        $scope.APData = SectorFactory.Library;
+        $scope.sectortotal = SectorFactory.LibraryTotal;
+        console.log("case: Library");
+        break;
+      default:
+        $scope.APData = SectorFactory.CICOs;
+        $scope.sectortotal = SectorFactory.CICOsTotal;
+        console.log("case: default");
+    }
+  }, true);
 
   $scope.toggleState = function(stateName) {
     var state = $state.current.name !== stateName ? stateName : 'main';
