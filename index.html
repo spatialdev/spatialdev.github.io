@@ -795,11 +795,14 @@
                         </div>
                     </div>
                     <div ng-class="{active: navTab==='apoints'}" class="tab-pane">
+                        <div class="CountryOverview">
                         <div ng-repeat="names in APData">
-                            {{names.count}} {{names.type}}
+                            {{names.count}} {{names.type}} ({{names.pct | percentage:0}})
+                            <svg><rect width='20' height='20' fill='{{CICOcfg[names.type].color}}' text-anchor='beginning'></rect></svg>
                         </div>
                         <div>
                             Total: {{sectortotal}}
+                        </div>
                         </div>
                 </div>
 

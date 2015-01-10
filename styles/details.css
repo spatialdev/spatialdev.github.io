@@ -4,7 +4,14 @@
     padding: 2px 26px;
     line-height: 22px;
     height:90%;
+    background-color: white;
 
+}
+
+.CountryOverview svg{
+    padding: 0px;
+    height: 20px;
+    width: 20px;
 }
 
 .CountryOverview .OverviewTitle {
@@ -148,7 +155,7 @@
 #DetailsPanel {
     float: left;
     padding: 14px 10px 10px;
-    background-color: #F2F2F2;
+    background-color: #ffffff;
     width: 300px;
     margin-top: -88px;
     border: 1px solid #d3d3d3;

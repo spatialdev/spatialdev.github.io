@@ -589,6 +589,8 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
 
     };
 
+    service.CICO_Config = CICO_Config;
+
     return service;
 
 });

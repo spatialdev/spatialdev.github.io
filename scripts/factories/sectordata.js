@@ -12,6 +12,12 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
     service.LibraryTotal = 0;
     service.HealthTotal = 0;
 
+    //service.pctPerType = function(sector){
+    //    for(var i=0;i<sector.length;i++) {
+    //        sector[i]["pct"] = ((parseInt(sector[i].count) / service.CICOsTotal));
+    //    }
+    //};
+
     service.getJson = function() {
         if (countryname == 'India') {
             // CICOS
@@ -25,9 +31,12 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                                 "selected": false
                             }
                     );
-                    }
-                    for(var i=0;i<CICOs.length;i++){
                         service.CICOsTotal += parseInt(CICOs[i].count);
+                    }
+                    // Calculate percentage per type
+                    //service.pctPerType(CICOs);
+                    for(var i=0;i<CICOs.length;i++){
+                        CICOs[i]["pct"]=((parseInt(CICOs[i].count)/service.CICOsTotal));
                     };
                 }).
                 error(function (data) {
@@ -42,9 +51,11 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                             "count": data.features[i].properties.count_type,
                             "selected": false
                         });
-                    }
-                    for(var i=0;i<Health.length;i++){
                         service.HealthTotal += parseInt(Health[i].count);
+                    }
+                    // Calculate percentage per type
+                    for(var i=0;i<Health.length;i++){
+                        Health[i]["pct"]=((parseInt(Health[i].count)/service.HealthTotal));
                     };
                 }).
                 error(function (data) {
@@ -59,9 +70,12 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                             "count": data.features[i].properties.count_type,
                             "selected": false
                         });
-                    }
-                    for(var i=0;i<Agg.length;i++){
                         service.AggTotal += parseInt(Agg[i].count);
+
+                    }
+                    // Calculate percentage per type
+                    for(var i=0;i<Agg.length;i++){
+                        Agg[i]["pct"]=((parseInt(Agg[i].count)/service.AggTotal));
                     };
                 }).
                 error(function (data) {
@@ -76,9 +90,10 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                             "count": data.features[i].properties.count_type,
                             "selected": false
                         });
+                        service.LibraryTotal += parseInt(Library[i].count);
                     }
                     for(var i=0;i<Library.length;i++){
-                        service.LibraryTotal += parseInt(Library[i].count);
+                        Library[i]["pct"]=((parseInt(Library[i].count)/service.LibraryTotal));
                     };
                 }).
                 error(function (data) {

@@ -47,6 +47,8 @@
     margin-left:0px;
     background-color:#f1efec;
     padding:0px;
+    border-color: #D2D2D2;
+    border-width: 1px;
 }
 
 #DetailsButtonWrapper button:hover{
@@ -97,7 +99,7 @@
 #DetailsPanel {
     float: left;
     padding: 0px 10px 10px;
-    background-color: #F2F2F2;
+    background-color: #ffffff;
     width: 457px;
     margin-top: -88px;
     border: 1px solid #d3d3d3;
@@ -125,6 +127,7 @@
 .row-rightnav {
     background-color:#f1efec;
     margin-left: -11px;
+    width:106%;
 }
 
 .row-rightinfo {

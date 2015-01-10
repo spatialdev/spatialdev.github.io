@@ -4,7 +4,7 @@
  */
 
 module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function ($scope, $rootScope, $state, $stateParams, $http, SectorFactory,
-                                                                                     Donuts, $filter, IndiaFactory) {
+                                                                                     Donuts, $filter, IndiaFactory,CICOFilterFactory) {
   $scope.details = {};
 
   $scope.navTab = 'countryoverview';
@@ -238,6 +238,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
   //Init selectedFeatureTitle property
   $scope.QuickStats = IndiaFactory.India.QuickStats;
   $scope.title= "Overview - Bihar & Uttar Pradesh";
+
+  // CICO config has filter data (name,type,count,color,zindex) for every sector
+  $scope.CICOcfg = CICOFilterFactory.CICO_Config;
 
 
   // Set sector total on page load
