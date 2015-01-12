@@ -38,6 +38,10 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                     for(var i=0;i<CICOs.length;i++){
                         CICOs[i]["pct"]=((parseInt(CICOs[i].count)/service.CICOsTotal));
                     };
+                    // Sort sector array by count
+                    CICOs.sort(function(a,b){
+                        return b.count- a.count;
+                    });
                 }).
                 error(function (data) {
                     alert(data);
@@ -57,6 +61,10 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                     for(var i=0;i<Health.length;i++){
                         Health[i]["pct"]=((parseInt(Health[i].count)/service.HealthTotal));
                     };
+                    // Sort sector array by count
+                    Health.sort(function(a,b){
+                        return b.count- a.count;
+                    });
                 }).
                 error(function (data) {
                     alert(data);
@@ -71,12 +79,15 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                             "selected": false
                         });
                         service.AggTotal += parseInt(Agg[i].count);
-
                     }
                     // Calculate percentage per type
                     for(var i=0;i<Agg.length;i++){
                         Agg[i]["pct"]=((parseInt(Agg[i].count)/service.AggTotal));
                     };
+                    // Sort sector array by count
+                    Agg.sort(function(a,b){
+                        return b.count- a.count;
+                    });
                 }).
                 error(function (data) {
                     alert(data);
@@ -95,10 +106,16 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                     for(var i=0;i<Library.length;i++){
                         Library[i]["pct"]=((parseInt(Library[i].count)/service.LibraryTotal));
                     };
+
+                    // Sort sector array by count
+                    Library.sort(function(a,b){
+                       return b.count- a.count;
+                    });
                 }).
                 error(function (data) {
                     alert(data);
                 });
+
         } else {
             alert('No country Selected');
         }
