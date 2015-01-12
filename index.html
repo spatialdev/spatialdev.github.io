@@ -795,16 +795,23 @@
                         </div>
                     </div>
                     <div ng-class="{active: navTab==='apoints'}" class="tab-pane">
-                        <div class="CountryOverview">
-                        <div ng-repeat="names in APData">
-                            {{names.count}} {{names.type}} ({{names.pct | percentage:0}})
-                            <svg><rect width='20' height='20' fill='{{CICOcfg[names.type].color}}' text-anchor='beginning'></rect></svg>
+                        <div class="APOverview scrollable">
+                        <div class = "sector" ng-repeat="names in APData">
+                            <table>
+                                <tbody>
+                                    <td class="numAccessPoints">
+                                        {{names.count | number}}
+                                        <svg><rect width='20' height='20' fill='{{CICOcfg[names.type].color}}' text-anchor='beginning'></rect></svg>
+                                    </td>
+                                    <td class="AccessPointName">
+                                        {{names.type}} ({{names.pct | percentage:0}})
+                                    </td>
+                                </tbody>
+                            </table>
                         </div>
-                        <div>
-                            Total: {{sectortotal}}
                         </div>
-                        </div>
-                </div>
+                        <div id="cicoTally">Total Access Points: {{sectortotal | number}}</div>
+                    </div>
 
                 <div class="row-rightinfo">
                     <div class="InnerContainer" style="height:100%;">
@@ -991,6 +998,7 @@
 
                     </div>
                 </div>
+
                 </div>
                 <div class="details-bottom-buttons pull-right" ng-show="!contextualLayer && !itemsList">
                     <button type="button" class="btn btn-default btn-xs" ng-click="toggleMoreLess()">Show {{moreLess}}

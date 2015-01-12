@@ -237,11 +237,22 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
   //Init selectedFeatureTitle property
   $scope.QuickStats = IndiaFactory.India.QuickStats;
-  $scope.title= "Overview - Bihar & Uttar Pradesh";
 
   // CICO config has filter data (name,type,count,color,zindex) for every sector
   $scope.CICOcfg = CICOFilterFactory.CICO_Config;
 
+
+  // Watch for change in right details navTab
+  $scope.$watch(function(){
+    return $scope.navTab;
+  }, function(){
+
+    if($scope.navTab !== 'countryoverview'){
+      $scope.title = $scope.selectedTab;
+    } else {
+      $scope.title = "Overview - Bihar & Uttar Pradesh";
+    }
+  });
 
   // Set sector total on page load
   $scope.$watch(function(){
@@ -255,6 +266,13 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     return SectorFactory.SelectedTab;
   }, function() {
     $scope.selectedTab = SectorFactory.SelectedTab;
+
+    // watch for change in sector, not tab
+    if($scope.navTab !== 'countryoverview'){
+      $scope.title = $scope.selectedTab;
+    } else {
+      $scope.title = "Overview - Bihar & Uttar Pradesh";
+    }
 
     switch($scope.selectedTab){
       case 'agriculture':

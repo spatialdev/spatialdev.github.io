@@ -1,3 +1,43 @@
+#cicoTally {
+    font-family: Din-Regular;
+    text-align: right;
+    padding: 20px;
+    background-color: #ececec;
+    font-size: 24px;
+    font-weight: bold;
+    float: right;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.APOverview{
+    font-family: Din-Regular;
+    font-size:16px;
+    padding: 2px 0px;
+    line-height: 22px;
+    height:500px;
+    background-color: white;
+    margin-top: 15px;
+    height: 470px;
+}
+
+.APOverview .sector{
+    margin-top: 10px;
+}
+
+.numAccessPoints {
+    font-size: 20px;
+    width: 110px;
+    padding: 5px 0;
+    font-weight: 500;
+    text-align: right;
+}
+
+.AccessPointName {
+    font-size: 17px;
+    padding-left: 15px;
+}
+
 .CountryOverview {
     font-family: Din-Regular;
     font-size:16px;
@@ -5,10 +45,13 @@
     line-height: 22px;
     height:90%;
     background-color: white;
-
 }
 
-.CountryOverview svg{
+.CountryOverview .sector{
+    margin-top: 10px;
+}
+
+.APOverview svg{
     padding: 0px;
     height: 20px;
     width: 20px;
@@ -18,7 +61,7 @@
     font-family: Din-Regular;
     font-size:22px;
     margin-bottom: 15px;
-    margin-top:30px;
+    margin-top:24px;
 }
 
 .CountryOverview .statistic {
