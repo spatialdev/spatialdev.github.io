@@ -3,7 +3,7 @@
  *       on 1/6/15.
  */
 
-module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', function () {
+module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', function ($http) {
 
     var CICO_Config = {
         'Offsite ATMs': {
@@ -369,8 +369,62 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
         }
 
     };
-
+    var CICOs = [];
+    var CICOsGraph = [];
     var service = {};
+
+    service.CICOsTotal = 0;
+
+    service.getCICOsCounts = function() {
+        $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
+            success(function (data) {
+                for (var i = 0; i < data.features.length; i++) {
+                    CICOs.push(
+                        {
+                            "type": data.features[i].properties.type,
+                            "count": data.features[i].properties.count_type,
+                            "land_use":data.features[i].properties.land_use,
+                            "selected": false
+                        }
+                    );
+                    service.CICOsTotal += parseInt(CICOs[i].count);
+                }
+                // Calculate percentage per type
+                //service.pctPerType(CICOs);
+                for (var i = 0; i < CICOs.length; i++) {
+                    CICOs[i]["pct"] = ((parseInt(CICOs[i].count) / service.CICOsTotal));
+                }
+
+                // Sort sector array by count
+                CICOs.sort(function (a, b) {
+                    return b.count - a.count;
+                });
+            }).
+            error(function (data) {
+                alert(data);
+            });
+    };
+    service.getCICOsUrbanRuralCounts = function() {
+        $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27&returnfields=type%2Cland_use&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type%2Cland_use&statsdef=count%3Atype').
+            success(function (data) {
+                for (var i = 0; i < data.features.length; i++) {
+                    CICOsGraph.push(
+                        {
+                            "type": data.features[i].properties.type,
+                            "count": data.features[i].properties.count_type,
+                            "land_use":data.features[i].properties.land_use,
+                            "selected": false
+                        }
+                    );
+                }
+
+            }).
+            error(function (data) {
+                alert(data);
+            });
+    };
+    service.getCICOsCounts();
+    service.getCICOsUrbanRuralCounts();
 
     service.checkAll = function (sector, selection,selectall) {
 
@@ -588,8 +642,9 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
         }
 
     };
-
     service.CICO_Config = CICO_Config;
+    service.CICOs_Counts = CICOs;
+    service.CICOs_LandUse_Counts = CICOsGraph;
 
     return service;
 

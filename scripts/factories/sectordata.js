@@ -1,14 +1,12 @@
 module.exports = angular.module('SpatialViewer').factory('SectorFactory', function($http) {
 
     var service = {};
-    var CICOs = [];
     var Library = [];
     var Agg = [];
     var Health = [];
     var countryname = 'India';
     service.SelectedTab = 'CICOS';
     service.AggTotal = 0;
-    service.CICOsTotal = 0;
     service.LibraryTotal = 0;
     service.HealthTotal = 0;
 
@@ -18,34 +16,8 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
     //    }
     //};
 
-    service.getJson = function() {
+    service.getSectorCounts = function() {
         if (countryname == 'India') {
-            // CICOS
-            $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
-                success(function (data) {
-                    for (var i = 0; i < data.features.length; i++) {
-                        CICOs.push(
-                            {
-                                "type": data.features[i].properties.type,
-                                "count": data.features[i].properties.count_type,
-                                "selected": false
-                            }
-                    );
-                        service.CICOsTotal += parseInt(CICOs[i].count);
-                    }
-                    // Calculate percentage per type
-                    //service.pctPerType(CICOs);
-                    for(var i=0;i<CICOs.length;i++){
-                        CICOs[i]["pct"]=((parseInt(CICOs[i].count)/service.CICOsTotal));
-                    };
-                    // Sort sector array by count
-                    CICOs.sort(function(a,b){
-                        return b.count- a.count;
-                    });
-                }).
-                error(function (data) {
-                    alert(data);
-                });
             // Health
             $http.get('http://spatialserver.spatialdev.com/services/tables/health_2014/query?where=country%3D%27India%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
                 success(function (data) {
@@ -53,6 +25,7 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                         Health.push({
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type,
+                            "land_use": data.features[i].properties.land_use,
                             "selected": false
                         });
                         service.HealthTotal += parseInt(Health[i].count);
@@ -76,6 +49,7 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                         Agg.push({
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type,
+                            "land_use": data.features[i].properties.land_use,
                             "selected": false
                         });
                         service.AggTotal += parseInt(Agg[i].count);
@@ -99,6 +73,7 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                         Library.push({
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type,
+                            "land_use": data.features[i].properties.land_use,
                             "selected": false
                         });
                         service.LibraryTotal += parseInt(Library[i].count);
@@ -120,7 +95,7 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
             alert('No country Selected');
         }
     }
-    service.getJson();
+    service.getSectorCounts();
 
     service.setSelectedTab = function(sector){
         service.SelectedTab = sector;
@@ -129,10 +104,9 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
 
     service.setCountry = function(country){
         countryname = country;
-        this.getJson();
+        this.getSectorCounts();
     }
 
-    service.CICOs = CICOs;
     service.Agg = Agg;
     service.Library = Library;
     service.Health = Health;

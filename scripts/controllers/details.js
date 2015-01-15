@@ -7,6 +7,8 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                                                                                      Donuts, $filter, IndiaFactory,CICOFilterFactory) {
   $scope.details = {};
 
+  $scope.toolTipDiv = null;
+
   $scope.navTab = 'countryoverview';
 
   $scope.salesforceUrl = config.salesforceUrl;
@@ -14,6 +16,184 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
   $http.get('data/sf-object-field-hash.json', {cached: true}).success(function(sfFieldHash) {
     $scope.sfFieldHash = sfFieldHash;
   });
+
+  $scope.APChart = function(sector){
+    //Clear old ones
+    $("#d3Container").html("");
+
+    if (!$scope.toolTipDiv) {
+      $scope.toolTipDiv = d3.select("#SiteWrapper").append("div")
+          .attr("class", "tooltip")
+          .style("opacity", 0);
+    }
+
+    var margin = { top: 20, right: 20, bottom: 260, left: 200 },
+        width = 650 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
+
+    var x0 = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);
+
+    var x1 = d3.scale.ordinal();
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var color = d3.scale.ordinal()
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x0)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .tickFormat(d3.format(".2s"));
+
+    var svg = d3.select("#d3Container").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var landUseTypes = [];
+    $.each(sector, function (idx,item) {
+      if ($.inArray(item.land_use, landUseTypes) == -1) {
+        landUseTypes.push(item.land_use);
+      }
+    });
+
+    //Always rearrange array.
+    //Move Urban to 1st slot
+    //Then Rural, then whatever else
+    var goal = ['Urban', 'Rural'],
+        index,
+        holder;
+
+    for (var i = 0, gl = goal.length; i < gl; i++) {
+      index = landUseTypes.indexOf(goal[i]);
+      holder = landUseTypes.splice(index, 1)[0];
+      landUseTypes.splice(i, 0, holder);
+    }
+
+    var cicoTypes = []; //Get unique list of cico types
+    var cicoTypesObject = {}; //Get unique list of cico types
+    var maxCounts = []; //keep the cico counts here.
+
+    $.each(sector, function (idx, item) {
+      if (!cicoTypesObject[item.type]) {
+        cicoTypes.push(item.type);
+        cicoTypesObject[item.type] = { name: item.type, counts: [] };
+      }
+    });
+
+    //Get list of counts by cico type
+    $.each(cicoTypes, function (idx, item) {
+      $.each(sector, function (cidx, citem) {
+        if (citem.type == item) {
+          //If it's a match, add the count to the array
+          cicoTypesObject[item].counts.push({ name: citem.land_use, value: citem.count, landUse: citem.land_use, FeatureType: citem.type });
+          maxCounts.push(+citem.count);
+        }
+      });
+    });
+
+
+    x0.domain(cicoTypes.map(function (d) {
+      return d;
+    })); //Get x axis values (CICO Type)
+    x1.domain(landUseTypes).rangeRoundBands([0, x0.rangeBand()]);
+    y.domain([0, d3.max(maxCounts)]);
+
+    //XAxis Labels
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+      //.selectAll(".tick text")
+      //.call(wrap, x0.rangeBand());
+        .attr("transform", function (d) {
+          return "rotate(-45)"
+        });
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("# Access Points");
+
+    var state = svg.selectAll(".state")
+        .data(cicoTypes)
+        .enter().append("g")
+        .attr("class", "state")
+        .attr("transform", function (d) {
+          return "translate(" + (x0(d) + 10) + ",0)";
+        });
+
+    var rect = state.selectAll("rect")
+        .data(function (d) {
+          return cicoTypesObject[d].counts;
+        })
+        .enter().append("rect")
+        .attr("width", x1.rangeBand())
+        .attr("x", function (d) {
+          return x1(d.landUse);
+        })
+        .attr("y", function (d) {
+          return y(d.value);
+        })
+        .attr("height", function (d) {
+          return height - y(d.value);
+        })
+        .style("fill", function (d) {
+          return color(d.landUse);
+        })
+        .on("mouseover", function (d) {
+          $scope.toolTipDiv.transition()
+              .duration(200)
+              .style("opacity", .9);
+          $scope.toolTipDiv.html("<span class='ttLandUse'>" + d.land_use + ":</span> <br/><span class='d3Tooltip'>" + $.number(d.count, 0) + "</span><br> " + d.type)
+              .style("left", (d3.event.pageX + 10) + "px")
+              .style("top", (d3.event.pageY - 60) + "px");
+        })
+        .on("mousemove", function (d) {
+          $scope.toolTipDiv.style("left", (d3.event.pageX + 10) + "px")
+              .style("top", (d3.event.pageY - 60) + "px");
+        })
+        .on("mouseout", function (d) {
+          $scope.toolTipDiv.transition()
+              .duration(500)
+              .style("opacity", 0);
+        });
+
+    var legend = svg.selectAll(".legend")
+        .data(landUseTypes.slice())
+        .enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", function (d, i) { return "translate(-20," + i * 20 + ")"; });
+
+    legend.append("rect")
+        .attr("x", width - 18)
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill", color);
+
+    legend.append("text")
+        .attr("x", width - 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function (d) { return d; });
+  };
 
   $scope.showRfa = function (details, value) {
     details.showRfa = true;
@@ -246,7 +426,6 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
   $scope.$watch(function(){
     return $scope.navTab;
   }, function(){
-
     if($scope.navTab !== 'countryoverview'){
       $scope.title = $scope.selectedTab;
     } else {
@@ -256,9 +435,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
   // Set sector total on page load
   $scope.$watch(function(){
-    return SectorFactory.CICOsTotal;
+    return CICOFilterFactory.CICOsTotal;
   },function(){
-    $scope.sectortotal = SectorFactory.CICOsTotal;
+    $scope.sectortotal = CICOFilterFactory.CICOsTotal;
   });
 
   // Watch for change in selected Sector
@@ -278,26 +457,31 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
       case 'agriculture':
         $scope.APData = SectorFactory.Agg;
         $scope.sectortotal = SectorFactory.AggTotal;
+        $scope.APChart(SectorFactory.Agg);
         console.log("case: agriculture");
         break;
       case 'CICOS':
-        $scope.APData = SectorFactory.CICOs;
-        $scope.sectortotal = SectorFactory.CICOsTotal;
+        $scope.APData = CICOFilterFactory.CICOs_Counts;
+        $scope.sectortotal = CICOFilterFactory.CICOsTotal;
+        $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
         console.log("case: CICOS");
         break;
       case 'health':
         $scope.APData = SectorFactory.Health;
         $scope.sectortotal = SectorFactory.HealthTotal;
+        $scope.APChart(SectorFactory.Health);
         console.log("case: Health");
         break;
       case 'library':
         $scope.APData = SectorFactory.Library;
         $scope.sectortotal = SectorFactory.LibraryTotal;
+        $scope.APChart(SectorFactory.Library);
         console.log("case: Library");
         break;
       default:
-        $scope.APData = SectorFactory.CICOs;
-        $scope.sectortotal = SectorFactory.CICOsTotal;
+        $scope.APData = CICOFilterFactory.CICOs_Counts;
+        $scope.sectortotal = CICOFilterFactory.CICOsTotal;
+        $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
         console.log("case: default");
     }
   }, true);

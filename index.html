@@ -711,7 +711,6 @@
                         ng-mouseenter="isOverviewActive = isNotParam('details-panel')"
                         ng-mouseleave="isOverviewActive = false"
                         >
-
                     <img class="svg iconpopup-svg" src="styles/svg/icon_popupInfo.svg" alt="Analysis">
                 </button>
 
@@ -811,6 +810,13 @@
                         </div>
                         </div>
                         <div id="cicoTally">Total Access Points: {{sectortotal | number}}</div>
+                    </div>
+                    <div ng-class="{active: navTab==='alorem'}" class="tab-pane">
+                        <div id="SiteWrapper">
+                            <div id="d3Container" style="height: 600px;">
+
+                            </div>
+                        </div>
                     </div>
 
                 <div class="row-rightinfo">
@@ -1027,6 +1033,7 @@
             </div>
 
         </div>
+
     </div>
     <div ui-view="upload"></div>
     <div ui-view="export"></div>
@@ -1060,6 +1067,7 @@
 <script src="bower_components/angular-ui-slider/src/slider.js"></script>
 
 
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="lib/togeojson.js"></script>
 <script src="lib/mapbox.standalone.uncompressed.js"></script>
 <script src="lib/jquery.layout-latest.min.js"></script>
