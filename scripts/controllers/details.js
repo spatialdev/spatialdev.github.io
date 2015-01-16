@@ -4,7 +4,8 @@
  */
 
 module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function ($scope, $rootScope, $state, $stateParams, $http, SectorFactory,
-                                                                                     Donuts, $filter, IndiaFactory,CICOFilterFactory) {
+                                                                                     Donuts, $filter, IndiaFactory,
+                                                                                     CICOFilterFactory,HealthFilterFactory) {
   $scope.details = {};
 
   $scope.toolTipDiv = null;
@@ -478,9 +479,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         console.log("case: CICOS");
         break;
       case 'health':
-        $scope.APData = SectorFactory.Health;
-        $scope.sectortotal = SectorFactory.HealthTotal;
-        $scope.APChart(SectorFactory.Health);
+        $scope.APData = HealthFilterFactory.Health_Counts;
+        $scope.sectortotal = HealthFilterFactory.HealthTotal;
+        $scope.APChart(HealthFilterFactory.Health_LandUse_Counts);
         console.log("case: Health");
         break;
       case 'library':

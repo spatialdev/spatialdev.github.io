@@ -16,7 +16,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
 
   $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
-  $scope.HealthSector = SectorFactory.Health;
+  $scope.HealthSector = HealthFilterFactory.Health_Counts;
   $scope.AggSector = SectorFactory.Agg;
   $scope.LibrarySector = SectorFactory.Library;
 
