@@ -370,7 +370,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
 
     };
     var CICOs = [];
-    var CICOsGraph = [];
+    var CICOsBarChart = [];
     var service = {};
 
     service.CICOsTotal = 0;
@@ -408,7 +408,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
         $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27&returnfields=type%2Cland_use&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type%2Cland_use&statsdef=count%3Atype').
             success(function (data) {
                 for (var i = 0; i < data.features.length; i++) {
-                    CICOsGraph.push(
+                    CICOsBarChart.push(
                         {
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type,
@@ -453,7 +453,6 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                 break;
         }
     };
-
     service.clearAll = function (sector, selection,selectall) {
 
         if (!selectall) {
@@ -644,7 +643,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
     };
     service.CICO_Config = CICO_Config;
     service.CICOs_Counts = CICOs;
-    service.CICOs_LandUse_Counts = CICOsGraph;
+    service.CICOs_LandUse_Counts = CICOsBarChart;
 
     return service;
 

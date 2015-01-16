@@ -58,11 +58,12 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var landUseTypes = [];
-    $.each(sector, function (idx,item) {
-      if ($.inArray(item.land_use, landUseTypes) == -1) {
-        landUseTypes.push(item.land_use);
+
+      for (var i=0;i<sector.length;i++){
+          if (landUseTypes.includes(sector[i].land_use) == false) {
+              landUseTypes.push(sector[i].land_use);
+          }
       }
-    });
 
     //Always rearrange array.
     //Move Urban to 1st slot
@@ -81,16 +82,23 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     var cicoTypesObject = {}; //Get unique list of cico types
     var maxCounts = []; //keep the cico counts here.
 
-    $.each(sector, function (idx, item) {
-      if (!cicoTypesObject[item.type]) {
-        cicoTypes.push(item.type);
-        cicoTypesObject[item.type] = { name: item.type, counts: [] };
-      }
-    });
+    //for (var i=0;i<sector.length;i++){
+    //    if (!cicoTypesObject[sector[i].type]) {
+    //        cicoTypes.push(sector[i].type);
+    //        cicoTypesObject[sector[i].type] = { name: sector[i].type, counts: [] };
+    //    }
+    //}
+
+      sector.forEach(function(item){
+          if (!cicoTypesObject[item.type]) {
+              cicoTypes.push(item.type);
+              cicoTypesObject[item.type] = { name: item.type, counts: [] };
+          }
+      });
 
     //Get list of counts by cico type
-    $.each(cicoTypes, function (idx, item) {
-      $.each(sector, function (cidx, citem) {
+      cicoTypes.forEach(function (item, idx) {
+        sector.forEach(function (citem, ixdx) {
         if (citem.type == item) {
           //If it's a match, add the count to the array
           cicoTypesObject[item].counts.push({ name: citem.land_use, value: citem.count, landUse: citem.land_use, FeatureType: citem.type });
@@ -98,7 +106,6 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         }
       });
     });
-
 
     x0.domain(cicoTypes.map(function (d) {
       return d;
@@ -161,13 +168,13 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
           $scope.toolTipDiv.transition()
               .duration(200)
               .style("opacity", .9);
-          $scope.toolTipDiv.html("<span class='ttLandUse'>" + d.land_use + ":</span> <br/><span class='d3Tooltip'>" + $.number(d.count, 0) + "</span><br> " + d.type)
-              .style("left", (d3.event.pageX + 10) + "px")
-              .style("top", (d3.event.pageY - 60) + "px");
+            $scope.toolTipDiv.html("<span class='ttLandUse'>" + d.landUse + ":</span> <br/><span class='d3Tooltip'>" + d.value + "</span><br> " + d.FeatureType)
+              .style("left", (d3.event.layerX + 10) + "px")
+              .style("top", (d3.event.layerY - 60) + "px");
         })
         .on("mousemove", function (d) {
-          $scope.toolTipDiv.style("left", (d3.event.pageX + 10) + "px")
-              .style("top", (d3.event.pageY - 60) + "px");
+          $scope.toolTipDiv.style("left", (d3.event.layerX + 10) + "px")
+              .style("top", (d3.event.layerY - 60) + "px");
         })
         .on("mouseout", function (d) {
           $scope.toolTipDiv.transition()
@@ -426,11 +433,15 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
   $scope.$watch(function(){
     return $scope.navTab;
   }, function(){
-    if($scope.navTab !== 'countryoverview'){
+      if($scope.navTab !== 'countryoverview'){
       $scope.title = $scope.selectedTab;
     } else {
       $scope.title = "Overview - Bihar & Uttar Pradesh";
     }
+      // set default bar chart to CICOs
+      if($scope.selectedTab == 'CICOS'){
+          $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
+      }
   });
 
   // Set sector total on page load

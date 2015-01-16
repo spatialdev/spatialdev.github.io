@@ -10,6 +10,18 @@
     margin-top: 10px;
 }
 
+.d3Tooltip {
+    font-family: Din-Regular;
+    font-weight: bold;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.ttLandUse {
+    font-family: Din-Regular;
+    color: #8988a6;
+}
+
 .APOverview{
     font-family: Din-Regular;
     font-size:16px;
