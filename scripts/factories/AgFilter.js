@@ -6,11 +6,13 @@
  *       on 1/6/15.
  */
 
-module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', function () {
+module.exports = angular.module('SpatialViewer').factory('AgFilterFactory', function ($http) {
 
+    var Ag = [];
+    var AgLandUse = [];
     var service = {};
-
-    var Agg_Config =  {
+    service.AgTotal = 0;
+    var Ag_Config =  {
         'Dairy Processors': {
             color: '#9b242d',
             infoLabel: 'Dairy Processors',
@@ -47,9 +49,9 @@ module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', fun
             providers: null,
             zIndex: 7
         },
-        'Warehouse/Storage/Aggregation Centres': {
+        'Warehouse/Storage/Agregation Centres': {
             color: '#8cb7c7',
-            infoLabel: 'Warehouse/Storage/Aggregation Centres',
+            infoLabel: 'Warehouse/Storage/Agregation Centres',
             providers: null,
             zIndex: 4
         },
@@ -110,13 +112,12 @@ module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', fun
                     console.log("factory selected all: " + selectall);
                     console.log("service selected all: " + service.selectall);
                 }
-                angular.forEach(sector, function (names) {
+                sector.forEach(function (names) {
                     names.selected = selectall;
                 });
                 break;
         }
     };
-
     service.clearAll = function (sector, selection,selectall) {
 
         if (!selectall) {
@@ -124,10 +125,57 @@ module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', fun
             service.selectall = false;
             service.checkBool = "Check All";
         }
-        angular.forEach(sector, function (names) {
+        sector.forEach(function (names) {
             names.selected = selectall;
         });
     };
+
+    service.getAgCounts = function(){
+        $http.get('http://spatialserver.spatialdev.com/services/tables/agriculture_2014/query?where=country%3D%27India%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
+            success(function (data) {
+                for (var i = 0; i < data.features.length; i++) {
+                    Ag.push({
+                        "type": data.features[i].properties.type,
+                        "count": data.features[i].properties.count_type,
+                        "land_use": data.features[i].properties.land_use,
+                        "selected": false
+                    });
+                    service.AgTotal += parseInt(Ag[i].count);
+                }
+                // Calculate percentage per type
+                for(var i=0;i<Ag.length;i++){
+                    Ag[i]["pct"]=((parseInt(Ag[i].count)/service.AgTotal));
+                };
+                // Sort sector array by count
+                Ag.sort(function(a,b){
+                    return b.count- a.count;
+                });
+            }).
+            error(function (data) {
+                alert(data);
+            });
+    };
+    service.getAgUrbanRuralCounts = function(){
+        $http.get('http://spatialserver.spatialdev.com/services/tables/agriculture_2014/query?where=country%3D%27India%27&returnfields=type%2Cland_use&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type%2Cland_use&statsdef=count%3Atype').
+            success(function (data) {
+                for (var i = 0; i < data.features.length; i++) {
+                    AgLandUse.push(
+                        {
+                            "type": data.features[i].properties.type,
+                            "count": data.features[i].properties.count_type,
+                            "land_use":data.features[i].properties.land_use,
+                            "selected": false
+                        }
+                    );
+                }
+
+            }).
+            error(function (data) {
+                alert(data);
+            });
+    };
+    service.getAgCounts();
+    service.getAgUrbanRuralCounts();
 
     service.Layer = {
         url: "http://spatialserver.spatialdev.com/services/postgis/agriculture_2014/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type,id",
@@ -182,7 +230,7 @@ module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', fun
         layerOrdering: function (feature) {
             //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
             if (feature && feature.properties) {
-              feature.properties.zIndex = Agg_Config[feature.properties.type].zIndex || 5;
+              feature.properties.zIndex = Ag_Config[feature.properties.type].zIndex || 5;
             }
         },
 
@@ -211,7 +259,7 @@ module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', fun
             switch (type) {
                 case 1: //'Point'
                         // unselected
-                    style.color = Agg_Config[feature.properties.type].color;
+                    style.color = Ag_Config[feature.properties.type].color;
                     style.radius = ScaleDependentPointRadius;
                     // selected
                     selected.color = 'rgba(255,255,0,0.5)';
@@ -249,13 +297,13 @@ module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', fun
             //
             //var buffer = _FSP.ConfettiLoader.clickToBuffer(evt);
             //
-            //if(Object.keys(_FSP.AggListBuilder.GetFilterObject()).length == 0) return;
+            //if(Object.keys(_FSP.AgListBuilder.GetFilterObject()).length == 0) return;
             //
             ////We have the buffer as geojson.  Send it to the point table to intersect
             //var tablePostArgs = {
             //  returnfields: 'lat,lng,id,type,name,photos,irrigation_pumps,farm_tractors,seed,fertilizer,chemical_inputs,organic_fertilizers,vet_supplies,tools_equipment,seed_muliplier,storage_capacity,urban_center_dist,seed_muliplier,vacination,inseminaiton,breeding,modernized',
             //  format: 'geojson',
-            //  where: _FSP.Utilities.buildPostGresQueryExpression('agriculture', _FSP.AggListBuilder.AggSelections),
+            //  where: _FSP.Utilities.buildPostGresQueryExpression('agriculture', _FSP.AgListBuilder.AgSelections),
             //  returnGeometry: 'yes',
             //  intersects: buffer,
             //  limit: 200 //add a limit of 200 so we don't get carried away
@@ -298,6 +346,9 @@ module.exports = angular.module('SpatialViewer').factory('AggFilterFactory', fun
         }
 
     };
+    service.Ag_Config = Ag_Config;
+    service.Ag_Counts = Ag;
+    service.Ag_LandUse_Counts = AgLandUse;
 
     return service;
 

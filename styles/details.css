@@ -10,16 +10,32 @@
     margin-top: 10px;
 }
 
+div.tooltip{
+    position:absolute;
+    font-family: Din-Regular;
+    text-align:left;
+    padding:5px 10px;
+    font:12px;
+    border:1px solid #666;
+    pointer-events:none;
+    background-color:#fff;
+    color:#000;
+    font-weight:bold;
+}
+
 .d3Tooltip {
     font-family: Din-Regular;
     font-weight: bold;
     font-size: 24px;
     font-weight: 700;
+    background-color: white;
 }
 
 .ttLandUse {
     font-family: Din-Regular;
     color: #8988a6;
+    background-color: white;
+
 }
 
 .APOverview{

@@ -483,14 +483,14 @@
 
                             <div>
                                 <label class="checkbox">
-                                    <input type="checkbox" ng-model="AggSector.selectedAll"
-                                           ng-click="filterAgg(); toggleMapLayer(navTab, AggLayer)">
+                                    <input type="checkbox" ng-model="AgSector.selectedAll"
+                                           ng-click="filterAg(); toggleMapLayer(navTab, AgLayer)">
                                     {{checkedBool}}
                                 </label>
 
-                                <label ng-repeat="names in AggSector" class="checkbox">
+                                <label ng-repeat="names in AgSector" class="checkbox">
                                     <input type="checkbox" ng-model="names.selected"
-                                           ng-click="setAggSelection(names.type, !names.selected)">
+                                           ng-click="setAgSelection(names.type, !names.selected)">
                                     {{names.type}} ({{names.count | number}})
                                 </label>
                             </div>

@@ -210,7 +210,7 @@ require('./factories/sectordata');
 require('./factories/CICOFilter');
 require('./factories/HealthFilter');
 require('./factories/LibraryFilter');
-require('./factories/AggFilter');
+require('./factories/AgFilter');
 require('./controllers/main');
 require('./controllers/map');
 require('./controllers/navbar');

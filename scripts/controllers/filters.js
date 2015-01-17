@@ -5,25 +5,25 @@
 
 module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', function($scope, $http, $state, $stateParams, $rootScope,
                                                                                     SectorFactory, CICOFilterFactory,HealthFilterFactory,
-                                                                                    LibraryFilterFactory, AggFilterFactory, LayerConfig) {
+                                                                                    LibraryFilterFactory, AgFilterFactory, LayerConfig) {
   $scope.params = $stateParams;
   $scope.navTab = 'CICOS';
 
   $scope.HealthLayer = HealthFilterFactory.Layer;
-  $scope.AggLayer = AggFilterFactory.Layer;
+  $scope.AgLayer = AgFilterFactory.Layer;
   $scope.LibraryLayer = LibraryFilterFactory.Layer;
   $scope.CICOLayer = CICOFilterFactory.Layer;
 
 
   $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
   $scope.HealthSector = HealthFilterFactory.Health_Counts;
-  $scope.AggSector = SectorFactory.Agg;
-  $scope.LibrarySector = SectorFactory.Library;
+  $scope.AgSector = AgFilterFactory.Ag_Counts;
+  $scope.LibrarySector = LibraryFilterFactory.Library_Counts;
 
   // Check box are checked by default
   $scope.CICOSector.selectedAll = false;
   $scope.HealthSector.selectedAll = false;
-  $scope.AggSector.selectedAll = false;
+  $scope.AgSector.selectedAll = false;
   $scope.LibrarySector.selectedAll = false;
   $scope.checkedBool = "Check All";
   $scope.SelectedTab = 'CICOS';
@@ -80,7 +80,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.checkedBool = LibraryFilterFactory.checkBool;
     $scope.LibrarySector.selectedAll = LibraryFilterFactory.selectall;
 
-    // Toggle agg sector later
+    // Toggle ag sector later
     if($scope.LibrarySector.selectedAll == true){
       $scope.LibraryLayer.active = true;
     } else {
@@ -93,21 +93,21 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
   };
 
-  $scope.filterAgg = function(){
-    AggFilterFactory.checkAll($scope.AggSector,$scope.SelectedTab,$scope.AggSector.selectedAll);
-    $scope.checkedBool = AggFilterFactory.checkBool;
-    $scope.AggSector.selectedAll = AggFilterFactory.selectall;
+  $scope.filterAg = function(){
+    AgFilterFactory.checkAll($scope.AgSector,$scope.SelectedTab,$scope.AgSector.selectedAll);
+    $scope.checkedBool = AgFilterFactory.checkBool;
+    $scope.AgSector.selectedAll = AgFilterFactory.selectall;
 
-    // Toggle agg sector later
-    if($scope.AggSector.selectedAll == true){
-      $scope.AggLayer.active = true;
+    // Toggle ag sector later
+    if($scope.AgSector.selectedAll == true){
+      $scope.AgLayer.active = true;
     } else {
-      $scope.AggLayer.active = false
+      $scope.AgLayer.active = false
     }
 
     console.log("Checked Bool: " + $scope.checkedBool);
-    console.log("Selected All: " + $scope.AggSector.selectedAll);
-    console.log("Active? " +  $scope.AggLayer.active );
+    console.log("Selected All: " + $scope.AgSector.selectedAll);
+    console.log("Active? " +  $scope.AgLayer.active );
 
   };
 
@@ -169,24 +169,24 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     console.log($scope.LibrarySelections);
   };
-  $scope.setAggSelection = function(sector, checked){
+  $scope.setAgSelection = function(sector, checked){
     // Set selected value for each sector based on checkbox
-    for(var i=0;i<$scope.AggSector.length;i++) {
-      if(sector == $scope.AggSector[i].type) {
-        $scope.AggSector[i].selected = checked;
+    for(var i=0;i<$scope.AgSector.length;i++) {
+      if(sector == $scope.AgSector[i].type) {
+        $scope.AgSector[i].selected = checked;
         break;
       }
       console.log(sector + ": " + checked);
     }
     // Save selected Filters into array
-    $scope.AggSelections = [];
-    for(var i=0;i<$scope.AggSector.length;i++){
-      if($scope.AggSector[i].selected == true){
-        $scope.AggSelections.push($scope.AggSector[i].type);
+    $scope.AgSelections = [];
+    for(var i=0;i<$scope.AgSector.length;i++){
+      if($scope.AgSector[i].selected == true){
+        $scope.AgSelections.push($scope.AgSector[i].type);
       }
     }
 
-    console.log($scope.AggSelections);
+    console.log($scope.AgSelections);
   };
 
   $scope.submitFilter = function () {
@@ -196,7 +196,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   };
 
   $scope.clearAllFilters = function () {
-    //$scope.AggSector.selectedAll = false;
+    //$scope.AgSector.selectedAll = false;
     //$scope.LibrarySector.selectedAll = false;
     //
     //$scope.scrapeCICOSelection();
@@ -204,8 +204,8 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     //
     //LibraryFilterFactory.clearAll($scope.LibrarySector,$scope.SelectedTab,$scope.LibrarySector.selectedAll);
     //$scope.checkedBool = LibraryFilterFactory.checkBool;
-    //AggFilterFactory.clearAll($scope.AggSector,$scope.SelectedTab,$scope.AggSector.selectedAll);
-    //$scope.checkedBool = AggFilterFactory.checkBool;
+    //AgFilterFactory.clearAll($scope.AgSector,$scope.SelectedTab,$scope.AgSector.selectedAll);
+    //$scope.checkedBool = AgFilterFactory.checkBool;
   };
 
   $scope.scrapeCICOSelection = function(){
@@ -336,7 +336,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $state.go(state, $stateParams);
 
   };
-
 
   $scope.listGists = function () {
     $scope.gists = gists.fetch();

@@ -372,7 +372,6 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
     var CICOs = [];
     var CICOsLandUse = [];
     var service = {};
-
     service.CICOsTotal = 0;
 
     service.getCICOsCounts = function() {
@@ -447,7 +446,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                     console.log("CICO factory selected all: " + selectall);
                     console.log("CICO service selected all: " + service.selectall);
                 }
-                angular.forEach(sector, function (names) {
+                sector.forEach(function (names) {
                     names.selected = selectall;
                 });
                 break;
@@ -463,7 +462,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
             console.log("CICO factory selected all: " + selectall);
             console.log("CICO service selected all: " + service.selectall);
         }
-        angular.forEach(sector, function (names) {
+        sector.forEach(function (names) {
             names.selected = selectall;
         });
     };

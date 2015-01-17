@@ -6,10 +6,9 @@
  *       on 1/6/15.
  */
 
-module.exports = angular.module('SpatialViewer').factory('LibraryFilterFactory', function () {
+module.exports = angular.module('SpatialViewer').factory('LibraryFilterFactory', function ($http) {
 
     var service = {};
-
     var Lib_Config =  {
         'District': {
             color: '#9b242d',
@@ -37,6 +36,58 @@ module.exports = angular.module('SpatialViewer').factory('LibraryFilterFactory',
         }
 
     };
+    var Library = [];
+    var LibraryLandUse = [];
+    service.LibraryTotal = 0;
+
+    service.getLibraryCounts = function(){
+        // Library
+        $http.get('http://spatialserver.spatialdev.com/services/tables/library_2014/query?where=country%3D%27India%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
+            success(function (data) {
+                for (var i = 0; i < data.features.length; i++) {
+                    Library.push({
+                        "type": data.features[i].properties.type,
+                        "count": data.features[i].properties.count_type,
+                        "land_use": data.features[i].properties.land_use,
+                        "selected": false
+                    });
+                    service.LibraryTotal += parseInt(Library[i].count);
+                }
+                for(var i=0;i<Library.length;i++){
+                    Library[i]["pct"]=((parseInt(Library[i].count)/service.LibraryTotal));
+                };
+
+                // Sort sector array by count
+                Library.sort(function(a,b){
+                    return b.count- a.count;
+                });
+            }).
+            error(function (data) {
+                alert(data);
+            });
+    };
+    service.getLibraryUrbanRuralCounts = function(){
+        $http.get('http://spatialserver.spatialdev.com/services/tables/library_2014/query?where=country%3D%27India%27&returnfields=type%2Cland_use&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type%2Cland_use&statsdef=count%3Atype').
+            success(function (data) {
+                for (var i = 0; i < data.features.length; i++) {
+                    LibraryLandUse.push(
+                        {
+                            "type": data.features[i].properties.type,
+                            "count": data.features[i].properties.count_type,
+                            "land_use":data.features[i].properties.land_use,
+                            "selected": false
+                        }
+                    );
+                }
+
+            }).
+            error(function (data) {
+                alert(data);
+            });
+    };
+
+    service.getLibraryCounts();
+    service.getLibraryUrbanRuralCounts();
 
     service.checkAll = function (sector, selection,selectall) {
 
@@ -57,21 +108,19 @@ module.exports = angular.module('SpatialViewer').factory('LibraryFilterFactory',
                     console.log("factory selected all: " + selectall);
                     console.log("service selected all: " + service.selectall);
                 }
-                angular.forEach(sector, function (names) {
+                sector.forEach(function (names) {
                     names.selected = selectall;
                 });
                 break;
         }
     };
-
     service.clearAll = function (sector, selection,selectall) {
-
         if (!selectall) {
             selectall = false;
             service.selectall = false;
             service.checkBool = "Check All";
         }
-        angular.forEach(sector, function (names) {
+        sector.forEach(function (names) {
             names.selected = selectall;
         });
     };
@@ -246,6 +295,9 @@ module.exports = angular.module('SpatialViewer').factory('LibraryFilterFactory',
         }
 
     };
+    service.Library_Config = Lib_Config;
+    service.Library_Counts = Library;
+    service.Library_LandUse_Counts = LibraryLandUse;
 
     return service;
 

@@ -5,7 +5,8 @@
 
 module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function ($scope, $rootScope, $state, $stateParams, $http, SectorFactory,
                                                                                      Donuts, $filter, IndiaFactory,
-                                                                                     CICOFilterFactory,HealthFilterFactory) {
+                                                                                     CICOFilterFactory,HealthFilterFactory,AgFilterFactory,
+                                                                                     LibraryFilterFactory) {
   $scope.details = {};
 
   $scope.toolTipDiv = null;
@@ -169,7 +170,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
           $scope.toolTipDiv.transition()
               .duration(200)
               .style("opacity", .9);
-            $scope.toolTipDiv.html("<span class='ttLandUse'>" + d.landUse + ":</span> <br/><span class='d3Tooltip'>" + d.value + "</span><br> " + d.FeatureType)
+            $scope.toolTipDiv.html("<span class='ttLandUse'>" + d.landUse + ":</span> <br/><span class='d3Tooltip'>" + $filter('number')(d.value,0) + "</span><br> " + d.FeatureType)
               .style("left", (d3.event.layerX + 10) + "px")
               .style("top", (d3.event.layerY - 60) + "px");
         })
@@ -467,9 +468,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
     switch($scope.selectedTab){
       case 'agriculture':
-        $scope.APData = SectorFactory.Agg;
-        $scope.sectortotal = SectorFactory.AggTotal;
-        $scope.APChart(SectorFactory.Agg);
+        $scope.APData = AgFilterFactory.Ag_Counts;
+        $scope.sectortotal = AgFilterFactory.AgTotal;
+        $scope.APChart(AgFilterFactory.Ag_LandUse_Counts);
         console.log("case: agriculture");
         break;
       case 'CICOS':
@@ -485,9 +486,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         console.log("case: Health");
         break;
       case 'library':
-        $scope.APData = SectorFactory.Library;
-        $scope.sectortotal = SectorFactory.LibraryTotal;
-        $scope.APChart(SectorFactory.Library);
+        $scope.APData = LibraryFilterFactory.Libary_Counts;
+        $scope.sectortotal = LibraryFilterFactory.LibraryTotal;
+        $scope.APChart(LibraryFilterFactory.Library_LandUse_Counts);
         console.log("case: Library");
         break;
       default:

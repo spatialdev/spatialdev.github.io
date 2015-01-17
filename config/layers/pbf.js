@@ -1075,7 +1075,6 @@ layer.agriculture = {
 
 };
 
-
 // All possible CICO layer (combined from all countries)
 var CICO_Config = {
   'Offsite ATMs': {
