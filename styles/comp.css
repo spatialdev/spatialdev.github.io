@@ -32,17 +32,17 @@ a {
     z-index: 2002;
 }
 
-#MapUpperRightToolbarWrapper > div {
-    float: left;
-    background-color: #43484a;
-    color: #fff;
-    text-transform: uppercase;
-    padding: 7px 25px;
-    font-size: 14px;
-    font-family: oswaldregular;
-    cursor: pointer;
+/*#MapUpperRightToolbarWrapper > div {*/
+    /*float: left;*/
+    /*background-color: #43484a;*/
+    /*color: #fff;*/
+    /*text-transform: uppercase;*/
+    /*padding: 7px 25px;*/
+    /*font-size: 14px;*/
+    /*font-family: oswaldregular;*/
+    /*cursor: pointer;*/
 
-}
+/*}*/
 
 #MapUpperRightToolbarWrapper .btn{
     border-radius: 0px;
@@ -56,7 +56,7 @@ a {
     background-color: #2D91CD;
 }
 
-#MapUpperRightToolbarWrapper .btn:active{
+#MapUpperRightToolbtnarWrapper .btn:active{
     background-color: #2D91CD;
 }
 

@@ -1,5 +1,5 @@
 .logo_BG {
-    background-color: #9b232c;
+    background-color: rgb(237,27,46);
     position: absolute;
     left: -1px;
     top: 0px;
@@ -53,7 +53,7 @@
 
 .flyout {
     padding: 10px 25px;
-    background-color: #9b232c;
+    background-color: rgb(237,27,46);
     color: #fff;
     text-transform: uppercase;
     font-family: DIN;
@@ -71,27 +71,27 @@
 }
 
 .side-view-close {
-    background-color: #9b232c;
+    background-color: rgb(237,27,46);
 }
 
 .side-view li.active > a {
-    color: #9b232c;
+    color: rgb(237,27,46);
 }
 
 .side-view li.active > a:hover {
-    color: #9b232c;
+    color: rgb(237,27,46);
 }
 
 .side-view .nav-tabs a:hover {
-    color: #9b232c;
+    color: rgb(237,27,46);
 }
 
 .btn-primary {
-    border-color: #9b232c;
+    border-color: rgb(237,27,46);
 }
 
 .NavButtonGroup button:hover {
-    color: #9b232c!important;
+    color: rgb(237,27,46)!important;
 }
 
 .NavButtonGroup, .NavFlyoutGroup {
@@ -103,7 +103,7 @@
 }
 
 .NavButtonGroup button.on {
-    color: #9b232c!important;
+    color: rgb(237,27,46)!important;
 }
 
 .topnav-button {

@@ -13,9 +13,23 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   $scope.AgLayer = AgFilterFactory.Layer;
   $scope.LibraryLayer = LibraryFilterFactory.Layer;
   $scope.CICOLayer = CICOFilterFactory.Layer;
-
-
   $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
+
+  $scope.setFilters = function() {
+    if($scope.selection ==  'India') {
+      $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
+    } else {
+      $scope.CICOSector = CICOFilterFactory.CICOs_Counts_Kenya;
+    }
+  };
+
+  $scope.$watch(function(){
+    return SectorFactory.selectedCountry;
+  },function(){
+    $scope.setFilters();
+  });
+
+
   $scope.HealthSector = HealthFilterFactory.Health_Counts;
   $scope.AgSector = AgFilterFactory.Ag_Counts;
   $scope.LibrarySector = LibraryFilterFactory.Library_Counts;

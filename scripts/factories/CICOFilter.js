@@ -370,19 +370,23 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
 
     };
     var CICOs = [];
+    var CICOs_Kenya = [];
     var CICOsLandUse = [];
     var service = {};
+    service.selectedCountry = 'India';
     service.CICOsTotal = 0;
+    service.CICOsTotal_Kenya = 0;
 
-    service.getCICOsCounts = function() {
+    service.getCICOsCounts = function () {
         $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
             success(function (data) {
+                //reset array to prevent duplicates
                 for (var i = 0; i < data.features.length; i++) {
                     CICOs.push(
                         {
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type,
-                            "land_use":data.features[i].properties.land_use,
+                            "land_use": data.features[i].properties.land_use,
                             "selected": false
                         }
                     );
@@ -402,8 +406,37 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
             error(function (data) {
                 alert(data);
             });
+
+        $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2013/query?where=country%3D%27Kenya%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
+            success(function (data) {
+                //reset array to prevent duplicates
+                for (var i = 0; i < data.features.length; i++) {
+                    CICOs_Kenya.push(
+                        {
+                            "type": data.features[i].properties.type,
+                            "count": data.features[i].properties.count_type,
+                            "land_use": data.features[i].properties.land_use,
+                            "selected": false
+                        }
+                    );
+                    service.CICOsTotal_Kenya += parseInt(CICOs_Kenya[i].count);
+                }
+                // Calculate percentage per type
+                //service.pctPerType(CICOs);
+                for (var i = 0; i < CICOs_Kenya.length; i++) {
+                    CICOs_Kenya[i]["pct"] = ((parseInt(CICOs_Kenya[i].count) / service.CICOsTotal_Kenya));
+                }
+
+                // Sort sector array by count
+                CICOs_Kenya.sort(function (a, b) {
+                    return b.count - a.count;
+                });
+            }).
+            error(function (data) {
+                alert(data);
+            });
     };
-    service.getCICOsUrbanRuralCounts = function() {
+    service.getCICOsUrbanRuralCounts = function () {
         $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27&returnfields=type%2Cland_use&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type%2Cland_use&statsdef=count%3Atype').
             success(function (data) {
                 for (var i = 0; i < data.features.length; i++) {
@@ -411,7 +444,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                         {
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type,
-                            "land_use":data.features[i].properties.land_use,
+                            "land_use": data.features[i].properties.land_use,
                             "selected": false
                         }
                     );
@@ -422,12 +455,12 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                 alert(data);
             });
     };
-    service.getCICOsCounts();
     service.getCICOsUrbanRuralCounts();
+    service.getCICOsCounts();
 
-    service.checkAll = function (sector, selection,selectall) {
+    service.checkAll = function (sector, selection, selectall) {
 
-        switch(selection) {
+        switch (selection) {
             case 'CICOS':
                 if (selectall) {
                     selectall = false;
@@ -452,7 +485,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                 break;
         }
     };
-    service.clearAll = function (sector, selection,selectall) {
+    service.clearAll = function (sector, selection, selectall) {
 
         if (!selectall) {
             selectall = false;
@@ -524,21 +557,21 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
             //}
         },
 
-        style: function(feature) {
+        style: function (feature) {
             var style = {};
             var selected = style.selected = {};
             var pointRadius = 1;
 
-            function ScaleDependentPointRadius(zoom){
+            function ScaleDependentPointRadius(zoom) {
                 //Set point radius based on zoom
                 var pointRadius = 1;
-                if(zoom >= 0 && zoom <= 7){
+                if (zoom >= 0 && zoom <= 7) {
                     pointRadius = 1;
                 }
-                else if(zoom > 7 && zoom <= 10){
+                else if (zoom > 7 && zoom <= 10) {
                     pointRadius = 3;
                 }
-                else if(zoom > 10){
+                else if (zoom > 10) {
                     pointRadius = 4;
                 }
 
@@ -642,6 +675,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
     };
     service.CICO_Config = CICO_Config;
     service.CICOs_Counts = CICOs;
+    service.CICOs_Counts_Kenya = CICOs_Kenya;
     service.CICOs_LandUse_Counts = CICOsLandUse;
 
     return service;

@@ -596,92 +596,97 @@
 
         <!-- Upper Right Toolbar in Map -->
 
-        <div ng-controller="CountrySelect as cs">
-
+        <div>
             <div id="MapUpperRightToolbarWrapper">
-                <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')"><span
-                        class="glyphicon glyphicon-chevron-down"></span></div>
+
                 <div class="left-section countryselect" class="breadcrumbs-container">
                     <div ng-click="switchCountry(selection)" class="world countrytext">
                         {{selection}}
                     </div>
-                    <div class="stack">
-                        <div class="icon-10_arrow_right" ng-show="levelarc"></div>
-                        <div class="bc arcregion" ng-cloak ng-show="levelarc" ng-click="zoomToGUID(featarc, -1)">
-                            {{levelarc}}
-                        </div>
+                    <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')"><span
+                            class="glyphicon glyphicon-chevron-down"></span></div>
+                    <!--<div class="stack">-->
+                        <!--<div class="icon-10_arrow_right" ng-show="levelarc"></div>-->
+                        <!--<div class="bc arcregion" ng-cloak ng-show="levelarc" ng-click="zoomToGUID(featarc, -1)">-->
+                            <!--{{levelarc}}-->
+                        <!--</div>-->
 
-                        <div class="icon-10_arrow_right" ng-show="level0"></div>
-                        <div class="bc level0" ng-cloak ng-show="level0" ng-click="zoomToGUID(feat0, 0)">{{level0}}
-                        </div>
+                        <!--<div class="icon-10_arrow_right" ng-show="level0"></div>-->
+                        <!--<div class="bc level0" ng-cloak ng-show="level0" ng-click="zoomToGUID(feat0, 0)">{{level0}}-->
+                        <!--</div>-->
 
-                        <div class="icon-10_arrow_right" ng-show="level1"></div>
-                        <div class="bc level1" ng-cloak ng-show="level1" ng-click="zoomToGUID(feat1, 1)">{{level1}}
-                        </div>
+                        <!--<div class="icon-10_arrow_right" ng-show="level1"></div>-->
+                        <!--<div class="bc level1" ng-cloak ng-show="level1" ng-click="zoomToGUID(feat1, 1)">{{level1}}-->
+                        <!--</div>-->
 
-                        <div class="icon-10_arrow_right" ng-show="level2"></div>
-                        <div class="bc level2" ng-cloak ng-show="level2" ng-click="zoomToGUID(feat2, 2)">{{level2}}
-                        </div>
+                        <!--<div class="icon-10_arrow_right" ng-show="level2"></div>-->
+                        <!--<div class="bc level2" ng-cloak ng-show="level2" ng-click="zoomToGUID(feat2, 2)">{{level2}}-->
+                        <!--</div>-->
 
-                        <div class="icon-10_arrow_right" ng-show="level3"></div>
-                        <div class="bc level3" ng-cloak ng-show="level3" ng-click="zoomToGUID(feat3, 3)">{{level3}}
-                        </div>
+                        <!--<div class="icon-10_arrow_right" ng-show="level3"></div>-->
+                        <!--<div class="bc level3" ng-cloak ng-show="level3" ng-click="zoomToGUID(feat3, 3)">{{level3}}-->
+                        <!--</div>-->
 
-                        <div class="icon-10_arrow_right" ng-show="level4"></div>
-                        <div class="bc level4" ng-cloak ng-show="level4" ng-click="zoomToGUID(feat4, 4)">{{level4}}
-                        </div>
+                        <!--<div class="icon-10_arrow_right" ng-show="level4"></div>-->
+                        <!--<div class="bc level4" ng-cloak ng-show="level4" ng-click="zoomToGUID(feat4, 4)">{{level4}}-->
+                        <!--</div>-->
 
-                        <div class="icon-10_arrow_right" ng-show="level5"></div>
-                        <div class="bc level5" ng-cloak ng-show="level5" ng-click="zoomToGUID(feat5, 5)">{{level5}}
-                        </div>
-                    </div>
+                        <!--<div class="icon-10_arrow_right" ng-show="level5"></div>-->
+                        <!--<div class="bc level5" ng-cloak ng-show="level5" ng-click="zoomToGUID(feat5, 5)">{{level5}}-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
 
-                <div class="light" ui-sref="upload(params)">
-                    <div><i class="icon-30_download upper-icon-upload"></i></div>
-                    <div class="upper-inline-nowrap">Upload Data</div>
-                </div>
+                <!--<div class="light" ui-sref="upload(params)">-->
+                    <!--<div><i class="icon-30_download upper-icon-upload"></i></div>-->
+                    <!--<div class="upper-inline-nowrap">Upload Data</div>-->
+                <!--</div>-->
 
-                <div class="light export" ui-sref="export(params)">
-                    <div><i class="icon-29_export upper-icon-upload"></i></div>
-                    <div class="upper-inline-nowrap">Export</div>
-                </div>
-                <div class="search icon-12_search" ng-click="toggleParam('search-panel')"></div>
+                <!--<div class="light export" ui-sref="export(params)">-->
+                    <!--<div><i class="icon-29_export upper-icon-upload"></i></div>-->
+                    <!--<div class="upper-inline-nowrap">Export</div>-->
+                <!--</div>-->
+                <!--<div class="search icon-12_search" ng-click="toggleParam('search-panel')"></div>-->
 
             </div>
 
             <!-- Region / Country Selector Panel -->
             <div id="CountrySelectorPanelWrapper" ng-class="{on: isParam('zoom-extent')}">
                 <!--<button ng-click="closeParam('zoom-extent')" type="button" class="close" aria-hidden="true">&times;</button>-->
-                <div ng-repeat="x in cs.country.countryNames" class="bc">
-                    <a ng-click="chooseCountry(x); switchCountry(x)">{{x}}</a>
+                <div id="CountrySelectedRegion" ng-repeat="cname in SelectCountry.countryNames">
+                    <a>
+                        <div id="CountrySelectedCountry">
+                            <div ng-click="toggleParam('zoom-extent'); setCountry(cname); switchCountry(cname)">{{cname}}</div>
+                        </div>
+                    </a>
                 </div>
+
             </div>
 
             <!-- Search Panel -->
-            <div id="SearchPanelWrapper" ng-class="{on: isParam('search-panel')}">
-                <div class="input-group">
-                    <span class="input-group-addon">ECOS Search</span>
-                    <input type="text" class="form-control" placeholder="Enter search term" ng-model="SearchInput">
-                </div>
-                <div id="searchResults">
-                    <div class="searchResult Header" ng-show="projectResults">Project Results
-                        ({{projectResults.length}})
-                    </div>
-                    <div ng-repeat="row in projectResults" class="resultItem" ng-click="handleSearchResultClick(row)">
-                        <span ng-show="row.level">(Mapped) </span>
-                        {{row.name}}
-                    </div>
+            <!--<div id="SearchPanelWrapper" ng-class="{on: isParam('search-panel')}">-->
+                <!--<div class="input-group">-->
+                    <!--<span class="input-group-addon">ECOS Search</span>-->
+                    <!--<input type="text" class="form-control" placeholder="Enter search term" ng-model="SearchInput">-->
+                <!--</div>-->
+                <!--<div id="searchResults">-->
+                    <!--<div class="searchResult Header" ng-show="projectResults">Project Results-->
+                        <!--({{projectResults.length}})-->
+                    <!--</div>-->
+                    <!--<div ng-repeat="row in projectResults" class="resultItem" ng-click="handleSearchResultClick(row)">-->
+                        <!--<span ng-show="row.level">(Mapped) </span>-->
+                        <!--{{row.name}}-->
+                    <!--</div>-->
 
-                    <div class="searchResult Header" ng-show="disasterResults">Disaster Results
-                        ({{disasterResults.length}})
-                    </div>
-                    <div ng-repeat="row in disasterResults" class="resultItem" ng-click="handleSearchResultClick(row)">
-                        {{row.name}}
-                    </div>
+                    <!--<div class="searchResult Header" ng-show="disasterResults">Disaster Results-->
+                        <!--({{disasterResults.length}})-->
+                    <!--</div>-->
+                    <!--<div ng-repeat="row in disasterResults" class="resultItem" ng-click="handleSearchResultClick(row)">-->
+                        <!--{{row.name}}-->
+                    <!--</div>-->
 
-                </div>
-            </div>
+                <!--</div>-->
+            <!--</div>-->
 
         </div>
 
@@ -793,6 +798,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div ng-class="{active: navTab==='apoints'}" class="tab-pane">
                         <div class="APOverview scrollable">
                         <div class = "sector" ng-repeat="names in APData">

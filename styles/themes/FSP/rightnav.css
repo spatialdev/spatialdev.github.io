@@ -1,13 +1,13 @@
 .on #DetailsNub {
     background-color: #f1efec;
-    color: #9b232c;
+    color: rgb(237,27,46);
     padding:0px;
 }
 .on #DetailsNub .iconpopup-svg.svg{
     background-color: #f1efec;
-    color: #9b232c;
+    color: rgb(237,27,46);
     padding:0px;
-    fill:#9b232c;
+    fill:rgb(237,27,46);
 }
 
 /* NavBar Flyout Tooltips */
@@ -33,7 +33,7 @@
 }
 
 #DetailsWrapper .side-view-close {
-    background-color: #9b232c;
+    background-color: rgb(237,27,46);
     top: -88px;
     right: 0px;
 }
@@ -52,7 +52,7 @@
 }
 
 #DetailsButtonWrapper button:hover{
-    color: #9b232c!important;
+    color: rgb(237,27,46)!important;
 }
 
 #DetailsButtonWrapper {
@@ -71,7 +71,7 @@
 
 .flyout-right {
     padding: 10px 25px;
-    background-color: #9b232c;
+    background-color: rgb(237,27,46);
     color: #fff;
     text-transform: uppercase;
     font-family: DIN;
@@ -144,7 +144,7 @@
     font-size: 20px;
     font-family: Din-Medium;
     text-transform: uppercase;
-    color: #9b232c;
+    color: rgb(237,27,46);
     margin-bottom: 15px;
 }
 
@@ -175,7 +175,7 @@
 }
 
 .svg:hover {
-    fill:#9b232c;
+    fill:rgb(237,27,46);
 }
 
 #DetailsNub .no-padding{

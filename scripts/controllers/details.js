@@ -432,9 +432,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
 
   // Watch for change in right details navTab
-  $scope.$watch(function(){
-    return $scope.navTab;
-  }, function(){
+  $scope.$watch('navTab', function(){
       if($scope.navTab !== 'countryoverview'){
       $scope.title = $scope.selectedTab;
     } else {
@@ -454,7 +452,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
   });
 
   // Watch for change in selected Sector
-  $scope.$watch(function setSelectedSector() {
+  $scope.$watch(function () {
     return SectorFactory.SelectedTab;
   }, function() {
     $scope.selectedTab = SectorFactory.SelectedTab;
@@ -474,10 +472,16 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         console.log("case: agriculture");
         break;
       case 'CICOS':
-        $scope.APData = CICOFilterFactory.CICOs_Counts;
-        $scope.sectortotal = CICOFilterFactory.CICOsTotal;
-        $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
-        console.log("case: CICOS");
+          if($scope.selection == 'India') {
+              $scope.APData = CICOFilterFactory.CICOs_Counts;
+              $scope.sectortotal = CICOFilterFactory.CICOsTotal;
+              $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
+          } else if ($scope.selection) {
+              $scope.APData = CICOFilterFactory.CICOs_Counts_Kenya;
+              $scope.sectortotal = CICOFilterFactory.CICOsTotal_Kenya;
+          }
+              console.log("case: CICOS");
+
         break;
       case 'health':
         $scope.APData = HealthFilterFactory.Health_Counts;
@@ -486,7 +490,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         console.log("case: Health");
         break;
       case 'library':
-        $scope.APData = LibraryFilterFactory.Libary_Counts;
+        $scope.APData = LibraryFilterFactory.Library_Counts;
         $scope.sectortotal = LibraryFilterFactory.LibraryTotal;
         $scope.APChart(LibraryFilterFactory.Library_LandUse_Counts);
         console.log("case: Library");
@@ -497,7 +501,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
         console.log("case: default");
     }
-  }, true);
+  }  );
 
   $scope.toggleState = function(stateName) {
     var state = $state.current.name !== stateName ? stateName : 'main';

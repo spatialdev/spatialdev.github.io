@@ -3,7 +3,11 @@
  *     on Mon Mar 17 2014
  */
 
-module.exports = angular.module('SpatialViewer').controller('MapCtrl', function ($scope, $rootScope, $state, $stateParams, LayerConfig, VectorProvider, $http) {
+module.exports = angular.module('SpatialViewer').controller('MapCtrl', function (LayerConfig, VectorProvider, IndiaFactory, SectorFactory,
+                                                                                 KenyaFactory,CICOFilterFactory,
+                                                                                 UgandaFactory, BangladeshFactory, TanzaniaFactory, NigeriaFactory,
+                                                                                 $scope, $rootScope, $state, $stateParams,
+                                                                                 $http) {
   var map = L.map('map');
   var lastLayersStr = '';
   var lastBasemapUrl = null;
@@ -16,6 +20,50 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
   $scope.params = $stateParams;
   $scope.blur = '';
+
+  // Country Select
+  // All variables will be inherited by other controllers
+
+  $scope.SelectCountry = {
+    default:'India',
+    countryNames: ['Bangladesh','Uganda','Kenya','Nigeria','Tanzania','India','India-Bihar','India - ' + 'Uttar Pradeh']
+  };
+
+  $scope.selection = 'Select A Region';
+  SectorFactory.selectedCountry = $scope.selection;
+
+  //Users Selected Country
+  $scope.setCountry = function(selected){
+    $scope.selection = selected;
+    SectorFactory.setCountry(selected);
+    SectorFactory.selectedCountry = $scope.selection;
+
+  };
+
+  $scope.zoomToCountry = function () {
+    map.setView([IndiaFactory.India.MapCenter.Latitude,
+          IndiaFactory.India.MapCenter.Longitude],
+        IndiaFactory.India.MapZoom);
+  };
+
+  $scope.switchCountry = function (selected) {
+    var cname = selected;
+    console.log(cname);
+
+    if(cname !== null) {
+      map.setView([eval(cname + "Factory")[cname].MapCenter.Latitude,
+            eval(cname + "Factory")[cname].MapCenter.Longitude],
+          eval(cname + "Factory")[cname].MapZoom);
+    }
+  };
+
+  // watch for counter, when increased run http.get again and update variable
+  $scope.$watch(function(){
+    return SectorFactory.selectedCountry;
+  }, function(){
+    SectorFactory.selectedCountry = $scope.selection;
+    console.log(" ------ Current Country has changed --------");
+  });
 
   $scope.toggleState = function (stateName) {
     var state = $state.current.name !== stateName ? stateName : 'main';

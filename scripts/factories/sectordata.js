@@ -3,6 +3,8 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
     var service = {};
     var countryname = 'India';
     service.SelectedTab = 'CICOS';
+    service.selectedCountry = 'India';
+
 
 
     service.setSelectedTab = function(sector){
@@ -11,11 +13,9 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
     };
 
     service.setCountry = function(country){
-        countryname = country;
-        this.getSectorCounts();
+        service.selectedCountry = country;
+        console.log("Country Selection: " + service.selectedCountry);
     };
-
-    service.selectedCountry = countryname;
 
     return service;
 
