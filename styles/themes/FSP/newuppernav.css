@@ -54,12 +54,13 @@
     width: 180px;
     height: 44px;
     z-index: 187;
+    float:right;
 
 }
 
 #MapUpperRightToolbarWrapper .btn{
     position: absolute;
-    left: 160px;
+    right:5px;
     top: 6px;
     z-index: 190;
     background-color: rgb(237,27,46);
@@ -95,9 +96,9 @@
     position:absolute;
     width: 114px;
     background-color: #fff;
-    -moz-transition: all .5s ease; /* This is the animation UP for the country selector wrapper */
-    -webkit-transition: all .5s ease; /* This is the animation UP for the country selector wrapper */
-    -ms-transition: all .5s ease; /* This is the animation UP for the country selector wrapper */
+    /*-moz-transition: all .5s ease; *//* This is the animation UP for the country selector wrapper */
+    /*-webkit-transition: all .5s ease; *//* This is the animation UP for the country selector wrapper */
+    /*-ms-transition: all .5s ease; *//* This is the animation UP for the country selector wrapper */
     top: -2775px;
     padding: 0px;
     z-index: 2001;
@@ -112,12 +113,12 @@
     display:block;
     position: absolute;
     top: 44px;
-    width: 670px;
-    height: 172px;
+    width: 675px;
+    height: 183px;
     z-index: 165;
-    -moz-transition: all .5s ease; /* This is the animation DOWN for the country selector wrapper */
-    -webkit-transition: all .5s ease; /* This is the animation DOWN for the country selector wrapper */
-    -ms-transition: all .5s ease; /* This is the animation DOWN for the country selector wrapper */
+    /*-moz-transform: matrix( 0.78,0,0,0.77790178571429,0,0);*/
+    /*-webkit-transform: matrix( 0.78,0,0,0.77790178571429,0,0);*/
+    /*-ms-transform: matrix( 0.78,0,0,0.77790178571429,0,0);*/
     background-color: rgb(237,27,46);
 
 }
@@ -159,8 +160,7 @@
 }
 
 #CountrySelectedRegion {
-    width: 223px;
-    height: 56px;
+    width: 225px;
     z-index: 166;
     float: left;
 }
@@ -177,14 +177,39 @@
 #CountrySelectedCountry{
     border-bottom-style: solid;
     border-bottom-width: 1px;
+    border-bottom-color: #9b232c;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #9b232c;
 
 }
 
-
-
-
-
-
-
-
 /* End Country selector */
+
+/** Filter Drop Down */
+
+#FilterArea {
+    position: absolute;
+    height: 44px;
+    top: 0;
+    right: 0px;
+    left: 94px;
+    z-index: 2002;
+    background-color: #e2e1dd;
+}
+
+.FilterAreaText {
+    font-size: 14.141px;
+    font-family: "DIN";
+    color: rgb(55, 56, 56);
+    line-height: 2.051;
+    text-align: left;
+    -moz-transform: matrix( 0.78,0,0,0.77790178571429,0,0);
+    -webkit-transform: matrix( 0.78,0,0,0.77790178571429,0,0);
+    -ms-transform: matrix( 0.78,0,0,0.77790178571429,0,0);
+    position: absolute;
+    left: 35px;
+    top: 9.498px;
+    z-index: 165;
+    text-transform: uppercase;
+}

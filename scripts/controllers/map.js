@@ -26,7 +26,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
   $scope.SelectCountry = {
     default:'India',
-    countryNames: ['Bangladesh','Uganda','Kenya','Nigeria','Tanzania','India','India-Bihar','India - ' + 'Uttar Pradeh']
+    countryNames: ['Bangladesh','Uganda','Kenya','Nigeria','Tanzania','India','India-Bihar','India - Uttar Pradeh']
   };
 
   $scope.selection = 'Select A Region';

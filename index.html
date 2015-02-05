@@ -596,9 +596,12 @@
 
         <!-- Upper Right Toolbar in Map -->
 
-        <div>
-            <div id="MapUpperRightToolbarWrapper">
+            <div id=FilterArea>
 
+                <div class="FilterAreaText">
+                    Filter:
+                </div>
+            <div id="MapUpperRightToolbarWrapper">
                 <div class="left-section countryselect" class="breadcrumbs-container">
                     <div ng-click="switchCountry(selection)" class="world countrytext">
                         {{selection}}
@@ -649,6 +652,15 @@
                 <!--<div class="search icon-12_search" ng-click="toggleParam('search-panel')"></div>-->
 
             </div>
+
+            </div>
+
+
+
+
+
+
+
 
             <!-- Region / Country Selector Panel -->
             <div id="CountrySelectorPanelWrapper" ng-class="{on: isParam('zoom-extent')}">
