@@ -218,7 +218,7 @@
     font-family: DIN;
     -moz-transform: matrix(0.68417828601723, 0, 0, 0.68489583333333, 0, 0);
     -ms-transform: matrix(0.68417828601723, 0, 0, 0.68489583333333, 0, 0);
-
+    margin-top: 4px;
     z-index: 172;
     float: left;
 }
@@ -241,7 +241,7 @@
 
 #FilterArea .btn {
     display: inline-block;
-    padding: 6px 12px;
+    padding: 6px 11px;
     margin-bottom: 0;
     font-size: 16px;
     font-weight: 300;
@@ -263,6 +263,8 @@
     position: absolute;
     top: 27px;
     z-index: 176;
+    border-radius: 0px;
+    left:26px;
 }
 
 #FilterArea .dropdown-menu > li > a {
@@ -284,4 +286,15 @@
     margin-bottom: 0px;
     vertical-align: middle;
     font-size: 12px;
+}
+
+#FilterArea .btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+    color: #333333;
+    background-color: #ffffff;
+    box-shadow: 1px 1.732px 5px 0px rgba(0, 0, 0, 0.2);
+    border-color: #ffffff;
 }
