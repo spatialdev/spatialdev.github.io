@@ -376,8 +376,10 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
     service.selectedCountry = 'India';
     service.CICOsTotal = 0;
     service.CICOsTotal_Kenya = 0;
+    service.CICOsTypeTotal_Kenya = 0;
 
     service.getCICOsCounts = function () {
+        // INDIA
         $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2014/query?where=country%3D%27India%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
             success(function (data) {
                 //reset array to prevent duplicates
@@ -407,6 +409,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                 alert(data);
             });
 
+        // KENYA
         $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2013/query?where=country%3D%27Kenya%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
             success(function (data) {
                 //reset array to prevent duplicates
@@ -431,6 +434,8 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                 CICOs_Kenya.sort(function (a, b) {
                     return b.count - a.count;
                 });
+
+                service.CICOsTypeTotal_Kenya = CICOs_Kenya.length;
             }).
             error(function (data) {
                 alert(data);
@@ -465,7 +470,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                 if (selectall) {
                     selectall = false;
                     service.selectall = false;
-                    service.checkBool = "Check All";
+                    service.checkBool = "View All";
                     console.log(service.checkBool);
                     console.log("CICO factory check bool: " + service.checkBool);
                     console.log("CICO factory selected all: " + selectall);
@@ -473,7 +478,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                 } else {
                     selectall = true;
                     service.selectall = true;
-                    service.checkBool = "Uncheck All";
+                    service.checkBool = "View All";
                     console.log(service.checkBool);
                     console.log("CICO factory check bool: " + service.checkBool);
                     console.log("CICO factory selected all: " + selectall);

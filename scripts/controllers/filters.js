@@ -16,10 +16,10 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
 
   $scope.setFilters = function() {
-    if($scope.selection ==  'India') {
-      $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
-    } else {
+    if($scope.selection ==  'Kenya') {
       $scope.CICOSector = CICOFilterFactory.CICOs_Counts_Kenya;
+    } else {
+      $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
     }
   };
 
@@ -39,7 +39,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
   $scope.HealthSector.selectedAll = false;
   $scope.AgSector.selectedAll = false;
   $scope.LibrarySector.selectedAll = false;
-  $scope.checkedBool = "Check All";
+  $scope.checkedBool = "View All";
   $scope.SelectedTab = 'CICOS';
 
   // Get selected tab
@@ -143,7 +143,16 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
       }
     }
 
-    console.log($scope.CICOSelections);
+    var CICOSelectionsLength = $scope.CICOSelections.length;
+    // Hard coded 16
+    if($scope.selection == 'Kenya' && CICOSelectionsLength < CICOFilterFactory.CICOsTypeTotal_Kenya){
+      $scope.CICOSector.selectedAll = false;
+    } else {
+      $scope.CICOSector.selectedAll = true;
+    }
+
+
+    console.log("length: " + CICOSelectionsLength + " " + $scope.CICOSelections);
   };
   $scope.setHealthSelection = function(sector, checked){
     // Set selected value for each sector based on checkbox

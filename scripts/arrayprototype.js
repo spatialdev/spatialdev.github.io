@@ -106,3 +106,7 @@ if (!Array.prototype.indexOf) {
     };
 }
 
+// Prevent Filter dropdown from closing onclick
+$('.dropdown-menu').click(function(e) {
+    e.stopPropagation();
+});
