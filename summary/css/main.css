@@ -1,0 +1,176 @@
+body {
+    font-family: ff-din-web, sans-serif;
+}
+
+.map {
+    height: 400px;
+}
+
+.chart {
+    height: 275px;
+}
+
+.navbar {
+    background-color: #353c45;
+    font-size: 18px;
+    color: white;
+    border: none;
+}
+
+.navbar-brand {
+    background-color: #9b232c;
+    color: white;
+    cursor: default;
+}
+
+li#page-header{
+    text-transform: uppercase;
+}
+
+.navbar-nav>li {
+    padding: 15px;
+    line-height: 20px;
+}
+
+.masthead {
+    padding-top: 70px;
+}
+
+.nav-tabs>li:first-child {
+    padding-left: 30px;
+}
+
+.nav-tabs>li>a, .nav-tabs>li>a:hover, .nav-tabs>li>a:focus {
+    border-top: 3px solid white;
+    border-radius: 0;
+    color: #7a7a7a;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    border-top: 3px solid #9b232c;
+    font-weight: bold;
+}
+
+.summary-blue-number {
+    color: #0077ac;
+}
+
+h4.fat-top {
+    margin-top:50px;
+}
+
+.progress {
+    border-radius: 0;
+}
+
+.progress-bar {
+    background-color: #9b232c;
+}
+
+.sub-counts {
+    font-size: 16px;
+}
+
+h2 {
+    margin-top: 40px;
+}
+
+.footer {
+    margin-top: 40px;
+    background-color: #ede9e6;
+}
+
+.footer p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.coming-soon {
+    margin-top: 100px;
+    margin-bottom: 500px;
+}
+
+#exportBtn{
+    float: right;
+    background-color: #9b232c;
+    color: #fff;
+    padding: 10px;
+    cursor:pointer;
+    display: none;
+}
+
+#resetButton, #openBtn{
+    display: none;
+    float:right;
+    margin-left: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#openBtn{
+    background-color: #9b232c;
+    color: #fff;
+    padding: 10px;
+}
+
+#resetButton.on, #exportBtn span.on{
+    display: inline;
+}
+
+#openBtn.on, #exportBtn.on{
+    display: block;
+}
+
+
+#exportBtn span.loading.on{
+    display: block;
+
+}
+
+#export-glyph {
+    margin-right: 5px;
+}
+
+#openBtn, #exportBtn span{
+     display: none;
+ }
+
+.loading
+{
+    background: url(../../img/squares_loading.gif) no-repeat 50% 35%;
+    margin: 0;
+    moz-border-radius: 0px;
+    border-radius: 0px;
+    padding: 4px 0;
+    position:relative;
+    left: auto;
+    top: auto;
+    height: 20px;
+    min-height: 0;
+    width: 50px;
+}
+
+.nav-tabs>li>a.open, .nav-tabs>li>a.open:hover, .nav-tabs>li>a.open:focus {
+    border-top: 0px !important;
+    border-radius: 0 !important;
+    color: inherit !important;
+    background-color: inherit !important;
+    padding: 0 !important;
+    border-color: inherit !important;
+    border: 0px;
+}
+
+#tooltip {
+    position: absolute;
+    display: none;
+    opacity: 0.80;
+}
+
+#tooltip .summary-blue-number {
+    font-size:20px;
+    line-height: 16px;
+}
+
+.legendLabel {
+    padding: 2px;
+}

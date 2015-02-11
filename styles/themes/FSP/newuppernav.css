@@ -222,6 +222,9 @@
     z-index: 172;
     float: left;
 }
+.SectorDropDown .dropdown{
+    float: left;
+}
 
 .FilterTitle {
     width: 80px;
@@ -265,6 +268,8 @@
     z-index: 176;
     border-radius: 0px;
     left:26px;
+    max-height:200px;
+    width:250px;
 }
 
 #FilterArea .dropdown-menu > li > a {
@@ -297,4 +302,19 @@
     background-color: #ffffff;
     box-shadow: 1px 1.732px 5px 0px rgba(0, 0, 0, 0.2);
     border-color: #ffffff;
+}
+
+#FilterArea .ShowMore {
+    font-size: 14.601px;
+    font-family: "DIN";
+    color: rgb(157, 33, 41);
+    font-weight: bold;
+    line-height: 1.2;
+    z-index: 178;
+    text-align:center;
+}
+
+#FilterArea .ShowMore a{
+    text-decoration: none;
+    color: rgb(157, 33, 41);
 }

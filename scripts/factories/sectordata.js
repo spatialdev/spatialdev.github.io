@@ -1,15 +1,15 @@
-module.exports = angular.module('SpatialViewer').factory('SectorFactory', function($http) {
+module.exports = angular.module('SpatialViewer').factory('SectorFactory', function() {
 
     var service = {};
     var countryname = 'India';
-    service.SelectedTab = 'CICOS';
+    service.SelectedSector = 'CICOS';
     service.selectedCountry = 'India';
 
 
 
-    service.setSelectedTab = function(sector){
-        service.SelectedTab = sector;
-        console.log("factory tab: " + service.SelectedTab);
+    service.setSelectedSector = function(sector){
+        service.SelectedSector = sector;
+        console.log("SectorFactory tab: " + service.SelectedSector);
     };
 
     service.setCountry = function(country){

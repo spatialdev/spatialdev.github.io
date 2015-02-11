@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="lib/Leaflet.PBFLayer/src/StaticLabel/label.css">
     <link rel="stylesheet" href="styles/themes/FSP/leftnav.css">
     <link rel="stylesheet" href="styles/themes/FSP/newuppernav.css">
+    <link rel="stylesheet" href="styles/themes/FSP/lowernav.css">
     <link rel="stylesheet" href="styles/themes/FSP/rightnav.css">
     <link rel="stylesheet" href="styles/themes/FSP/fonts.css">
 
@@ -596,36 +597,93 @@
 
 <!-- Upper Right Toolbar in Map -->
 
-<div ng-controller="FiltersCtrl" id=FilterArea>
+<div ng-controller="FiltersCtrl">
 
-    <div class="FilterTitle">Filter:</div>
-    <div class="SectorDropDown">
-        <div class="dropdown">
+    <div id="FilterArea">
+        <div class="FilterTitle">Filter:</div>
+        <div class="SectorDropDown">
+            <!-- Financial services -->
+            <div class="dropdown">
             <button class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
                     aria-expanded="true">
                 Financial Services
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu scrollable">
                 <div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">
                     <label class="checkbox">
-                        <input type="checkbox" ng-model="CICOSector.selectedAll" ng-click="filterCICO();
-                                toggleMapLayer(navTab, CICOLayer)">
+                        <input type="checkbox" ng-model="CICOSector.viewAll" ng-click="toggleViewAll()">
                         {{checkedBool}}
-                        <li class="divider"></li>
                     </label>
-                    <label ng-repeat="names in CICOSector" class="checkbox">
+                    <li class="divider"></li>
+
+                    <div ng-show="top3">
+                        <label ng-repeat="name in CICOTop3" class="checkbox">
+                            <input type="checkbox" ng-model="name.selected"
+                                   ng-click="setCICOSelection(name.type, !name.selected)">
+                            {{name.type}}
+                        </label>
+                        <li class="divider"></li>
+                    </div>
+
+                    <label ng-show="CICOSector.viewAll" ng-repeat="names in CICOSector" class="checkbox">
                         <input type="checkbox" ng-model="names.selected"
                                ng-click="setCICOSelection(names.type, !names.selected)">
                         {{names.type}} ({{names.count | number}})
                     </label>
+
+                    <div ng-show="!CICOSector.viewAll" class="ShowMore" ng-click="toggleViewAll()">
+                        <a>Show More</a>
+                    </div>
                 </div>
             </ul>
         </div>
+            <!-- Health -->
+            <div ng-show="IndiaOn" class="dropdown">
+                <button class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
+                        aria-expanded="true">
+                    Health
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu scrollable">
+                    <div ng-class="{active: navTab==='health'}" class="tab-pane" id="sectors-filter">
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="HealthSector.viewAll" ng-click="toggleViewAll();
+                                toggleMapLayer(navTab, HealthLayer)">
+                            {{checkedBool}}
+                        </label>
+                        <li class="divider"></li>
 
-    </div>
+                        <div ng-show="top3">
+                            <!--<label ng-repeat="name in CICOTop3" class="checkbox">-->
+                                <!--<input type="checkbox" ng-model="name.selected"-->
+                                       <!--ng-click="setCICOSelection(name.type, !name.selected)">-->
+                                <!--{{name.type}}-->
+                            <!--</label>-->
+                            <!--<li class="divider"></li>-->
+                        </div>
 
-    <div id="MapUpperRightToolbarWrapper">
+                        <label ng-show="HealthSector.viewAll" ng-repeat="names in HealthSector" class="checkbox">
+                            <input type="checkbox" ng-model="names.selected"
+                                   ng-click="setHealthSelection(names.type, !names.selected)">
+                            {{names.type}} ({{names.count | number}})
+                        </label>
+
+                        <!--<label ng-show="CICOSector.viewAll" ng-repeat="names in CICOSector" class="checkbox">-->
+                            <!--<input type="checkbox" ng-model="names.selected"-->
+                                   <!--ng-click="setCICOSelection(names.type, !names.selected)">-->
+                            <!--{{names.type}} ({{names.count | number}})-->
+                        <!--</label>-->
+
+                        <div ng-show="!HealthSector.viewAll" class="ShowMore" ng-click="toggleViewAll()">
+                            <a>Show More</a>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+
+        </div>
+        <div id="MapUpperRightToolbarWrapper">
         <div class="left-section countryselect" class="breadcrumbs-container">
             <div ng-click="switchCountry(selection)" class="world countrytext">
                 {{selection}}
@@ -676,6 +734,36 @@
         <!--<div class="search icon-12_search" ng-click="toggleParam('search-panel')"></div>-->
 
     </div>
+    </div>
+
+    <div class="SectorArea">
+        <div class="AllSectors off" ng-class="{true:'on',false:'off'}[ShowAllSectors]">
+            <div ng-click="ShowAllSectors=!ShowAllSectors" class="side-view-close btn btn-sm">
+                <span ng-show="!ShowAllSectors" class="glyphicon glyphicon-chevron-left"></span>
+                <span ng-show="ShowAllSectors" class="glyphicon glyphicon-chevron-right"></span>
+            </div>
+            <div class="SectorContent" ng-show="ShowAllSectors" >
+                <!-- Financial Sector -->
+                 <div class="SingleSector">
+                    <a style="color:{{Sectorcfg['Financial Service'].color}};"
+                       ng-click="setSelectedSector('CICOS');filterCICO();toggleMapLayer('CICOS',CICOLayer)">
+                        Financial Service
+                    </a>
+                 </div>
+                <!-- Health Sector -->
+                <div ng-show="IndiaOn" class="SingleSector">
+                    <a style="color:{{Sectorcfg['Health'].color}};"
+                       ng-click="setSelectedSector('Health');filterHealth();toggleMapLayer('health',HealthLayer)">
+                        Health
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
 
 </div>
 
@@ -745,13 +833,13 @@
         <img class="svg info-svg" src="styles/svg/icon_info.svg" alt="Analysis">
     </button>
 
-    <button id="DetailsNub" type="button" class="btn">
-        <img class="svg iconpopup-svg" src="styles/svg/icon_popupInfo.svg" alt="Analysis">
-    </button>
+    <!--<button id="DetailsNub" type="button" class="btn">-->
+        <!--<img class="svg iconpopup-svg" src="styles/svg/icon_popupInfo.svg" alt="Analysis">-->
+    <!--</button>-->
 
-    <button id="DetailsNub" type="button" class="btn">
-        <img class="svg analysis-svg" src="styles/svg/icon_analysis.svg" alt="Analysis">
-    </button>
+    <!--<button id="DetailsNub" type="button" class="btn">-->
+        <!--<img class="svg analysis-svg" src="styles/svg/icon_analysis.svg" alt="Analysis">-->
+    <!--</button>-->
 
     <div id="PreviousItem" class="icon-9_arrow_left"
          ng-class="{flipOpen: (isParam('details-panel') && details && numThemeItems > 1)}"
@@ -782,9 +870,7 @@
     <ul class="nav nav-tabs">
         <li class="active first-nav-tab"><a class="a-nav-tab" ng-click="navTab='countryoverview'"
                                             data-toggle="tab">Country Overview</a></li>
-
         <li><a class="a-nav-tab" ng-click="navTab='apoints'" data-toggle="tab">Access Points</a></li>
-
         <li><a class="a-nav-tab" ng-click="navTab='alorem'" data-toggle="tab">Access Lorem</a></li>
     </ul>
 

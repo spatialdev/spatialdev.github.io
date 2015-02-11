@@ -136,15 +136,15 @@ module.exports = angular.module('SpatialViewer').factory('HealthFilterFactory', 
             case 'health':
                 if (selectall) {
                     selectall = false;
-                    service.checkBool = "Check All";
                     service.selectall = false;
+                    service.checkBool = "Check All";
                     console.log("factory check bool: " + service.checkBool);
                     console.log("factory selected all: " + selectall);
                     console.log("service selected all: " + service.selectall);
                 } else {
                     selectall = true;
-                    service.checkBool = "Uncheck All";
                     service.selectall = true;
+                    service.checkBool = "Check All";
                     console.log("factory check bool: " + service.checkBool);
                     console.log("factory select all: " + selectall);
                     console.log("service selected all: " + service.selectall);

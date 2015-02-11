@@ -29,6 +29,10 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     countryNames: ['Bangladesh','Uganda','Kenya','Nigeria','Tanzania','India','India-Bihar','India - Uttar Pradeh']
   };
 
+  //$scope.SectorTypes = {
+  //  typeNames: ['Financial Service', 'Library','Agriculture','Health']
+  //};
+
   $scope.selection = 'Select A Region';
   SectorFactory.selectedCountry = $scope.selection;
 
@@ -60,9 +64,25 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
   // watch for counter, when increased run http.get again and update variable
   $scope.$watch(function(){
     return SectorFactory.selectedCountry;
-  }, function(){
+  }, function() {
     SectorFactory.selectedCountry = $scope.selection;
-    console.log(" ------ Current Country has changed --------");
+
+    switch ($scope.selection) {
+      case 'India':
+        $scope.SectorTypes = {
+          typeNames: ['Financial Service', 'Library', 'Agriculture', 'Health']
+        };
+        break;
+      case 'Kenya':
+        $scope.SectorTypes = {
+          typeNames: ['Financial Service']
+        };
+        break;
+      default:
+        $scope.SectorTypes = {
+          typeNames: ['Financial Service', 'Library', 'Agriculture', 'Health']
+        };
+    }
   });
 
   $scope.toggleState = function (stateName) {
