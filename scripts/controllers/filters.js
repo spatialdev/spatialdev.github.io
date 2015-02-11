@@ -87,7 +87,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     // Check box are checked by default
     $scope.CICOSector.selectedAll = false;
-    $scope.HealthSector.selectedAll = true;
+    $scope.HealthSector.selectedAll = false;
     $scope.AgSector.selectedAll = false;
     $scope.LibrarySector.selectedAll = false;
     $scope.checkedBool = "View All";
@@ -104,6 +104,8 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         for (var i = 0; i < $scope.CICOSector.length; i++) {
             if ($scope.CICOSector.selectedAll == true) {
                 $scope.CICOSector[i].selected = true;
+            } else {
+                $scope.CICOSector[i].selected = false;
             }
         }
     };
@@ -130,7 +132,9 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             $scope.CICOLayer.active = true;
             $scope.checkAllCICO();
         } else {
-            $scope.CICOLayer.active = false
+            $scope.CICOLayer.active = false;
+            $scope.checkAllCICO();
+
         }
 
         console.log("CICO Checked Bool: " + $scope.checkedBool);

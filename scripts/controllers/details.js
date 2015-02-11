@@ -62,10 +62,21 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 console.log("case: Library");
                 break;
             default:
-                $scope.APData = CICOFilterFactory.CICOs_Counts;
-                $scope.sectortotal = CICOFilterFactory.CICOsTotal;
-                $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
-                console.log("case: default");
+                if($scope.selection == 'India'){
+                    $scope.APData = CICOFilterFactory.CICOs_Counts;
+                    $scope.sectortotal = CICOFilterFactory.CICOsTotal;
+                    $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
+                    console.log("case: India CICOS");
+
+                } if($scope.selection == 'Kenya'){
+                    $scope.APData = CICOFilterFactory.CICOs_Counts_Kenya;
+                    $scope.sectortotal = CICOFilterFactory.CICOsTotal_Kenya;
+                    console.log("case: Kenya CICOS");
+                }
+                //$scope.APData = CICOFilterFactory.CICOs_Counts;
+                //$scope.sectortotal = CICOFilterFactory.CICOsTotal;
+                //$scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
+                //console.log("case: default");
         }
     };
 
@@ -90,6 +101,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 break;
             default:
                 $scope.QuickStats = IndiaFactory.India.QuickStats;
+                $scope.title = "Overview - Bihar & Uttar Pradesh";
 
         }
         console.log(" ------ Details.js Current Country has changed to: " + $scope.selection);
@@ -535,13 +547,13 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 $scope.title = "Overview - Bihar & Uttar Pradesh";
             }
             // set default bar chart to CICOs
-            if ($scope.selectedSector == 'CICOS') {
-                $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
-            }
-        } else {
-            $scope.title = "Overview - Kenya";
-        }
-    });
+        //    if ($scope.selectedSector == 'CICOS') {
+        //        $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
+        //    }
+        //} else {
+        //    //$scope.title = "Overview - Kenya";
+        //}
+        }});
 
     // Watch for change in selected Sector
     $scope.$watch(function () {

@@ -686,367 +686,405 @@ layer.agriculture = {
 
 };
 
+
 var CICO_Config = {
-    'Offsite ATMs': {
-        color: '#a4c78c',
-        infoLabel: 'Offsite ATM',
-        providers: null,
-        zIndex: 6
+    "Offsite ATM": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#a4c78c",
+        "infoLabel": "Offsite ATM",
+        "zIndex": 6
     },
-    'Bank Branches': {
-        color: '#977C00',
-        infoLabel: 'Bank Branch',
-        providers: null,
-        zIndex: 5
+    "Bank Branch": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#977C00",
+        "infoLabel": "Bank Branch",
+        "zIndex": 5
     },
-    'MFIs': {
-        color: '#977c00',
-        infoLabel: 'MFI',
-        providers: null,
-        zIndex: 7
+    "MFI": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#977c00",
+        "infoLabel": "MFI",
+        "zIndex": 7
     },
-    'SACCOs': {
-        color: '#cf8a57',
-        infoLabel: 'SACCO',
-        providers: null,
-        zIndex: 10
+    "SACCO": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#cf8a57",
+        "infoLabel": "SACCO",
+        "zIndex": 10
     },
-    'Mobile Money Agent': {
-        color: '#8CB7C7',
-        infoLabel: 'Mobile Money Agent',
-        providers: null,
-        zIndex: -1
+    "Mobile Money Agent": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#8CB7C7",
+        "infoLabel": "Mobile Money Agent",
+        "zIndex": -1
     },
-    'MDIs': {
-        color: '#825D99',
-        infoLabel: 'MDI',
-        providers: null,
-        zIndex: 6
+    "MDI": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#825D99",
+        "infoLabel": "MDI",
+        "zIndex": 6
     },
-    'Credit Institution': {
-        color: '#6CA76B',
-        infoLabel: 'Credit Institution',
-        providers: null,
-        zIndex: 5
+    "Credit Institution": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#6CA76B",
+        "infoLabel": "Credit Institution",
+        "zIndex": 5
     },
-    'MFBs': {
-        color: '#825D99',
-        infoLabel: 'MFB',
-        providers: null,
-        zIndex: 7
+    "MFB": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#825D99",
+        "infoLabel": "MFB",
+        "zIndex": 7
     },
-    'Motor Parks': {
-        color: '#bd85b3',
-        infoLabel: 'Motor Parks',
-        providers: null,
-        zIndex: 7
+    "Motor Parks": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#bd85b3",
+        "infoLabel": "Motor Parks",
+        "zIndex": 7
     },
-    'Mobile Network Operator Outlets': {
-        color: '#a2a2a2',
-        infoLabel: 'Mobile Network Operator Outlets',
-        providers: null,
-        zIndex: 0
+    "Mobile Network Operator Outlets": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#a2a2a2",
+        "infoLabel": "Mobile Network Operator Outlets",
+        "zIndex": 0
     },
-    'Post Offices': {
-        color: '#FFFF00',
-        infoLabel: 'Post Offices',
-        providers: null,
-        zIndex: 4
+    "Post Offices": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#80ad7b",
+        "infoLabel": "Post Offices",
+        "zIndex": 6
     },
-    'Post Office': {
-        color: '#80ad7b',
-        infoLabel: 'Post Offices',
-        providers: null,
-        zIndex: 6
+    "Bus Stands": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#80ad7b",
+        "infoLabel": "Bus Stands",
+        "zIndex": 6
     },
-    'Bus Stand': {
-        color: '#80ad7b',
-        infoLabel: 'Bus Stands',
-        providers: null,
-        zIndex: 6
+    "Insurance providers": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#3086AB",
+        "infoLabel": "Insurance providers",
+        "zIndex": 6
     },
-    'Bus Stands': {
-        color: '#80ad7b',
-        infoLabel: 'Bus Stands',
-        providers: null,
-        zIndex: 6
+    "Money Transfer Service": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#977C00",
+        "infoLabel": "Money Transfer Service",
+        "zIndex": 6
     },
-
-    //Kenya
-    'Insurance Providers': {
-        color: '#3086AB',
-        infoLabel: 'Insurance providers',
-        providers: null,
-        zIndex: 6
+    "Dev Finance": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#9B242D",
+        "infoLabel": "Dev Finance",
+        "zIndex": 6
     },
-    'Money Transfer Service': {
-        color: '#977C00',
-        infoLabel: 'Money Transfer Service',
-        providers: null,
-        zIndex: 6
+    "Forex Bureaus": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#cf8a57",
+        "infoLabel": "Forex Bureaus",
+        "zIndex": 6
     },
-    'Dev Finance': {
-        color: '#9B242D',
-        infoLabel: 'Dev Finance',
-        providers: null,
-        zIndex: 6
+    "Cap Markets": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#825D99",
+        "infoLabel": "Cap Markets",
+        "zIndex": 6
     },
-    'Forex Bureaus': {
-        color: '#cf8a57',
-        infoLabel: 'Forex Bureaus',
-        providers: null,
-        zIndex: 6
+    "Pension providers": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#a2a2a2",
+        "infoLabel": "Pension providers",
+        "zIndex": 6
     },
-    'Cap Markets': {
-        color: '#825D99',
-        infoLabel: 'Cap Markets',
-        providers: null,
-        zIndex: 6
+    "Purchase Lease Factoring": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#80ad7b",
+        "infoLabel": "Purchase Lease Factoring",
+        "zIndex": 6
     },
-    'Pension Providers': {
-        color: '#a2a2a2',
-        infoLabel: 'Pension providers',
-        providers: null,
-        zIndex: 6
+    "Bank Agent": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#80ad7b",
+        "infoLabel": "Bank Agent",
+        "zIndex": 6
     },
-    'Purchase Lease Factoring': {
-        color: '#80ad7b',
-        infoLabel: 'Purchase Lease Factoring',
-        providers: null,
-        zIndex: 6
+    "Banksand Mortgage": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#80ad7b",
+        "infoLabel": "Banksand Mortgage",
+        "zIndex": 6
     },
-    'Bank Agent': {
-        color: '#80ad7b',
-        infoLabel: 'Bank Agent',
-        providers: null,
-        zIndex: 6
+    "Commercial Bank": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#9b242d",
+        "infoLabel": "Commercial Bank",
+        "zIndex": 3
     },
-    'Bank and Mortgage': {
-        color: '#80ad7b',
-        infoLabel: 'Banks and Mortgage',
-        providers: null,
-        zIndex: 6
+    "Post Bank": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#bd85b3",
+        "infoLabel": "Post Bank",
+        "zIndex": 6
     },
-    'Commercial Bank': {
-        color: '#9b242d',
-        infoLabel: 'Commercial Bank',
-        providers: null,
-        zIndex: 3
+    "NIPOST PostOffices": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#80ad7b",
+        "infoLabel": "NIPOST PostOffices",
+        "zIndex": 6
     },
-
-    'PostBank': {
-        color: '#bd85b3',
-        infoLabel: 'Post Bank',
-        providers: null,
-        zIndex: 6
+    "NIPOST Post Shops": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#80ad7b",
+        "infoLabel": "NIPOST Post Shops",
+        "zIndex": 6
     },
-
-    //Nigeria New Post Offices
-    'NIPOST Post Office': {
-        color: '#80ad7b',
-        infoLabel: 'NIPOST Post Offices',
-        providers: null,
-        zIndex: 6
+    "NIPOST Postal Agencies": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#80ad7b",
+        "infoLabel": "NIPOST Postal Agencies",
+        "zIndex": 6
     },
-    'NIPOST Post Shop': {
-        color: '#80ad7b',
-        infoLabel: 'NIPOST Post Shops',
-        providers: null,
-        zIndex: 6
+    "Postal Outlets": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#ce6b29",
+        "infoLabel": "Postal Outlets",
+        "zIndex": 3
     },
-    'NIPOST Postal Agency': {
-        color: '#80ad7b',
-        infoLabel: 'NIPOST Postal Agencies',
-        providers: null,
-        zIndex: 6
+    "Commercial Banks": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#3086ab",
+        "infoLabel": "Commercial Banks",
+        "zIndex": 2
     },
-
-    //India
-    'Postal Outlets': {
-        color: '#ce6b29',
-        infoLabel: 'Postal Outlets',
-        providers: null,
-        zIndex: 3
+    "Bank Customer Service Points": {
+        "type": "Financial",
+        "country": "India",
+        "color": "#9b242d",
+        "infoLabel": "Bank Customer Service Points",
+        "zIndex": 4
     },
-    'Commercial Banks': {
-        color: '#3086ab',
-        infoLabel: 'Commercial Banks',
-        providers: null,
-        zIndex: 2
+    "District": {
+        "type": "Library",
+        "country": "India",
+        "color": "#9b242d",
+        "infoLabel": "District",
+        "zIndex": 6
     },
-    'Bank Customer Service Points': {
-        color: '#9b242d',
-        infoLabel: 'Bank Customer Service Points',
-        providers: null,
-        zIndex: 4
+    "Additional Primary Health Centres (APHC)": {
+        "type": "Health",
+        "country": "India",
+        "color": "#9b242d",
+        "infoLabel": "Additional Primary Health Centres (APHC)",
+        "zIndex": 6
     },
-    'District': {
-        color: '#9b242d',
-        infoLabel: 'District',
-        providers: null,
-        zIndex: 6
+    "ANM or District Training Centres": {
+        "type": "Health",
+        "country": "India",
+        "color": "#3086ab",
+        "infoLabel": "ANM or District Training Centres",
+        "zIndex": 5
     },
-    'Private Library': {
-        color: '#3086ab',
-        infoLabel: 'Private Library',
-        providers: null,
-        zIndex: 5
+    "Approved Nursing Training Centres (Private Sector)": {
+        "type": "Health",
+        "country": "India",
+        "color": "#977c00",
+        "infoLabel": "Approved Nursing Training Centres (Private Sector)",
+        "zIndex": 7
     },
-    'Public Library': {
-        color: '#977c00',
-        infoLabel: 'Public Library',
-        providers: null,
-        zIndex: 7
+    "Community Health Centre (CHC)/First Referral Units": {
+        "type": "Health",
+        "country": "India",
+        "color": "#d5cb98",
+        "infoLabel": "Community Health Centre (CHC)/First Referral Units",
+        "zIndex": 4
     },
-    'Village': {
-        color: '#a4c78c',
-        infoLabel: 'Village',
-        providers: null,
-        zIndex: 4
+    "District Hospitals": {
+        "type": "Health",
+        "country": "India",
+        "color": "#ce6b29",
+        "infoLabel": "District Hospitals",
+        "zIndex": 5
     },
-    'Additional Primary Health Centres (APHC)': {
-        color: '#9b242d',
-        infoLabel: 'Additional Primary Health Centres (APHC)',
-        providers: null,
-        zIndex: 6
+    "Medical Colleges and Hospitals": {
+        "type": "Health",
+        "country": "India",
+        "color": "#59452a",
+        "infoLabel": "Medical Colleges and Hospitals",
+        "zIndex": 7
     },
-    'ANM or District Training Centres': {
-        color: '#3086ab',
-        infoLabel: 'ANM or District Training Centres',
-        providers: null,
-        zIndex: 5
+    "Primary Health Centre (PHC)": {
+        "type": "Health",
+        "country": "India",
+        "color": "#8cb7c7",
+        "infoLabel": "Primary Health Centre (PHC)",
+        "zIndex": 4
     },
-    'Approved Nursing Training Centres (Private Sector)': {
-        color: '#977c00',
-        infoLabel: 'Approved Nursing Training Centres (Private Sector)',
-        providers: null,
-        zIndex: 7
+    "Private hospitals and clinics": {
+        "type": "Health",
+        "country": "India",
+        "color": "#d098d5",
+        "infoLabel": "Private hospitals and clinics",
+        "zIndex": 5
     },
-    'Community Health Centre (CHC)/First Referral Units': {
-        color: '#d5cb98',
-        infoLabel: 'Community Health Centre (CHC)/First Referral Units',
-        providers: null,
-        zIndex: 4
+    "Sub Divisional District Hospitals": {
+        "type": "Health",
+        "country": "India",
+        "color": "#a4c78c",
+        "infoLabel": "Sub Divisional District Hospitals",
+        "zIndex": 7
     },
-    'District Hospitals': {
-        color: '#ce6b29',
-        infoLabel: 'District Hospitals',
-        providers: null,
-        zIndex: 5
+    "Sub Health Centres": {
+        "type": "Health",
+        "country": "India",
+        "color": "#d59898",
+        "infoLabel": "Sub Health Centres",
+        "zIndex": 7
     },
-    'Medical Colleges and Hospitals': {
-        color: '#59452a',
-        infoLabel: 'Medical Colleges and Hospitals',
-        providers: null,
-        zIndex: 7
+    "Nursing Schools": {
+        "type": "Health",
+        "country": "India",
+        "color": "#567d54",
+        "infoLabel": "Nursing Schools",
+        "zIndex": 4
     },
-    'Primary Health Centre (PHC)': {
-        color: '#8cb7c7',
-        infoLabel: 'Primary Health Centre (PHC)',
-        providers: null,
-        zIndex: 4
+    "Dairy Processors": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#9b242d",
+        "infoLabel": "Dairy Processors",
+        "zIndex": 6
     },
-    'Private hospitals and clinics': {
-        color: '#d098d5',
-        infoLabel: 'Private hospitals and clinics',
-        providers: null,
-        zIndex: 5
+    "Day old chick hatcheries": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#3086ab",
+        "infoLabel": "Day old chick hatcheries",
+        "zIndex": 5
     },
-    'Sub Divisional District Hospitals': {
-        color: '#a4c78c',
-        infoLabel: 'Sub Divisional District Hospitals',
-        providers: null,
-        zIndex: 7
+    "Private sector Agricultural service providers": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#977c00",
+        "infoLabel": "Private sector Agricultural service providers",
+        "zIndex": 7
     },
-    'Sub Health Centres': {
-        color: '#d59898',
-        infoLabel: 'Sub Health Centres',
-        providers: null,
-        zIndex: 7
+    "Government Vets": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#d5cb98",
+        "infoLabel": "Government Vets",
+        "zIndex": 4
     },
-    'Nursing Schools': {
-        color: '#567d54',
-        infoLabel: 'Nursing Schools',
-        providers: null,
-        zIndex: 4
+    "Market Locations": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#ce6b29",
+        "infoLabel": "Market Locations",
+        "zIndex": 5
     },
-    'Dairy Processors': {
-        color: '#9b242d',
-        infoLabel: 'Dairy Processors',
-        providers: null,
-        zIndex: 6
+    "Agro-dealers": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#59452a",
+        "infoLabel": "Agro-dealers",
+        "zIndex": 7
     },
-    'Day old chick hatcheries': {
-        color: '#3086ab',
-        infoLabel: 'Day old chick hatcheries',
-        providers: null,
-        zIndex: 5
+    "Warehouse/Storage/Aggregation Centres": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#8cb7c7",
+        "infoLabel": "Warehouse/Storage/Aggregation Centres",
+        "zIndex": 4
     },
-    'Private sector Agricultural service providers': {
-        color: '#977c00',
-        infoLabel: 'Private sector Agricultural service providers',
-        providers: null,
-        zIndex: 7
+    "Dairy chilling plants": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#d098d5",
+        "infoLabel": "Dairy chilling plants",
+        "zIndex": 7
     },
-    'Government Vets': {
-        color: '#d5cb98',
-        infoLabel: 'Government Vets',
-        providers: null,
-        zIndex: 4
+    "Processors/value addition points": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#a4c78c",
+        "infoLabel": "Processors/value addition points",
+        "zIndex": 7
     },
-    'Market Locations': {
-        color: '#ce6b29',
-        infoLabel: 'Market Locations',
-        providers: null,
-        zIndex: 5
+    "Farmer Organisations and Cooperatives": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#d59898",
+        "infoLabel": "Farmer Organisations and Cooperatives",
+        "zIndex": 4
     },
-    'Agro-dealers': {
-        color: '#59452a',
-        infoLabel: 'Agro-dealers',
-        providers: null,
-        zIndex: 7
+    "Artificial Insemination Centres": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#567d54",
+        "infoLabel": "Artificial Insemination Centres",
+        "zIndex": 4
     },
-    'Warehouse/Storage/Aggregation Centres': {
-        color: '#8cb7c7',
-        infoLabel: 'Warehouse/Storage/Aggregation Centres',
-        providers: null,
-        zIndex: 4
+    "National/Regional/State Research Stations": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#b6985e",
+        "infoLabel": "National/Regional/State Research Stations",
+        "zIndex": 5
     },
-    'Dairy chilling plants': {
-        color: '#d098d5',
-        infoLabel: 'Dairy chilling plants',
-        providers: null,
-        zIndex: 7
+    "Seed Multipliers": {
+        "type": "Agriculture",
+        "country": "India",
+        "color": "#ff5d5d",
+        "infoLabel": "Seed Multipliers",
+        "zIndex": 7
     },
-    'Processors/value addition points': {
-        color: '#a4c78c',
-        infoLabel: 'Processors/value addition points',
-        providers: null,
-        zIndex: 7
+    "Village": {
+        "type": "Library",
+        "country": "India",
+        "color": "#a4c78c",
+        "infoLabel": "Village",
+        "zIndex": 4
     },
-    'Farmer Organisations and Cooperatives': {
-        color: '#d59898',
-        infoLabel: 'Farmer Organisations and Cooperatives',
-        providers: null,
-        zIndex: 4
+    "Private Library": {
+        "type": "Library",
+        "country": "India",
+        "color": "#3086ab",
+        "infoLabel": "Private Library",
+        "zIndex": 5
     },
-    'Artificial Insemination Centres': {
-        color: '#567d54',
-        infoLabel: 'Artificial Insemination Centres',
-        providers: null,
-        zIndex: 4
-    },
-    'National/Regional/State Research Stations': {
-        color: '#b6985e',
-        infoLabel: 'National/Regional/State Research Stations',
-        providers: null,
-        zIndex: 5
-    },
-    'Seed Multipliers': {
-        color: '#ff5d5d',
-        infoLabel: 'Seed Multipliers',
-        providers: null,
-        zIndex: 7
+    "Public Library": {
+        "type": "Library",
+        "country": "India",
+        "color": "#977c00",
+        "infoLabel": "Public Library",
+        "zIndex": 7
     }
-
-};
+}
