@@ -272,6 +272,11 @@
     width:250px;
 }
 
+#FilterArea .dropdown-menu.library{
+    left: 14px;
+    width: 150px;
+}
+
 #FilterArea .dropdown-menu > li > a {
     display: inline;
     padding: 3px 20px;

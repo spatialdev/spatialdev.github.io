@@ -16,10 +16,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.CICOLayer = CICOFilterFactory.Layer;
     $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
     $scope.top3 = false;
-
-    $scope.SectorTypes = {
-        typeNames: ['Financial Service', 'Library', 'Agriculture', 'Health']
-    };
+    $scope.ShowAllSectors = true;
 
     // Move this to Factories
     $scope.Sectorcfg = {
@@ -90,6 +87,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.HealthSector.selectedAll = false;
     $scope.AgSector.selectedAll = false;
     $scope.LibrarySector.selectedAll = false;
+    $scope.LibrarySector.viewAll = true;
     $scope.checkedBool = "View All";
     $scope.selectedSector = 'CICOS';
 
@@ -114,9 +112,33 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         for (var i = 0; i < $scope.HealthSector.length; i++) {
             if ($scope.HealthSector.selectedAll == true) {
                 $scope.HealthSector[i].selected = true;
+            } else {
+                $scope.HealthSector[i].selected = false;
             }
         }
     };
+
+    $scope.checkAllLibrary = function (){
+        for (var i = 0; i < $scope.LibrarySector.length; i++) {
+            if ($scope.LibrarySector.selectedAll == true) {
+                $scope.LibrarySector[i].selected = true;
+            } else {
+                $scope.LibrarySector[i].selected = false;
+            }
+        }
+    };
+
+    $scope.checkAllAg = function (){
+        for (var i = 0; i < $scope.AgSector.length; i++) {
+            if ($scope.AgSector.selectedAll == true) {
+                $scope.AgSector[i].selected = true;
+            } else {
+                $scope.AgSector[i].selected = false;
+            }
+        }
+    };
+
+
 
     // Handle Check/Uncheck All filters
     $scope.filterCICO = function () {
@@ -156,7 +178,8 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             $scope.HealthLayer.active = true;
             $scope.checkAllHealth();
         } else {
-            $scope.HealthLayer.active = false
+            $scope.HealthLayer.active = false;
+            $scope.checkAllHealth();
         }
 
         console.log("Checked Bool: " + $scope.checkedBool);
@@ -165,15 +188,18 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     };
 
     $scope.filterLibrary = function () {
-        LibraryFilterFactory.checkAll($scope.LibrarySector, $scope.selectedSector, $scope.LibrarySector.selectedAll);
-        $scope.checkedBool = LibraryFilterFactory.checkBool;
-        $scope.LibrarySector.selectedAll = LibraryFilterFactory.selectall;
+        //LibraryFilterFactory.checkAll($scope.LibrarySector, $scope.selectedSector, $scope.LibrarySector.selectedAll);
+        //$scope.checkedBool = LibraryFilterFactory.checkBool;
+
+        $scope.LibrarySector.selectedAll = !$scope.LibrarySector.selectedAll;
 
         // Toggle ag sector later
         if ($scope.LibrarySector.selectedAll == true) {
             $scope.LibraryLayer.active = true;
+            $scope.checkAllLibrary();
         } else {
-            $scope.LibraryLayer.active = false
+            $scope.LibraryLayer.active = false;
+            $scope.checkAllLibrary();
         }
 
         console.log("Checked Bool: " + $scope.checkedBool);
@@ -183,15 +209,17 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     };
 
     $scope.filterAg = function () {
-        AgFilterFactory.checkAll($scope.AgSector, $scope.selectedSector, $scope.AgSector.selectedAll);
-        $scope.checkedBool = AgFilterFactory.checkBool;
-        $scope.AgSector.selectedAll = AgFilterFactory.selectall;
+        //AgFilterFactory.checkAll($scope.AgSector, $scope.selectedSector, $scope.AgSector.selectedAll);
+        //$scope.checkedBool = AgFilterFactory.checkBool;
+        $scope.AgSector.selectedAll = !$scope.AgSector.selectedAll;
 
         // Toggle ag sector later
         if ($scope.AgSector.selectedAll == true) {
             $scope.AgLayer.active = true;
+            $scope.checkAllAg();
         } else {
-            $scope.AgLayer.active = false
+            $scope.AgLayer.active = false;
+            $scope.checkAllAg();
         }
 
         console.log("Checked Bool: " + $scope.checkedBool);
@@ -203,6 +231,9 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.toggleViewAll = function() {
         $scope.CICOSector.viewAll = !$scope.CICOSector.viewAll;
         $scope.HealthSector.viewAll = !$scope.HealthSector.viewAll;
+        $scope.LibrarySector.viewAll = !$scope.LibrarySector.viewAll;
+        $scope.AgSector.viewAll = !$scope.AgSector.viewAll;
+
     };
 
     // Handle filters clicks events
@@ -222,7 +253,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
         //save selection index
         var sidx = 0;
-        var order = 0;
 
         //Add to CICO Selections
         for (var i = 0; i < $scope.CICOSector.length; i++) {
@@ -253,7 +283,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             }
         }
 
-
         var CICOSelectionsLength = $scope.CICOSelections.length;
         // Hard coded 16
         if ($scope.selection == 'Kenya' && CICOSelectionsLength < CICOFilterFactory.CICOsTypeTotal_Kenya) {
@@ -280,13 +309,55 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
         // Save selected Filters into array
         $scope.HealthSelections = [];
+        $scope.HealthTop3 = [];
+        $scope.t3 = [];
+
+        //save selection index
+        var sidx = 0;
+
+        //Add to Health Selections
         for (var i = 0; i < $scope.HealthSector.length; i++) {
             if ($scope.HealthSector[i].selected == true) {
-                $scope.HealthSelections.push($scope.HealthSector[i].type);
+                $scope.HealthSelections.push(
+                    {
+                        type: $scope.HealthSector[i].type,
+                        selected: $scope.HealthSector[i].selected
+                    });
+                $scope.t3.push(sector);
+                //Add to Top 3 array
+                for (var j = 0; j < $scope.HealthSelections.length; j++) {
+                    // Top 3 includes the LAST 3 Health selections
+                    if ($scope.HealthTop3.includes($scope.HealthSelections[$scope.HealthSelections.length - 1]) == false) {
+                        if ($scope.HealthTop3.length >= 3) {
+                            $scope.HealthTop3.splice(sidx, 1, $scope.HealthSelections[$scope.HealthSelections.length - 1]);
+                            $scope.top3 = ($scope.HealthTop3.length > 0);
+                            $scope.HealthSector.viewAll = false;
+                            if (sidx <2){sidx++;} else {sidx = 0;}
+                        } else {
+                            $scope.HealthTop3.push($scope.HealthSelections[$scope.HealthSelections.length - 1]);
+                            $scope.top3 = ($scope.HealthTop3.length > 0);
+                            //$scope.HealthSector.viewAll = false;
+
+                        }
+                    }
+                }
             }
         }
 
-        console.log($scope.HealthSelections);
+        //var HealthSelectionsLength = $scope.HealthSelections.length;
+        //// Hard coded 16
+        //if ($scope.selection == 'Kenya' && HealthSelectionsLength < HealthFilterFactory.HealthTypeTotal_Kenya) {
+        //    $scope.HealthSector.selectedAll = false;
+        //} else {
+        //    $scope.HealthSector.selectedAll = true;
+        //}
+
+        //for(var i=$scope.HealthSelections.length-1;i<3;i++){
+        //  $scope.HealthTop3.push($scope.HealthSelections[i]);
+        //}
+
+        console.log("TOP 3: " + $scope.HealthTop3);
+        console.log("length: " + HealthSelectionsLength + " " + $scope.HealthSelections);
     };
     $scope.setLibrarySelection = function (sector, checked) {
         // Set selected value for each sector based on checkbox
@@ -299,13 +370,55 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
         // Save selected Filters into array
         $scope.LibrarySelections = [];
+        $scope.LibraryTop3 = [];
+        $scope.t3 = [];
+
+        //save selection index
+        var sidx = 0;
+
+        //Add to Library Selections
         for (var i = 0; i < $scope.LibrarySector.length; i++) {
             if ($scope.LibrarySector[i].selected == true) {
-                $scope.LibrarySelections.push($scope.LibrarySector[i].type);
+                $scope.LibrarySelections.push(
+                    {
+                        type: $scope.LibrarySector[i].type,
+                        selected: $scope.LibrarySector[i].selected
+                    });
+                $scope.t3.push(sector);
+                //Add to Top 3 array
+                for (var j = 0; j < $scope.LibrarySelections.length; j++) {
+                    // Top 3 includes the LAST 3 Library selections
+                    if ($scope.LibraryTop3.includes($scope.LibrarySelections[$scope.LibrarySelections.length - 1]) == false) {
+                        if ($scope.LibraryTop3.length >= 3) {
+                            $scope.LibraryTop3.splice(sidx, 1, $scope.LibrarySelections[$scope.LibrarySelections.length - 1]);
+                            $scope.top3 = ($scope.LibraryTop3.length > 0);
+                            $scope.LibrarySector.viewAll = false;
+                            if (sidx <2){sidx++;} else {sidx = 0;}
+                        } else {
+                            $scope.LibraryTop3.push($scope.LibrarySelections[$scope.LibrarySelections.length - 1]);
+                            $scope.top3 = ($scope.LibraryTop3.length > 0);
+                            //$scope.LibrarySector.viewAll = false;
+
+                        }
+                    }
+                }
             }
         }
 
-        console.log($scope.LibrarySelections);
+        //var LibrarySelectionsLength = $scope.LibrarySelections.length;
+        //// Hard coded 16
+        //if ($scope.selection == 'Kenya' && LibrarySelectionsLength < LibraryFilterFactory.LibraryTypeTotal_Kenya) {
+        //    $scope.LibrarySector.selectedAll = false;
+        //} else {
+        //    $scope.LibrarySector.selectedAll = true;
+        //}
+
+        //for(var i=$scope.LibrarySelections.length-1;i<3;i++){
+        //  $scope.LibraryTop3.push($scope.LibrarySelections[i]);
+        //}
+
+        console.log("TOP 3: " + $scope.LibraryTop3);
+        //console.log("length: " + LibrarySelectionsLength + " " + $scope.LibrarySelections);
     };
     $scope.setAgSelection = function (sector, checked) {
         // Set selected value for each sector based on checkbox
@@ -318,13 +431,55 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
         // Save selected Filters into array
         $scope.AgSelections = [];
+        $scope.AgTop3 = [];
+        $scope.t3 = [];
+
+        //save selection index
+        var sidx = 0;
+
+        //Add to Ag Selections
         for (var i = 0; i < $scope.AgSector.length; i++) {
             if ($scope.AgSector[i].selected == true) {
-                $scope.AgSelections.push($scope.AgSector[i].type);
+                $scope.AgSelections.push(
+                    {
+                        type: $scope.AgSector[i].type,
+                        selected: $scope.AgSector[i].selected
+                    });
+                $scope.t3.push(sector);
+                //Add to Top 3 array
+                for (var j = 0; j < $scope.AgSelections.length; j++) {
+                    // Top 3 includes the LAST 3 Ag selections
+                    if ($scope.AgTop3.includes($scope.AgSelections[$scope.AgSelections.length - 1]) == false) {
+                        if ($scope.AgTop3.length >= 3) {
+                            $scope.AgTop3.splice(sidx, 1, $scope.AgSelections[$scope.AgSelections.length - 1]);
+                            $scope.top3 = ($scope.AgTop3.length > 0);
+                            $scope.AgSector.viewAll = false;
+                            if (sidx <2){sidx++;} else {sidx = 0;}
+                        } else {
+                            $scope.AgTop3.push($scope.AgSelections[$scope.AgSelections.length - 1]);
+                            $scope.top3 = ($scope.AgTop3.length > 0);
+                            //$scope.AgSector.viewAll = false;
+
+                        }
+                    }
+                }
             }
         }
 
-        console.log($scope.AgSelections);
+        //var AgSelectionsLength = $scope.AgSelections.length;
+        //// Hard coded 16
+        //if ($scope.selection == 'Kenya' && AgSelectionsLength < AgFilterFactory.AgTypeTotal_Kenya) {
+        //    $scope.AgSector.selectedAll = false;
+        //} else {
+        //    $scope.AgSector.selectedAll = true;
+        //}
+
+        //for(var i=$scope.AgSelections.length-1;i<3;i++){
+        //  $scope.AgTop3.push($scope.AgSelections[i]);
+        //}
+
+        console.log("TOP 3: " + $scope.AgTop3);
+        //console.log("length: " + AgSelectionsLength + " " + $scope.AgSelections);
     };
 
     // Watch for change in selected Sector

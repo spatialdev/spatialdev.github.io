@@ -648,19 +648,18 @@
                 <ul class="dropdown-menu scrollable">
                     <div ng-class="{active: navTab==='health'}" class="tab-pane" id="sectors-filter">
                         <label class="checkbox">
-                            <input type="checkbox" ng-model="HealthSector.viewAll" ng-click="toggleViewAll();
-                                toggleMapLayer(navTab, HealthLayer)">
+                            <input type="checkbox" ng-model="HealthSector.viewAll" ng-click="toggleViewAll();">
                             {{checkedBool}}
                         </label>
                         <li class="divider"></li>
 
                         <div ng-show="top3">
-                            <!--<label ng-repeat="name in CICOTop3" class="checkbox">-->
-                                <!--<input type="checkbox" ng-model="name.selected"-->
-                                       <!--ng-click="setCICOSelection(name.type, !name.selected)">-->
-                                <!--{{name.type}}-->
-                            <!--</label>-->
-                            <!--<li class="divider"></li>-->
+                            <label ng-repeat="name in HealthTop3" class="checkbox">
+                                <input type="checkbox" ng-model="name.selected"
+                                       ng-click="setHealthSelection(name.type, !name.selected)">
+                                {{name.type}}
+                            </label>
+                            <li class="divider"></li>
                         </div>
 
                         <label ng-show="HealthSector.viewAll" ng-repeat="names in HealthSector" class="checkbox">
@@ -669,14 +668,82 @@
                             {{names.type}} ({{names.count | number}})
                         </label>
 
-                        <!--<label ng-show="CICOSector.viewAll" ng-repeat="names in CICOSector" class="checkbox">-->
-                            <!--<input type="checkbox" ng-model="names.selected"-->
-                                   <!--ng-click="setCICOSelection(names.type, !names.selected)">-->
-                            <!--{{names.type}} ({{names.count | number}})-->
-                        <!--</label>-->
-
                         <div ng-show="!HealthSector.viewAll" class="ShowMore" ng-click="toggleViewAll()">
                             <a>Show More</a>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+
+            <!-- Library -->
+            <div ng-show="IndiaOn" class="dropdown">
+                <button class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
+                        aria-expanded="true">
+                    Library
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu library scrollable ">
+                    <div ng-class="{active: navTab==='library'}" class="tab-pane" id="sectors-filter">
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="LibrarySector.viewAll" ng-click="toggleViewAll();">
+                            {{checkedBool}}
+                        </label>
+                        <li class="divider"></li>
+
+                        <!--<div ng-show="top3">-->
+                            <!--<label ng-repeat="name in LibraryTop3" class="checkbox">-->
+                                <!--<input type="checkbox" ng-model="name.selected"-->
+                                       <!--ng-click="setLibrarySelection(name.type, !name.selected)">-->
+                                <!--{{name.type}}-->
+                            <!--</label>-->
+                            <!--<li class="divider"></li>-->
+                        <!--</div>-->
+
+                        <label ng-show="LibrarySector.viewAll" ng-repeat="names in LibrarySector" class="checkbox">
+                            <input type="checkbox" ng-model="names.selected"
+                                   ng-click="setLibrarySelection(names.type, !names.selected)">
+                            {{names.type}} ({{names.count | number}})
+                        </label>
+
+                        <!--<div ng-show="!LibrarySector.viewAll" class="ShowMore" ng-click="toggleViewAll()">-->
+                            <!--<a>Show More</a>-->
+                        <!--</div>-->
+                    </div>
+                </ul>
+            </div>
+
+            <!-- Agriculture -->
+            <div ng-show="IndiaOn" class="dropdown">
+                <button class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
+                        aria-expanded="true">
+                    Agriculture
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu scrollable ">
+                    <div ng-class="{active: navTab==='agriculture'}" class="tab-pane" id="sectors-filter">
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="AgSector.viewAll" ng-click="toggleViewAll();">
+                            {{checkedBool}}
+                        </label>
+                        <li class="divider"></li>
+
+                        <div ng-show="top3">
+                        <label ng-repeat="name in AgTop3" class="checkbox">
+                        <input type="checkbox" ng-model="name.selected"
+                        ng-click="setAgSelection(name.type, !name.selected)">
+                        {{name.type}}
+                        </label>
+                        <li class="divider"></li>
+                        </div>
+
+                        <label ng-show="AgSector.viewAll" ng-repeat="names in AgSector" class="checkbox">
+                            <input type="checkbox" ng-model="names.selected"
+                                   ng-click="setAgSelection(names.type, !names.selected)">
+                            {{names.type}} ({{names.count | number}})
+                        </label>
+
+                        <div ng-show="!AgSector.viewAll" class="ShowMore" ng-click="toggleViewAll()">
+                        <a>Show More</a>
                         </div>
                     </div>
                 </ul>
@@ -755,6 +822,20 @@
                     <a style="color:{{Sectorcfg['Health'].color}};"
                        ng-click="setSelectedSector('Health');filterHealth();toggleMapLayer('health',HealthLayer)">
                         Health
+                    </a>
+                </div>
+                <!-- Library Sector -->
+                <div ng-show="IndiaOn" class="SingleSector">
+                    <a style="color:{{Sectorcfg['Library'].color}};"
+                       ng-click="setSelectedSector('Library');filterLibrary();toggleMapLayer('library',LibraryLayer)">
+                        Library
+                    </a>
+                </div>
+                <!-- Agriculture Sector -->
+                <div ng-show="IndiaOn" class="SingleSector">
+                    <a style="color:{{Sectorcfg['Agriculture'].color}};"
+                       ng-click="setSelectedSector('Agriculture');filterAg();toggleMapLayer('agriculture',AgLayer)">
+                        Agriculture
                     </a>
                 </div>
             </div>
