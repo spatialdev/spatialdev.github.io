@@ -604,7 +604,7 @@
         <div class="SectorDropDown">
             <!-- Financial services -->
             <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
+            <button ng-disabled="!CICOLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
                     aria-expanded="true">
                 Financial Services
                 <span class="caret"></span>
@@ -640,7 +640,7 @@
         </div>
             <!-- Health -->
             <div ng-show="IndiaOn" class="dropdown">
-                <button class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
+                <button ng-disabled="!HealthLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
                         aria-expanded="true">
                     Health
                     <span class="caret"></span>
@@ -677,7 +677,7 @@
 
             <!-- Library -->
             <div ng-show="IndiaOn" class="dropdown">
-                <button class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
+                <button ng-disabled="!LibraryLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
                         aria-expanded="true">
                     Library
                     <span class="caret"></span>
@@ -714,7 +714,7 @@
 
             <!-- Agriculture -->
             <div ng-show="IndiaOn" class="dropdown">
-                <button class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
+                <button ng-disabled="!AgLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
                         aria-expanded="true">
                     Agriculture
                     <span class="caret"></span>
@@ -818,25 +818,31 @@
                     </a>
                  </div>
                 <!-- Health Sector -->
-                <div ng-show="IndiaOn" class="SingleSector">
+                <div class="SingleSector">
+                <div ng-show="IndiaOn">
                     <a style="color:{{Sectorcfg['Health'].color}};"
                        ng-click="setSelectedSector('Health');filterHealth();toggleMapLayer('health',HealthLayer)">
                         Health
                     </a>
                 </div>
+                </div>
                 <!-- Library Sector -->
-                <div ng-show="IndiaOn" class="SingleSector">
+                <div class="SingleSector">
+                <div ng-show="IndiaOn">
                     <a style="color:{{Sectorcfg['Library'].color}};"
                        ng-click="setSelectedSector('Library');filterLibrary();toggleMapLayer('library',LibraryLayer)">
                         Library
                     </a>
                 </div>
+                </div>
                 <!-- Agriculture Sector -->
-                <div ng-show="IndiaOn" class="SingleSector">
+                <div class="SingleSector">
+                <div ng-show="IndiaOn" >
                     <a style="color:{{Sectorcfg['Agriculture'].color}};"
                        ng-click="setSelectedSector('Agriculture');filterAg();toggleMapLayer('agriculture',AgLayer)">
                         Agriculture
                     </a>
+                </div>
                 </div>
             </div>
         </div>

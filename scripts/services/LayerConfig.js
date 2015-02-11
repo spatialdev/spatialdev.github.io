@@ -395,7 +395,12 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
      * @returns {boolean}
      */
     filter: function (feature, context) {
-      //return feature.properties.type != 'Mobile Money Agent';
+      //if(feature.properties.type == 'Seed Multipliers'){
+      //  return true;
+      //} else {
+      //  return false;
+      //
+      //}
       return true;
     },
 
@@ -566,7 +571,11 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
      * @returns {boolean}
      */
     filter: function (feature, context) {
-      //return feature.properties.type != 'Mobile Money Agent';
+      //if(feature.properties.type == 'Seed Multipliers'){
+      //  return true
+      //} else {
+      //  return false;
+      //}
       return true;
     },
 

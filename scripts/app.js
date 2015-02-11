@@ -196,6 +196,38 @@ angular.module('SpatialViewer').directive('myShow', function($animate) {
   }
 });
 
+/**
+ * Custom directive that disables hyperlink </a>
+ * http://plnkr.co/edit/GkP1ukju4FWgBeprBLwj?p=preview
+ *
+ */
+
+angular.module('SpatialViewer').directive('aDisabled', function() {
+  return {
+    compile: function(tElement, tAttrs, transclude) {
+      //Disable ngClick
+      tAttrs["ngClick"] = "!("+tAttrs["aDisabled"]+") && ("+tAttrs["ngClick"]+")";
+
+      //Toggle "disabled" to class when aDisabled becomes true
+      return function (scope, iElement, iAttrs) {
+        scope.$watch(iAttrs["aDisabled"], function(newValue) {
+          if (newValue !== undefined) {
+            iElement.toggleClass("disabled", newValue);
+          }
+        });
+
+        //Disable href on click
+        iElement.on("click", function(e) {
+          if (scope.$eval(iAttrs["aDisabled"])) {
+            e.preventDefault();
+          }
+        });
+      };
+    }
+  };
+});
+
+
 require('./services/LayerConfig');
 require('./services/StoriesConfig');
 require('./services/Vector/VectorProvider');

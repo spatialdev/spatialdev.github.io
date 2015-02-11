@@ -17,6 +17,9 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
     $scope.top3 = false;
     $scope.ShowAllSectors = true;
+    $scope.AgSelections = {};
+    $scope.AgTop3 = [];
+    $scope.t3 = [];
 
     // Move this to Factories
     $scope.Sectorcfg = {
@@ -27,10 +30,11 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             color: 'rgb(42, 133, 173)'
         },
         'Agriculture': {
-            color: 'rgb(127, 157, 106)'
+            color: 'rgb(209, 110, 35)'
+
         },
         'Health': {
-            color: 'rgb(209, 110, 35)'
+            color: 'rgb(127, 157, 106)'
         }
     };
 
@@ -430,7 +434,8 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             console.log(sector + ": " + checked);
         }
         // Save selected Filters into array
-        $scope.AgSelections = [];
+        $scope.AgSelections = {};
+        $scope.AgSelections.sector = 'agriculture';
         $scope.AgTop3 = [];
         $scope.t3 = [];
 
@@ -440,11 +445,11 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         //Add to Ag Selections
         for (var i = 0; i < $scope.AgSector.length; i++) {
             if ($scope.AgSector[i].selected == true) {
-                $scope.AgSelections.push(
+                $scope.AgSelections[$scope.AgSector[i].type] =
                     {
                         type: $scope.AgSector[i].type,
                         selected: $scope.AgSector[i].selected
-                    });
+                    };
                 $scope.t3.push(sector);
                 //Add to Top 3 array
                 for (var j = 0; j < $scope.AgSelections.length; j++) {
@@ -481,6 +486,14 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         console.log("TOP 3: " + $scope.AgTop3);
         //console.log("length: " + AgSelectionsLength + " " + $scope.AgSelections);
     };
+
+    // BroadCast change in AgSelections
+    $scope.$watch('AgSelections', function (){
+        $rootScope.$broadcast('AgSelections',$scope.AgSelections);
+    });
+
+    $rootScope.$broadcast('AgSelections',$scope.AgSelections);
+
 
     // Watch for change in selected Sector
     $scope.$watch(function () {

@@ -18,6 +18,33 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
   var theme = null;
   var filters = null;
 
+  $scope.$on('AgSelections', function(event,args){
+
+    var filter = function(feature, context) {
+      if (feature && feature.properties) {
+        var featureProperty = feature.properties.type;
+        if (args[featureProperty]) {
+          return true;  // show the feature
+        }
+        return false; //hide the feature
+      } else {
+        console.error('We are trying to filter on a point with no feature or feature.properties.');
+      }
+      return false; // error state, there should be a feature with properties
+    };
+
+    var sector = args.sector;
+    var activeLayer = findLayer(sector);
+
+    if(activeLayer){
+      activeLayer.setFilter(filter);
+      activeLayer.redraw();
+
+    }
+
+    console.log("MAP.JS Listener enabled" + args);
+  });
+
   $scope.params = $stateParams;
   $scope.blur = '';
 
@@ -363,6 +390,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
       layer.overlayName = overlayName;
       overlays[i] = layer;
 
+
+
     }
 
     // there are more overlays left in the list, less layers specified in route
@@ -373,6 +402,14 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
       delete overlays[i];
     }
 
+  }
+
+  function findLayer (layer){
+    for(var i=0;i<overlays.length;i++){
+      if(layer == overlays[i].overlayName){
+        return overlays[i];
+      }
+    }
   }
 
 });

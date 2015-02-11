@@ -541,8 +541,11 @@ layer.agriculture = {
      * @returns {boolean}
      */
     filter: function (feature, context) {
-        //return feature.properties.type != 'Mobile Money Agent';
-        return true;
+        if(feature.properties.type == 'Seed Multipliers'){
+            return true;
+        } else {
+            return false;
+        }
     },
 
     /**
