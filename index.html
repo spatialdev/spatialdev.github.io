@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="styles/themes/FSP/lowernav.css">
     <link rel="stylesheet" href="styles/themes/FSP/rightnav.css">
     <link rel="stylesheet" href="styles/themes/FSP/fonts.css">
+    <script src="/path/to/svg4everybody.ie8.min.js"></script>
 
 
     <!--font-family: 'Open Sans', sans-serif;-->
@@ -71,31 +72,25 @@
     </div>
 
     <div class="NavButtonGroup btn-group">
-        <button type="button" class="btn btn-default" ng-mouseenter="isStoriesActive = isNotParam('stories')"
-                ng-mouseleave="isStoriesActive=false"
-                ng-click="toggleParam('stories')"
-                ng-class="{on: isParam('stories')}">
-            <i class="icon-5_legend"></i>
+        <button type="button" class="btn btn-default top">
+            <span class="icon-icon_home nav_icons"></span>
+            <div class="icon_title">Home</div>
         </button>
-        <button type="button" class="btn btn-default" ng-mouseenter="isLayersActive = isNotParam('layers-panel')"
-                ng-mouseleave="isLayersActive=false"
-                ng-click="toggleParam('layers-panel')"
-                ng-class="{on: isParam('layers-panel')}">
-            <i class="icon-3_map_layers"></i>
+        <button type="button" class="btn btn-default">
+            <span class="icon-icon_mapView nav_icons"></span>
+            <div class="icon_title">Map View</div>
         </button>
 
-        <button type="button" class="btn btn-default" ng-mouseenter="isFiltersActive = isNotParam('filters-panel')"
-                ng-mouseleave="isFiltersActive=false"
-                ng-click="toggleParam('filters-panel')"
-                ng-class="{on: isParam('filters-panel')}">
-            <i class="icon-4_filters"></i>
+        <button type="button" class="btn btn-default">
+            <span class="icon-icon_summary nav_icons"></span>
+            <div class="icon_title">Summary</div>
         </button>
-        <button type="button" class="btn btn-default" ng-mouseenter="isInfoActive = isNotParam('info')"
-                ng-mouseleave="isInfoActive=false"
-                ng-click="toggleParam('info')"
-                ng-class="{on: isParam('info')}">
-            <i class="icon-1_info"></i>
+
+        <button type="button" class="btn btn-default">
+            <span class="icon-icon_analytics nav_icons"></span>
+            <div class="icon_title">Analytics</div>
         </button>
+
         <button type="button" class="btn btn-default left-nav-earth"
                 ng-mouseenter="isBasemapsActive = isNotParam('basemaps')"
                 ng-mouseleave="isBasemapsActive=false"
@@ -602,8 +597,9 @@
     <div id="FilterArea">
         <div class="FilterTitle">Filter:</div>
         <div class="SectorDropDown">
-            <!-- Financial services -->
-            <div class="dropdown">
+            <!-- Financial services India -->
+            <div class="dropdown" ng-show="IndiaOn">
+
             <button ng-disabled="!CICOLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
                     aria-expanded="true">
                 Financial Services
@@ -638,6 +634,44 @@
                 </div>
             </ul>
         </div>
+            <!-- Financial services Kenya -->
+            <div class="dropdown" ng-show="KenyaOn">
+
+                <button ng-disabled="!CICOLayer_Kenya.active" class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
+                        aria-expanded="true">
+                    Financial Services
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu scrollable">
+                    <div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="CICOSector.viewAll" ng-click="toggleViewAll()">
+                            {{checkedBool}}
+                        </label>
+                        <li class="divider"></li>
+
+                        <div ng-show="top3">
+                            <label ng-repeat="name in CICOTop3" class="checkbox">
+                                <input type="checkbox" ng-model="name.selected"
+                                       ng-click="setCICOSelection(name.type, !name.selected)">
+                                {{name.type}}
+                            </label>
+                            <li class="divider"></li>
+                        </div>
+
+                        <label ng-show="CICOSector.viewAll" ng-repeat="names in CICOSector" class="checkbox">
+                            <input type="checkbox" ng-model="names.selected"
+                                   ng-click="setCICOSelection(names.type, !names.selected)">
+                            {{names.type}} ({{names.count | number}})
+                        </label>
+
+                        <div ng-show="!CICOSector.viewAll" class="ShowMore" ng-click="toggleViewAll()">
+                            <a>Show More</a>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+
             <!-- Health -->
             <div ng-show="IndiaOn" class="dropdown">
                 <button ng-disabled="!HealthLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button" data-toggle="dropdown"
@@ -755,6 +789,7 @@
             <div ng-click="switchCountry(selection)" class="world countrytext">
                 {{selection}}
             </div>
+
             <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')"><span
                     class="glyphicon glyphicon-chevron-down"></span></div>
             <!--<div class="stack">-->
@@ -811,33 +846,37 @@
             </div>
             <div class="SectorContent" ng-show="ShowAllSectors" >
                 <!-- Financial Sector -->
-                 <div class="SingleSector">
-                    <a style="color:{{Sectorcfg['Financial Service'].color}};"
+                <div class="SingleSector">
+                    <span style="color:{{Sectorcfg['Financial Service'].color}};" class="icon-nearBy nav_icons nearby"></span>
+                     <a style="color:{{Sectorcfg['Financial Service'].color}};"
                        ng-click="setSelectedSector('CICOS');filterCICO();toggleMapLayer('CICOS',CICOLayer)">
                         Financial Service
                     </a>
                  </div>
+                <!-- Library Sector -->
+                <div class="SingleSector">
+                    <div ng-show="IndiaOn">
+                        <span style="color:{{Sectorcfg['Library'].color}};" class="icon-nearBy nav_icons nearby"></span>
+                        <a style="color:{{Sectorcfg['Library'].color}};"
+                           ng-click="setSelectedSector('Library');filterLibrary();toggleMapLayer('library',LibraryLayer)">
+                            Library
+                        </a>
+                    </div>
+                </div>
                 <!-- Health Sector -->
                 <div class="SingleSector">
                 <div ng-show="IndiaOn">
+                    <span style="color:{{Sectorcfg['Health'].color}};" class="icon-nearBy nav_icons nearby"></span>
                     <a style="color:{{Sectorcfg['Health'].color}};"
                        ng-click="setSelectedSector('Health');filterHealth();toggleMapLayer('health',HealthLayer)">
                         Health
                     </a>
                 </div>
                 </div>
-                <!-- Library Sector -->
-                <div class="SingleSector">
-                <div ng-show="IndiaOn">
-                    <a style="color:{{Sectorcfg['Library'].color}};"
-                       ng-click="setSelectedSector('Library');filterLibrary();toggleMapLayer('library',LibraryLayer)">
-                        Library
-                    </a>
-                </div>
-                </div>
                 <!-- Agriculture Sector -->
                 <div class="SingleSector">
                 <div ng-show="IndiaOn" >
+                    <span style="color:{{Sectorcfg['Agriculture'].color}};" class="icon-nearBy nav_icons nearby"></span>
                     <a style="color:{{Sectorcfg['Agriculture'].color}};"
                        ng-click="setSelectedSector('Agriculture');filterAg();toggleMapLayer('agriculture',AgLayer)">
                         Agriculture

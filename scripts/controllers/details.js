@@ -17,7 +17,6 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     $scope.ShowAllSectors = false;
 
     $scope.getSelectedSector = function () {
-        $scope.selectedSector = SectorFactory.SelectedSector;
 
         // watch for change in sector, not tab
         if ($scope.navTab !== 'countryoverview') {
@@ -27,7 +26,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         }
 
         switch ($scope.selectedSector) {
-            case 'agriculture':
+            case 'Agriculture':
                 $scope.APData = AgFilterFactory.Ag_Counts;
                 $scope.sectortotal = AgFilterFactory.AgTotal;
                 $scope.APChart(AgFilterFactory.Ag_LandUse_Counts);
@@ -49,13 +48,13 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                     console.log("case: Kenya CICOS");
                 }
                 break;
-            case 'health':
+            case 'Health':
                 $scope.APData = HealthFilterFactory.Health_Counts;
                 $scope.sectortotal = HealthFilterFactory.HealthTotal;
                 $scope.APChart(HealthFilterFactory.Health_LandUse_Counts);
                 console.log("case: Health");
                 break;
-            case 'library':
+            case 'Library':
                 $scope.APData = LibraryFilterFactory.Library_Counts;
                 $scope.sectortotal = LibraryFilterFactory.LibraryTotal;
                 $scope.APChart(LibraryFilterFactory.Library_LandUse_Counts);
@@ -79,7 +78,6 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 //console.log("case: default");
         }
     };
-
 
     //Watch for change in country
     $scope.$watch(function () {
@@ -557,9 +555,11 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
     // Watch for change in selected Sector
     $scope.$watch(function () {
-            return SectorFactory.SelectedSector;
-        }, $scope.getSelectedSector());
-
+        return SectorFactory.SelectedSector;
+    }, function() {
+        $scope.selectedSector = SectorFactory.SelectedSector;
+        $scope.getSelectedSector();
+    });
 
     $scope.toggleSectorShow = function(){
         $scope.ShowAllSectors = !$scope.ShowAllSectors;

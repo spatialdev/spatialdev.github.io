@@ -23,7 +23,6 @@
 
 .NavigationTooltipContainer-right.main{
     top: 0;
-    height: 100%;
     margin-top: 45px;
 }
 
@@ -103,7 +102,6 @@
     width: 457px;
     margin-top: -88px;
     border: 1px solid #d3d3d3;
-    height:100%;
 }
 
 #OverviewPanel {
@@ -117,11 +115,9 @@
 
 #DetailsWrapper {
     right: -457px;
-    height:100%;
 }
 
 #DetailsWrapper.on {
-    height:100%;
 }
 
 .row-rightnav {
@@ -133,7 +129,6 @@
 .row-rightinfo {
     background-color:#fff;
     margin-left: -11px;
-    height:100%;
 }
 
 .full-width{

@@ -33,13 +33,65 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
       return false; // error state, there should be a feature with properties
     };
 
+
     var sector = args.sector;
+    var sector_string = '';
+    var filter_string ='';
+
+    for (var key in args) {
+      var obj = args[key];
+      sector_string += key + ",";
+      //for (var prop in obj) {
+      //  // important check that this is objects own property
+      //  // not from prototype prop inherited
+      //  sector_string += key + ",";
+      //  if(obj.hasOwnProperty(prop)){
+      //    alert(prop + " = " + obj[prop]);
+      //  }
+      //}
+    }
+
+    //var new_string = sector_string.replace(/ /g,"");
+    var new_string = JSON.stringify(args);
+
     var activeLayer = findLayer(sector);
+
+    $stateParams.filters = new_string;
+    var state = $state.current.name || 'main';
+    $state.go(state, $stateParams);
 
     if(activeLayer){
       activeLayer.setFilter(filter);
       activeLayer.redraw();
 
+    }
+
+    console.log("MAP.JS Listener enabled" + args);
+  });
+
+  $scope.$on('CICOSelections', function(event,args){
+
+    var filter = function(feature, context) {
+      if (feature && feature.properties) {
+        var featureProperty = feature.properties.type;
+        if (args[featureProperty]) {
+          return true;  // show the feature
+        }
+        return false; //hide the feature
+      } else {
+        console.error('We are trying to filter on a point with no feature or feature.properties.');
+      }
+      return false; // error state, there should be a feature with properties
+    };
+
+
+    var sector = args.sector;
+
+    var activeLayer = findLayer(sector);
+
+    if(activeLayer){
+      activeLayer.setFilter(filter);
+      activeLayer.redraw();
     }
 
     console.log("MAP.JS Listener enabled" + args);

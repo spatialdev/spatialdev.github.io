@@ -240,3 +240,101 @@
     font-style: normal;
 
 }
+
+@font-face {
+    font-family: 'icomoon';
+    src:url('fonts/icomoon.eot?-h6f9sv');
+    src:url('fonts/icomoon.eot?#iefix-h6f9sv') format('embedded-opentype'),
+    url('fonts/icomoon.woff?-h6f9sv') format('woff'),
+    url('fonts/icomoon.ttf?-h6f9sv') format('truetype'),
+    url('fonts/icomoon.svg?-h6f9sv#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-icon_home:before {
+    content: "\e600";
+}
+
+.icon-icon_info:before {
+    content: "\e601";
+}
+
+.icon-viewBy .path1:before {
+    content: "\e602";
+    color: rgb(201, 201, 201);
+}
+.icon-viewBy .path2:before {
+    content: "\e603";
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+}
+
+.icon-Unchecked:before {
+    content: "\e604";
+}
+
+.icon-map:before {
+    content: "\e605";
+}
+
+.icon-nearBy:before {
+    content: "\e606";
+}
+
+.icon-InfoBox:before {
+    content: "\e607";
+}
+
+.icon-icon_settings:before {
+    content: "\e608";
+}
+
+.icon-icon_summary:before {
+    content: "\e609";
+}
+
+.icon-icon_mapView:before {
+    content: "\e60a";
+}
+
+.icon-icon_searchLoop:before {
+    content: "\e60b";
+}
+
+.icon-icon_infoPopup:before {
+    content: "\e60c";
+}
+
+.icon-icon_basemaps:before {
+    content: "\e60d";
+}
+
+.icon-icon_analytics:before {
+    content: "\e60e";
+}
+
+.icon-checked:before {
+    content: "\e60f";
+}
+
+
+
+
+
+
+

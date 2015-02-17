@@ -51,7 +51,7 @@
 #MapUpperRightToolbarWrapper > div {
     /*position: absolute;*/
     top: 0px;
-    width: 180px;
+    width: 152px;
     height: 44px;
     z-index: 187;
     float: right;
@@ -193,7 +193,7 @@
     height: 44px;
     top: 0;
     right: 0px;
-    left: 94px;
+    left: 0px;
     z-index: 2002;
     background-color: #e2e1dd;
 }

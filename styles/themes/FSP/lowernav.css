@@ -43,7 +43,7 @@
 }
 
 .SectorArea .AllSectors.on {
-    width: 575px;
+    width: 590px;
     -webkit-transition: all .5s ease;
     left:358px;
 }
@@ -55,16 +55,22 @@
 }
 
 .SectorArea .SectorContent .SingleSector {
-    float:left;
+    float: left;
     font-size: 13px;
     font-family: "DIN";
     line-height: 2.964;
     text-align: left;
-    padding:10px;
-    height:40px;
+    padding: 10px 10px 0px 12px;
+    height: 40px;
 }
 
 .SectorArea .SectorContent .SingleSector a {
     text-decoration: none;
+}
+
+.nearby {
+    float: left;
+    padding: 3px 0px 0px 0px;
+    font-size: 32px;
 }
 

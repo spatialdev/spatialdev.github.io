@@ -275,10 +275,10 @@ layer.gaul_fsp = {
 
 };
 
-layer.cicos = {
+layer.cicos_kenya = {
   type: 'pbf',
-  name: 'FSP Cico Points',
-  url: "http://spatialserver.spatialdev.com/services/vector-tiles/FSPCicos2013/{z}/{x}/{y}.pbf",
+  name: 'FSP Kenya',
+  url: "http://spatialserver.spatialdev.com/services/vector-tiles/cicos_2013_kenya/{z}/{x}/{y}.pbf",
   debug: false,
   clickableLayers: [],
 
@@ -297,7 +297,7 @@ layer.cicos = {
    * @returns {boolean}
    */
   filter: function(feature, context) {
-    //return feature.properties.type != 'Mobile Money Agent';
+    //return feature.properties.country == 'Kenya';
     return true;
   },
 
@@ -329,7 +329,7 @@ layer.cicos = {
     }
   },
 
-  styleFor: function(feature) {
+  style: function(feature) {
     var style = {};
     var selected = style.selected = {};
     var pointRadius = 1;
@@ -355,7 +355,7 @@ layer.cicos = {
     switch (type) {
       case 1: //'Point'
         // unselected
-        style.color = CICO_Config[feature.properties.type].ClusterColor || '#3086AB';
+        style.color = CICO_Config[feature.properties.type].color;
         style.radius = ScaleDependentPointRadius;
         // selected
         selected.color = 'rgba(255,255,0,0.5)';

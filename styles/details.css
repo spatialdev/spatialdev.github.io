@@ -43,7 +43,7 @@ div.tooltip{
     font-size:16px;
     padding: 2px 0px;
     line-height: 22px;
-    height:500px;
+    max-height:465px;
     background-color: white;
     margin-top: 15px;
     height: 470px;
