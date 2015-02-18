@@ -98,10 +98,10 @@ SpatialViewer.run(function ($rootScope, $state, $stateParams) {
 SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
     .when('/default', '/map@' + config.MapLocation.MapCenter.Latitude + "," +config.MapLocation.MapCenter.Longitude + ","
-  +config.MapLocation.MapZoom + '(osm)')
-    .when('/phl', '/map@11.759815,121.893311,6(osm)')
+  +config.MapLocation.MapZoom + '(dark)')
+    .when('/phl', '/map@11.759815,121.893311,6(dark)')
     .otherwise(localStorage.getItem('defaultRoute') || '/map@'+config.MapLocation.MapCenter.Latitude+','
-      +config.MapLocation.MapCenter.Longitude+','+config.MapLocation.MapZoom+'(osm)');
+      +config.MapLocation.MapCenter.Longitude+','+config.MapLocation.MapZoom+'(dark)');
 
   $stateProvider
     .state('main', {

@@ -8009,7 +8009,7 @@ L.Map.include({
 
 L.Control.Zoom = L.Control.extend({
 	options: {
-		position: 'bottomleft',
+		position: 'bottomright',
 		zoomInText: '+',
 		zoomInTitle: 'Zoom in',
 		zoomOutText: '-',

@@ -17,9 +17,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.CICOLayer_Kenya = CICOFilterFactory.Layer_Kenya;
     $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
     $scope.top3 = false;
-    $scope.ShowAllSectors = true;
-    $scope.AgSelections = {};
-    $scope.CICOSelections = {};
+    $scope.ShowAllSectors = false;
     $scope.AgTop3 = [];
     $scope.t3 = [];
 
@@ -66,6 +64,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 $scope.title = "Overview - Bihar & Uttar Pradesh";
                 console.log("India QuickStats");
                 $scope.IndiaOn = true;
+                $scope.ShowAllSectors = true;
                 $scope.KenyaOn = false;
                 $scope.CICOSelections = [];
                 $scope.CICOTop3 = [];
@@ -75,6 +74,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             case 'Kenya':
                 $scope.IndiaOn = false;
                 $scope.KenyaOn = true;
+                $scope.ShowAllSectors = true;
                 $scope.CICOSelections = [];
                 $scope.CICOTop3 = [];
                 $scope.t3 = [];
@@ -93,12 +93,13 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.LibrarySector = LibraryFilterFactory.Library_Counts;
 
     // Check box are checked by default
-    $scope.CICOSector.selectedAll = false;
-    $scope.HealthSector.selectedAll = false;
-    $scope.AgSector.selectedAll = false;
-    $scope.LibrarySector.selectedAll = false;
+    //$scope.CICOSector.selectedAll = false;
+    $scope.HealthSector.viewAll = true;
+    //$scope.AgSector.selectedAll = false;
+    //$scope.LibrarySector.selectedAll = false;
     $scope.LibrarySector.viewAll = true;
     $scope.CICOSector.viewAll = true;
+    $scope.AgSector.viewAll = true;
     $scope.checkedBool = "View All";
     $scope.selectedSector = 'CICOS';
 
@@ -249,12 +250,21 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     };
 
-    $scope.toggleViewAll = function() {
-        $scope.CICOSector.viewAll = !$scope.CICOSector.viewAll;
+    $scope.toggleViewAllHealth = function() {
         $scope.HealthSector.viewAll = !$scope.HealthSector.viewAll;
-        $scope.LibrarySector.viewAll = !$scope.LibrarySector.viewAll;
-        $scope.AgSector.viewAll = !$scope.AgSector.viewAll;
 
+    };
+
+    $scope.toggleViewAllAg = function() {
+        $scope.AgSector.viewAll = !$scope.AgSector.viewAll;
+    };
+
+    $scope.toggleViewAllLibrary = function() {
+        $scope.LibrarySector.viewAll = !$scope.LibrarySector.viewAll;
+    };
+
+    $scope.toggleViewAllCICOS = function() {
+        $scope.CICOSector.viewAll = !$scope.CICOSector.viewAll;
     };
 
     // Handle filters clicks events
@@ -268,29 +278,33 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             console.log(sector + ": " + checked);
         }
         // Save selected Filters into array
-        $scope.CICOSelections = {};
-
-        if($scope.selection == 'India') {
-            $scope.CICOSelections.sector = 'CICOS';
-        }
-        if($scope.selection == 'Kenya') {
-            $scope.CICOSelections.sector = 'cicos_kenya';
-        }
-
+        $scope.CICOSelections = [];
+        $scope.CICOSelections_obj = {};
         $scope.CICOTop3 = [];
         $scope.t3 = [];
+        var cico_sector ='';
+
+        if($scope.selection == 'India') {
+            cico_sector = 'CICOS';
+        }
+        if($scope.selection == 'Kenya') {
+            cico_sector = 'cicos_kenya';
+        }
 
         //save selection index
         var sidx = 0;
+        var order = 0;
 
         //Add to CICO Selections
         for (var i = 0; i < $scope.CICOSector.length; i++) {
             if ($scope.CICOSector[i].selected == true) {
-                $scope.CICOSelections[$scope.CICOSector[i].type] =
-                {
-                    value: $scope.CICOSector[i].selected
-                };
-                $scope.t3.push(sector);
+                $scope.CICOSelections.push({
+                        type: $scope.CICOSector[i].type,
+                        selected: $scope.CICOSector[i].selected,
+                        sector: cico_sector
+                    }
+            );
+                //$scope.t3.push(sector);
                 //Add to Top 3 array
                 for (var j = 0; j < $scope.CICOSelections.length; j++) {
                     // Top 3 includes the LAST 3 CICO selections
@@ -311,143 +325,23 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             }
         }
 
-        //var CICOSelectionsLength = $scope.CICOSelections.length;
-        //// Hard coded 16
-        //if ($scope.selection == 'Kenya' && CICOSelectionsLength < CICOFilterFactory.CICOTypeTotal_Kenya) {
-        //    $scope.CICOSector.selectedAll = false;
-        //} else {
-        //    $scope.CICOSector.selectedAll = true;
-        //}
+
+        var CICOSelectionsLength = $scope.CICOSelections.length;
+        // Hard coded 16
+        if ($scope.selection == 'Kenya' && CICOSelectionsLength < CICOFilterFactory.CICOsTypeTotal_Kenya) {
+            $scope.CICOSector.selectedAll = false;
+        } else {
+            $scope.CICOSector.selectedAll = true;
+        }
 
         //for(var i=$scope.CICOSelections.length-1;i<3;i++){
         //  $scope.CICOTop3.push($scope.CICOSelections[i]);
         //}
 
         console.log("TOP 3: " + $scope.CICOTop3);
-        //console.log("length: " + CICOSelectionsLength + " " + $scope.CICOSelections);
+        console.log("length: " + CICOSelectionsLength + " " + $scope.CICOSelections);
     };
-    $scope.setHealthSelection = function (sector, checked) {
-        // Set selected value for each sector based on checkbox
-        for (var i = 0; i < $scope.HealthSector.length; i++) {
-            if (sector == $scope.HealthSector[i].type) {
-                $scope.HealthSector[i].selected = checked;
-                break;
-            }
-            console.log(sector + ": " + checked);
-        }
-        // Save selected Filters into array
-        $scope.HealthSelections = [];
-        $scope.HealthTop3 = [];
-        $scope.t3 = [];
 
-        //save selection index
-        var sidx = 0;
-
-        //Add to Health Selections
-        for (var i = 0; i < $scope.HealthSector.length; i++) {
-            if ($scope.HealthSector[i].selected == true) {
-                $scope.HealthSelections.push(
-                    {
-                        type: $scope.HealthSector[i].type,
-                        selected: $scope.HealthSector[i].selected
-                    });
-                $scope.t3.push(sector);
-                //Add to Top 3 array
-                for (var j = 0; j < $scope.HealthSelections.length; j++) {
-                    // Top 3 includes the LAST 3 Health selections
-                    if ($scope.HealthTop3.includes($scope.HealthSelections[$scope.HealthSelections.length - 1]) == false) {
-                        if ($scope.HealthTop3.length >= 3) {
-                            $scope.HealthTop3.splice(sidx, 1, $scope.HealthSelections[$scope.HealthSelections.length - 1]);
-                            $scope.top3 = ($scope.HealthTop3.length > 0);
-                            $scope.HealthSector.viewAll = false;
-                            if (sidx <2){sidx++;} else {sidx = 0;}
-                        } else {
-                            $scope.HealthTop3.push($scope.HealthSelections[$scope.HealthSelections.length - 1]);
-                            $scope.top3 = ($scope.HealthTop3.length > 0);
-                            //$scope.HealthSector.viewAll = false;
-
-                        }
-                    }
-                }
-            }
-        }
-
-        //var HealthSelectionsLength = $scope.HealthSelections.length;
-        //// Hard coded 16
-        //if ($scope.selection == 'Kenya' && HealthSelectionsLength < HealthFilterFactory.HealthTypeTotal_Kenya) {
-        //    $scope.HealthSector.selectedAll = false;
-        //} else {
-        //    $scope.HealthSector.selectedAll = true;
-        //}
-
-        //for(var i=$scope.HealthSelections.length-1;i<3;i++){
-        //  $scope.HealthTop3.push($scope.HealthSelections[i]);
-        //}
-
-        console.log("TOP 3: " + $scope.HealthTop3);
-        console.log("length: " + HealthSelectionsLength + " " + $scope.HealthSelections);
-    };
-    $scope.setLibrarySelection = function (sector, checked) {
-        // Set selected value for each sector based on checkbox
-        for (var i = 0; i < $scope.LibrarySector.length; i++) {
-            if (sector == $scope.LibrarySector[i].type) {
-                $scope.LibrarySector[i].selected = checked;
-                break;
-            }
-            console.log(sector + ": " + checked);
-        }
-        // Save selected Filters into array
-        $scope.LibrarySelections = [];
-        $scope.LibraryTop3 = [];
-        $scope.t3 = [];
-
-        //save selection index
-        var sidx = 0;
-
-        //Add to Library Selections
-        for (var i = 0; i < $scope.LibrarySector.length; i++) {
-            if ($scope.LibrarySector[i].selected == true) {
-                $scope.LibrarySelections.push(
-                    {
-                        type: $scope.LibrarySector[i].type,
-                        selected: $scope.LibrarySector[i].selected
-                    });
-                $scope.t3.push(sector);
-                //Add to Top 3 array
-                for (var j = 0; j < $scope.LibrarySelections.length; j++) {
-                    // Top 3 includes the LAST 3 Library selections
-                    if ($scope.LibraryTop3.includes($scope.LibrarySelections[$scope.LibrarySelections.length - 1]) == false) {
-                        if ($scope.LibraryTop3.length >= 3) {
-                            $scope.LibraryTop3.splice(sidx, 1, $scope.LibrarySelections[$scope.LibrarySelections.length - 1]);
-                            $scope.top3 = ($scope.LibraryTop3.length > 0);
-                            $scope.LibrarySector.viewAll = false;
-                            if (sidx <2){sidx++;} else {sidx = 0;}
-                        } else {
-                            $scope.LibraryTop3.push($scope.LibrarySelections[$scope.LibrarySelections.length - 1]);
-                            $scope.top3 = ($scope.LibraryTop3.length > 0);
-                            //$scope.LibrarySector.viewAll = false;
-
-                        }
-                    }
-                }
-            }
-        }
-
-        //var LibrarySelectionsLength = $scope.LibrarySelections.length;
-        //// Hard coded 16
-        //if ($scope.selection == 'Kenya' && LibrarySelectionsLength < LibraryFilterFactory.LibraryTypeTotal_Kenya) {
-        //    $scope.LibrarySector.selectedAll = false;
-        //} else {
-        //    $scope.LibrarySector.selectedAll = true;
-        //}
-
-        //for(var i=$scope.LibrarySelections.length-1;i<3;i++){
-        //  $scope.LibraryTop3.push($scope.LibrarySelections[i]);
-        //}
-
-        console.log("TOP 3: " + $scope.LibraryTop3);
-        //console.log("length: " + LibrarySelectionsLength + " " + $scope.LibrarySelections);
-    };
     $scope.setAgSelection = function (sector, checked) {
         // Set selected value for each sector based on checkbox
         for (var i = 0; i < $scope.AgSector.length; i++) {
@@ -458,22 +352,31 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             console.log(sector + ": " + checked);
         }
         // Save selected Filters into array
-        $scope.AgSelections = {};
-        $scope.AgSelections.sector = 'agriculture';
+        $scope.AgSelections = [];
+        $scope.AgSelections_obj = {};
         $scope.AgTop3 = [];
         $scope.t3 = [];
 
+        var ag_sector ='';
+
+        if($scope.selection == 'India') {
+            ag_sector = 'agriculture';
+        }
+
         //save selection index
         var sidx = 0;
+        var order = 0;
 
         //Add to Ag Selections
         for (var i = 0; i < $scope.AgSector.length; i++) {
             if ($scope.AgSector[i].selected == true) {
-                $scope.AgSelections[$scope.AgSector[i].type] =
-                    {
-                        value: $scope.AgSector[i].selected
-                    };
-                $scope.t3.push(sector);
+                $scope.AgSelections.push({
+                        type: $scope.AgSector[i].type,
+                        selected: $scope.AgSector[i].selected,
+                        sector: ag_sector
+                    }
+                );
+                //$scope.t3.push(sector);
                 //Add to Top 3 array
                 for (var j = 0; j < $scope.AgSelections.length; j++) {
                     // Top 3 includes the LAST 3 Ag selections
@@ -494,20 +397,166 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             }
         }
 
-        //var AgSelectionsLength = $scope.AgSelections.length;
-        //// Hard coded 16
-        //if ($scope.selection == 'Kenya' && AgSelectionsLength < AgFilterFactory.AgTypeTotal_Kenya) {
-        //    $scope.AgSector.selectedAll = false;
-        //} else {
-        //    $scope.AgSector.selectedAll = true;
-        //}
+
+        var AgSelectionsLength = $scope.AgSelections.length;
+        // Hard coded 16
+        if ($scope.selection == 'Kenya' && AgSelectionsLength < AgFilterFactory.AgsTypeTotal_Kenya) {
+            $scope.AgSector.selectedAll = false;
+        } else {
+            $scope.AgSector.selectedAll = true;
+        }
 
         //for(var i=$scope.AgSelections.length-1;i<3;i++){
         //  $scope.AgTop3.push($scope.AgSelections[i]);
         //}
 
         console.log("TOP 3: " + $scope.AgTop3);
-        //console.log("length: " + AgSelectionsLength + " " + $scope.AgSelections);
+        console.log("length: " + AgSelectionsLength + " " + $scope.AgSelections);
+    };
+
+    $scope.setHealthSelection = function (sector, checked) {
+        // Set selected value for each sector based on checkbox
+        for (var i = 0; i < $scope.HealthSector.length; i++) {
+            if (sector == $scope.HealthSector[i].type) {
+                $scope.HealthSector[i].selected = checked;
+                break;
+            }
+            console.log(sector + ": " + checked);
+        }
+        // Save selected Filters into array
+        $scope.HealthSelections = [];
+        $scope.HealthSelections_obj = {};
+        $scope.HealthTop3 = [];
+        $scope.t3 = [];
+
+        var health_sector ='';
+
+        if($scope.selection == 'India') {
+            health_sector = 'health';
+        }
+
+        //save selection index
+        var sidx = 0;
+        var order = 0;
+
+        //Add to Health Selections
+        for (var i = 0; i < $scope.HealthSector.length; i++) {
+            if ($scope.HealthSector[i].selected == true) {
+                $scope.HealthSelections.push({
+                        type: $scope.HealthSector[i].type,
+                        selected: $scope.HealthSector[i].selected,
+                        sector: health_sector
+                    }
+                );
+                //$scope.t3.push(sector);
+                //Add to Top 3 array
+                for (var j = 0; j < $scope.HealthSelections.length; j++) {
+                    // Top 3 includes the LAST 3 Health selections
+                    if ($scope.HealthTop3.includes($scope.HealthSelections[$scope.HealthSelections.length - 1]) == false) {
+                        if ($scope.HealthTop3.length >= 3) {
+                            $scope.HealthTop3.splice(sidx, 1, $scope.HealthSelections[$scope.HealthSelections.length - 1]);
+                            $scope.top3 = ($scope.HealthTop3.length > 0);
+                            $scope.HealthSector.viewAll = false;
+                            if (sidx <2){sidx++;} else {sidx = 0;}
+                        } else {
+                            $scope.HealthTop3.push($scope.HealthSelections[$scope.HealthSelections.length - 1]);
+                            $scope.top3 = ($scope.HealthTop3.length > 0);
+                            //$scope.HealthSector.viewAll = false;
+
+                        }
+                    }
+                }
+            }
+        }
+
+
+        var HealthSelectionsLength = $scope.HealthSelections.length;
+        // Hard coded 16
+        if ($scope.selection == 'Kenya' && HealthSelectionsLength < HealthFilterFactory.HealthsTypeTotal_Kenya) {
+            $scope.HealthSector.selectedAll = false;
+        } else {
+            $scope.HealthSector.selectedAll = true;
+        }
+
+        //for(var i=$scope.HealthSelections.length-1;i<3;i++){
+        //  $scope.HealthTop3.push($scope.HealthSelections[i]);
+        //}
+
+        console.log("TOP 3: " + $scope.HealthTop3);
+        console.log("length: " + HealthSelectionsLength + " " + $scope.HealthSelections);
+    };
+
+    $scope.setLibrarySelection = function (sector, checked) {
+        // Set selected value for each sector based on checkbox
+        for (var i = 0; i < $scope.LibrarySector.length; i++) {
+            if (sector == $scope.LibrarySector[i].type) {
+                $scope.LibrarySector[i].selected = checked;
+                break;
+            }
+            console.log(sector + ": " + checked);
+        }
+        // Save selected Filters into array
+        $scope.LibrarySelections = [];
+        $scope.LibrarySelections_obj = {};
+        $scope.LibraryTop3 = [];
+        $scope.t3 = [];
+
+        var library_sector ='';
+
+        if($scope.selection == 'India') {
+            library_sector = 'library';
+        }
+
+        //save selection index
+        var sidx = 0;
+        var order = 0;
+
+        //Add to Library Selections
+        for (var i = 0; i < $scope.LibrarySector.length; i++) {
+            if ($scope.LibrarySector[i].selected == true) {
+                $scope.LibrarySelections.push({
+                        type: $scope.LibrarySector[i].type,
+                        selected: $scope.LibrarySector[i].selected,
+                        sector: library_sector
+                    }
+                );
+                //Library only has 4 sub sectors; top 3 is unnecessary
+                //$scope.t3.push(sector);
+                //Add to Top 3 array
+                //for (var j = 0; j < $scope.LibrarySelections.length; j++) {
+                //    // Top 3 includes the LAST 3 Library selections
+                //    if ($scope.LibraryTop3.includes($scope.LibrarySelections[$scope.LibrarySelections.length - 1]) == false) {
+                //        if ($scope.LibraryTop3.length >= 3) {
+                //            $scope.LibraryTop3.splice(sidx, 1, $scope.LibrarySelections[$scope.LibrarySelections.length - 1]);
+                //            $scope.top3 = ($scope.LibraryTop3.length > 0);
+                //            $scope.LibrarySector.viewAll = false;
+                //            if (sidx <2){sidx++;} else {sidx = 0;}
+                //        } else {
+                //            $scope.LibraryTop3.push($scope.LibrarySelections[$scope.LibrarySelections.length - 1]);
+                //            $scope.top3 = ($scope.LibraryTop3.length > 0);
+                //            //$scope.LibrarySector.viewAll = false;
+                //
+                //        }
+                //    }
+                //}
+            }
+        }
+
+
+        var LibrarySelectionsLength = $scope.LibrarySelections.length;
+        // Hard coded 16
+        if ($scope.selection == 'Kenya' && LibrarySelectionsLength < LibraryFilterFactory.LibrarysTypeTotal_Kenya) {
+            $scope.LibrarySector.selectedAll = false;
+        } else {
+            $scope.LibrarySector.selectedAll = true;
+        }
+
+        //for(var i=$scope.LibrarySelections.length-1;i<3;i++){
+        //  $scope.LibraryTop3.push($scope.LibrarySelections[i]);
+        //}
+
+        console.log("TOP 3: " + $scope.LibraryTop3);
+        console.log("length: " + LibrarySelectionsLength + " " + $scope.LibrarySelections);
     };
 
     // BroadCast change in AgSelections
@@ -517,6 +566,14 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     $scope.$watch('CICOSelections', function (){
         $rootScope.$broadcast('CICOSelections',$scope.CICOSelections);
+    });
+
+    $scope.$watch('HealthSelections', function (){
+        $rootScope.$broadcast('HealthSelections',$scope.HealthSelections);
+    });
+
+    $scope.$watch('LibrarySelections', function (){
+        $rootScope.$broadcast('LibrarySelections',$scope.LibrarySelections);
     });
 
     // Watch for change in selected Sector
