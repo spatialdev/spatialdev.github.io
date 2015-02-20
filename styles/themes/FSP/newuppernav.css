@@ -6,7 +6,7 @@
     position: absolute;
     /* top: 6px; */
     width: 62px;
-    left: 190px;
+    left: 204px;
     padding-top: 3px;
     height: inherit;
     background-color: #e2e1dd;
@@ -36,7 +36,7 @@
     -moz-transform: matrix(0.78, 0, 0, 0.77790178571429, 0, 0);
     -webkit-transform: matrix(0.78, 0, 0, 0.77790178571429, 0, 0);
     -ms-transform: matrix(0.78, 0, 0, 0.77790178571429, 0, 0);
-    /* position: absolute; */
+     /*position: absolute;*/
     /* top: 9.502px; */
     z-index: 189;
     text-transform: uppercase;
@@ -61,7 +61,7 @@
 
 #MapUpperRightToolbarWrapper {
     /* position: absolute; */
-    width: 245px;
+    width: 266px;
     /* top: 0; */
     /* right: 0; */
     float: right;
@@ -79,6 +79,7 @@
 
 #MapUpperRightToolbarWrapper .btn {
     /*right: 5px;*/
+    padding: 6px 11px;
     top: 6px;
     z-index: 190;
     background-color: rgb(237, 27, 46);
@@ -93,6 +94,7 @@
     padding: 0px;
     position: inherit;
     left: 34px;
+    top:10px;
     background-color: #e2e1dd;
 }
 
@@ -117,6 +119,14 @@
     padding: 5px 14px 2px 16px;
     background-color: #f1efec;
     height: 35px;
+}
+
+#SearchPanelWrapper.on {
+    display: block;
+    top: 44px;
+    -moz-transition: all .5s ease;
+    -webkit-transition: all .5s ease;
+    -ms-transition: all .5s ease;
 }
 
 /* Country Selector */
@@ -247,12 +257,16 @@
     font-family: DIN;
     -moz-transform: matrix(0.68417828601723, 0, 0, 0.68489583333333, 0, 0);
     -ms-transform: matrix(0.68417828601723, 0, 0, 0.68489583333333, 0, 0);
-    margin-top: 4px;
+    /*margin-top: 4px;*/
     z-index: 172;
     float: left;
 }
 .SectorDropDown .dropdown{
     float: left;
+}
+
+#FilterArea .btn-sector{
+    padding: 10px 15px 10px 15px;
 }
 
 .FilterTitle {
@@ -271,9 +285,12 @@
 
 }
 
+.abs {
+    position: absolute;
+}
+
 #FilterArea .btn {
     display: inline-block;
-    padding: 6px 11px;
     margin-bottom: 0;
     font-size: 16px;
     font-weight: 300;
@@ -302,8 +319,25 @@
 }
 
 #FilterArea .dropdown-menu.library{
-    left: 14px;
+    left: 15px;
     width: 150px;
+}
+
+#FilterArea .dropdown-menu.health{
+    left: 15px;
+    width: 195px;
+    top: 33px;
+}
+
+#FilterArea .dropdown-menu.financial{
+    left: 27px;
+    top: 33px;
+}
+
+#FilterArea .dropdown-menu.ag{
+    left: 20px;
+    top: 33px;
+    z-index: 2003;
 }
 
 #FilterArea .dropdown-menu > li > a {

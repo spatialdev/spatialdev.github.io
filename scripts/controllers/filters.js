@@ -19,6 +19,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
     $scope.top3 = false;
     $scope.ShowAllSectors = false;
+    $scope.SearchBar = false;
     $scope.AgTop3 = [];
     $scope.t3 = [];
 
@@ -37,6 +38,10 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         'Health': {
             color: 'rgb(127, 157, 106)'
         }
+    };
+
+    $scope.toggleSearchBar = function(){
+        $scope.SearchBar = !$scope.SearchBar;
     };
 
     // Function is called after Country has changed

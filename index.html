@@ -604,13 +604,13 @@
     <!-- Financial services India -->
     <div class="dropdown" ng-show="IndiaOn">
 
-        <button ng-disabled="!CICOLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button"
+        <button ng-disabled="!CICOLayer.active" class="btn btn-default dropdown-toggle ng-binding btn-sector" type="button"
                 data-toggle="dropdown"
                 aria-expanded="true">
             Financial Services
             <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu scrollable">
+        <ul class="dropdown-menu financial scrollable">
             <div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">
                 <label class="checkbox">
                     <input type="checkbox" ng-model="CICOSector.viewAll" ng-click="toggleViewAllCICOS()">
@@ -642,13 +642,13 @@
     <!-- Financial services Kenya -->
     <div class="dropdown" ng-show="KenyaOn">
 
-        <button ng-disabled="!CICOLayer_Kenya.active" class="btn btn-default dropdown-toggle ng-binding" type="button"
+        <button ng-disabled="!CICOLayer_Kenya.active" class="btn btn-default dropdown-toggle ng-binding btn-sector" type="button"
                 data-toggle="dropdown"
                 aria-expanded="true">
             Financial Services
             <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu scrollable">
+        <ul class="dropdown-menu financial scrollable">
             <div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">
                 <label class="checkbox">
                     <input type="checkbox" ng-model="CICOSector.viewAll" ng-click="toggleViewAllCICOS()">
@@ -680,13 +680,13 @@
     <!-- Financial services Nigeria -->
     <div class="dropdown" ng-show="NigeriaOn">
 
-        <button ng-disabled="!CICOLayer_Nigeria.active" class="btn btn-default dropdown-toggle ng-binding" type="button"
+        <button ng-disabled="!CICOLayer_Nigeria.active" class="btn btn-default dropdown-toggle ng-binding btn-sector" type="button"
                 data-toggle="dropdown"
                 aria-expanded="true">
             Financial Services
             <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu scrollable">
+        <ul class="dropdown-menu financial scrollable">
             <div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">
                 <label class="checkbox">
                     <input type="checkbox" ng-model="CICOSector.viewAll" ng-click="toggleViewAllCICOS()">
@@ -716,48 +716,9 @@
         </ul>
     </div>
 
-
-    <!-- Health -->
-    <div ng-show="IndiaOn" class="dropdown">
-        <button ng-disabled="!HealthLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button"
-                data-toggle="dropdown"
-                aria-expanded="true">
-            Health
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu scrollable">
-            <div ng-class="{active: navTab==='health'}" class="tab-pane" id="sectors-filter">
-                <label class="checkbox">
-                    <input type="checkbox" ng-model="HealthSector.viewAll" ng-click="toggleViewAllHealth();">
-                    {{checkedBool}}
-                </label>
-                <li class="divider"></li>
-
-                <div ng-show="top3">
-                    <label ng-repeat="name in HealthTop3" class="checkbox">
-                        <input type="checkbox" ng-model="name.selected"
-                               ng-click="setHealthSelection(name.type, !name.selected)">
-                        {{name.type}}
-                    </label>
-                    <li class="divider"></li>
-                </div>
-
-                <label ng-show="HealthSector.viewAll" ng-repeat="names in HealthSector" class="checkbox">
-                    <input type="checkbox" ng-model="names.selected"
-                           ng-click="setHealthSelection(names.type, !names.selected)">
-                    {{names.type}} ({{names.count | number}})
-                </label>
-
-                <div ng-show="!HealthSector.viewAll" class="ShowMore" ng-click="toggleViewAllHealth()">
-                    <a>Show More</a>
-                </div>
-            </div>
-        </ul>
-    </div>
-
     <!-- Library -->
     <div ng-show="IndiaOn" class="dropdown">
-        <button ng-disabled="!LibraryLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button"
+        <button ng-disabled="!LibraryLayer.active" class="btn btn-default dropdown-toggle ng-binding btn-sector" type="button"
                 data-toggle="dropdown"
                 aria-expanded="true">
             Library
@@ -792,16 +753,52 @@
             </div>
         </ul>
     </div>
+    <!-- Health -->
+    <div ng-show="IndiaOn" class="dropdown">
+        <button ng-disabled="!HealthLayer.active" class="btn btn-default dropdown-toggle ng-binding btn-sector" type="button"
+                data-toggle="dropdown"
+                aria-expanded="true">
+            Health
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu health scrollable">
+            <div ng-class="{active: navTab==='health'}" class="tab-pane" id="sectors-filter">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="HealthSector.viewAll" ng-click="toggleViewAllHealth();">
+                    {{checkedBool}}
+                </label>
+                <li class="divider"></li>
 
+                <div ng-show="top3">
+                    <label ng-repeat="name in HealthTop3" class="checkbox">
+                        <input type="checkbox" ng-model="name.selected"
+                               ng-click="setHealthSelection(name.type, !name.selected)">
+                        {{name.type}}
+                    </label>
+                    <li class="divider"></li>
+                </div>
+
+                <label ng-show="HealthSector.viewAll" ng-repeat="names in HealthSector" class="checkbox">
+                    <input type="checkbox" ng-model="names.selected"
+                           ng-click="setHealthSelection(names.type, !names.selected)">
+                    {{names.type}} ({{names.count | number}})
+                </label>
+
+                <div ng-show="!HealthSector.viewAll" class="ShowMore" ng-click="toggleViewAllHealth()">
+                    <a>Show More</a>
+                </div>
+            </div>
+        </ul>
+    </div>
     <!-- Agriculture -->
     <div ng-show="IndiaOn" class="dropdown">
-        <button ng-disabled="!AgLayer.active" class="btn btn-default dropdown-toggle ng-binding" type="button"
+        <button ng-disabled="!AgLayer.active" class="btn btn-default dropdown-toggle ng-binding btn-sector" type="button"
                 data-toggle="dropdown"
                 aria-expanded="true">
             Agriculture
             <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu scrollable ">
+        <ul class="dropdown-menu ag scrollable">
             <div ng-class="{active: navTab==='agriculture'}" class="tab-pane" id="sectors-filter">
                 <label class="checkbox">
                     <input type="checkbox" ng-model="AgSector.viewAll" ng-click="toggleViewAllAg();">
@@ -837,7 +834,7 @@
     <div class="left-section countryselect">
         <div ng-click="switchCountry(selection)" class="world countrytext ng-binding">
             {{selection}}
-            <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')">
+            <div class="side-view-close btn btn-lg abs" ng-click="toggleParam('zoom-extent')">
                 <span class="glyphicon glyphicon-chevron-down"></span>
             </div>
 
@@ -875,13 +872,13 @@
         <!--</div>-->
     </div>
 
-    <div class="searchbar">
-        <span class="icon-icon_searchLoop search-icon"></span>
+    <!--<div class="searchbar">-->
+        <!--<span class="icon-icon_searchLoop search-icon"></span>-->
 
-        <div class="side-view-close btn btn-lg sbar" ng-click="toggleParam('zoom-extent')">
-            <span class="glyphicon glyphicon-chevron-down"></span>
-        </div>
-    </div>
+        <!--<div class="side-view-close btn btn-lg sbar" ng-click="toggleSearchBar()">-->
+            <!--<span class="glyphicon glyphicon-chevron-down"></span>-->
+        <!--</div>-->
+    <!--</div>-->
     <!--<div class="light" ui-sref="upload(params)">-->
     <!--<div><i class="icon-30_download upper-icon-upload"></i></div>-->
     <!--<div class="upper-inline-nowrap">Upload Data</div>-->
@@ -891,12 +888,17 @@
     <!--<div><i class="icon-29_export upper-icon-upload"></i></div>-->
     <!--<div class="upper-inline-nowrap">Export</div>-->
     <!--</div>-->
-    <!--<div class="search icon-12_search" ng-click="toggleParam('search-panel')"></div>-->
+    <div class="searchbar">
+        <span class="icon-icon_searchLoop search-icon"></span>
+        <div class="side-view-close btn btn-lg sbar" ng-click="toggleParam('search-panel')">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </div>
+    </div>
 
 </div></div>
 
 <div class="SectorArea">
-    <div class="AllSectors off" ng-class="{true:'on',false:'off'}[ShowAllSectors]">
+    <div class="AllSectors off" ng-class="ShowAllSectors ? 'on' : 'off'">
         <div ng-click="ShowAllSectors=!ShowAllSectors" class="side-view-close btn btn-sm">
             <span ng-show="!ShowAllSectors" class="glyphicon glyphicon-chevron-left"></span>
             <span ng-show="ShowAllSectors" class="glyphicon glyphicon-chevron-right"></span>
@@ -964,34 +966,23 @@
             </div>
         </a>
     </div>
+</div>
 
 </div>
 
-<!-- Search Panel -->
-<!--<div id="SearchPanelWrapper" ng-class="{on: isParam('search-panel')}">-->
-<!--<div class="input-group">-->
-<!--<span class="input-group-addon">ECOS Search</span>-->
-<!--<input type="text" class="form-control" placeholder="Enter search term" ng-model="SearchInput">-->
-<!--</div>-->
-<!--<div id="searchResults">-->
-<!--<div class="searchResult Header" ng-show="projectResults">Project Results-->
-<!--({{projectResults.length}})-->
-<!--</div>-->
-<!--<div ng-repeat="row in projectResults" class="resultItem" ng-click="handleSearchResultClick(row)">-->
-<!--<span ng-show="row.level">(Mapped) </span>-->
-<!--{{row.name}}-->
-<!--</div>-->
+<div ng-controller="SearchECOSCtrl" id="SearchPanelWrapper" ng-class="{on: isParam('search-panel')}" class="ng-scope" style="">
+    <div class="input-group">
+        <span class="input-group-addon">ECOS Search</span>
+        <input type="text" class="form-control ng-pristine ng-valid" placeholder="Enter search term" ng-model="SearchInput">
+    </div>
+    <div id="searchResults">
+        <div class="searchResult Header ng-binding ng-hide" ng-show="projectResults">Project Results ()</div>
+        <!-- ngRepeat: row in projectResults -->
 
-<!--<div class="searchResult Header" ng-show="disasterResults">Disaster Results-->
-<!--({{disasterResults.length}})-->
-<!--</div>-->
-<!--<div ng-repeat="row in disasterResults" class="resultItem" ng-click="handleSearchResultClick(row)">-->
-<!--{{row.name}}-->
-<!--</div>-->
+        <div class="searchResult Header ng-binding ng-hide" ng-show="disasterResults">Disaster Results ()</div>
+        <!-- ngRepeat: row in disasterResults -->
 
-<!--</div>-->
-<!--</div>-->
-
+    </div>
 </div>
 
 <!-- Bottom Right Theme Selector -->
