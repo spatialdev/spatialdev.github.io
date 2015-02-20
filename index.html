@@ -64,7 +64,7 @@
 
     <div class="logo_BG">
         <div class="logo_font">
-            <a href="#/default">
+            <a href="/SpatialViewer/#/map@26.000000,85.000000,6(dark)">
                 <div class="fsp">FSP</div>
                 <div class="maps">MAPS</div>
             </a>
@@ -677,6 +677,45 @@
             </div>
         </ul>
     </div>
+    <!-- Financial services Nigeria -->
+    <div class="dropdown" ng-show="NigeriaOn">
+
+        <button ng-disabled="!CICOLayer_Nigeria.active" class="btn btn-default dropdown-toggle ng-binding" type="button"
+                data-toggle="dropdown"
+                aria-expanded="true">
+            Financial Services
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu scrollable">
+            <div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="CICOSector.viewAll" ng-click="toggleViewAllCICOS()">
+                    {{checkedBool}}
+                </label>
+                <li class="divider"></li>
+
+                <div ng-show="top3">
+                    <label ng-repeat="name in CICOTop3" class="checkbox">
+                        <input type="checkbox" ng-model="name.selected"
+                               ng-click="setCICOSelection(name.type, !name.selected)">
+                        {{name.type}}
+                    </label>
+                    <li class="divider"></li>
+                </div>
+
+                <label ng-show="CICOSector.viewAll" ng-repeat="names in CICOSector" class="checkbox">
+                    <input type="checkbox" ng-model="names.selected"
+                           ng-click="setCICOSelection(names.type, !names.selected)">
+                    {{names.type}} ({{names.count | number}})
+                </label>
+
+                <div ng-show="!CICOSector.viewAll" class="ShowMore" ng-click="toggleViewAllCICOS()">
+                    <a>Show More</a>
+                </div>
+            </div>
+        </ul>
+    </div>
+
 
     <!-- Health -->
     <div ng-show="IndiaOn" class="dropdown">
@@ -795,22 +834,15 @@
 </div>
 <div id="MapUpperRightToolbarWrapper">
 
-    <div class="searchbar">
-        <span class="icon-icon_searchLoop nav_icons"></span>
-
-        <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')">
-            <span class="glyphicon glyphicon-chevron-down"></span>
-        </div>
-
-    </div>
-
-    <div class="left-section countryselect" class="breadcrumbs-container">
-        <div ng-click="switchCountry(selection)" class="world countrytext">
+    <div class="left-section countryselect">
+        <div ng-click="switchCountry(selection)" class="world countrytext ng-binding">
             {{selection}}
+            <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </div>
+
         </div>
 
-        <div class="side-view-close btn btn-lg" ng-click="toggleParam('zoom-extent')"><span
-                class="glyphicon glyphicon-chevron-down"></span></div>
         <!--<div class="stack">-->
         <!--<div class="icon-10_arrow_right" ng-show="levelarc"></div>-->
         <!--<div class="bc arcregion" ng-cloak ng-show="levelarc" ng-click="zoomToGUID(featarc, -1)">-->
@@ -843,6 +875,13 @@
         <!--</div>-->
     </div>
 
+    <div class="searchbar">
+        <span class="icon-icon_searchLoop search-icon"></span>
+
+        <div class="side-view-close btn btn-lg sbar" ng-click="toggleParam('zoom-extent')">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </div>
+    </div>
     <!--<div class="light" ui-sref="upload(params)">-->
     <!--<div><i class="icon-30_download upper-icon-upload"></i></div>-->
     <!--<div class="upper-inline-nowrap">Upload Data</div>-->
@@ -854,8 +893,7 @@
     <!--</div>-->
     <!--<div class="search icon-12_search" ng-click="toggleParam('search-panel')"></div>-->
 
-</div>
-</div>
+</div></div>
 
 <div class="SectorArea">
     <div class="AllSectors off" ng-class="{true:'on',false:'off'}[ShowAllSectors]">
@@ -868,7 +906,7 @@
             <div class="SingleSector">
                 <a style="color:{{Sectorcfg['Financial Service'].color}};"
                    ng-click="setSelectedSector('CICOS');filterCICO();toggleMapLayer('CICOS',CICOLayer)">
-                    <div ng-show="IndiaOn || KenyaOn">
+                    <div ng-show="IndiaOn || KenyaOn || NigeriaOn">
                         <span style="color:{{Sectorcfg['Financial Service'].color}};"
                               class="icon-nearBy nav_icons nearby"></span>
 

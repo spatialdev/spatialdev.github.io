@@ -259,7 +259,7 @@ module.exports = angular.module('SpatialViewer').factory('AgFilterFactory', func
             switch (type) {
                 case 1: //'Point'
                         // unselected
-                    style.color = Ag_Config[feature.properties.type].color;
+                    style.color = 'rgb(209, 110, 35)';
                     style.radius = ScaleDependentPointRadius;
                     // selected
                     selected.color = 'rgba(255,255,0,0.5)';

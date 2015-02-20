@@ -371,12 +371,15 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
     };
     var CICOs = [];
     var CICOs_Kenya = [];
+    var CICOs_Nigeria = [];
     var CICOsLandUse = [];
     var service = {};
     service.selectedCountry = 'India';
     service.CICOsTotal = 0;
     service.CICOsTotal_Kenya = 0;
     service.CICOsTypeTotal_Kenya = 0;
+    service.CICOsTotal_Nigeria = 0;
+    service.CICOsTypeTotal_Nigeria = 0;
 
     service.getCICOsCounts = function () {
         // INDIA
@@ -587,7 +590,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
             switch (type) {
                 case 1: //'Point'
                     // unselected
-                    style.color = CICO_Config[feature.properties.type].color;
+                    style.color = 'rgb(157, 33, 41);';
                     style.radius = ScaleDependentPointRadius;
                     // selected
                     selected.color = 'rgba(255,255,0,0.5)';
@@ -758,7 +761,7 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
             switch (type) {
                 case 1: //'Point'
                         // unselected
-                    style.color = CICO_Config[feature.properties.type].color;
+                    style.color = 'rgb(157, 33, 41)';
                     style.radius = ScaleDependentPointRadius;
                     // selected
                     selected.color = 'rgba(255,255,0,0.5)';

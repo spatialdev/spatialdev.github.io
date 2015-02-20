@@ -24,13 +24,15 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     var typeobj = {};
     var sector='';
 
-    args.forEach(function(val,idx){
-      typeobj[val.type] = {
-        type:val.type,
-        sector:val.sector
-      };
-      sector = val.sector;
-    });
+    if(args) {
+      args.forEach(function (val, idx) {
+        typeobj[val.type] = {
+          type: val.type,
+          sector: val.sector
+        };
+        sector = val.sector;
+      });
+    }
 
     var filter = function(feature, context) {
       if (feature && feature.properties) {
@@ -63,13 +65,15 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     var typeobj = {};
     var sector='';
 
-    args.forEach(function(val,idx){
-      typeobj[val.type] = {
-        type:val.type,
-        sector:val.sector
-      };
-      sector = val.sector;
-    });
+    if(args) {
+      args.forEach(function (val, idx) {
+        typeobj[val.type] = {
+          type: val.type,
+          sector: val.sector
+        };
+        sector = val.sector;
+      });
+    }
 
     var filter = function(feature, context) {
       if (feature && feature.properties) {
@@ -102,13 +106,15 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     var typeobj = {};
     var sector='';
 
-    args.forEach(function(val,idx){
-      typeobj[val.type] = {
-        type:val.type,
-        sector:val.sector
-      };
-      sector = val.sector;
-    });
+    if(args) {
+      args.forEach(function (val, idx) {
+        typeobj[val.type] = {
+          type: val.type,
+          sector: val.sector
+        };
+        sector = val.sector;
+      });
+    }
 
     var filter = function(feature, context) {
       if (feature && feature.properties) {
@@ -141,13 +147,15 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     var typeobj = {};
     var sector='';
 
-    args.forEach(function(val,idx){
-      typeobj[val.type] = {
-        type:val.type,
-        sector:val.sector
-      };
-      sector = val.sector;
-    });
+    if(args) {
+      args.forEach(function (val, idx) {
+        typeobj[val.type] = {
+          type: val.type,
+          sector: val.sector
+        };
+        sector = val.sector;
+      });
+    }
 
     var filter = function(feature, context) {
       if (feature && feature.properties) {
@@ -166,10 +174,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
     var activeLayer = findLayer(sector);
 
-    if(activeLayer){
-      activeLayer.setFilter(filter);
-      activeLayer.redraw();
-    }
+    activeLayer.setFilter(filter);
+    activeLayer.redraw();
 
     console.log("MAP.JS Listener enabled" + args);
   });

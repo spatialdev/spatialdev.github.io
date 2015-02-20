@@ -4,7 +4,7 @@
  */
 
 module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function ($scope, $rootScope, $state, $stateParams, $http, SectorFactory,
-                                                                                     Donuts, $filter, IndiaFactory, KenyaFactory,
+                                                                                     Donuts, $filter, IndiaFactory, KenyaFactory, NigeriaFactory,
                                                                                      CICOFilterFactory, HealthFilterFactory, AgFilterFactory,
                                                                                      LibraryFilterFactory) {
     $scope.details = {};
@@ -46,6 +46,11 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                     $scope.APData = CICOFilterFactory.CICOs_Counts_Kenya;
                     $scope.sectortotal = CICOFilterFactory.CICOsTotal_Kenya;
                     console.log("case: Kenya CICOS");
+                }
+                if($scope.selection == 'Nigeria'){
+                    $scope.APData = NigeriaFactory.CICOs_Counts;
+                    $scope.sectortotal = NigeriaFactory.CICOsTotal;
+                    console.log("case: Nigeria CICOS");
                 }
                 break;
             case 'Health':
@@ -96,6 +101,12 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 $scope.title = "Overview - Kenya";
                 $scope.SectorTypes = ['Financial Service'];
                 console.log("Kenya QuickStats " + $scope.QuickStats);
+                break;
+            case 'Nigeria':
+                $scope.QuickStats = NigeriaFactory.Nigeria.QuickStats;
+                $scope.title = "Overview - Nigeria";
+                $scope.SectorTypes = ['Financial Service'];
+                console.log("Nigeria QuickStats " + $scope.QuickStats);
                 break;
             default:
                 $scope.QuickStats = IndiaFactory.India.QuickStats;

@@ -253,7 +253,7 @@ module.exports = angular.module('SpatialViewer').factory('HealthFilterFactory', 
             switch (type) {
                 case 1: //'Point'
                     // unselected
-                    style.color = Health_Config[feature.properties.type].color;
+                    style.color = 'rgb(127, 157, 106)';
                     style.radius = ScaleDependentPointRadius;
                     // selected
                     selected.color = 'rgba(255,255,0,0.5)';

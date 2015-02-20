@@ -1,11 +1,30 @@
 .left-section {
-    margin-right: 10px;
+    margin-right: 0px;
+}
+
+.searchbar {
+    position: absolute;
+    /* top: 6px; */
+    width: 62px;
+    left: 190px;
+    padding-top: 3px;
+    height: inherit;
+    background-color: #e2e1dd;
+}
+
+.search-icon {
+    font-size: 33px;
+    position: relative;
+    /* margin-top: 6px; */
+    left: 10px;
+    top: 3px;
+    /* height: inherit; */
 }
 
 .countryselect {
-    width: 115px;
     padding: 0px;
     height: 35px;
+    width:190px;
 }
 
 .countrytext {
@@ -41,27 +60,25 @@
 }
 
 #MapUpperRightToolbarWrapper {
-    /*position: absolute;*/
-    /*top: 0;*/
-    /*right: 0;*/
+    /* position: absolute; */
+    width: 245px;
+    /* top: 0; */
+    /* right: 0; */
     float: right;
     z-index: 2002;
     background-color: rgb(237, 27, 46);
 }
 
 #MapUpperRightToolbarWrapper > div {
-    /*position: absolute;*/
-    top: 0px;
-    width: 174px;
+    /* position: absolute; */
+    /* top: 0px; */
     height: 44px;
     z-index: 187;
-    float: right;
-
+    float: left;
 }
 
 #MapUpperRightToolbarWrapper .btn {
-    position: absolute;
-    right: 5px;
+    /*right: 5px;*/
     top: 6px;
     z-index: 190;
     background-color: rgb(237, 27, 46);
@@ -70,6 +87,17 @@
 
 #MapUpperRightToolbarWrapper .btn:hover {
     background-color: rgb(237, 27, 46);
+}
+
+#FilterArea .btn.sbar {
+    padding: 0px;
+    position: inherit;
+    left: 34px;
+    background-color: #e2e1dd;
+}
+
+#MapUpperRightToolbarWrapper .btn.sbar:hover {
+    background-color: #e2e1dd;
 }
 
 #MapUpperRightToolbarWrapper .btn:active {

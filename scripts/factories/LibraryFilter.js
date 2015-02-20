@@ -207,7 +207,7 @@ module.exports = angular.module('SpatialViewer').factory('LibraryFilterFactory',
             switch (type) {
                 case 1: //'Point'
                         // unselected
-                    style.color = Lib_Config[feature.properties.type].color;
+                    style.color = 'rgb(42, 133, 173)';
                     style.radius = ScaleDependentPointRadius;
                     // selected
                     selected.color = 'rgba(255,255,0,0.5)';

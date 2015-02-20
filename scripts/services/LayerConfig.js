@@ -107,7 +107,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
       switch (type) {
         case 1: //'Point'
           // unselected
-          style.color = CICO_Config[feature.properties.type].color;
+          style.color = 'rgb(157, 33, 41)';
           style.radius = ScaleDependentPointRadius;
           // selected
           selected.color = 'rgba(255,255,0,0.5)';
@@ -281,7 +281,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
       switch (type) {
         case 1: //'Point'
                 // unselected
-          style.color = CICO_Config[feature.properties.type].color;
+          style.color = 'rgb(42, 133, 173)';
           style.radius = ScaleDependentPointRadius;
           // selected
           selected.color = 'rgba(255,255,0,0.5)';
@@ -457,7 +457,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
       switch (type) {
         case 1: //'Point'
           // unselected
-          style.color = CICO_Config[feature.properties.type].color;
+          style.color = 'rgb(127, 157, 106)';
           style.radius = ScaleDependentPointRadius;
           // selected
           selected.color = 'rgba(255,255,0,0.5)';
@@ -632,7 +632,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
       switch (type) {
         case 1: //'Point'
                 // unselected
-          style.color = CICO_Config[feature.properties.type].color;
+          style.color = 'rgb(209, 110, 35)';
           style.radius = ScaleDependentPointRadius;
           // selected
           selected.color = 'rgba(255,255,0,0.5)';
