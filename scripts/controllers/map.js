@@ -32,28 +32,27 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         };
         sector = val.sector;
       });
-    }
 
-    var filter = function(feature, context) {
-      if (feature && feature.properties) {
-        var featureProperty = feature.properties.type;
-        // check if selections are valid types
-        if (typeobj[featureProperty]) {
-          return true;  // show the feature
+      var filter = function (feature, context) {
+        if (feature && feature.properties) {
+          var featureProperty = feature.properties.type;
+          // check if selections are valid types
+          if (typeobj[featureProperty]) {
+            return true;  // show the feature
+          }
+          return false; //hide the feature
+        } else {
+          console.error('We are trying to filter on a point with no feature or feature.properties.');
         }
-        return false; //hide the feature
-      } else {
-        console.error('We are trying to filter on a point with no feature or feature.properties.');
+        return false; // error state, there should be a feature with properties
+      };
+
+      var activeLayer = findLayer(sector);
+
+      if (activeLayer) {
+        activeLayer.setFilter(filter);
+        activeLayer.redraw();
       }
-      return false; // error state, there should be a feature with properties
-    };
-
-
-    var activeLayer = findLayer(sector);
-
-    if(activeLayer){
-      activeLayer.setFilter(filter);
-      activeLayer.redraw();
     }
 
     console.log("MAP.JS Listener enabled" + args);
@@ -73,28 +72,28 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         };
         sector = val.sector;
       });
-    }
 
-    var filter = function(feature, context) {
-      if (feature && feature.properties) {
-        var featureProperty = feature.properties.type;
-        // check if selections are valid types
-        if (typeobj[featureProperty]) {
-          return true;  // show the feature
+      var filter = function (feature, context) {
+        if (feature && feature.properties) {
+          var featureProperty = feature.properties.type;
+          // check if selections are valid types
+          if (typeobj[featureProperty]) {
+            return true;  // show the feature
+          }
+          return false; //hide the feature
+        } else {
+          console.error('We are trying to filter on a point with no feature or feature.properties.');
         }
-        return false; //hide the feature
-      } else {
-        console.error('We are trying to filter on a point with no feature or feature.properties.');
+        return false; // error state, there should be a feature with properties
+      };
+
+
+      var activeLayer = findLayer(sector);
+
+      if (activeLayer) {
+        activeLayer.setFilter(filter);
+        activeLayer.redraw();
       }
-      return false; // error state, there should be a feature with properties
-    };
-
-
-    var activeLayer = findLayer(sector);
-
-    if(activeLayer){
-      activeLayer.setFilter(filter);
-      activeLayer.redraw();
     }
 
     console.log("MAP.JS Listener enabled" + args);
@@ -114,28 +113,28 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         };
         sector = val.sector;
       });
-    }
 
-    var filter = function(feature, context) {
-      if (feature && feature.properties) {
-        var featureProperty = feature.properties.type;
-        // check if selections are valid types
-        if (typeobj[featureProperty]) {
-          return true;  // show the feature
+      var filter = function (feature, context) {
+        if (feature && feature.properties) {
+          var featureProperty = feature.properties.type;
+          // check if selections are valid types
+          if (typeobj[featureProperty]) {
+            return true;  // show the feature
+          }
+          return false; //hide the feature
+        } else {
+          console.error('We are trying to filter on a point with no feature or feature.properties.');
         }
-        return false; //hide the feature
-      } else {
-        console.error('We are trying to filter on a point with no feature or feature.properties.');
+        return false; // error state, there should be a feature with properties
+      };
+
+
+      var activeLayer = findLayer(sector);
+
+      if (activeLayer) {
+        activeLayer.setFilter(filter);
+        activeLayer.redraw();
       }
-      return false; // error state, there should be a feature with properties
-    };
-
-
-    var activeLayer = findLayer(sector);
-
-    if(activeLayer){
-      activeLayer.setFilter(filter);
-      activeLayer.redraw();
     }
 
     console.log("MAP.JS Listener enabled" + args);
@@ -155,27 +154,29 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         };
         sector = val.sector;
       });
-    }
 
-    var filter = function(feature, context) {
-      if (feature && feature.properties) {
-        var featureProperty = feature.properties.type;
-        // check if selections are valid types
-        if (typeobj[featureProperty]) {
-          return true;  // show the feature
+
+      var filter = function (feature, context) {
+        if (feature && feature.properties) {
+          var featureProperty = feature.properties.type;
+          // check if selections are valid types
+          if (typeobj[featureProperty]) {
+            return true;  // show the feature
+          }
+          return false; //hide the feature
+        } else {
+          console.error('We are trying to filter on a point with no feature or feature.properties.');
         }
-        return false; //hide the feature
-      } else {
-        console.error('We are trying to filter on a point with no feature or feature.properties.');
+        return false; // error state, there should be a feature with properties
+      };
+
+      var activeLayer = findLayer(sector);
+
+      if (activeLayer) {
+        activeLayer.setFilter(filter);
+        activeLayer.redraw();
       }
-      return false; // error state, there should be a feature with properties
-    };
-
-
-    var activeLayer = findLayer(sector);
-
-    activeLayer.setFilter(filter);
-    activeLayer.redraw();
+    }
 
     console.log("MAP.JS Listener enabled" + args);
   });
@@ -216,14 +217,13 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     var cname = selected;
     console.log(cname);
 
-    if(cname !== null) {
+    if(cname !== null && cname !== 'Select A Region') {
       map.setView([eval(cname + "Factory")[cname].MapCenter.Latitude,
             eval(cname + "Factory")[cname].MapCenter.Longitude],
           eval(cname + "Factory")[cname].MapZoom);
     }
   };
 
-  // watch for counter, when increased run http.get again and update variable
   $scope.$watch(function(){
     return SectorFactory.selectedCountry;
   }, function() {
@@ -247,6 +247,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     }
   });
 
+  // watch for counter, when increased run http.get again and update variable
   $scope.toggleState = function (stateName) {
     var state = $state.current.name !== stateName ? stateName : 'main';
     $state.go(state, $stateParams);
@@ -458,11 +459,12 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
         map.on('click', function (e) {
           //Take the click event and pass it to the group layers.
-          layer.onClick(e, function (evt) {
-            if (evt && evt.feature) {
-              console.log(['Clicked PBF Feature', evt.feature.properties]);
-            }
-          });
+          //layer.onClick(e, function (evt) {
+          //  if (evt && evt.feature) {
+          //    console.log(['Clicked PBF Feature', evt.feature.properties]);
+          //  }
+          //});
+          console.log("Map Clicked");
         });
 
         map.on('layerremove', function (removed) {
@@ -524,8 +526,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
       layer.overlayName = overlayName;
       overlays[i] = layer;
-
-
 
     }
 

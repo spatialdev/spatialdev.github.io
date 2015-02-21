@@ -8,6 +8,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                                                                                      CICOFilterFactory, HealthFilterFactory, AgFilterFactory,
                                                                                      LibraryFilterFactory) {
     $scope.details = {};
+    $scope.library = {};
 
     $scope.toolTipDiv = null;
 
@@ -83,6 +84,22 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 //console.log("case: default");
         }
     };
+
+    $rootScope.$on('LibraryDetails', function(event,args){
+        if(args) {
+            console.log('Library Details: ' + args);
+            $scope.library = args.features;
+            $scope.librarydetails = [];
+
+            $scope.library.forEach(function(val) {
+                $scope.librarydetails.push((val));
+            });
+
+            console.log($scope.librarydetails);
+        }
+    });
+
+
 
     //Watch for change in country
     $scope.$watch(function () {

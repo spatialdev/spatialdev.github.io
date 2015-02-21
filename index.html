@@ -832,12 +832,11 @@
 <div id="MapUpperRightToolbarWrapper">
 
     <div class="left-section countryselect">
-        <div ng-click="switchCountry(selection)" class="world countrytext ng-binding">
+        <div class="world countrytext ng-binding">
             {{selection}}
-            <div class="side-view-close btn btn-lg abs" ng-click="toggleParam('zoom-extent')">
+            <div class="side-view-close btn btn-lg abs" ng-click="toggleParam('zoom-extent');switchCountry(selection)">
                 <span class="glyphicon glyphicon-chevron-down"></span>
             </div>
-
         </div>
 
         <!--<div class="stack">-->
@@ -994,14 +993,6 @@
 
 <div id="DetailsButtonWrapper" class="btn-group">
 
-    <!--<button type="button" class="btn btn-default"-->
-    <!--ng-mouseenter="isLayersActive = isNotParam('layers-panel')"-->
-    <!--ng-mouseleave="isLayersActive=false"-->
-    <!--ng-click="toggleParam('layers-panel')"-->
-    <!--ng-class="{on: isParam('layers-panel')}">-->
-    <!--<i class="icon-3_map_layers"></i>-->
-    <!--</button>-->
-
     <button id="DetailsNub" type="button" class="no-padding btn right-icon-gap"
             ng-click="toggleParam('details-panel')"
             ng-mouseenter="isOverviewActive = isNotParam('details-panel')"
@@ -1045,10 +1036,12 @@
     </div>
 
     <ul class="nav nav-tabs">
+        <li><a class="a-nav-tab" ng-click="navTab='PointDetails'" data-toggle="tab">Feature Details</a></li>
         <li class="active first-nav-tab"><a class="a-nav-tab" ng-click="navTab='countryoverview'"
                                             data-toggle="tab">Country Overview</a></li>
         <li><a class="a-nav-tab" ng-click="navTab='apoints'" data-toggle="tab">Access Points</a></li>
-        <li><a class="a-nav-tab" ng-click="navTab='alorem'" data-toggle="tab">Access Lorem</a></li>
+        <!--<li><a class="a-nav-tab" ng-click="navTab='alorem'" data-toggle="tab">Access Lorem</a></li>-->
+
     </ul>
 
     <!-- Tab panes -->
@@ -1072,6 +1065,16 @@
 </ul>
 
 <div class="tab-content">
+<div ng-class="{active: navTab==='PointDetails'}" class="tab-pane">
+    <div class="CountryOverview">
+        Name: {{librarydetails[0].properties.name}} </br>
+        Type: {{librarydetails[0].properties.type}}  </br>
+        Lat:{{librarydetails[0].properties.lat}}  </br>
+        Long:{{librarydetails[0].properties.lng}}  </br>
+        Business Hours: {{librarydetails[0].properties.business_hours}}
+    </div>
+</div>
+
 <div ng-class="{active: navTab==='countryoverview'}" class="tab-pane">
     <div class="CountryOverview">
         <div class="OverviewTitle">Total Population (2010):</div>
@@ -1371,6 +1374,7 @@
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="lib/togeojson.js"></script>
+<script src="lib/turf.min.js"></script>
 <script src="lib/mapbox.standalone.uncompressed.js"></script>
 <script src="lib/jquery.layout-latest.min.js"></script>
 <script src="lib/ui-bootstrap-no-dropdown-tpls-0.11.0.js"></script>
