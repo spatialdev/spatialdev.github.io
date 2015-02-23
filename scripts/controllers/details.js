@@ -8,9 +8,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                                                                                      CICOFilterFactory, HealthFilterFactory, AgFilterFactory,
                                                                                      LibraryFilterFactory) {
     $scope.details = {};
-    $scope.library = {};
     $scope.activeidx = 0;
-
+    $scope.library = [];
+    $scope.librarydetails = [];
 
     $scope.toolTipDiv = null;
 
@@ -89,21 +89,23 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
     // Listen for Library Details to populate
     $rootScope.$on('LibraryDetails', function(event,args){
-        if(args) {
+        if(Object.keys(args).length !== 0) {
             console.log('Library Details: ' + args);
             $scope.library = args.features;
-            $scope.librarydetails = [];
             $scope.activeidx = 0;
+            $scope.librarydetails = [];
+            $scope.libraryimages = [];
 
-            //$scope.openParam('details-panel');
-
-            $scope.library.forEach(function(val) {
+            $scope.library.forEach(function (val) {
                 $scope.librarydetails.push((val));
             });
 
-            if($scope.librarydetails) $scope.currentDetailitem = $scope.librarydetails[0].properties;
+            if($scope.librarydetails.length>0) {
+                $scope.currentDetailitem = $scope.librarydetails[0].properties;
+                $scope.libraryimages = ($scope.librarydetails[0].properties.photos.split("|"));
+            }
 
-            console.log("Number of points in radius: " + $scope.librarydetails.length + $scope.librarydetails);
+            console.log("Number of points in radius: " + $scope.librarydetails.length + $scope.libraryimages);
         }
     });
 
@@ -832,18 +834,31 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         //if (++$scope.activeThemeItemIdx >= len) $scope.activeThemeItemIdx = 0;
         //var item = $scope.activeThemeItemsList[$scope.activeThemeItemIdx];
 
+        // if active item is length of details array, reset to zero, otherwise add 1
         $scope.activeidx = ($scope.activeidx >= len-1) ? 0 : ++$scope.activeidx;
 
         $scope.currentDetailitem = $scope.librarydetails[$scope.activeidx].properties;
+        $scope.libraryimages = ($scope.librarydetails[$scope.activeidx].properties.photos.split("|"));
+
 
         $scope.showDetails($scope.currentDetailitem);
     };
 
     $scope.prevThemeItem = function () {
-        //var len = $scope.activeThemeItemsList.length;
+        var len = $scope.librarydetails.length;
+
+        if ($scope.activeidx > 0) {
+            $scope.activeidx--;
+        } else {
+            $scope.activeidx = len-1;
+        }
+
+        $scope.currentDetailitem = $scope.librarydetails[$scope.activeidx].properties;
+        $scope.libraryimages = ($scope.librarydetails[$scope.activeidx].properties.photos.split("|"));
+
         //if (--$scope.activeThemeItemIdx < 0) $scope.activeThemeItemIdx = len - 1;
         //var item = $scope.activeThemeItemsList[$scope.activeThemeItemIdx];
-        //$scope.showDetails(item);
+        $scope.showDetails($scope.currentDetailitem);
     };
 
     $scope.showList = function () {

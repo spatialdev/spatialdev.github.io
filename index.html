@@ -1059,19 +1059,26 @@
 </ul>
 
 <div class="tab-content">
-<div ng-class="{active: navTab==='PointDetails'}" class="tab-pane" style="height: 450px;
+<div ng-class="{active: navTab==='PointDetails'}" class="tab-pane" style="height:420px;
 overflow-x: hidden;
 overflow-y: auto;">
+
+    <div ng-show="librarydetails.length>0">
+    <div id="pageTally" class="ng-binding">page {{activeidx+1}} of {{librarydetails.length}}</div>
+
     <div class="DetailsOverview">
         Name: {{currentDetailitem.name}} </br>
         Type: {{currentDetailitem.type}}  </br>
         Lat:{{currentDetailitem.lat}}  </br>
         Long:{{currentDetailitem.lng}}  </br>
         Business Hours: {{currentDetailitem.business_hours}}
+
+
+        <div ng-repeat="x in libraryimages" class="img">
+            <img src="http://spatialserver.spatialdev.com/fsp-ebs/2014/india/library/{{x}}"/>
+        </div>
     </div>
-
-    <div id="cicoTally" class="ng-binding">page {{activeidx+1}} of {{librarydetails.length}}</div>
-
+    </div>
 
 </div>
 

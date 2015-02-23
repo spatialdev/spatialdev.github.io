@@ -606,7 +606,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         //}
 
         console.log("TOP 3: " + $scope.LibraryTop3);
-        console.log("length: " + LibrarySelectionsLength + " " + $scope.LibrarySelections);
+        //console.log("length: " + LibrarySelectionsLength + " " + $scope.LibrarySelections);
     };
 
     // BroadCast change in AgSelections

@@ -6,647 +6,581 @@
 /**
  * All of the layer names need to be lowercase.
  */
-module.exports = angular.module('SpatialViewer').service('LayerConfig', function ($stateParams,$rootScope) {
-
-  /**
-   * The layers specified in this main LayerConfig module are integral to SpatialViewer
-   * and should not be changed by the user.
-   */
-
-  /**
-   * This is an object that is a hash of the LatLngs from clicks to the resulting buffer.
-   * This is so that clickToBuffer does not have to do the expensive Turf operation repeatedly,
-   * especially since several MVTSource layers will have the same event and independently be
-   * processing this event.
-   *
-   * @type {{}}
-   * @private
-   */
-  var latLngBufferHash = {};
-
-  var LibraryDetails = {};
-
-  // BroadCast change in AgSelections
-  $rootScope.$watch(function(){
-    return LibraryDetails;
-  }, function (){
-    $rootScope.$broadcast('LibraryDetails',LibraryDetails);
-  });
-
-  var PixelsToMetersByZoom = [
-    156412,
-    78206,
-    39103,
-    19551,
-    9776,
-    4888,
-    2444,
-    1222,
-    610.984,
-    305.492,
-    152.746,
-    76.373,
-    38.187,
-    19.093,
-    9.547,
-    4.773,
-    2.387,
-    1.193,
-    .596,
-    .298
-  ];
-
-  var clickToBuffer = function(e) {
-    // handle map click events
-    //Depending on what mode we're in and what we're showing...
-    //This is a test hard-coded for confetti mode.
-    var latlng = e.latlng;
-    var lat = e.latlng.lat;
-    var lng = e.latlng.lng;
-    var latLngStr = lat + ',' + lng;
-
-    var buffer = latLngBufferHash[latLngStr];
-    if (buffer) {
-      return buffer;
-    }
-
-    var meters_per_pixel = PixelsToMetersByZoom[$stateParams.zoom];
-    var tolerance_pixels = 8;  //The number of pixels around the click point to search in
-    var tolerance_kilometers = (tolerance_pixels * meters_per_pixel)/1000;
-
-    //Convert pixel click buffer to meters.
-    var bufferObj = turf.buffer(turf.point(lng, lat), tolerance_kilometers, 'kilometers');
-    buffer = JSON.stringify(bufferObj);
-
-    latLngBufferHash[latLngStr] = buffer;
-
-    return buffer;
-  };
-
-  //GADM country extents, level 0
-  this.countryextents = {
-    type: 'geojson',
-    url: 'data/vw_gadm_raw_geom.geojson'
-  };
-
-  //ARC Region extents
-  this.arcregionextents = {
-    type: 'geojson',
-    url: 'data/arc_region_extents.geojson'
-  };
-
-  this.library = {
-    url: "http://spatialserver.spatialdev.com/services/postgis/library_2014/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type,id",
-    debug: false,
-    type: 'pbf',
-    name: 'Library',
-    clickableLayers: null,
-
-    // we want confetti to be on top of other layers, such as the contextual layers
-    zIndex: 1000,
-
-    getIDForLayerFeature: function (feature) {
-      return feature.properties.id;
-    },
+module.exports = angular.module('SpatialViewer').service('LayerConfig', function ($stateParams, $rootScope) {
 
     /**
-     * The filter function gets called when iterating though each vector tile feature (vtf). You have access
-     * to every property associated with a given feature (the feature, and the layer). You can also filter
-     * based of the context (each tile that the feature is drawn onto).
-     *
-     * Returning false skips over the feature and it is not drawn.
-     *
-     * @param feature
-     * @returns {boolean}
+     * The layers specified in this main LayerConfig module are integral to SpatialViewer
+     * and should not be changed by the user.
      */
-    filter: function (feature, context) {
-      //return feature.properties.type != 'Mobile Money Agent';
-      return true;
-    },
+    
+    //GADM country extents, level 0
+    this.countryextents = {
+        type: 'geojson',
+        url: 'data/vw_gadm_raw_geom.geojson'
+    };
+
+    //ARC Region extents
+    this.arcregionextents = {
+        type: 'geojson',
+        url: 'data/arc_region_extents.geojson'
+    };
+
+    this.library = {
+        url: "http://spatialserver.spatialdev.com/services/postgis/library_2014/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type,id",
+        debug: false,
+        type: 'pbf',
+        name: 'Library',
+        clickableLayers: null,
+
+        // we want confetti to be on top of other layers, such as the contextual layers
+        zIndex: 1000,
+
+        getIDForLayerFeature: function (feature) {
+            return feature.properties.id;
+        },
+
+        /**
+         * The filter function gets called when iterating though each vector tile feature (vtf). You have access
+         * to every property associated with a given feature (the feature, and the layer). You can also filter
+         * based of the context (each tile that the feature is drawn onto).
+         *
+         * Returning false skips over the feature and it is not drawn.
+         *
+         * @param feature
+         * @returns {boolean}
+         */
+        filter: function (feature, context) {
+            //return feature.properties.type != 'Mobile Money Agent';
+            return true;
+        },
+
+        /**
+         * When we want to link events between layers, like clicking on a label and a
+         * corresponding polygon freature, this will return the corresponding mapping
+         * between layers. This provides knowledge of which other feature a given feature
+         * is linked to.
+         *
+         * @param layerName  the layer we want to know the linked layer from
+         * @returns {string} returns corresponding linked layer
+         */
+        layerLink: function (layerName) {
+            if (layerName.indexOf('_label') > -1) {
+                return layerName.replace('_label', '');
+            }
+            return layerName + '_label';
+        },
+
+        /**
+         * Specify which features should have a certain z index (integer).  Lower numbers will draw on 'the bottom'.
+         *
+         * @param feature - the PBFFeature that contains properties
+         */
+        layerOrdering: function (feature) {
+            //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
+            //if (feature && feature.properties) {
+            //  feature.properties.zIndex = _FSP.Config.LIBRARY_LAYERS[feature.properties.type].zIndex || 5;
+            //}
+        },
+
+        style: function (feature) {
+            var style = {};
+            var selected = style.selected = {};
+            var pointRadius = 1;
+
+            function ScaleDependentPointRadius(zoom) {
+                //Set point radius based on zoom
+                var pointRadius = 1;
+                if (zoom >= 0 && zoom <= 7) {
+                    pointRadius = 1;
+                }
+                else if (zoom > 7 && zoom <= 10) {
+                    pointRadius = 3;
+                }
+                else if (zoom > 10) {
+                    pointRadius = 4;
+                }
+
+                return pointRadius;
+            }
+
+            var type = feature.type;
+            switch (type) {
+                case 1: //'Point'
+                    // unselected
+                    style.color = 'rgb(42, 133, 173)';
+                    style.radius = ScaleDependentPointRadius;
+                    // selected
+                    selected.color = 'rgba(255,255,0,0.5)';
+                    selected.radius = 5;
+                    break;
+                case 2: //'LineString'
+                    // unselected
+                    style.color = 'rgba(161,217,155,0.8)';
+                    style.size = 3;
+                    // selected
+                    selected.color = 'rgba(255,25,0,0.5)';
+                    selected.size = 3;
+                    break;
+                case 3: //'Polygon'
+                    // unselected
+                    style.color = 'rgba(149,139,255,0.4)';
+                    style.outline = {
+                        color: 'rgb(20,20,20)',
+                        size: 2
+                    };
+                    // selected
+                    selected.color = 'rgba(255,25,0,0.3)';
+                    selected.outline = {
+                        color: '#d9534f',
+                        size: 3
+                    };
+            }
+
+            return style;
+        },
+
+        onClick: function (evt) {
+
+            //If nearby tool (or any tool) is active, then abort.
+            //  if(_FSP.ToolMaster.activeTool.active == true) return;
+
+            //var buffer = clickToBuffer(evt);
+            //
+            ////If all are unchecked, then exit out of here
+            ////if(Object.keys(_FSP.LibraryListBuilder.GetFilterObject()).length == 0) return;
+            //
+            ////We have the buffer as geojson.  Send it to the point table to intersect
+            //var tablePostArgs = {
+            //    returnfields: 'lat,lng,name,type,id,photos,business_hours,staff_count,internet,public_computer_count,computer_fee',
+            //    format: 'geojson',
+            //    returnGeometry: 'yes',
+            //    intersects: buffer,
+            //    limit: 200 //add a limit of 200 so we don't get carried away
+            //};
+            //
+            //if(LibraryWhereCaluse != ''){
+            //    tablePostArgs.where = LibraryWhereCaluse
+            //}
+            //
+            //var pointUrl = "http://spatialserver.spatialdev.com/services/tables/library_2014/query";
+            //
+            //$.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+            //    //GeoJSON result of points
+            //    if (!points || points.error) {
+            //        console.error('Unable to fetch feature: ' + points.error);
+            //        return;
+            //    }
+            //
+            //    LibraryDetails = points;
+            //
+            //});
+
+        }
+
+    };
+
+
+    var configLayers = [
+        require('../../config/layers/basemaps.js'),
+        //require('../../config/layers/csv.js'),
+        //require('../../config/layers/geojson.js'),
+        //require('../../config/layers/kml.js'),
+        //require('../../config/layers/other.js'),
+        require('../../config/layers/pbf.js')
+        //require('../../config/layers/wms.js'),
+        //require('../../config/layers/xyz.js')
+    ];
+
+    for (var i = 0, len = configLayers.length; i < len; i++) {
+        var cfg = configLayers[i];
+        for (var key in cfg) {
+            this[key] = cfg[key];
+            //console.log(this[key]);
+        }
+    }
 
     /**
-     * When we want to link events between layers, like clicking on a label and a
-     * corresponding polygon freature, this will return the corresponding mapping
-     * between layers. This provides knowledge of which other feature a given feature
-     * is linked to.
+     * For layers, we try and get an alias for everything, so if it's a URL that
+     * does not match, we just want to return itself so we can fetch that given url.
      *
-     * @param layerName  the layer we want to know the linked layer from
-     * @returns {string} returns corresponding linked layer
+     * @param name
+     * @returns {*}
      */
-    layerLink: function (layerName) {
-      if (layerName.indexOf('_label') > -1) {
-        return layerName.replace('_label', '');
-      }
-      return layerName + '_label';
-    },
-
-    /**
-     * Specify which features should have a certain z index (integer).  Lower numbers will draw on 'the bottom'.
-     *
-     * @param feature - the PBFFeature that contains properties
-     */
-    layerOrdering: function (feature) {
-      //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
-      //if (feature && feature.properties) {
-      //  feature.properties.zIndex = _FSP.Config.LIBRARY_LAYERS[feature.properties.type].zIndex || 5;
-      //}
-    },
-
-    style:function(feature) {
-      var style = {};
-      var selected = style.selected = {};
-      var pointRadius = 1;
-
-      function ScaleDependentPointRadius(zoom){
-        //Set point radius based on zoom
-        var pointRadius = 1;
-        if(zoom >= 0 && zoom <= 7){
-          pointRadius = 1;
+    this.find = function (name) {
+        var val = this[name] || this[name.toLowerCase()];
+        if (typeof val !== 'undefined' && val !== null) {
+            return val;
         }
-        else if(zoom > 7 && zoom <= 10){
-          pointRadius = 3;
+        if (name.slice(0, 4).toLowerCase() === 'http') {
+            return name;
         }
-        else if(zoom > 10){
-          pointRadius = 4;
+        console.error('COULD NOT FIND ALIAS: ' + name);
+        return null;
+    };
+
+    var CICO_Config = {
+        'Offsite ATMs': {
+            color: '#a4c78c',
+            infoLabel: 'Offsite ATM',
+            providers: null,
+            zIndex: 6
+        },
+        'Bank Branches': {
+            color: '#977C00',
+            infoLabel: 'Bank Branch',
+            providers: null,
+            zIndex: 5
+        },
+        'MFIs': {
+            color: '#977c00',
+            infoLabel: 'MFI',
+            providers: null,
+            zIndex: 7
+        },
+        'SACCOs': {
+            color: '#cf8a57',
+            infoLabel: 'SACCO',
+            providers: null,
+            zIndex: 10
+        },
+        'Mobile Money Agent': {
+            color: '#8CB7C7',
+            infoLabel: 'Mobile Money Agent',
+            providers: null,
+            zIndex: -1
+        },
+        'MDIs': {
+            color: '#825D99',
+            infoLabel: 'MDI',
+            providers: null,
+            zIndex: 6
+        },
+        'Credit Institution': {
+            color: '#6CA76B',
+            infoLabel: 'Credit Institution',
+            providers: null,
+            zIndex: 5
+        },
+        'MFBs': {
+            color: '#825D99',
+            infoLabel: 'MFB',
+            providers: null,
+            zIndex: 7
+        },
+        'Motor Parks': {
+            color: '#bd85b3',
+            infoLabel: 'Motor Parks',
+            providers: null,
+            zIndex: 7
+        },
+        'Mobile Network Operator Outlets': {
+            color: '#a2a2a2',
+            infoLabel: 'Mobile Network Operator Outlets',
+            providers: null,
+            zIndex: 0
+        },
+        'Post Offices': {
+            color: '#FFFF00',
+            infoLabel: 'Post Offices',
+            providers: null,
+            zIndex: 4
+        },
+        'Post Office': {
+            color: '#80ad7b',
+            infoLabel: 'Post Offices',
+            providers: null,
+            zIndex: 6
+        },
+        'Bus Stand': {
+            color: '#80ad7b',
+            infoLabel: 'Bus Stands',
+            providers: null,
+            zIndex: 6
+        },
+        'Bus Stands': {
+            color: '#80ad7b',
+            infoLabel: 'Bus Stands',
+            providers: null,
+            zIndex: 6
+        },
+
+        //Kenya
+        'Insurance Providers': {
+            color: '#3086AB',
+            infoLabel: 'Insurance providers',
+            providers: null,
+            zIndex: 6
+        },
+        'Money Transfer Service': {
+            color: '#977C00',
+            infoLabel: 'Money Transfer Service',
+            providers: null,
+            zIndex: 6
+        },
+        'Dev Finance': {
+            color: '#9B242D',
+            infoLabel: 'Dev Finance',
+            providers: null,
+            zIndex: 6
+        },
+        'Forex Bureaus': {
+            color: '#cf8a57',
+            infoLabel: 'Forex Bureaus',
+            providers: null,
+            zIndex: 6
+        },
+        'Cap Markets': {
+            color: '#825D99',
+            infoLabel: 'Cap Markets',
+            providers: null,
+            zIndex: 6
+        },
+        'Pension Providers': {
+            color: '#a2a2a2',
+            infoLabel: 'Pension providers',
+            providers: null,
+            zIndex: 6
+        },
+        'Purchase Lease Factoring': {
+            color: '#80ad7b',
+            infoLabel: 'Purchase Lease Factoring',
+            providers: null,
+            zIndex: 6
+        },
+        'Bank Agent': {
+            color: '#80ad7b',
+            infoLabel: 'Bank Agent',
+            providers: null,
+            zIndex: 6
+        },
+        'Bank and Mortgage': {
+            color: '#80ad7b',
+            infoLabel: 'Banks and Mortgage',
+            providers: null,
+            zIndex: 6
+        },
+        'Commercial Bank': {
+            color: '#9b242d',
+            infoLabel: 'Commercial Bank',
+            providers: null,
+            zIndex: 3
+        },
+
+        'PostBank': {
+            color: '#bd85b3',
+            infoLabel: 'Post Bank',
+            providers: null,
+            zIndex: 6
+        },
+
+        //Nigeria New Post Offices
+        'NIPOST Post Office': {
+            color: '#80ad7b',
+            infoLabel: 'NIPOST Post Offices',
+            providers: null,
+            zIndex: 6
+        },
+        'NIPOST Post Shop': {
+            color: '#80ad7b',
+            infoLabel: 'NIPOST Post Shops',
+            providers: null,
+            zIndex: 6
+        },
+        'NIPOST Postal Agency': {
+            color: '#80ad7b',
+            infoLabel: 'NIPOST Postal Agencies',
+            providers: null,
+            zIndex: 6
+        },
+
+        //India
+        'Postal Outlets': {
+            color: '#ce6b29',
+            infoLabel: 'Postal Outlets',
+            providers: null,
+            zIndex: 3
+        },
+        'Commercial Banks': {
+            color: '#3086ab',
+            infoLabel: 'Commercial Banks',
+            providers: null,
+            zIndex: 2
+        },
+        'Bank Customer Service Points': {
+            color: '#9b242d',
+            infoLabel: 'Bank Customer Service Points',
+            providers: null,
+            zIndex: 4
+        },
+        'District': {
+            color: '#9b242d',
+            infoLabel: 'District',
+            providers: null,
+            zIndex: 6
+        },
+        'Private Library': {
+            color: '#3086ab',
+            infoLabel: 'Private Library',
+            providers: null,
+            zIndex: 5
+        },
+        'Public Library': {
+            color: '#977c00',
+            infoLabel: 'Public Library',
+            providers: null,
+            zIndex: 7
+        },
+        'Village': {
+            color: '#a4c78c',
+            infoLabel: 'Village',
+            providers: null,
+            zIndex: 4
+        },
+        'Additional Primary Health Centres (APHC)': {
+            color: '#9b242d',
+            infoLabel: 'Additional Primary Health Centres (APHC)',
+            providers: null,
+            zIndex: 6
+        },
+        'ANM or District Training Centres': {
+            color: '#3086ab',
+            infoLabel: 'ANM or District Training Centres',
+            providers: null,
+            zIndex: 5
+        },
+        'Approved Nursing Training Centres (Private Sector)': {
+            color: '#977c00',
+            infoLabel: 'Approved Nursing Training Centres (Private Sector)',
+            providers: null,
+            zIndex: 7
+        },
+        'Community Health Centre (CHC)/First Referral Units': {
+            color: '#d5cb98',
+            infoLabel: 'Community Health Centre (CHC)/First Referral Units',
+            providers: null,
+            zIndex: 4
+        },
+        'District Hospitals': {
+            color: '#ce6b29',
+            infoLabel: 'District Hospitals',
+            providers: null,
+            zIndex: 5
+        },
+        'Medical Colleges and Hospitals': {
+            color: '#59452a',
+            infoLabel: 'Medical Colleges and Hospitals',
+            providers: null,
+            zIndex: 7
+        },
+        'Primary Health Centre (PHC)': {
+            color: '#8cb7c7',
+            infoLabel: 'Primary Health Centre (PHC)',
+            providers: null,
+            zIndex: 4
+        },
+        'Private hospitals and clinics': {
+            color: '#d098d5',
+            infoLabel: 'Private hospitals and clinics',
+            providers: null,
+            zIndex: 5
+        },
+        'Sub Divisional District Hospitals': {
+            color: '#a4c78c',
+            infoLabel: 'Sub Divisional District Hospitals',
+            providers: null,
+            zIndex: 7
+        },
+        'Sub Health Centres': {
+            color: '#d59898',
+            infoLabel: 'Sub Health Centres',
+            providers: null,
+            zIndex: 7
+        },
+        'Nursing Schools': {
+            color: '#567d54',
+            infoLabel: 'Nursing Schools',
+            providers: null,
+            zIndex: 4
+        },
+        'Dairy Processors': {
+            color: '#9b242d',
+            infoLabel: 'Dairy Processors',
+            providers: null,
+            zIndex: 6
+        },
+        'Day old chick hatcheries': {
+            color: '#3086ab',
+            infoLabel: 'Day old chick hatcheries',
+            providers: null,
+            zIndex: 5
+        },
+        'Private sector Agricultural service providers': {
+            color: '#977c00',
+            infoLabel: 'Private sector Agricultural service providers',
+            providers: null,
+            zIndex: 7
+        },
+        'Government Vets': {
+            color: '#d5cb98',
+            infoLabel: 'Government Vets',
+            providers: null,
+            zIndex: 4
+        },
+        'Market Locations': {
+            color: '#ce6b29',
+            infoLabel: 'Market Locations',
+            providers: null,
+            zIndex: 5
+        },
+        'Agro-dealers': {
+            color: '#59452a',
+            infoLabel: 'Agro-dealers',
+            providers: null,
+            zIndex: 7
+        },
+        'Warehouse/Storage/Aggregation Centres': {
+            color: '#8cb7c7',
+            infoLabel: 'Warehouse/Storage/Aggregation Centres',
+            providers: null,
+            zIndex: 4
+        },
+        'Dairy chilling plants': {
+            color: '#d098d5',
+            infoLabel: 'Dairy chilling plants',
+            providers: null,
+            zIndex: 7
+        },
+        'Processors/value addition points': {
+            color: '#a4c78c',
+            infoLabel: 'Processors/value addition points',
+            providers: null,
+            zIndex: 7
+        },
+        'Farmer Organisations and Cooperatives': {
+            color: '#d59898',
+            infoLabel: 'Farmer Organisations and Cooperatives',
+            providers: null,
+            zIndex: 4
+        },
+        'Artificial Insemination Centres': {
+            color: '#567d54',
+            infoLabel: 'Artificial Insemination Centres',
+            providers: null,
+            zIndex: 4
+        },
+        'National/Regional/State Research Stations': {
+            color: '#b6985e',
+            infoLabel: 'National/Regional/State Research Stations',
+            providers: null,
+            zIndex: 5
+        },
+        'Seed Multipliers': {
+            color: '#ff5d5d',
+            infoLabel: 'Seed Multipliers',
+            providers: null,
+            zIndex: 7
         }
 
-        return pointRadius;
-      }
-
-      var type = feature.type;
-      switch (type) {
-        case 1: //'Point'
-                // unselected
-          style.color = 'rgb(42, 133, 173)';
-          style.radius = ScaleDependentPointRadius;
-          // selected
-          selected.color = 'rgba(255,255,0,0.5)';
-          selected.radius = 5;
-          break;
-        case 2: //'LineString'
-                // unselected
-          style.color = 'rgba(161,217,155,0.8)';
-          style.size = 3;
-          // selected
-          selected.color = 'rgba(255,25,0,0.5)';
-          selected.size = 3;
-          break;
-        case 3: //'Polygon'
-                // unselected
-          style.color = 'rgba(149,139,255,0.4)';
-          style.outline = {
-            color: 'rgb(20,20,20)',
-            size: 2
-          };
-          // selected
-          selected.color = 'rgba(255,25,0,0.3)';
-          selected.outline = {
-            color: '#d9534f',
-            size: 3
-          };
-      }
-
-      return style;
-    },
-
-    onClick: function(evt) {
-
-      //If nearby tool (or any tool) is active, then abort.
-      //  if(_FSP.ToolMaster.activeTool.active == true) return;
-
-      var buffer = clickToBuffer(evt);
-
-      //If all are unchecked, then exit out of here
-      //if(Object.keys(_FSP.LibraryListBuilder.GetFilterObject()).length == 0) return;
-
-      //We have the buffer as geojson.  Send it to the point table to intersect
-      var tablePostArgs = {
-        returnfields: 'lat,lng,name,type,id,photos,business_hours,staff_count,internet,public_computer_count,computer_fee',
-        format: 'geojson',
-        returnGeometry: 'yes',
-        intersects: buffer,
-        limit: 200 //add a limit of 200 so we don't get carried away
-      };
-
-      var pointUrl = "http://spatialserver.spatialdev.com/services/tables/library_2014/query";
-
-      $.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
-        //GeoJSON result of points
-        if (!points || points.error) {
-          console.error('Unable to fetch feature: ' + points.error);
-          return;
-        }
-
-        LibraryDetails = points;
-
-      });
-
-    }
-
-  };
-
-
-  var configLayers = [
-    require('../../config/layers/basemaps.js'),
-    //require('../../config/layers/csv.js'),
-    //require('../../config/layers/geojson.js'),
-    //require('../../config/layers/kml.js'),
-    //require('../../config/layers/other.js'),
-    require('../../config/layers/pbf.js')
-    //require('../../config/layers/wms.js'),
-    //require('../../config/layers/xyz.js')
-  ];
-
-  for (var i = 0, len = configLayers.length;  i < len; i++) {
-    var cfg = configLayers[i];
-    for (var key in cfg) {
-      this[key] = cfg[key];
-      //console.log(this[key]);
-    }
-  }
-
-  /**
-   * For layers, we try and get an alias for everything, so if it's a URL that
-   * does not match, we just want to return itself so we can fetch that given url.
-   *
-   * @param name
-   * @returns {*}
-   */
-  this.find = function (name) {
-    var val = this[name] || this[name.toLowerCase()];
-    if (typeof val !== 'undefined' && val !== null) {
-      return val;
-    }
-    if (name.slice(0, 4).toLowerCase() === 'http') {
-      return name;
-    }
-    console.error('COULD NOT FIND ALIAS: ' + name);
-    return null;
-  };
-
-  var CICO_Config = {
-    'Offsite ATMs': {
-      color: '#a4c78c',
-      infoLabel: 'Offsite ATM',
-      providers: null,
-      zIndex: 6
-    },
-    'Bank Branches': {
-      color: '#977C00',
-      infoLabel: 'Bank Branch',
-      providers: null,
-      zIndex: 5
-    },
-    'MFIs': {
-      color: '#977c00',
-      infoLabel: 'MFI',
-      providers: null,
-      zIndex: 7
-    },
-    'SACCOs': {
-      color: '#cf8a57',
-      infoLabel: 'SACCO',
-      providers: null,
-      zIndex: 10
-    },
-    'Mobile Money Agent': {
-      color: '#8CB7C7',
-      infoLabel: 'Mobile Money Agent',
-      providers: null,
-      zIndex: -1
-    },
-    'MDIs': {
-      color: '#825D99',
-      infoLabel: 'MDI',
-      providers: null,
-      zIndex: 6
-    },
-    'Credit Institution': {
-      color: '#6CA76B',
-      infoLabel: 'Credit Institution',
-      providers: null,
-      zIndex: 5
-    },
-    'MFBs': {
-      color: '#825D99',
-      infoLabel: 'MFB',
-      providers: null,
-      zIndex: 7
-    },
-    'Motor Parks': {
-      color: '#bd85b3',
-      infoLabel: 'Motor Parks',
-      providers: null,
-      zIndex: 7
-    },
-    'Mobile Network Operator Outlets': {
-      color: '#a2a2a2',
-      infoLabel: 'Mobile Network Operator Outlets',
-      providers: null,
-      zIndex: 0
-    },
-    'Post Offices': {
-      color: '#FFFF00',
-      infoLabel: 'Post Offices',
-      providers: null,
-      zIndex: 4
-    },
-    'Post Office': {
-      color: '#80ad7b',
-      infoLabel: 'Post Offices',
-      providers: null,
-      zIndex: 6
-    },
-    'Bus Stand': {
-      color: '#80ad7b',
-      infoLabel: 'Bus Stands',
-      providers: null,
-      zIndex: 6
-    },
-    'Bus Stands': {
-      color: '#80ad7b',
-      infoLabel: 'Bus Stands',
-      providers: null,
-      zIndex: 6
-    },
-
-    //Kenya
-    'Insurance Providers': {
-      color: '#3086AB',
-      infoLabel: 'Insurance providers',
-      providers: null,
-      zIndex: 6
-    },
-    'Money Transfer Service': {
-      color: '#977C00',
-      infoLabel: 'Money Transfer Service',
-      providers: null,
-      zIndex: 6
-    },
-    'Dev Finance': {
-      color: '#9B242D',
-      infoLabel: 'Dev Finance',
-      providers: null,
-      zIndex: 6
-    },
-    'Forex Bureaus': {
-      color: '#cf8a57',
-      infoLabel: 'Forex Bureaus',
-      providers: null,
-      zIndex: 6
-    },
-    'Cap Markets': {
-      color: '#825D99',
-      infoLabel: 'Cap Markets',
-      providers: null,
-      zIndex: 6
-    },
-    'Pension Providers': {
-      color: '#a2a2a2',
-      infoLabel: 'Pension providers',
-      providers: null,
-      zIndex: 6
-    },
-    'Purchase Lease Factoring': {
-      color: '#80ad7b',
-      infoLabel: 'Purchase Lease Factoring',
-      providers: null,
-      zIndex: 6
-    },
-    'Bank Agent': {
-      color: '#80ad7b',
-      infoLabel: 'Bank Agent',
-      providers: null,
-      zIndex: 6
-    },
-    'Bank and Mortgage': {
-      color: '#80ad7b',
-      infoLabel: 'Banks and Mortgage',
-      providers: null,
-      zIndex: 6
-    },
-    'Commercial Bank': {
-      color: '#9b242d',
-      infoLabel: 'Commercial Bank',
-      providers: null,
-      zIndex: 3
-    },
-
-    'PostBank': {
-      color: '#bd85b3',
-      infoLabel: 'Post Bank',
-      providers: null,
-      zIndex: 6
-    },
-
-    //Nigeria New Post Offices
-    'NIPOST Post Office': {
-      color: '#80ad7b',
-      infoLabel: 'NIPOST Post Offices',
-      providers: null,
-      zIndex: 6
-    },
-    'NIPOST Post Shop': {
-      color: '#80ad7b',
-      infoLabel: 'NIPOST Post Shops',
-      providers: null,
-      zIndex: 6
-    },
-    'NIPOST Postal Agency': {
-      color: '#80ad7b',
-      infoLabel: 'NIPOST Postal Agencies',
-      providers: null,
-      zIndex: 6
-    },
-
-    //India
-    'Postal Outlets': {
-      color: '#ce6b29',
-      infoLabel: 'Postal Outlets',
-      providers: null,
-      zIndex: 3
-    },
-    'Commercial Banks': {
-      color: '#3086ab',
-      infoLabel: 'Commercial Banks',
-      providers: null,
-      zIndex: 2
-    },
-    'Bank Customer Service Points': {
-      color: '#9b242d',
-      infoLabel: 'Bank Customer Service Points',
-      providers: null,
-      zIndex: 4
-    },
-    'District': {
-      color: '#9b242d',
-      infoLabel: 'District',
-      providers: null,
-      zIndex: 6
-    },
-    'Private Library': {
-      color: '#3086ab',
-      infoLabel: 'Private Library',
-      providers: null,
-      zIndex: 5
-    },
-    'Public Library': {
-      color: '#977c00',
-      infoLabel: 'Public Library',
-      providers: null,
-      zIndex: 7
-    },
-    'Village': {
-      color: '#a4c78c',
-      infoLabel: 'Village',
-      providers: null,
-      zIndex: 4
-    },
-    'Additional Primary Health Centres (APHC)': {
-      color: '#9b242d',
-      infoLabel: 'Additional Primary Health Centres (APHC)',
-      providers: null,
-      zIndex: 6
-    },
-    'ANM or District Training Centres': {
-      color: '#3086ab',
-      infoLabel: 'ANM or District Training Centres',
-      providers: null,
-      zIndex: 5
-    },
-    'Approved Nursing Training Centres (Private Sector)': {
-      color: '#977c00',
-      infoLabel: 'Approved Nursing Training Centres (Private Sector)',
-      providers: null,
-      zIndex: 7
-    },
-    'Community Health Centre (CHC)/First Referral Units': {
-      color: '#d5cb98',
-      infoLabel: 'Community Health Centre (CHC)/First Referral Units',
-      providers: null,
-      zIndex: 4
-    },
-    'District Hospitals': {
-      color: '#ce6b29',
-      infoLabel: 'District Hospitals',
-      providers: null,
-      zIndex: 5
-    },
-    'Medical Colleges and Hospitals': {
-      color: '#59452a',
-      infoLabel: 'Medical Colleges and Hospitals',
-      providers: null,
-      zIndex: 7
-    },
-    'Primary Health Centre (PHC)': {
-      color: '#8cb7c7',
-      infoLabel: 'Primary Health Centre (PHC)',
-      providers: null,
-      zIndex: 4
-    },
-    'Private hospitals and clinics': {
-      color: '#d098d5',
-      infoLabel: 'Private hospitals and clinics',
-      providers: null,
-      zIndex: 5
-    },
-    'Sub Divisional District Hospitals': {
-      color: '#a4c78c',
-      infoLabel: 'Sub Divisional District Hospitals',
-      providers: null,
-      zIndex: 7
-    },
-    'Sub Health Centres': {
-      color: '#d59898',
-      infoLabel: 'Sub Health Centres',
-      providers: null,
-      zIndex: 7
-    },
-    'Nursing Schools': {
-      color: '#567d54',
-      infoLabel: 'Nursing Schools',
-      providers: null,
-      zIndex: 4
-    },
-    'Dairy Processors': {
-      color: '#9b242d',
-      infoLabel: 'Dairy Processors',
-      providers: null,
-      zIndex: 6
-    },
-    'Day old chick hatcheries': {
-      color: '#3086ab',
-      infoLabel: 'Day old chick hatcheries',
-      providers: null,
-      zIndex: 5
-    },
-    'Private sector Agricultural service providers': {
-      color: '#977c00',
-      infoLabel: 'Private sector Agricultural service providers',
-      providers: null,
-      zIndex: 7
-    },
-    'Government Vets': {
-      color: '#d5cb98',
-      infoLabel: 'Government Vets',
-      providers: null,
-      zIndex: 4
-    },
-    'Market Locations': {
-      color: '#ce6b29',
-      infoLabel: 'Market Locations',
-      providers: null,
-      zIndex: 5
-    },
-    'Agro-dealers': {
-      color: '#59452a',
-      infoLabel: 'Agro-dealers',
-      providers: null,
-      zIndex: 7
-    },
-    'Warehouse/Storage/Aggregation Centres': {
-      color: '#8cb7c7',
-      infoLabel: 'Warehouse/Storage/Aggregation Centres',
-      providers: null,
-      zIndex: 4
-    },
-    'Dairy chilling plants': {
-      color: '#d098d5',
-      infoLabel: 'Dairy chilling plants',
-      providers: null,
-      zIndex: 7
-    },
-    'Processors/value addition points': {
-      color: '#a4c78c',
-      infoLabel: 'Processors/value addition points',
-      providers: null,
-      zIndex: 7
-    },
-    'Farmer Organisations and Cooperatives': {
-      color: '#d59898',
-      infoLabel: 'Farmer Organisations and Cooperatives',
-      providers: null,
-      zIndex: 4
-    },
-    'Artificial Insemination Centres': {
-      color: '#567d54',
-      infoLabel: 'Artificial Insemination Centres',
-      providers: null,
-      zIndex: 4
-    },
-    'National/Regional/State Research Stations': {
-      color: '#b6985e',
-      infoLabel: 'National/Regional/State Research Stations',
-      providers: null,
-      zIndex: 5
-    },
-    'Seed Multipliers': {
-      color: '#ff5d5d',
-      infoLabel: 'Seed Multipliers',
-      providers: null,
-      zIndex: 7
-    }
-
-  };
+    };
 
 });

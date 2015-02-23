@@ -17,6 +17,19 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
   var overlayNames = [];
   var theme = null;
   var filters = null;
+  /**
+   * This is an object that is a hash of the LatLngs from clicks to the resulting buffer.
+   * This is so that clickToBuffer does not have to do the expensive Turf operation repeatedly,
+   * especially since several MVTSource layers will have the same event and independently be
+   * processing this event.
+   *
+   * @type {{}}
+   * @private
+   */
+  var latLngBufferHash = {};
+
+  var LibraryDetails = {};
+  var LibraryWhereCaluse = '';
 
   $scope.$on('AgSelections', function(event,args){
 
@@ -145,6 +158,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     // object keys are the CICO selection sub sector names
     var typeobj = {};
     var sector='';
+    var types = [];
 
     if(args) {
       args.forEach(function (val, idx) {
@@ -152,9 +166,11 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
           type: val.type,
           sector: val.sector
         };
+        types.push(val.type);
         sector = val.sector;
       });
 
+      LibraryWhereCaluse = buildPostGresQueryExpression(types);
 
       var filter = function (feature, context) {
         if (feature && feature.properties) {
@@ -183,6 +199,30 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
   $scope.params = $stateParams;
   $scope.blur = '';
+
+  var PixelsToMetersByZoom = [
+    156412,
+    78206,
+    39103,
+    19551,
+    9776,
+    4888,
+    2444,
+    1222,
+    610.984,
+    305.492,
+    152.746,
+    76.373,
+    38.187,
+    19.093,
+    9.547,
+    4.773,
+    2.387,
+    1.193,
+    .596,
+    .298
+  ];
+
 
   // Country Select
   // All variables will be inherited by other controllers
@@ -457,13 +497,44 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         var layer = new L.TileLayer.MVTSource(cfg);
         layer.addTo(map);
 
-        map.on('click', function (e) {
+        map.on('click', function (evt) {
           //Take the click event and pass it to the group layers.
           //layer.onClick(e, function (evt) {
           //  if (evt && evt.feature) {
           //    console.log(['Clicked PBF Feature', evt.feature.properties]);
           //  }
           //});
+            //If nearby tool (or any tool) is active, then abort.
+            //  if(_FSP.ToolMaster.activeTool.active == true) return;
+
+            var buffer = clickToBuffer(evt);
+
+            //We have the buffer as geojson.  Send it to the point table to intersect
+            var tablePostArgs = {
+              returnfields: 'lat,lng,name,type,id,photos,business_hours,staff_count,internet,public_computer_count,computer_fee',
+              format: 'geojson',
+              returnGeometry: 'yes',
+              intersects: buffer,
+              limit: 200 //add a limit of 200 so we don't get carried away
+            };
+
+            if(LibraryWhereCaluse != ''){
+              tablePostArgs.where = LibraryWhereCaluse
+            }
+
+            var pointUrl = "http://spatialserver.spatialdev.com/services/tables/library_2014/query";
+
+            $.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+              //GeoJSON result of points
+              if (!points || points.error) {
+                console.error('Unable to fetch feature: ' + points.error);
+                return;
+              }
+
+              LibraryDetails = points;
+
+            });
+
           console.log("Map Clicked");
         });
 
@@ -546,5 +617,65 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
       }
     }
   }
+
+  var clickToBuffer = function (e) {
+    // handle map click events
+    //Depending on what mode we're in and what we're showing...
+    //This is a test hard-coded for confetti mode.
+    var latlng = e.latlng;
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    var latLngStr = lat + ',' + lng;
+
+    var buffer = latLngBufferHash[latLngStr];
+    if (buffer) {
+      return buffer;
+    }
+
+    var meters_per_pixel = PixelsToMetersByZoom[$stateParams.zoom];
+    var tolerance_pixels = 8;  //The number of pixels around the click point to search in
+    var tolerance_kilometers = (tolerance_pixels * meters_per_pixel) / 1000;
+
+    //Convert pixel click buffer to meters.
+    var bufferObj = turf.buffer(turf.point(lng, lat), tolerance_kilometers, 'kilometers');
+    buffer = JSON.stringify(bufferObj);
+
+    latLngBufferHash[latLngStr] = buffer;
+
+    return buffer;
+  };
+
+  function buildPostGresQueryExpression(typearray) {
+    var typestring = '';
+    var finalstring = '';
+
+    if(typearray.length > 0) {
+      if (typearray.length > 1) {
+        typearray.forEach(function (val) {
+          typestring += "'"+ val+ "'" + ",";
+        });
+        //remove tailing comma
+        var finalstring = typestring.replace(/(^\s*,)|(,\s*$)/g, '');
+        return "type IN(" + finalstring + ")";
+      } else {
+        typearray.forEach(function (val) {
+          typestring += "'"+val+"'";
+        });
+        return "type IN(" + typestring + ")";
+
+      }
+    } else {
+      return "";
+
+    }
+  }
+
+  $rootScope.$watch(function () {
+    return LibraryDetails;
+  }, function () {
+    $rootScope.$broadcast('LibraryDetails', LibraryDetails);
+  });
+
+
 
 });

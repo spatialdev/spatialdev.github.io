@@ -60,6 +60,18 @@ div.tooltip{
     text-align: right;
 }
 
+#pageTally {
+    font-family: Din-Regular;
+    text-align: center;
+    padding: 5px;
+    background-color: #ececec;
+    font-weight: bold;
+    margin-top: 10px;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .AccessPointName {
     font-size: 17px;
     padding-left: 15px;
@@ -81,6 +93,13 @@ div.tooltip{
     line-height: 22px;
     background-color: white;
 }
+
+.DetailsOverview.img{
+    height:200px;
+    width: 200px;
+}
+
+
 
 .CountryOverview .sector{
     margin-top: 10px;
