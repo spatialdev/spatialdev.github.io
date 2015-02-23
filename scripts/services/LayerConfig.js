@@ -261,7 +261,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
     var cfg = configLayers[i];
     for (var key in cfg) {
       this[key] = cfg[key];
-      console.log(this[key]);
+      //console.log(this[key]);
     }
   }
 

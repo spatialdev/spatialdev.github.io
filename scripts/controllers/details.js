@@ -9,6 +9,8 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                                                                                      LibraryFilterFactory) {
     $scope.details = {};
     $scope.library = {};
+    $scope.activeidx = 0;
+
 
     $scope.toolTipDiv = null;
 
@@ -85,17 +87,23 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         }
     };
 
+    // Listen for Library Details to populate
     $rootScope.$on('LibraryDetails', function(event,args){
         if(args) {
             console.log('Library Details: ' + args);
             $scope.library = args.features;
             $scope.librarydetails = [];
+            $scope.activeidx = 0;
+
+            //$scope.openParam('details-panel');
 
             $scope.library.forEach(function(val) {
                 $scope.librarydetails.push((val));
             });
 
-            console.log($scope.librarydetails);
+            if($scope.librarydetails) $scope.currentDetailitem = $scope.librarydetails[0].properties;
+
+            console.log("Number of points in radius: " + $scope.librarydetails.length + $scope.librarydetails);
         }
     });
 
@@ -664,48 +672,51 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     };
 
     $scope.showDetails = function (item, themeItems, idx) {
-        if (item.sf_id) {
-            $rootScope.setParamWithVal('sf_id', item.sf_id);
-        }
-        if (item.name || item.title) {
-            $scope.title = item.name || item.title;
-        }
-        if (typeof idx === 'number') $scope.activeThemeItemIdx = idx;
-        if (themeItems) $scope.activeThemeItemsList = themeItems;
-        $scope.itemsList = false;
-        $scope.details = removeUnwantedItems(formatDetails(item, $stateParams.theme), $stateParams.theme);
-        if (!$scope.contextualLayer) {
-            $scope.lessDetails = removeUnwantedItems(lessDetails(formatDetails(item, $stateParams.theme)), $stateParams.theme);
-        }
 
-        //Filter/Format RFAs and Indicators
-        if ($scope.details.requestsForAssistance && typeof $scope.details.requestsForAssistance === 'array') {
-            //Filter/Format
-            $scope.details.requestsForAssistance = $scope.details.requestsForAssistance.map(function (rfa) {
-                return removeUnwantedItems(formatDetails(rfa, "RFA"), "RFA");
-            });
-        }
-
-        if ($scope.details.indicators && typeof $scope.details.indicators === 'array') {
-            //Filter/Format
-            $scope.details.indicators = $scope.details.indicators.map(function (indicator) {
-                return removeUnwantedItems(formatDetails(indicator, "indicator"), "indicator");
-            });
-        }
-
-        if ($scope.details.risks && typeof $scope.details.risks === 'array') {
-            //Filter/Format
-//          $scope.details.risks = $scope.details.risks.map(function (risk) {
-//              return removeUnwantedItems(formatDetails(risk, "risk"), "risk");
-//          });
-        }
-
-        if ($scope.details.statuses && typeof $scope.details.statuses === 'array') {
-            //Filter/Format
-//          $scope.details.statuses = $scope.details.statuses.map(function (status) {
-//              return removeUnwantedItems(formatDetails(status, "status"), "status");
-//          });
-        }
+        $scope.currentItem = item;
+        console.log($scope.currentItem);
+//        if (item.sf_id) {
+//            $rootScope.setParamWithVal('sf_id', item.sf_id);
+//        }
+//        if (item.name || item.title) {
+//            $scope.title = item.name || item.title;
+//        }
+//        if (typeof idx === 'number') $scope.activeThemeItemIdx = idx;
+//        if (themeItems) $scope.activeThemeItemsList = themeItems;
+//        $scope.itemsList = false;
+//        $scope.details = removeUnwantedItems(formatDetails(item, $stateParams.theme), $stateParams.theme);
+//        if (!$scope.contextualLayer) {
+//            $scope.lessDetails = removeUnwantedItems(lessDetails(formatDetails(item, $stateParams.theme)), $stateParams.theme);
+//        }
+//
+//        //Filter/Format RFAs and Indicators
+//        if ($scope.details.requestsForAssistance && typeof $scope.details.requestsForAssistance === 'array') {
+//            //Filter/Format
+//            $scope.details.requestsForAssistance = $scope.details.requestsForAssistance.map(function (rfa) {
+//                return removeUnwantedItems(formatDetails(rfa, "RFA"), "RFA");
+//            });
+//        }
+//
+//        if ($scope.details.indicators && typeof $scope.details.indicators === 'array') {
+//            //Filter/Format
+//            $scope.details.indicators = $scope.details.indicators.map(function (indicator) {
+//                return removeUnwantedItems(formatDetails(indicator, "indicator"), "indicator");
+//            });
+//        }
+//
+//        if ($scope.details.risks && typeof $scope.details.risks === 'array') {
+//            //Filter/Format
+////          $scope.details.risks = $scope.details.risks.map(function (risk) {
+////              return removeUnwantedItems(formatDetails(risk, "risk"), "risk");
+////          });
+//        }
+//
+//        if ($scope.details.statuses && typeof $scope.details.statuses === 'array') {
+//            //Filter/Format
+////          $scope.details.statuses = $scope.details.statuses.map(function (status) {
+////              return removeUnwantedItems(formatDetails(status, "status"), "status");
+////          });
+//        }
 
         $scope.resizeDetailsPanel();
     };
@@ -815,17 +826,24 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     }
 
     $scope.nextThemeItem = function () {
-        var len = $scope.activeThemeItemsList.length;
-        if (++$scope.activeThemeItemIdx >= len) $scope.activeThemeItemIdx = 0;
-        var item = $scope.activeThemeItemsList[$scope.activeThemeItemIdx];
-        $scope.showDetails(item);
+        var len = $scope.librarydetails.length;
+
+        //var len = $scope.activeThemeItemsList.length;
+        //if (++$scope.activeThemeItemIdx >= len) $scope.activeThemeItemIdx = 0;
+        //var item = $scope.activeThemeItemsList[$scope.activeThemeItemIdx];
+
+        $scope.activeidx = ($scope.activeidx >= len-1) ? 0 : ++$scope.activeidx;
+
+        $scope.currentDetailitem = $scope.librarydetails[$scope.activeidx].properties;
+
+        $scope.showDetails($scope.currentDetailitem);
     };
 
     $scope.prevThemeItem = function () {
-        var len = $scope.activeThemeItemsList.length;
-        if (--$scope.activeThemeItemIdx < 0) $scope.activeThemeItemIdx = len - 1;
-        var item = $scope.activeThemeItemsList[$scope.activeThemeItemIdx];
-        $scope.showDetails(item);
+        //var len = $scope.activeThemeItemsList.length;
+        //if (--$scope.activeThemeItemIdx < 0) $scope.activeThemeItemIdx = len - 1;
+        //var item = $scope.activeThemeItemsList[$scope.activeThemeItemIdx];
+        //$scope.showDetails(item);
     };
 
     $scope.showList = function () {
@@ -864,5 +882,12 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         downloadLink.download = name || 'feature.geojson';
         downloadLink.click();
     };
+
+    $scope.$watch('librarydetails',function(){
+        if($scope.librarydetails.length > 0) {
+            $scope.openParam('details-panel');
+            $scope.navTab = 'PointDetails';
+        }
+    });
 
 });

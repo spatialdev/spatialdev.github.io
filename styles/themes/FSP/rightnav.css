@@ -1,7 +1,6 @@
 .on #DetailsNub {
-    background-color: #f1efec;
-    color: rgb(237,27,46);
-    padding:0px;
+    background-color: rgb(237,27,46);
+    color: #fff;
 }
 .on #DetailsNub .iconpopup-svg.svg{
     background-color: #f1efec;
@@ -42,7 +41,7 @@
     /*padding: 13px 16px 10px 16px;*/
     width: 61px;
     height:61px;
-    font-size: 26px;
+    font-size: 18px;
     margin-left:0px;
     background-color:#f1efec;
     padding:0px;
