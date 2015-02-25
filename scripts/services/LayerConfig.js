@@ -12,7 +12,7 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
      * The layers specified in this main LayerConfig module are integral to SpatialViewer
      * and should not be changed by the user.
      */
-    
+
     //GADM country extents, level 0
     this.countryextents = {
         type: 'geojson',

@@ -9,7 +9,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                                                                                      IndiaFactory,KenyaFactory,NigeriaFactory) {
     $scope.params = $stateParams;
     $scope.navTab = 'CICOS';
-
+    $scope.allSectors = [];
     $scope.HealthLayer = HealthFilterFactory.Layer;
     $scope.AgLayer = AgFilterFactory.Layer;
     $scope.LibraryLayer = LibraryFilterFactory.Layer;
@@ -129,9 +129,9 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     // Get selected tab
     $scope.setSelectedSector = function (selection) {
-        $scope.selectedSector = selection;
-        console.log("Selected Sector: " + $scope.selectedSector);
         SectorFactory.setSelectedSector(selection);
+        $scope.selectedSector = SectorFactory.SelectedSector;
+        console.log("Selected Sector: " + $scope.selectedSector);
     };
 
     $scope.checkAllCICO = function () {
@@ -173,8 +173,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             }
         }
     };
-
-
 
     // Handle Check/Uncheck All filters
     $scope.filterCICO = function () {
@@ -628,9 +626,10 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     // Watch for change in selected Sector
     $scope.$watch(function () {
-            return SectorFactory.selectedSector;
+            return SectorFactory.SelectedSector;
         }, function () {
-            $scope.selectedSector = SectorFactory.selectedSector;
+            $scope.selectedSector = SectorFactory.SelectedSector;
+            $scope.allSectors = SectorFactory.allSectors;
         }
     );
 

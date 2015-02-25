@@ -9,8 +9,8 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                                                                                      LibraryFilterFactory) {
     $scope.details = {};
     $scope.activeidx = 0;
-    $scope.library = [];
-    $scope.librarydetails = [];
+    $scope.ALLdetails = [];
+    $scope.allSectors = [];
 
     $scope.toolTipDiv = null;
 
@@ -87,29 +87,13 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         }
     };
 
-    // Listen for Library Details to populate
-    $rootScope.$on('LibraryDetails', function(event,args){
-        if(Object.keys(args).length !== 0) {
-            console.log('Library Details: ' + args);
-            $scope.library = args.features;
-            $scope.activeidx = 0;
-            $scope.librarydetails = [];
-            $scope.libraryimages = [];
-
-            $scope.library.forEach(function (val) {
-                $scope.librarydetails.push((val));
-            });
-
-            if($scope.librarydetails.length>0) {
-                $scope.currentDetailitem = $scope.librarydetails[0].properties;
-                $scope.libraryimages = ($scope.librarydetails[0].properties.photos.split("|"));
-            }
-
-            console.log("Number of points in radius: " + $scope.librarydetails.length + $scope.libraryimages);
+    // Watch for change in selected Sector
+    $scope.$watch(function () {
+            return SectorFactory.allSectors;
+        }, function () {
+            $scope.allSectors = SectorFactory.allSectors;
         }
-    });
-
-
+    );
 
     //Watch for change in country
     $scope.$watch(function () {
@@ -618,8 +602,29 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     $scope.alertUserToClick = true;
 
     $scope.$on('details', function (event, featureLayer) {
+        $scope.activeidx = 0;
+        $scope.ALLdetails = [];
         $scope.alertUserToClick = false;
-        var properties = featureLayer.feature.properties;
+        var properties = featureLayer;
+
+        properties.forEach(function (val) {
+            val.forEach(function (v) {
+                $scope.ALLdetails.push(v.properties);
+            })
+        });
+
+        if($scope.ALLdetails.length > 0) {
+            $scope.openParam('details-panel');
+            $scope.navTab = 'PointDetails';
+            $scope.currentDetailitem = $scope.ALLdetails[0];
+
+            $scope.photourl = $scope.currentDetailitem.url;
+
+            $scope.currentDetailitemPhoto = $scope.ALLdetails[0].photos.split("|");
+
+            $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : $scope.activeidx++;
+        }
+
         $scope.feature = featureLayer.feature;
         $scope.title = $scope.featureTitle = properties.name || properties.title || 'Selected Feature';
         if (properties.salesforce) { // salesforce theme badge selected
@@ -828,33 +833,27 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     }
 
     $scope.nextThemeItem = function () {
-        var len = $scope.librarydetails.length;
-
-        //var len = $scope.activeThemeItemsList.length;
-        //if (++$scope.activeThemeItemIdx >= len) $scope.activeThemeItemIdx = 0;
-        //var item = $scope.activeThemeItemsList[$scope.activeThemeItemIdx];
 
         // if active item is length of details array, reset to zero, otherwise add 1
-        $scope.activeidx = ($scope.activeidx >= len-1) ? 0 : ++$scope.activeidx;
+        $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : ++$scope.activeidx;
 
-        $scope.currentDetailitem = $scope.librarydetails[$scope.activeidx].properties;
-        $scope.libraryimages = ($scope.librarydetails[$scope.activeidx].properties.photos.split("|"));
+        $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx];
+        $scope.photourl = $scope.currentDetailitem.url;
+        $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
+
+        //$scope.libraryimages = ($scope.librarydetails[$scope.activeidx].properties.photos.split("|"));
 
 
         $scope.showDetails($scope.currentDetailitem);
     };
 
     $scope.prevThemeItem = function () {
-        var len = $scope.librarydetails.length;
 
-        if ($scope.activeidx > 0) {
-            $scope.activeidx--;
-        } else {
-            $scope.activeidx = len-1;
-        }
+        $scope.activeidx = ($scope.activeidx > 0) ? --$scope.activeidx : $scope.ALLdetails.length-1;
 
-        $scope.currentDetailitem = $scope.librarydetails[$scope.activeidx].properties;
-        $scope.libraryimages = ($scope.librarydetails[$scope.activeidx].properties.photos.split("|"));
+        $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx];
+        $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
+        //$scope.libraryimages = ($scope.librarydetails[$scope.activeidx].properties.photos.split("|"));
 
         //if (--$scope.activeThemeItemIdx < 0) $scope.activeThemeItemIdx = len - 1;
         //var item = $scope.activeThemeItemsList[$scope.activeThemeItemIdx];
@@ -897,12 +896,5 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         downloadLink.download = name || 'feature.geojson';
         downloadLink.click();
     };
-
-    $scope.$watch('librarydetails',function(){
-        if($scope.librarydetails.length > 0) {
-            $scope.openParam('details-panel');
-            $scope.navTab = 'PointDetails';
-        }
-    });
-
+    
 });

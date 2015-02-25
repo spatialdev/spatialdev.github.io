@@ -1004,11 +1004,11 @@
     <!--</button>-->
 
     <div id="PreviousItem" class="icon-9_arrow_left"
-         ng-class="{flipOpen: (isParam('details-panel') && librarydetails && librarydetails.length > 1)}"
+         ng-class="{flipOpen: (isParam('details-panel') && ALLdetails && ALLdetails.length > 1)}"
          ng-click="prevThemeItem()">
     </div>
     <div id="NextItem" class="icon-10_arrow_right"
-         ng-class="{flipOpen: (isParam('details-panel') && librarydetails && librarydetails.length > 1)}"
+         ng-class="{flipOpen: (isParam('details-panel') && ALLdetails && ALLdetails.length > 1)}"
          ng-click="nextThemeItem()">
     </div>
 </div>
@@ -1063,8 +1063,8 @@
 overflow-x: hidden;
 overflow-y: auto;">
 
-    <div ng-show="librarydetails.length>0">
-    <div id="pageTally" class="ng-binding">page {{activeidx+1}} of {{librarydetails.length}}</div>
+    <div ng-show="ALLdetails.length>0">
+    <div id="pageTally" class="ng-binding">page {{activeidx+1}} of {{ALLdetails.length}}</div>
 
     <div class="DetailsOverview">
         Name: {{currentDetailitem.name}} </br>
@@ -1074,8 +1074,8 @@ overflow-y: auto;">
         Business Hours: {{currentDetailitem.business_hours}}
 
 
-        <div ng-repeat="x in libraryimages" class="img">
-            <img src="http://spatialserver.spatialdev.com/fsp-ebs/2014/india/library/{{x}}"/>
+        <div ng-repeat="x in currentDetailitemPhoto" class="img">
+            <img src="{{photourl}}{{x}}"/>
         </div>
     </div>
     </div>
