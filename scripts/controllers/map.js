@@ -21,6 +21,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     $scope.allSectors = [];
     $scope.featureCollection = []; // cross sector features within selected buffer
     $scope.CICODetails = [];
+    $scope.detailsIndex = 0;
 
     /**
      * This is an object that is a hash of the LatLngs from clicks to the resulting buffer.
@@ -748,6 +749,28 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         console.log('CICO Details change');
     });
 
+    function highlightPointSelection (index,points){
+        index = $scope.detailsIndex;
+        var currentPoint = points.features[index];
+        if(currentPoint){
+            var layerindex = overlayNames.indexOf("health");
+            var currOverlay = overlays[layerindex];
+
+            var layers = currOverlay.getLayers();
+            if(layers){
+                var layer = layers[Object.keys(layers)[0]];
+                if(layer){
+                    MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
+                    if(MapBuilder.selectedConfetti){
+                        MapBuilder.selectedConfetti.select();
+                        if (MapBuilder.previouslySelectedConfetti) MapBuilder.previouslySelectedConfetti.deselect();
+                        MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
+                    }
+                }
+            }
+        }
+    }
+
     function createOnClickEvent(evt, sector) {
 
         var buffer = clickToBuffer(evt);
@@ -783,44 +806,16 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                 points.features.forEach(function(val){
                                     val.properties["sector"] = 'health';
                                     val.properties["url"] = "http://spatialserver.spatialdev.com/fsp-ebs/2014/" + $scope.selection.toLowerCase()  + "/" + val.properties.sector  + "/";
-
                                 });
                                 $scope.featureCollection.push(points.features);
                                 $rootScope.$broadcast('details', $scope.featureCollection);
                             }
-
-                            //selected point
-                            var currentPoint = points.features[0];
-                                if (currentPoint) {
-                                    var layerindex = overlayNames.indexOf("health");
-                                    var currOverlay = overlays[layerindex];
-                                    //var cfg = LayerConfig[overlayName];
-
-                                    //for (var i = 0, len = overlayNames.length; i < len; ++i) {
-                                    //    var overlayName = overlayNames[i];
-                                    //    var cfg = LayerConfig[overlayName];
-                                    //    var layer = new L.TileLayer.MVTSource(cfg);
-                                    //    layer.addTo(map);
-                                    //}
-
-                                        //Highlight point.
-                                    var layers = currOverlay.getLayers();
-                                    if (layers) {
-                                        var layer = layers[Object.keys(layers)[0]];
-                                        if (layer) {
-                                            //try to pluck vtf
-                                            MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
-                                            if (MapBuilder.selectedConfetti) {
-                                                //Set feature to be big and high z-index
-                                                MapBuilder.selectedConfetti.select();
-                                                if (MapBuilder.previouslySelectedConfetti) MapBuilder.previouslySelectedConfetti.deselect();
-                                                MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
-                                            }
-                                        }
-                                    }
-                                }
-                            ;
-
+                                highlightPointSelection($scope.detailsIndex,points);
+                            //watch for change in active index; if active index is zero, still highlight the point
+                            $scope.$on('activeidx',function (event,args){
+                                $scope.detailsIndex = args;
+                                highlightPointSelection($scope.detailsIndex,points);
+                            });
                         }
                     });
 

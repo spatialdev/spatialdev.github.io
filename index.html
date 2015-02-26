@@ -1079,80 +1079,70 @@ overflow-y: auto;">
     <div ng-show="ALLdetails.length>0">
         <div id="pageTally" class="ng-binding">page {{activeidx+1}} of {{ALLdetails.length}}</div>
 
-        <!-- cicos details -->
-        <div ng-show="currentDetailitem.sector==='fsp'" class="DetailsOverview">
-            Financial Service Name: {{currentDetailitem.name}} </br>
-            Type: {{currentDetailitem.type}}  </br>
-            Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
+        <div class="DetailsOverview">
 
-            <div ng-repeat="x in currentDetailitemPhoto" class="img">
-                <img src="{{photourl}}{{x}}"/>
+            <div class="img">
+                <div ng-repeat="x in currentDetailitemPhoto">
+                    <img class="img" src="{{photourl}}{{x}}"/>
+                </div>
             </div>
-        </div>
 
-        <!-- library details -->
-        <div ng-show="currentDetailitem.sector==='library'" class="DetailsOverview">
-            Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
-            Type: {{currentDetailitem.type}}  </br>
-            Library Name: {{currentDetailitem.name}} </br>
-            Business Hours: {{currentDetailitem.business_hours}} </br>
-            Staff Count: {{currentDetailitem.staff_count}} </br>
-            Internet?: {{currentDetailitem.internet}}
-
-            <div ng-repeat="x in currentDetailitemPhoto" class="img">
-                <img src="{{photourl}}{{x}}"/>
+            <!-- cicos details -->
+            <div ng-show="currentDetailitem.sector==='fsp'" class="individual">
+                Financial Service Name: {{currentDetailitem.name}} </br>
+                Type: {{currentDetailitem.type}}  </br>
+                Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
             </div>
-        </div>
 
-        <!-- agriculture details -->
-        <div ng-show="currentDetailitem.sector==='agriculture'" class="DetailsOverview">
-            Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
-            Type: {{currentDetailitem.type}}  </br>
-            Argo-dealer name:{{currentDetailitem.name}}  </br>
-            <b>Products sold/rented</b></br>
-            Irrigation Pumps: {{currentDetailitem.irrigation_pumps || "Unknown"}} </br>
-            Farm Tractors: {{currentDetailitem.farm_tractors || "Unknown"}} </br>
-            Seeds: {{currentDetailitem.seed || "Unknown"}} </br>
-            Fertilizer: {{currentDetailitem.fertilizer || "Unknown"}} </br>
-            Chemical Inputs: {{currentDetailitem.fertilizer || "Unknown"}} </br>
-            Organic Fertilizers: {{currentDetailitem.organic_fertilizers || "Unknown"}} </br>
-            Veterinary Supplies: {{currentDetailitem.vet_supplies || "Unknown"}} </br>
-            <b>Services Offered</b></br>
-            Vaccination: {{currentDetailitem.vacination || "Unknown"}} </br>
-            Insemination: {{currentDetailitem.insemination || "Unknown"}} </br>
-            Breeding: {{currentDetailitem.breeding || "Unknown"}}
-
-            <div ng-repeat="x in currentDetailitemPhoto" class="img">
-                <img src="{{photourl}}{{x}}"/>
+            <!-- library details -->
+            <div ng-show="currentDetailitem.sector==='library'" class="individual">
+                Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
+                Type: {{currentDetailitem.type}}  </br>
+                Library Name: {{currentDetailitem.name}} </br>
+                Business Hours: {{currentDetailitem.business_hours}} </br>
+                Staff Count: {{currentDetailitem.staff_count}} </br>
+                Internet?: {{currentDetailitem.internet}}
             </div>
-        </div>
 
-        <!-- health details -->
-        <div ng-show="currentDetailitem.sector==='health'" class="DetailsOverview">
-            Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
-            Type: {{currentDetailitem.type}}  </br>
-            Delivery Center?: {{currentDetailitem.delivery_center}} </br>
-            Seperate Materity Ward: {{currentDetailitem.seperate_maternity}} </br>
-            Skilled Birth Attendant: {{currentDetailitem.sba_resource}} </br>
-            <b>Familty Planning Services:</b></br>
-            Female Sterilization: {{currentDetailitem.female_sterilization}}</br>
-            Intra Uterine Contraceptive Devices: {{currentDetailitem.intra_uterine}}</br>
-            Condoms: {{currentDetailitem.condoms}}</br>
-            Oral Pills: {{currentDetailitem.oral_pills}}</br></br>
-            Pharmacist: {{currentDetailitem.pharmacist || "Unknown"}}</br>
-            C-Section/EmONC?: {{currentDetailitem.csection_emonc}}</br>
-            Pharmacy open 24/7?: {{currentDetailitem.csection_emonc}}</br>
-            <b>Services Provided:</b></br>
-            Immunization: {{currentDetailitem.immunization}}</br>
-            Cold Chain Equiptment: {{currentDetailitem.cold_chain_equiptment}}</br>
-
-
-
-
-
-            <div ng-repeat="x in currentDetailitemPhoto" class="img">
-                <img src="{{photourl}}{{x}}"/>
+            <!-- agriculture details -->
+            <div ng-show="currentDetailitem.sector==='agriculture'" class="individual">
+                Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
+                Type: {{currentDetailitem.type}}  </br>
+                Argo-dealer name:{{currentDetailitem.name}}  </br>
+                <b>Products sold/rented</b></br>
+                Irrigation Pumps: {{currentDetailitem.irrigation_pumps || "Unknown"}} </br>
+                Farm Tractors: {{currentDetailitem.farm_tractors || "Unknown"}} </br>
+                Seeds: {{currentDetailitem.seed || "Unknown"}} </br>
+                Fertilizer: {{currentDetailitem.fertilizer || "Unknown"}} </br>
+                Chemical Inputs: {{currentDetailitem.fertilizer || "Unknown"}} </br>
+                Organic Fertilizers: {{currentDetailitem.organic_fertilizers || "Unknown"}} </br>
+                Veterinary Supplies: {{currentDetailitem.vet_supplies || "Unknown"}} </br>
+                <b>Services Offered</b></br>
+                Vaccination: {{currentDetailitem.vacination || "Unknown"}} </br>
+                Insemination: {{currentDetailitem.insemination || "Unknown"}} </br>
+                Breeding: {{currentDetailitem.breeding || "Unknown"}}
             </div>
+
+            <!-- health details -->
+            <div ng-show="currentDetailitem.sector==='health'" class="individual">
+                Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
+                Type: {{currentDetailitem.type}}  </br>
+                Delivery Center?: {{currentDetailitem.delivery_center}} </br>
+                Seperate Materity Ward: {{currentDetailitem.seperate_maternity}} </br>
+                Skilled Birth Attendant: {{currentDetailitem.sba_resource}} </br>
+                <b>Familty Planning Services:</b></br>
+                Female Sterilization: {{currentDetailitem.female_sterilization}}</br>
+                Intra Uterine Contraceptive Devices: {{currentDetailitem.intra_uterine}}</br>
+                Condoms: {{currentDetailitem.condoms}}</br>
+                Oral Pills: {{currentDetailitem.oral_pills}}</br></br>
+                Pharmacist: {{currentDetailitem.pharmacist || "Unknown"}}</br>
+                C-Section/EmONC?: {{currentDetailitem.csection_emonc}}</br>
+                Pharmacy open 24/7?: {{currentDetailitem.csection_emonc}}</br>
+                <b>Services Provided:</b></br>
+                Immunization: {{currentDetailitem.immunization}}</br>
+                Cold Chain Equiptment: {{currentDetailitem.cold_chain_equiptment}}</br>
+            </div>
+
         </div>
 
 

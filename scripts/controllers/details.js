@@ -602,7 +602,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     $scope.alertUserToClick = true;
 
     $scope.$on('details', function (event, featureLayer) {
+
         $scope.activeidx = 0;
+
         $scope.ALLdetails = [];
         $scope.alertUserToClick = false;
         var properties = featureLayer;
@@ -895,5 +897,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         downloadLink.download = name || 'feature.geojson';
         downloadLink.click();
     };
+
+    $scope.$watch('activeidx',function(){
+        $rootScope.$broadcast('activeidx', $scope.activeidx);
+    });
 
 });
