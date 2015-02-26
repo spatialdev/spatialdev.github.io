@@ -607,6 +607,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         $scope.alertUserToClick = false;
         var properties = featureLayer;
 
+        //combine all sector data into one array
         properties.forEach(function (val) {
             val.forEach(function (v) {
                 $scope.ALLdetails.push(v.properties);
@@ -614,14 +615,12 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         });
 
         if($scope.ALLdetails.length > 0) {
-            $scope.openParam('details-panel');
+            $scope.openParam('details-panel'); //open details panel
             $scope.navTab = 'PointDetails';
-            $scope.currentDetailitem = $scope.ALLdetails[0];
 
-            $scope.photourl = $scope.currentDetailitem.url;
-
-            $scope.currentDetailitemPhoto = $scope.ALLdetails[0].photos.split("|");
-
+            $scope.currentDetailitem = $scope.ALLdetails[0]; // first item shown
+            $scope.photourl = $scope.currentDetailitem.url; // get url from first item properties
+            $scope.currentDetailitemPhoto = $scope.ALLdetails[0].photos.split("|"); // split the pipe seperated values
             $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : $scope.activeidx++;
         }
 
@@ -836,8 +835,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
         // if active item is length of details array, reset to zero, otherwise add 1
         $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : ++$scope.activeidx;
-
-        $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx];
+        $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx]; // change current item to active index
         $scope.photourl = $scope.currentDetailitem.url;
         $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
 
@@ -849,9 +847,10 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
     $scope.prevThemeItem = function () {
 
+        //if active item is greater than 0, then subtract the index, otherwise go to last index
         $scope.activeidx = ($scope.activeidx > 0) ? --$scope.activeidx : $scope.ALLdetails.length-1;
-
-        $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx];
+        $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx]; // change current item to active index
+        $scope.photourl = $scope.currentDetailitem.url;
         $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
         //$scope.libraryimages = ($scope.librarydetails[$scope.activeidx].properties.photos.split("|"));
 
@@ -896,5 +895,5 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         downloadLink.download = name || 'feature.geojson';
         downloadLink.click();
     };
-    
+
 });

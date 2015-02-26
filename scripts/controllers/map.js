@@ -17,6 +17,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     var overlayNames = [];
     var theme = null;
     var filters = null;
+    var MapBuilder = {};
     $scope.allSectors = [];
     $scope.featureCollection = []; // cross sector features within selected buffer
     $scope.CICODetails = [];
@@ -33,15 +34,18 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     var latLngBufferHash = {};
 
     var LibraryDetails = {};
-    var LibraryWhereCaluse = '';
+    var LibraryWhereClause = '';
     $scope.CICODetails = {};
     var CICOWhereClause = '';
+    var AgWhereClause = '';
+    var HealthWhereClause = '';
 
     $scope.$on('AgSelections', function (event, args) {
 
         // object keys are the CICO selection sub sector names
         var typeobj = {};
         var sector = '';
+        var types = [];
 
         if (args) {
             args.forEach(function (val, idx) {
@@ -49,8 +53,11 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                     type: val.type,
                     sector: val.sector
                 };
+                types.push(val.type);
                 sector = val.sector;
             });
+
+            AgWhereClause = buildPostGresQueryExpression(types);
 
             var filter = function (feature, context) {
                 if (feature && feature.properties) {
@@ -126,6 +133,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         // object keys are the CICO selection sub sector names
         var typeobj = {};
         var sector = '';
+        var types = [];
 
         if (args) {
             args.forEach(function (val, idx) {
@@ -133,8 +141,11 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                     type: val.type,
                     sector: val.sector
                 };
+                types.push(val.type);
                 sector = val.sector;
             });
+
+            HealthWhereClause = buildPostGresQueryExpression(types);
 
             var filter = function (feature, context) {
                 if (feature && feature.properties) {
@@ -179,7 +190,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                 sector = val.sector;
             });
 
-            LibraryWhereCaluse = buildPostGresQueryExpression(types);
+            LibraryWhereClause = buildPostGresQueryExpression(types);
 
             var filter = function (feature, context) {
                 if (feature && feature.properties) {
@@ -739,16 +750,120 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
     function createOnClickEvent(evt, sector) {
 
-        //SectorFactory.clearDetails();
-        //SectorFactory.clearTotal();
-
         var buffer = clickToBuffer(evt);
 
         sector.forEach(function (val) {
             $scope.featureCollection = [];
             switch (val) {
+                case 'Health':
+                    var tablePostArgs = {
+                        returnfields: 'lat,lng,id,type,name,photos,delivery_center,separate_maternity,sba_resource,female_sterilization,intra_uterine,condoms,oral_pills,pharmacist,csection_emonc,phc_24_7,blood_transfusion,immunization,cold_chain_equipment',
+                        format: 'geojson',
+                        returnGeometry: 'yes',
+                        intersects: buffer,
+                        limit: 200 //add a limit of 200 so we don't get carried away
+                    };
+                    var pointUrl = "http://spatialserver.spatialdev.com/services/tables/health_2014/query";
+
+                    if (HealthWhereClause != '') {
+                        tablePostArgs.where = HealthWhereClause;
+                    }
+
+                    $http.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+                        //GeoJSON result of points
+                        if (!points || points.error) {
+                            console.error('Unable to fetch feature: ' + points.error);
+                            return;
+                        }
+
+                        //point is a featurecollection. open the panel and show some stuff.
+                        if (points && points.features && points.features.length > 0) {
+                            if ($scope.featureCollection.length < sector.length) {
+                                // add sector and url for photos
+                                points.features.forEach(function(val){
+                                    val.properties["sector"] = 'health';
+                                    val.properties["url"] = "http://spatialserver.spatialdev.com/fsp-ebs/2014/" + $scope.selection.toLowerCase()  + "/" + val.properties.sector  + "/";
+
+                                });
+                                $scope.featureCollection.push(points.features);
+                                $rootScope.$broadcast('details', $scope.featureCollection);
+                            }
+
+                            //selected point
+                            var currentPoint = points.features[0];
+                                if (currentPoint) {
+                                    var layerindex = overlayNames.indexOf("health");
+                                    var currOverlay = overlays[layerindex];
+                                    //var cfg = LayerConfig[overlayName];
+
+                                    //for (var i = 0, len = overlayNames.length; i < len; ++i) {
+                                    //    var overlayName = overlayNames[i];
+                                    //    var cfg = LayerConfig[overlayName];
+                                    //    var layer = new L.TileLayer.MVTSource(cfg);
+                                    //    layer.addTo(map);
+                                    //}
+
+                                        //Highlight point.
+                                    var layers = currOverlay.getLayers();
+                                    if (layers) {
+                                        var layer = layers[Object.keys(layers)[0]];
+                                        if (layer) {
+                                            //try to pluck vtf
+                                            MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
+                                            if (MapBuilder.selectedConfetti) {
+                                                //Set feature to be big and high z-index
+                                                MapBuilder.selectedConfetti.select();
+                                                if (MapBuilder.previouslySelectedConfetti) MapBuilder.previouslySelectedConfetti.deselect();
+                                                MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
+                                            }
+                                        }
+                                    }
+                                }
+                            ;
+
+                        }
+                    });
+
+                    break;
+                case 'Agriculture':
+                    var tablePostArgs = {
+                        returnfields: 'lat,lng,id,type,name,photos,irrigation_pumps,farm_tractors,seed,fertilizer,chemical_inputs,organic_fertilizers,vet_supplies,tools_equipment,seed_muliplier,storage_capacity,urban_center_dist,seed_muliplier,vacination,inseminaiton,breeding,modernized',
+                        format: 'geojson',
+                        returnGeometry: 'yes',
+                        intersects: buffer,
+                        limit: 200 //add a limit of 200 so we don't get carried away
+                    };
+
+                    if (AgWhereClause != '') {
+                        tablePostArgs.where = AgWhereClause;
+                    }
+
+                    var pointUrl = "http://spatialserver.spatialdev.com/services/tables/agriculture_2014/query";
+
+                    $http.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+                        //GeoJSON result of points
+                        if (!points || points.error) {
+                            console.error('Unable to fetch feature: ' + points.error);
+                            return;
+                        }
+
+                        //point is a featurecollection. open the panel and show some stuff.
+                        if (points && points.features && points.features.length > 0) {
+                            if ($scope.featureCollection.length < sector.length) {
+                                // add sector and url for photos
+                                points.features.forEach(function(val){
+                                    val.properties["sector"] = 'agriculture';
+                                    val.properties["url"] = "http://spatialserver.spatialdev.com/fsp-ebs/2014/" + $scope.selection.toLowerCase()  + "/" + val.properties.sector  + "/";
+
+                                });
+                                $scope.featureCollection.push(points.features);
+                                $rootScope.$broadcast('details', $scope.featureCollection);
+                            }
+                        }
+                    });
+
+                    break;
                 case 'Library':
-                    //We have the buffer as geojson.  Send it to the point table to intersect
                     var tablePostArgs = {
                         returnfields: 'lat,lng,name,type,id,photos,business_hours,staff_count,internet,public_computer_count,computer_fee',
                         format: 'geojson',
@@ -757,8 +872,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                         limit: 200 //add a limit of 200 so we don't get carried away
                     };
 
-                    if (LibraryWhereCaluse != '') {
-                        tablePostArgs.where = LibraryWhereCaluse
+                    if (LibraryWhereClause != '') {
+                        tablePostArgs.where = LibraryWhereClause
                     }
 
                     var pointUrl = "http://spatialserver.spatialdev.com/services/tables/library_2014/query";
@@ -773,6 +888,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                         //point is a featurecollection. open the panel and show some stuff.
                         if (points && points.features && points.features.length > 0) {
                             if ($scope.featureCollection.length < sector.length) {
+                                // add sector and url for photos
                                 points.features.forEach(function(val){
                                     val.properties["sector"] = 'library';
                                     val.properties["url"] = "http://spatialserver.spatialdev.com/fsp-ebs/2014/" + $scope.selection.toLowerCase()  + "/" + val.properties.sector  + "/";
@@ -809,6 +925,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                         //point is a featurecollection. open the panel and show some stuff.
                         if (points && points.features && points.features.length > 0) {
                             if ($scope.featureCollection.length < sector.length) {
+                                // add sector and url for photos
                                 points.features.forEach(function(val){
                                     val.properties["sector"] = 'fsp';
                                     val.properties["url"] = "http://spatialserver.spatialdev.com/fsp-ebs/2014/" + $scope.selection.toLowerCase()  + "/" + val.properties.sector  + "/";
