@@ -841,9 +841,6 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         $scope.photourl = $scope.currentDetailitem.url;
         $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
 
-        //$scope.libraryimages = ($scope.librarydetails[$scope.activeidx].properties.photos.split("|"));
-
-
         $scope.showDetails($scope.currentDetailitem);
     };
 
@@ -854,10 +851,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx]; // change current item to active index
         $scope.photourl = $scope.currentDetailitem.url;
         $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
-        //$scope.libraryimages = ($scope.librarydetails[$scope.activeidx].properties.photos.split("|"));
 
-        //if (--$scope.activeThemeItemIdx < 0) $scope.activeThemeItemIdx = len - 1;
-        //var item = $scope.activeThemeItemsList[$scope.activeThemeItemIdx];
         $scope.showDetails($scope.currentDetailitem);
     };
 
@@ -899,7 +893,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     };
 
     $scope.$watch('activeidx',function(){
-        $rootScope.$broadcast('activeidx', $scope.activeidx);
+        $rootScope.$broadcast('activeidx', {properties: {index: $scope.activeidx,sector:$scope.currentDetailitem.sector}});
     });
 
 });

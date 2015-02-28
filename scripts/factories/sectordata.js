@@ -4,20 +4,20 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
     var countryname = 'India';
     service.SelectedSector = '';
     service.selectedCountry = 'India';
-    var sectorSelections = [];
+    service.sectorSelections = [];
     //service.ALLdetails = [];
     //service.ALLdetailsLength = 0;
 
     service.setSelectedSector = function (sector) {
         service.SelectedSector = sector;
 
-        if (sectorSelections.indexOf(sector) == -1) {
-            sectorSelections.push(sector);
+        if (service.sectorSelections.indexOf(sector) == -1) {
+            service.sectorSelections.push(sector);
         } else {
-            sectorSelections.splice(sectorSelections.indexOf(sector), 1);
+            service.sectorSelections.splice(service.sectorSelections.indexOf(sector), 1);
         }
 
-        service.allSectors = sectorSelections;
+        service.allSectors = service.sectorSelections;
 
         console.log("SectorFactory tab: " + service.SelectedSector);
     };

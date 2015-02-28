@@ -397,7 +397,7 @@ layer.cicos_nigeria = {
   clickableLayers: [],
 
   getIDForLayerFeature: function(feature) {
-    return "";
+    return feature.properties.id;
   },
 
   /**
@@ -464,7 +464,6 @@ layer.cicos_nigeria = {
       return pointRadius;
     }
 
-
     var type = feature.type;
     switch (type) {
       case 1: //'Point'
@@ -474,6 +473,12 @@ layer.cicos_nigeria = {
         // selected
         selected.color = 'rgba(255,255,0,0.5)';
         selected.radius = 5;
+        selected.strokeStyle = 'rgba(255,255,255,0.5)';
+        selected.lineWidth = 2;
+        //selected.outline = {
+        //  strokeStyle: 'rgb(20,20,20)',
+        //  lineWidth: 2
+        //};
         break;
       case 2: //'LineString'
               // unselected
@@ -588,8 +593,10 @@ layer.CICOS = {
         style.color = 'rgb(157, 33, 41)';
         style.radius = ScaleDependentPointRadius;
         // selected
-        selected.color = 'rgba(255,255,0,0.5)';
+        style.color = 'rgb(157, 33, 41)';
         selected.radius = 5;
+        selected.strokeStyle = 'rgba(255,255,255,0.5)';
+        selected.lineWidth = 2;
         break;
       case 2: //'LineString'
         // unselected
@@ -764,11 +771,13 @@ layer.health =  {
     switch (type) {
       case 1: //'Point'
         // unselected
-        style.color = 'rgb(127, 157, 106)';
+        style.color = '#7F9D6A';
         style.radius = ScaleDependentPointRadius;
         // selected
-        selected.color = 'rgba(255,255,0,0.5)';
-        selected.radius = 5;
+        selected.color = '#7F9D6A';
+        selected.radius = 7;
+        selected.strokeStyle = 'rgba(255,255,255,0.5)';
+        selected.lineWidth = 2;
         break;
       case 2: //'LineString'
         // unselected
@@ -942,8 +951,10 @@ layer.agriculture = {
         style.color = 'rgb(209, 110, 35)';
         style.radius = ScaleDependentPointRadius;
         // selected
-        selected.color = 'rgba(255,255,0,0.5)';
-        selected.radius = 5;
+        selected.color = 'rgb(209, 110, 35)';
+        selected.radius = 7;
+        selected.strokeStyle = 'rgba(255,255,255,0.5)';
+        selected.lineWidth = 2;
         break;
       case 2: //'LineString'
         // unselected
@@ -1026,6 +1037,164 @@ layer.agriculture = {
   }
 
 };
+
+layer.library = {
+  url: "http://spatialserver.spatialdev.com/services/postgis/library_2014/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=type,id",
+  debug: false,
+  type: 'pbf',
+  name: 'Library',
+  clickableLayers: null,
+
+  // we want confetti to be on top of other layers, such as the contextual layers
+  zIndex: 1000,
+
+  getIDForLayerFeature: function (feature) {
+    return feature.properties.id;
+  },
+
+  /**
+   * The filter function gets called when iterating though each vector tile feature (vtf). You have access
+   * to every property associated with a given feature (the feature, and the layer). You can also filter
+   * based of the context (each tile that the feature is drawn onto).
+   *
+   * Returning false skips over the feature and it is not drawn.
+   *
+   * @param feature
+   * @returns {boolean}
+   */
+  filter: function (feature, context) {
+    //return feature.properties.type != 'Mobile Money Agent';
+    return true;
+  },
+
+  /**
+   * When we want to link events between layers, like clicking on a label and a
+   * corresponding polygon freature, this will return the corresponding mapping
+   * between layers. This provides knowledge of which other feature a given feature
+   * is linked to.
+   *
+   * @param layerName  the layer we want to know the linked layer from
+   * @returns {string} returns corresponding linked layer
+   */
+  layerLink: function (layerName) {
+    if (layerName.indexOf('_label') > -1) {
+      return layerName.replace('_label', '');
+    }
+    return layerName + '_label';
+  },
+
+  /**
+   * Specify which features should have a certain z index (integer).  Lower numbers will draw on 'the bottom'.
+   *
+   * @param feature - the PBFFeature that contains properties
+   */
+  layerOrdering: function (feature) {
+    //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
+    //if (feature && feature.properties) {
+    //  feature.properties.zIndex = _FSP.Config.LIBRARY_LAYERS[feature.properties.type].zIndex || 5;
+    //}
+  },
+
+  style: function (feature) {
+    var style = {};
+    var selected = style.selected = {};
+    var pointRadius = 1;
+
+    function ScaleDependentPointRadius(zoom) {
+      //Set point radius based on zoom
+      var pointRadius = 1;
+      if (zoom >= 0 && zoom <= 7) {
+        pointRadius = 1;
+      }
+      else if (zoom > 7 && zoom <= 10) {
+        pointRadius = 3;
+      }
+      else if (zoom > 10) {
+        pointRadius = 4;
+      }
+
+      return pointRadius;
+    }
+
+    var type = feature.type;
+    switch (type) {
+      case 1: //'Point'
+        // unselected
+        style.color = 'rgb(42, 133, 173)';
+        style.radius = ScaleDependentPointRadius;
+        // selected
+        selected.color = 'rgb(42, 133, 173)';
+        selected.radius = 7;
+        selected.strokeStyle = 'rgba(255,255,255,0.5)';
+        selected.lineWidth = 2;
+        break;
+        break;
+      case 2: //'LineString'
+        // unselected
+        style.color = 'rgba(161,217,155,0.8)';
+        style.size = 3;
+        // selected
+        selected.color = 'rgba(255,25,0,0.5)';
+        selected.size = 3;
+        break;
+      case 3: //'Polygon'
+        // unselected
+        style.color = 'rgba(149,139,255,0.4)';
+        style.outline = {
+          color: 'rgb(20,20,20)',
+          size: 2
+        };
+        // selected
+        selected.color = 'rgba(255,25,0,0.3)';
+        selected.outline = {
+          color: '#d9534f',
+          size: 3
+        };
+    }
+
+    return style;
+  },
+
+  onClick: function (evt) {
+
+    //If nearby tool (or any tool) is active, then abort.
+    //  if(_FSP.ToolMaster.activeTool.active == true) return;
+
+    //var buffer = clickToBuffer(evt);
+    //
+    ////If all are unchecked, then exit out of here
+    ////if(Object.keys(_FSP.LibraryListBuilder.GetFilterObject()).length == 0) return;
+    //
+    ////We have the buffer as geojson.  Send it to the point table to intersect
+    //var tablePostArgs = {
+    //    returnfields: 'lat,lng,name,type,id,photos,business_hours,staff_count,internet,public_computer_count,computer_fee',
+    //    format: 'geojson',
+    //    returnGeometry: 'yes',
+    //    intersects: buffer,
+    //    limit: 200 //add a limit of 200 so we don't get carried away
+    //};
+    //
+    //if(LibraryWhereCaluse != ''){
+    //    tablePostArgs.where = LibraryWhereCaluse
+    //}
+    //
+    //var pointUrl = "http://spatialserver.spatialdev.com/services/tables/library_2014/query";
+    //
+    //$.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+    //    //GeoJSON result of points
+    //    if (!points || points.error) {
+    //        console.error('Unable to fetch feature: ' + points.error);
+    //        return;
+    //    }
+    //
+    //    LibraryDetails = points;
+    //
+    //});
+
+  }
+
+};
+
 
 // All possible CICO layer (combined from all countries)
 var CICO_Config = {

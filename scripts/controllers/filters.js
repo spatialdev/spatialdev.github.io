@@ -71,6 +71,8 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
         switch ($scope.selection) {
             case 'India':
+                SectorFactory.sectorSelections = [];
+                $scope.allSectors = SectorFactory.sectorSelections;
                 $scope.QuickStats = IndiaFactory.India.QuickStats;
                 $scope.title = "Overview - Bihar & Uttar Pradesh";
                 console.log("India QuickStats");
@@ -84,6 +86,8 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 console.log("India On " + $scope.IndiaOn);
                 break;
             case 'Kenya':
+                SectorFactory.sectorSelections = [];
+                $scope.allSectors = SectorFactory.sectorSelections;
                 $scope.IndiaOn = false;
                 $scope.KenyaOn = true;
                 $scope.NigeriaOn = false;
@@ -96,6 +100,8 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 console.log("Kenya QuickStats " + $scope.QuickStats);
                 break;
             case 'Nigeria':
+                SectorFactory.sectorSelections = [];
+                $scope.allSectors = SectorFactory.sectorSelections;
                 $scope.IndiaOn = false;
                 $scope.KenyaOn = false;
                 $scope.NigeriaOn = true;

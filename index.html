@@ -916,7 +916,6 @@
                     <div ng-show="IndiaOn || KenyaOn || NigeriaOn">
                         <span style="color:{{Sectorcfg['Financial Service'].color}};"
                               class="icon-nearBy nav_icons nearby"></span>
-
                         Financial Service
                     </div>
                 </a>
@@ -1089,9 +1088,16 @@ overflow-y: auto;">
 
             <!-- cicos details -->
             <div ng-show="currentDetailitem.sector==='fsp'" class="individual">
-                Financial Service Name: {{currentDetailitem.name}} </br>
-                Type: {{currentDetailitem.type}}  </br>
-                Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
+                <div ng-show="selection=='India'">
+                    Financial Service Name: {{currentDetailitem.name}} </br>
+                    Type: {{currentDetailitem.type}}  </br>
+                    Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
+                </div>
+                <div ng-show="selection=='Nigeria'">
+                    Type: {{currentDetailitem.type}}  </br>
+                    Providers:{{currentDetailitem.providers}} </br>
+                    Submit Date: {{currentDetailitem.submit_date}}
+                </div>
             </div>
 
             <!-- library details -->
