@@ -607,7 +607,6 @@ module.exports = angular.module('SpatialViewer').factory('NigeriaFactory', funct
     service.CICO_Config = CICO_Config;
     service.CICOs_Counts = CICOs;
 
-
     return service;
 
 });

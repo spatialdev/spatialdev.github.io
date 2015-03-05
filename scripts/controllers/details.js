@@ -9,6 +9,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                                                                                      LibraryFilterFactory) {
     $scope.details = {};
     $scope.activeidx = 0;
+    $scope.currentDetailitem = {};
     $scope.ALLdetails = [];
     $scope.allSectors = [];
 
@@ -46,8 +47,8 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
                 }
                 if($scope.selection == 'Kenya'){
-                    $scope.APData = CICOFilterFactory.CICOs_Counts_Kenya;
-                    $scope.sectortotal = CICOFilterFactory.CICOsTotal_Kenya;
+                    $scope.APData = KenyaFactory.CICOs_Counts;
+                    $scope.sectortotal = KenyaFactory.CICOsTotal;
                     console.log("case: Kenya CICOS");
                 }
                 if($scope.selection == 'Nigeria'){

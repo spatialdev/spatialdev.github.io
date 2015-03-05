@@ -370,16 +370,10 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
 
     };
     var CICOs = [];
-    var CICOs_Kenya = [];
-    var CICOs_Nigeria = [];
     var CICOsLandUse = [];
     var service = {};
     service.selectedCountry = 'India';
     service.CICOsTotal = 0;
-    service.CICOsTotal_Kenya = 0;
-    service.CICOsTypeTotal_Kenya = 0;
-    service.CICOsTotal_Nigeria = 0;
-    service.CICOsTypeTotal_Nigeria = 0;
 
     service.getCICOsCounts = function () {
         // INDIA
@@ -391,7 +385,6 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                         {
                             "type": data.features[i].properties.type,
                             "count": data.features[i].properties.count_type,
-                            "land_use": data.features[i].properties.land_use,
                             "selected": false
                         }
                     );
@@ -407,38 +400,6 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
                 CICOs.sort(function (a, b) {
                     return b.count - a.count;
                 });
-            }).
-            error(function (data) {
-                alert(data);
-            });
-
-        // KENYA
-        $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2013/query?where=country%3D%27Kenya%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
-            success(function (data) {
-                //reset array to prevent duplicates
-                for (var i = 0; i < data.features.length; i++) {
-                    CICOs_Kenya.push(
-                        {
-                            "type": data.features[i].properties.type,
-                            "count": data.features[i].properties.count_type,
-                            "land_use": data.features[i].properties.land_use,
-                            "selected": false
-                        }
-                    );
-                    service.CICOsTotal_Kenya += parseInt(CICOs_Kenya[i].count);
-                }
-                // Calculate percentage per type
-                //service.pctPerType(CICOs);
-                for (var i = 0; i < CICOs_Kenya.length; i++) {
-                    CICOs_Kenya[i]["pct"] = ((parseInt(CICOs_Kenya[i].count) / service.CICOsTotal_Kenya));
-                }
-
-                // Sort sector array by count
-                CICOs_Kenya.sort(function (a, b) {
-                    return b.count - a.count;
-                });
-
-                service.CICOsTypeTotal_Kenya = CICOs_Kenya.length;
             }).
             error(function (data) {
                 alert(data);
@@ -681,122 +642,8 @@ module.exports = angular.module('SpatialViewer').factory('CICOFilterFactory', fu
         }
 
     };
-    service.Layer_Kenya = {
-        type: 'pbf',
-        name: 'FSP Kenya',
-        url: "http://spatialserver.spatialdev.com/services/vector-tiles/cicos_2013_kenya/{z}/{x}/{y}.pbf",
-        debug: false,
-        clickableLayers: [],
-
-        getIDForLayerFeature: function(feature) {
-            return "";
-        },
-
-        /**
-         * The filter function gets called when iterating though each vector tile feature (vtf). You have access
-         * to every property associated with a given feature (the feature, and the layer). You can also filter
-         * based of the context (each tile that the feature is drawn onto).
-         *
-         * Returning false skips over the feature and it is not drawn.
-         *
-         * @param feature
-         * @returns {boolean}
-         */
-        filter: function(feature, context) {
-            //return feature.properties.country == 'Kenya';
-            return true;
-        },
-
-        /**
-         * When we want to link events between layers, like clicking on a label and a
-         * corresponding polygon freature, this will return the corresponding mapping
-         * between layers. This provides knowledge of which other feature a given feature
-         * is linked to.
-         *
-         * @param layerName  the layer we want to know the linked layer from
-         * @returns {string} returns corresponding linked layer
-         */
-        layerLink: function(layerName) {
-            if (layerName.indexOf('_label') > -1) {
-                return layerName.replace('_label', '');
-            }
-            return layerName + '_label';
-        },
-
-        /**
-         * Specify which features should have a certain z index (integer).  Lower numbers will draw on 'the bottom'.
-         *
-         * @param feature - the PBFFeature that contains properties
-         */
-        layerOrdering: function(feature){
-            //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
-            if(feature && feature.properties){
-                feature.properties.zIndex = CICO_Config[feature.properties.type].zIndex || 5;
-            }
-        },
-
-        style: function(feature) {
-            var style = {};
-            var selected = style.selected = {};
-            var pointRadius = 1;
-
-            function ScaleDependentPointRadius(zoom){
-                //Set point radius based on zoom
-                var pointRadius = 1;
-                if(zoom >= 0 && zoom <= 7){
-                    pointRadius = 1;
-                }
-                else if(zoom > 7 && zoom <= 10){
-                    pointRadius = 3;
-                }
-                else if(zoom > 10){
-                    pointRadius = 4;
-                }
-
-                return pointRadius;
-            }
-
-
-            var type = feature.type;
-            switch (type) {
-                case 1: //'Point'
-                        // unselected
-                    style.color = 'rgb(157, 33, 41)';
-                    style.radius = ScaleDependentPointRadius;
-                    // selected
-                    selected.color = 'rgba(255,255,0,0.5)';
-                    selected.radius = 5;
-                    break;
-                case 2: //'LineString'
-                        // unselected
-                    style.color = 'rgba(161,217,155,0.8)';
-                    style.size = 3;
-                    // selected
-                    selected.color = 'rgba(255,25,0,0.5)';
-                    selected.size = 3;
-                    break;
-                case 3: //'Polygon'
-                        // unselected
-                    style.color = 'rgba(149,139,255,0.4)';
-                    style.outline = {
-                        color: 'rgb(20,20,20)',
-                        size: 2
-                    };
-                    // selected
-                    selected.color = 'rgba(255,25,0,0.3)';
-                    selected.outline = {
-                        color: '#d9534f',
-                        size: 3
-                    };
-            }
-
-            return style;
-        }
-
-    };
     service.CICO_Config = CICO_Config;
     service.CICOs_Counts = CICOs;
-    service.CICOs_Counts_Kenya = CICOs_Kenya;
     service.CICOs_LandUse_Counts = CICOsLandUse;
 
     return service;

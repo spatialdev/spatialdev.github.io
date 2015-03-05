@@ -41,6 +41,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     var CICOWhereClause = '';
     var AgWhereClause = '';
     var HealthWhereClause = '';
+    var ProviderWhereClause = '';
 
     $scope.$on('AgSelections', function (event, args) {
 
@@ -89,41 +90,85 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     $scope.$on('CICOSelections', function (event, args) {
 
         // object keys are the CICO selection sub sector names
-        var typeobj = {};
+        var typeobj = {}; //  object of CICO selections and their providers
         var sector = '';
         var types = [];
+        var providers = {};
 
         if (args) {
             args.forEach(function (val, idx) {
-                typeobj[val.type] = {
-                    type: val.type,
-                    sector: val.sector
-                };
-                types.push(val.type);
-                sector = val.sector;
+                // create object to compare feature filter properties with
+                if (val.providers) {
+                    typeobj[val.type] = {
+                        type: val.type,
+                        sector: val.sector,
+                        providers: val.providers
+                    };
+                    types.push(val.type);
+                    sector = val.sector;
+                    providers[val.type] = {
+                        providers: val.providers
+                    }
+                } else {
+                    //these object does not have providers
+                    typeobj[val.type] = {
+                        type: val.type,
+                        sector: val.sector
+                    };
+                    types.push(val.type);
+                    sector = val.sector;
+                }
             });
 
-            CICOWhereClause = buildPostGresQueryExpression(types);
+            // create where string that is part of the CICOWhere clause sub queries
+            ProviderWhereClause = buildPostGresProviderExpression(providers);
+
+            //create where clause for onclick events
+            CICOWhereClause = buildPostGresQueryExpression(types, ProviderWhereClause);
+
+            var pvdr_split = [];
 
             var filter = function (feature, context) {
                 if (feature && feature.properties) {
                     var featureProperty = feature.properties.type;
+                    var featureProvider = feature.properties.providers;
                     // check if selections are valid types
                     if (typeobj[featureProperty]) {
-                        return true;  // show the feature
+                        // treat properties with providers different
+                        if (typeobj[featureProperty].hasOwnProperty('providers') == true) {
+                            for (var i = 0; i < typeobj[featureProperty].providers.length; i++) {
+                                //look for '|' in feature properties
+                                if (featureProperty.indexOf("|") !== -1) {
+                                    // split the properties and compare each value in array
+                                    pvdr_split = featureProperty.split("|");
+                                    pvdr_split.forEach(function (val) {
+                                        if (val === typeobj[featureProperty].providers[i]) return true;
+                                    })
+                                } else {
+                                    //if no '|' compare the feature property to our typeobj
+                                    if (featureProvider === typeobj[featureProperty].providers[i]) return true;
+                                }
+                            }
+                        } else {
+                            if (typeobj[featureProperty]) {
+                                return true;
+                            }
+                        }
                     }
-                    return false; //hide the feature
+                    return false;
+
                 } else {
                     console.error('We are trying to filter on a point with no feature or feature.properties.');
                 }
                 return false; // error state, there should be a feature with properties
             };
 
+            // search for pbf later
             var activeLayer = findLayer(sector);
 
             if (activeLayer) {
-                activeLayer.setFilter(filter);
-                activeLayer.redraw();
+                activeLayer.setFilter(filter); // set new filter
+                activeLayer.redraw(); // redraw the map
             }
         }
 
@@ -643,25 +688,53 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         return buffer;
     };
 
-    function buildPostGresQueryExpression(typearray) {
+    function buildPostGresQueryExpression(typearray, providers) {
         var typestring = '';
         var finalstring = '';
 
         if (typearray.length > 0) {
-            if (typearray.length > 1) {
+            if (typearray.length >= 1) {
                 typearray.forEach(function (val) {
-                    typestring += "'" + val + "'" + ",";
+                    // handle providers
+                    if (Object.keys(providers).length > 0) {
+                        Object.keys(providers).forEach(function (p) {
+                            // if cico selections has a type that has providers
+                            if (p == val) {
+                                typestring += " (type='" + val + "' AND (" + providers[p].providers + ")) OR";
+                            } else {
+                                // cico selection type that does not have provider
+                                if (typestring.search(val) == -1) { // only append to string if type does not exist
+                                    typestring += " (type='" + val + "') OR";
+                                }
+                            }
+                        })
+                    } else {
+                        // all types with providers are unchecked
+                        typestring += " (type='" + val + "') OR";
+                    }
                 });
-                //remove tailing comma
-                var finalstring = typestring.replace(/(^\s*,)|(,\s*$)/g, '');
-                if($scope.selection == 'India') return "type IN(" + finalstring + ")";
-                if($scope.selection == 'Nigeria') return "type IN(" + finalstring + ")";
+
+                if ($scope.selection == 'Nigeria') {
+                    //remove trailing comma
+                    //finalstring = typestring.replace(/(^\s*,)|(,\s*$)/g, '');
+                    finalstring = typestring.substring(0, typestring.length - 3);
+                    return finalstring + "AND Country ='Nigeria'";
+                }
+
+                if ($scope.selection == 'Kenya') {
+                    //remove trailing 'OR'
+                    finalstring = typestring.substring(0, typestring.length - 3);
+                    return finalstring + "AND Country ='Kenya'";
+                }
+
+                return "type IN(" + finalstring + ")";
+
             } else {
                 typearray.forEach(function (val) {
                     typestring += "'" + val + "'";
                 });
-
-                if ($scope.selection == 'Nigeria') if($scope.selection == 'Nigeria') return "type IN(" + finalstring + ")";
+                if ($scope.selection == 'Nigeria') return "type IN(" + finalstring + ") AND Country ='Nigeria'";
+                //if ($scope.selection == 'Kenya') return "type IN(" + finalstring + ") AND Country ='Kenya'";
                 return "type IN(" + typestring + ")";
 
             }
@@ -669,6 +742,23 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             return "";
 
         }
+    }
+
+    function buildPostGresProviderExpression(obj) {
+        var fobj = {};
+
+        if (Object.keys(obj)) { // if obj is valid
+            Object.keys(obj).forEach(function (key) {
+                fobj[key] = {providers: ''};
+                obj[key].providers.forEach(function (val, i) {
+                    // for each filter, create string that combines all providers
+                    fobj[key].providers += "providers like '%" + val + "%' or ";
+                });
+                // remove the last 'or ' from string
+                fobj[key].providers = fobj[key].providers.substring(0, fobj[key].providers.length - 3);
+            })
+        }
+        return fobj;
     }
 
     map.on('click', function (evt) {
@@ -690,59 +780,65 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     });
 
     function highlightPointSelection(index, points, sector) {
-        if($scope.ALLpoints.length < 2) {
-            index = $scope.detailsIndex;
-            var currentPoint = points.features[index];
 
-            if (currentPoint) {
-                var layerindex = overlayNames.indexOf(sector);
-                var currOverlay = overlays[layerindex];
+        if (points.length > 0) {
 
-                var layers = currOverlay.getLayers();
-                if (layers) {
-                    var layer = layers[Object.keys(layers)[0]];
-                    if (layer) {
-                        MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
-                        if (MapBuilder.selectedConfetti) {
-                            MapBuilder.selectedConfetti.select();
-                            if (MapBuilder.previouslySelectedConfetti) MapBuilder.previouslySelectedConfetti.deselect();
-                            MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
+            if ($scope.ALLpoints.length < 2) { // check if more then one sector is selected
+                index = $scope.detailsIndex;
+                var currentPoint = points[0][index];
+
+                if (currentPoint) {
+                    var layerindex = overlayNames.indexOf(sector);
+                    var currOverlay = overlays[layerindex];
+
+                    var layers = currOverlay.getLayers();
+                    if (layers) {
+                        var layer = layers[Object.keys(layers)[0]];
+                        if (layer) {
+                            MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
+                            if (MapBuilder.selectedConfetti) {
+                                MapBuilder.selectedConfetti.select();
+                                if (MapBuilder.previouslySelectedConfetti) MapBuilder.previouslySelectedConfetti.deselect();
+                                MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
+                            }
                         }
                     }
                 }
-            }
-        } else {
-            // handles multiple sectors
-            index = $scope.detailsIndex;
-            var allpoints = [];
+            } else {
+                // handles multiple sectors
+                index = $scope.detailsIndex;
 
-            points.forEach(function(val){
-                val.forEach(function(v){
-                    allpoints.push(v);
+                var allpoints = [];
+
+                //combine feature points from all sectors into one array 'allpoints'
+                points.forEach(function (val) {
+                    val.forEach(function (v) {
+                        allpoints.push(v);
+                    });
                 });
-            });
 
-            var currentPoint = allpoints[index];
+                var currentPoint = allpoints[index];
 
-            if (currentPoint) {
-                var layerindex = overlayNames.indexOf(currentPoint.properties.sector);
-                var currOverlay = overlays[layerindex];
+                if (currentPoint) {
+                    var layerindex = (currentPoint.properties.sector == "fsp") ? overlayNames.indexOf(sector) : overlayNames.indexOf(currentPoint.properties.sector);
+                    var currOverlay = overlays[layerindex];
 
-                var layers = currOverlay.getLayers();
-                if (layers) {
-                    var layer = layers[Object.keys(layers)[0]];
-                    if (layer) {
-                        MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
-                        if (MapBuilder.selectedConfetti) {
-                            MapBuilder.selectedConfetti.select();
-                            if (MapBuilder.previouslySelectedConfetti) MapBuilder.previouslySelectedConfetti.deselect();
-                            MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
+                    var layers = currOverlay.getLayers();
+                    if (layers) {
+                        var layer = layers[Object.keys(layers)[0]];
+                        if (layer) {
+                            MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
+                            if (MapBuilder.selectedConfetti) {
+                                MapBuilder.selectedConfetti.select();
+                                if (MapBuilder.previouslySelectedConfetti && (MapBuilder.selectedConfetti.id !== MapBuilder.previouslySelectedConfetti.id)) MapBuilder.previouslySelectedConfetti.deselect();
+                                MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
+                            }
                         }
                     }
                 }
+
+
             }
-
-
         }
     }
 
@@ -791,13 +887,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                 $rootScope.$broadcast('details', $scope.featureCollection);
                             }
 
-                            if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, points, "health");
+                            if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, $scope.featureCollection, "health");
 
-                            //watch for change in active index; if active index is zero, still highlight the point
-                            //$scope.$on('activeidx', function (event, args) {
-                            //    $scope.detailsIndex = args.properties.index;
-                            //    highlightPointSelection($scope.detailsIndex, points, "health");
-                            //});
                         }
                     });
 
@@ -837,13 +928,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                 $rootScope.$broadcast('details', $scope.featureCollection);
                             }
 
-                            if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, points, "agriculture");
+                            if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, $scope.featureCollection, "agriculture");
 
-                            //watch for change in active index; if active index is zero, still highlight the point
-                            //$scope.$on('activeidx', function (event, args) {
-                            //    $scope.detailsIndex = args.properties.index;
-                            //    highlightPointSelection($scope.detailsIndex, points, "agriculture");
-                            //});
                         }
                     });
 
@@ -882,19 +968,13 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                 $rootScope.$broadcast('details', $scope.featureCollection);
                             }
 
-                            if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, points, "library");
-
-                            //watch for change in active index; if active index is zero, still highlight the point
-                            //$scope.$on('activeidx', function (event, args) {
-                            //    $scope.detailsIndex = args.properties.index;
-                            //    highlightPointSelection($scope.detailsIndex, points, "library");
-                            //});
+                            if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, $scope.featureCollection, "library");
                         }
                     });
                     break;
 
                 case 'CICOS':
-                    if($scope.selection == 'India') {
+                    if ($scope.selection == 'India') {
                         var tablePostArgs = {
                             returnfields: 'lat,lng,name,assoc_bank,assoc_business,form_submitted,type,id,photos',
                             format: 'geojson',
@@ -920,7 +1000,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                 if ($scope.featureCollection.length < sector.length) {
                                     // add sector and url for photos
                                     points.features.forEach(function (val) {
-                                        val.properties["sector"] = 'fsp';
+                                        val.properties["sector"] = 'CICOS';
                                         val.properties["url"] = photoRoot;
                                     });
                                     $scope.ALLpoints.push(points);
@@ -928,17 +1008,12 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                     $rootScope.$broadcast('details', $scope.featureCollection);
                                 }
 
-                                if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, points, "CICOS");
+                                if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, $scope.featureCollection, "CICOS");
 
-                                //watch for change in active index; if active index is zero, still highlight the point
-                                //$scope.$on('activeidx', function (event, args) {
-                                //    $scope.detailsIndex = args.properties.index;
-                                //    highlightPointSelection($scope.detailsIndex, points, "CICOS");
-                                //});
                             }
                         });
                     }
-                    if($scope.selection == 'Nigeria') {
+                    if ($scope.selection == 'Nigeria') {
                         var tablePostArgs = {
                             returnfields: 'shared_agent,bank_operational,id,country,type,providers,photos,land_use,submit_date,bank_registered',
                             format: 'geojson',
@@ -966,7 +1041,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                 if ($scope.featureCollection.length < sector.length) {
                                     // add sector and url for photos
                                     points.features.forEach(function (val) {
-                                        val.properties["sector"] = 'fsp';
+                                        val.properties["sector"] = 'cicos_nigeria';
                                         val.properties["url"] = photoRoot;
                                     });
                                     $scope.ALLpoints.push(points);
@@ -974,15 +1049,49 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                     $rootScope.$broadcast('details', $scope.featureCollection);
                                 }
 
-                                if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, points, "cicos_nigeria");
+                                if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, $scope.featureCollection, "cicos_nigeria");
 
-                                //watch for change in active index; if active index is zero, still highlight the point
-                                $scope.$on('activeidx', function (event, args) {
-                                    if($scope.detailsIndex != args) {
-                                        $scope.detailsIndex = args.properties.index;
-                                        highlightPointSelection($scope.detailsIndex, points, "cicos_nigeria");
-                                    }
-                                });
+                            }
+                        });
+                    }
+                    if ($scope.selection == 'Kenya') {
+                        var tablePostArgs = {
+                            returnfields: 'shared_agent,bank_operational,id,country,type,providers,photos,land_use,submit_date,bank_registered',
+                            format: 'geojson',
+                            returnGeometry: 'yes',
+                            intersects: buffer,
+                            limit: 200 //add a limit of 200 so we don't get carried away
+                        };
+
+                        var pointUrl = "http://spatialserver.spatialdev.com/services/tables/cicos_2013//query";
+                        var photoRoot = "http://www.fspmaps.com/php/fetchPhoto.php?name=Kenya/";
+
+                        if (CICOWhereClause != '') {
+                            tablePostArgs.where = CICOWhereClause;
+                        }
+
+                        $http.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+                            //GeoJSON result of points
+                            if (!points || points.error) {
+                                console.error('Unable to fetch feature: ' + points.error);
+                                return;
+                            }
+
+                            //point is a featurecollection. open the panel and show some stuff.
+                            if (points && points.features && points.features.length > 0) {
+                                if ($scope.featureCollection.length < sector.length) {
+                                    // add sector and url for photos
+                                    points.features.forEach(function (val) {
+                                        val.properties["sector"] = 'cicos_kenya';
+                                        val.properties["url"] = photoRoot;
+                                    });
+                                    $scope.ALLpoints.push(points);
+                                    $scope.featureCollection.push(points.features);
+                                    $rootScope.$broadcast('details', $scope.featureCollection);
+                                }
+
+                                if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, $scope.featureCollection, "cicos_kenya");
+
                             }
                         });
                     }
@@ -993,10 +1102,9 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     // watch for when user details panel index changes
     $scope.$on('activeidx', function (event, args) {
         // activeidx changes multiples times in details.js, so only run when details index != activeidx
-        if($scope.detailsIndex != args) {
+        if ($scope.detailsIndex != args && args !== 0) {
             $scope.detailsIndex = args.properties.index;
-            var sector = args.properties.sector;
-            highlightPointSelection($scope.detailsIndex, $scope.featureCollection, sector);
+            highlightPointSelection($scope.detailsIndex, $scope.featureCollection, args.properties.sector);
         }
     })
 

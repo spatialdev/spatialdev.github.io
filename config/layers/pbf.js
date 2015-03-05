@@ -278,12 +278,12 @@ layer.gaul_fsp = {
 layer.cicos_kenya = {
   type: 'pbf',
   name: 'FSP Kenya',
-  url: "http://spatialserver.spatialdev.com/services/vector-tiles/cicos_2013_kenya/{z}/{x}/{y}.pbf",
+  url: "http://spatialserver.spatialdev.com/services/vector-tiles/cicos_2013_kenya/{z}/{x}/{y}.pbf?fields=type,id,providers",
   debug: false,
   clickableLayers: [],
 
   getIDForLayerFeature: function(feature) {
-    return "";
+    return feature.properties.id;
   },
 
   /**
@@ -358,8 +358,10 @@ layer.cicos_kenya = {
         style.color = CICO_Config[feature.properties.type].color;
         style.radius = ScaleDependentPointRadius;
         // selected
-        selected.color = 'rgba(255,255,0,0.5)';
-        selected.radius = 5;
+        selected.color = CICO_Config[feature.properties.type].color;
+        selected.radius = 7;
+        selected.strokeStyle = 'rgba(255,255,255,0.5)';
+        selected.lineWidth = 2;
         break;
       case 2: //'LineString'
         // unselected
@@ -471,8 +473,8 @@ layer.cicos_nigeria = {
         style.color = CICO_Config[feature.properties.type].color;
         style.radius = ScaleDependentPointRadius;
         // selected
-        selected.color = 'rgba(255,255,0,0.5)';
-        selected.radius = 5;
+        selected.color = CICO_Config[feature.properties.type].color;
+        selected.radius = 7;
         selected.strokeStyle = 'rgba(255,255,255,0.5)';
         selected.lineWidth = 2;
         //selected.outline = {
@@ -560,9 +562,9 @@ layer.CICOS = {
    */
   layerOrdering: function (feature) {
     //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
-    //if (feature && feature.properties) {
-    //  feature.properties.zIndex = _FSP.Config.CICO_LAYERS[feature.properties.type].zIndex || 5;
-    //}
+    if (feature && feature.properties) {
+      feature.properties.zIndex = CICO_Config[feature.properties.type].zIndex || 5;
+    }
   },
 
   style: function(feature) {
@@ -594,7 +596,7 @@ layer.CICOS = {
         style.radius = ScaleDependentPointRadius;
         // selected
         style.color = 'rgb(157, 33, 41)';
-        selected.radius = 5;
+        selected.radius = 7;
         selected.strokeStyle = 'rgba(255,255,255,0.5)';
         selected.lineWidth = 2;
         break;
@@ -741,9 +743,9 @@ layer.health =  {
    */
   layerOrdering: function (feature) {
     //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
-    //if (feature && feature.properties) {
-    //  feature.properties.zIndex = _FSP.Config.HEALTH_LAYERS[feature.properties.type].zIndex || 5;
-    //}
+    if (feature && feature.properties) {
+      feature.properties.zIndex = CICO_Config[feature.properties.type].zIndex || 5;
+    }
   },
 
   style: function(feature) {
@@ -918,9 +920,9 @@ layer.agriculture = {
    */
   layerOrdering: function (feature) {
     //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
-    //if (feature && feature.properties) {
-    //  feature.properties.zIndex = _FSP.Config.AG_LAYERS[feature.properties.type].zIndex || 5;
-    //}
+    if (feature && feature.properties) {
+      feature.properties.zIndex = CICO_Config[feature.properties.type].zIndex || 5;
+    }
   },
 
   style: function(feature) {
@@ -1090,9 +1092,9 @@ layer.library = {
    */
   layerOrdering: function (feature) {
     //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
-    //if (feature && feature.properties) {
-    //  feature.properties.zIndex = _FSP.Config.LIBRARY_LAYERS[feature.properties.type].zIndex || 5;
-    //}
+    if (feature && feature.properties) {
+      feature.properties.zIndex = CICO_Config[feature.properties.type].zIndex || 5;
+    }
   },
 
   style: function (feature) {

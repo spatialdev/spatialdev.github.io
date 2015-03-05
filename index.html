@@ -435,77 +435,77 @@
         </ul>
 
         <!-- Tab panes -->
-        <div class="tab-content scrollable">
-            <div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">
-                <label class="checkbox">
-                    <input type="checkbox" ng-model="CICOSector.selectedAll" ng-click="filterCICO();
-                                toggleMapLayer(navTab, CICOLayer)">
-                    {{checkedBool}}
-                </label>
-                <label ng-repeat="names in CICOSector" class="checkbox">
-                    <input type="checkbox" ng-model="names.selected"
-                           ng-click="setCICOSelection(names.type, !names.selected)">
-                    {{names.type}} ({{names.count | number}})
-                </label>
-            </div>
+        <!--<div class="tab-content scrollable">-->
+            <!--<div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">-->
+                <!--<label class="checkbox">-->
+                    <!--<input type="checkbox" ng-model="CICOSector.selectedAll" ng-click="filterCICO();-->
+                                <!--toggleMapLayer(navTab, CICOLayer)">-->
+                    <!--{{checkedBool}}-->
+                <!--</label>-->
+                <!--<label ng-repeat="names in CICOSector" class="checkbox">-->
+                    <!--<input type="checkbox" ng-model="names.selected"-->
+                           <!--ng-click="setCICOSelection(names.type, !names.selected)">-->
+                    <!--{{names.type}} ({{names.count | number}})-->
+                <!--</label>-->
+            <!--</div>-->
 
-            <div ng-class="{active: navTab==='health'}" id="sectors-filter" class="tab-pane">
-                <label class="checkbox">
-                    <input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth();
-                                toggleMapLayer(navTab, HealthLayer)">
-                    {{checkedBool}}
-                </label>
+            <!--<div ng-class="{active: navTab==='health'}" id="sectors-filter" class="tab-pane">-->
+                <!--<label class="checkbox">-->
+                    <!--<input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth();-->
+                                <!--toggleMapLayer(navTab, HealthLayer)">-->
+                    <!--{{checkedBool}}-->
+                <!--</label>-->
 
-                <label ng-repeat="names in HealthSector" class="checkbox">
-                    <input type="checkbox" ng-model="names.selected"
-                           ng-click="setHealthSelection(names.type, !names.selected)">
-                    {{names.type}} ({{names.count | number}})
-                </label>
-            </div>
+                <!--<label ng-repeat="names in HealthSector" class="checkbox">-->
+                    <!--<input type="checkbox" ng-model="names.selected"-->
+                           <!--ng-click="setHealthSelection(names.type, !names.selected)">-->
+                    <!--{{names.type}} ({{names.count | number}})-->
+                <!--</label>-->
+            <!--</div>-->
 
-            <div ng-class="{active: navTab==='library'}" id="sectors-filter" class="tab-pane">
-                <div>
-                    <label class="checkbox">
-                        <input type="checkbox" ng-model="LibrarySector.selectedAll"
-                               ng-click="filterLibrary(); toggleMapLayer(navTab, LibraryLayer)">
-                        {{checkedBool}}
-                    </label>
+            <!--<div ng-class="{active: navTab==='library'}" id="sectors-filter" class="tab-pane">-->
+                <!--<div>-->
+                    <!--<label class="checkbox">-->
+                        <!--<input type="checkbox" ng-model="LibrarySector.selectedAll"-->
+                               <!--ng-click="filterLibrary(); toggleMapLayer(navTab, LibraryLayer)">-->
+                        <!--{{checkedBool}}-->
+                    <!--</label>-->
 
-                    <label ng-repeat="names in LibrarySector" class="checkbox">
-                        <input type="checkbox" ng-model="names.selected"
-                               ng-click="setLibrarySelection(names.type, !names.selected)">
-                        {{names.type}} ({{names.count | number}})
-                    </label>
-                </div>
-            </div>
+                    <!--<label ng-repeat="names in LibrarySector" class="checkbox">-->
+                        <!--<input type="checkbox" ng-model="names.selected"-->
+                               <!--ng-click="setLibrarySelection(names.type, !names.selected)">-->
+                        <!--{{names.type}} ({{names.count | number}})-->
+                    <!--</label>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div ng-class="{active: navTab==='agriculture'}" id="sectors-filter" class="tab-pane">
+            <!--<div ng-class="{active: navTab==='agriculture'}" id="sectors-filter" class="tab-pane">-->
 
-                <div>
-                    <label class="checkbox">
-                        <input type="checkbox" ng-model="AgSector.selectedAll"
-                               ng-click="filterAg(); toggleMapLayer(navTab, AgLayer)">
-                        {{checkedBool}}
-                    </label>
+                <!--<div>-->
+                    <!--<label class="checkbox">-->
+                        <!--<input type="checkbox" ng-model="AgSector.selectedAll"-->
+                               <!--ng-click="filterAg(); toggleMapLayer(navTab, AgLayer)">-->
+                        <!--{{checkedBool}}-->
+                    <!--</label>-->
 
-                    <label ng-repeat="names in AgSector" class="checkbox">
-                        <input type="checkbox" ng-model="names.selected"
-                               ng-click="setAgSelection(names.type, !names.selected)">
-                        {{names.type}} ({{names.count | number}})
-                    </label>
-                </div>
-            </div>
+                    <!--<label ng-repeat="names in AgSector" class="checkbox">-->
+                        <!--<input type="checkbox" ng-model="names.selected"-->
+                               <!--ng-click="setAgSelection(names.type, !names.selected)">-->
+                        <!--{{names.type}} ({{names.count | number}})-->
+                    <!--</label>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div ng-class="{active: navTab==='custom'}" class="tab-pane" id="custom-filter">
-                <h4>Filter WHERE Clause</h4>
-                <textarea class="form-control" rows="6" placeholder="Create a custom where clause..."
-                          ng-model="whereClause"></textarea>
-                <button ng-click="submitFilter()" type="button"
-                        class="btn btn-primary pull-right custom-filter-submit">
-                    Submit
-                </button>
-            </div>
-        </div>
+            <!--<div ng-class="{active: navTab==='custom'}" class="tab-pane" id="custom-filter">-->
+                <!--<h4>Filter WHERE Clause</h4>-->
+                <!--<textarea class="form-control" rows="6" placeholder="Create a custom where clause..."-->
+                          <!--ng-model="whereClause"></textarea>-->
+                <!--<button ng-click="submitFilter()" type="button"-->
+                        <!--class="btn btn-primary pull-right custom-filter-submit">-->
+                    <!--Submit-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
 
     </div>
 </div>
@@ -659,17 +659,24 @@
 
             <div ng-show="top3">
                 <label ng-repeat="name in CICOTop3" class="checkbox">
-                    <input type="checkbox" ng-model="name.selected"
-                           ng-click="setCICOSelection(name.type, !name.selected)">
+                    <input type="checkbox" ng-model="name.selected" ng-click="setCICOSelection(name.type, !name.selected,null,null)">
                     {{name.type}}
                 </label>
                 <li class="divider"></li>
             </div>
 
-            <label ng-show="CICOSector.viewAll" ng-repeat="names in CICOSector" class="checkbox">
-                <input type="checkbox" ng-model="names.selected"
-                       ng-click="setCICOSelection(names.type, !names.selected)">
+            <label ng-show="CICOSector.viewAll" ng-repeat="names in CICOSector" ng-init="outerIndex = $index" class="checkbox">
+                <input type="checkbox" ng-model="names.selected" ng-click="setCICOSelection(names.type, !names.selected,null,null)">
                 {{names.type}} ({{names.count | number}})
+                <div class="providers">
+                    <div ng-show="names.providers.length>0">
+                        <input type="checkbox" ng-model="names.viewAll" ng-click="names.viewAll = !names.viewAll"> View All
+                    </div>
+                    <div ng-show="names.viewAll===true && names.providers.length>0" ng-repeat="providers in names.providers" ng-init="innerIndex = $index">
+                        <input type="checkbox" ng-model="providers.selected" ng-click="setCICOSelection(null, null,providers.type,!providers.selected)">
+                    {{providers.type }}
+                    </div>
+                </div>
             </label>
 
             <div ng-show="!CICOSector.viewAll" class="ShowMore" ng-click="toggleViewAllCICOS()">
@@ -911,48 +918,66 @@
         <div class="SectorContent" ng-show="ShowAllSectors">
             <!-- Financial Sector -->
             <div class="SingleSector">
-                <a style="color:{{Sectorcfg['Financial Service'].color}};"
+                <!-- India -->
+                <a class="cicos" ng-show="selection==='India'" ng-class="CICOLayer.active ? 'on' : 'off'"
                    ng-click="setSelectedSector('CICOS');filterCICO();toggleMapLayer('CICOS',CICOLayer)">
-                    <div ng-show="IndiaOn || KenyaOn || NigeriaOn">
-                        <span style="color:{{Sectorcfg['Financial Service'].color}};"
-                              class="icon-nearBy nav_icons nearby"></span>
+                    <div ng-show="IndiaOn">
+                        <span class="icon-nearBy nav_icons nearby"></span>
+                        Financial Service
+                    </div>
+                </a>
+                <!-- Nigeria -->
+                <a class="cicos" ng-show="selection==='Nigeria'" ng-class="CICOLayer_Nigeria.active ? 'on' : 'off'"
+                   ng-click="setSelectedSector('CICOS');filterCICO();toggleMapLayer('CICOS',CICOLayer)">
+                    <div ng-show="NigeriaOn">
+                        <span class="icon-nearBy nav_icons nearby"></span>
+                        Financial Service
+                    </div>
+                </a>
+                <!-- Kenya -->
+                <a class="cicos" ng-show="selection==='Kenya'" ng-class="CICOLayer_Kenya.active ? 'on' : 'off'"
+                   ng-click="setSelectedSector('CICOS');filterCICO();toggleMapLayer('CICOS',CICOLayer)">
+                    <div ng-show="KenyaOn">
+                        <span class="icon-nearBy nav_icons nearby"></span>
                         Financial Service
                     </div>
                 </a>
             </div>
             <!-- Library Sector -->
             <div class="SingleSector">
-                <a style="color:{{Sectorcfg['Library'].color}};"
+                <a class="library" ng-class="LibraryLayer.active ? 'on' : 'off'"
                    ng-click="setSelectedSector('Library');filterLibrary();toggleMapLayer('library',LibraryLayer)">
                     <div ng-show="IndiaOn">
-                        <span style="color:{{Sectorcfg['Library'].color}};" class="icon-nearBy nav_icons nearby"></span>
+                        <span class="icon-nearBy nav_icons nearby"></span>
                         Library
                     </div>
                 </a>
             </div>
             <!-- Health Sector -->
             <div class="SingleSector">
-                <a style="color:{{Sectorcfg['Health'].color}};"
+                <a class="health" ng-class="HealthLayer.active ? 'on' : 'off'"
                    ng-click="setSelectedSector('Health');filterHealth();toggleMapLayer('health',HealthLayer)">
                     <div ng-show="IndiaOn">
-                        <span style="color:{{Sectorcfg['Health'].color}};" class="icon-nearBy nav_icons nearby"></span>
+                        <span class="icon-nearBy nav_icons nearby"></span>
                         Health
                     </div>
                 </a>
             </div>
             <!-- Agriculture Sector -->
             <div class="SingleSector">
-                <a style="color:{{Sectorcfg['Agriculture'].color}};"
+                <a class="agriculture" ng-class="AgLayer.active ? 'on' : 'off'"
                    ng-click="setSelectedSector('Agriculture');filterAg();toggleMapLayer('agriculture',AgLayer)">
                     <div ng-show="IndiaOn">
-                        <span style="color:{{Sectorcfg['Agriculture'].color}};"
-                              class="icon-nearBy nav_icons nearby"></span>
+                        <span class="icon-nearBy nav_icons nearby"></span>
                         Agriculture
                     </div>
                 </a>
             </div>
+            <div ng-show="CICOLayer.active === false && LibraryLayer.active === false && HealthLayer.active === false && AgLayer.active === false"
+                 class="View_All" ng-click="ViewAllSectors()"><a>View All</a></div>
         </div>
     </div>
+
 
 </div>
 
@@ -979,10 +1004,15 @@
     <div class="input-group">
         <span class="input-group-addon">ECOS Search</span>
         <input type="text" class="form-control ng-pristine ng-valid" placeholder="Enter search term"
-               ng-model="SearchInput">
+               ng-model="searchText">
     </div>
-    <div id="searchResults">
-        <div class="searchResult Header ng-binding ng-hide" ng-show="projectResults">Project Results ()</div>
+    <div ng-show="searchText.length>0" id="searchResults">
+        <div class="searchResult Header" >
+            <div ng-repeat="x in FirstNames | filter:searchText">
+                {{x}}
+            </div>
+        </div>
+
         <!-- ngRepeat: row in projectResults -->
 
         <div class="searchResult Header ng-binding ng-hide" ng-show="disasterResults">Disaster Results ()</div>
@@ -1087,13 +1117,14 @@ overflow-y: auto;">
             </div>
 
             <!-- cicos details -->
-            <div ng-show="currentDetailitem.sector==='fsp'" class="individual">
+            <div ng-show="currentDetailitem.sector==='CICOS' || currentDetailitem.sector==='cicos_nigeria' || currentDetailitem.sector==='cicos_kenya'"
+                 class="individual">
                 <div ng-show="selection=='India'">
                     Financial Service Name: {{currentDetailitem.name}} </br>
                     Type: {{currentDetailitem.type}}  </br>
                     Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
                 </div>
-                <div ng-show="selection=='Nigeria'">
+                <div ng-show="selection=='Nigeria' || selection=='Kenya'">
                     Type: {{currentDetailitem.type}}  </br>
                     Providers:{{currentDetailitem.providers}} </br>
                     Submit Date: {{currentDetailitem.submit_date}}

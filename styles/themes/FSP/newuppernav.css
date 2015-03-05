@@ -265,6 +265,10 @@
     float: left;
 }
 
+.providers {
+    margin-left:25px;
+}
+
 #FilterArea .btn-sector{
     padding: 10px 15px 10px 15px;
 }

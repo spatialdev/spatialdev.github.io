@@ -12,6 +12,8 @@ module.exports = angular.module('SpatialViewer').controller('SearchECOSCtrl', fu
   $scope.$watch('SearchInput', executeECOSSearch, true);
 
 
+    $scope.FirstNames = ['Daniel','Ryan','Jubal','Clint','David','Daniela','Nick','Todd','Derrick','Lebron'];
+
   function executeECOSSearch (text){
       if(!text || text.length < 3) return;
 
@@ -55,7 +57,6 @@ module.exports = angular.module('SpatialViewer').controller('SearchECOSCtrl', fu
     function sendProjectToDetailsPanel (properties){
         $rootScope.$broadcast('details', { feature: { properties: properties } });
     }
-
 
     //this is a duplicate from breadcrumbs.js  Should be refactored to a single function
     function zoomToGUID (guid, level) {

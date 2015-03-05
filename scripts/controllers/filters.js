@@ -6,7 +6,7 @@
 module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', function ($scope, $http, $state, $stateParams, $rootScope,
                                                                                      SectorFactory, CICOFilterFactory, HealthFilterFactory,
                                                                                      LibraryFilterFactory, AgFilterFactory, LayerConfig,
-                                                                                     IndiaFactory,KenyaFactory,NigeriaFactory) {
+                                                                                     IndiaFactory, KenyaFactory, NigeriaFactory) {
     $scope.params = $stateParams;
     $scope.navTab = 'CICOS';
     $scope.allSectors = [];
@@ -14,33 +14,22 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.AgLayer = AgFilterFactory.Layer;
     $scope.LibraryLayer = LibraryFilterFactory.Layer;
     $scope.CICOLayer = CICOFilterFactory.Layer;
-    $scope.CICOLayer_Kenya = CICOFilterFactory.Layer_Kenya;
+    $scope.CICOLayer_Kenya = KenyaFactory.Layer;
     $scope.CICOLayer_Nigeria = NigeriaFactory.Layer;
     $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
+    $scope.HealthLayer.active = false;
+    $scope.LibraryLayer.active = false;
+    $scope.CICOLayer.active = false;
+    $scope.AgLayer.active = false;
     $scope.top3 = false;
     $scope.ShowAllSectors = false;
     $scope.SearchBar = false;
     $scope.AgTop3 = [];
     $scope.t3 = [];
 
-    // Move this to Factories
-    $scope.Sectorcfg = {
-        'Financial Service': {
-            color: 'rgb(157, 33, 41)'
-        },
-        'Library': {
-            color: 'rgb(42, 133, 173)'
-        },
-        'Agriculture': {
-            color: 'rgb(209, 110, 35)'
+    $scope.CICOProviders_Kenya = {};
 
-        },
-        'Health': {
-            color: 'rgb(127, 157, 106)'
-        }
-    };
-
-    $scope.toggleSearchBar = function(){
+    $scope.toggleSearchBar = function () {
         $scope.SearchBar = !$scope.SearchBar;
     };
 
@@ -48,15 +37,16 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     // $scope.CICOSector can either contain Kenya/India/Nigeria data
     $scope.setFilters = function () {
         if ($scope.selection == 'Kenya') {
-            $scope.CICOSector = CICOFilterFactory.CICOs_Counts_Kenya;
+            $scope.CICOSector = KenyaFactory.CICOs_Counts;
+            //$scope.CICOProviders.viewAll = true;
             $scope.CICOSector.viewAll = true;
         }
-        if($scope.selection == 'India'){
+        if ($scope.selection == 'India') {
             $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
             //$scope.CICOSector.viewAll = false;
             //$scope.HealthSector.viewAll = true;
         }
-        if($scope.selection == 'Nigeria'){
+        if ($scope.selection == 'Nigeria') {
             $scope.CICOSector = NigeriaFactory.CICOs_Counts;
             $scope.CICOSector.viewAll = true;
         }
@@ -123,13 +113,16 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.LibrarySector = LibraryFilterFactory.Library_Counts;
 
     // Check box are checked by default
-    //$scope.CICOSector.selectedAll = false;
     $scope.HealthSector.viewAll = true;
-    //$scope.AgSector.selectedAll = false;
-    //$scope.LibrarySector.selectedAll = false;
     $scope.LibrarySector.viewAll = true;
     $scope.CICOSector.viewAll = true;
     $scope.AgSector.viewAll = true;
+
+    $scope.HealthSector.active = false;
+    $scope.LibrarySector.active = false;
+    $scope.CICOSector.active = false;
+    $scope.AgSector.active = false;
+
     $scope.checkedBool = "View All";
     $scope.selectedSector = 'CICOS';
 
@@ -150,7 +143,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
     };
 
-    $scope.checkAllHealth = function (){
+    $scope.checkAllHealth = function () {
         for (var i = 0; i < $scope.HealthSector.length; i++) {
             if ($scope.HealthSector.selectedAll == true) {
                 $scope.HealthSector[i].selected = true;
@@ -160,7 +153,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
     };
 
-    $scope.checkAllLibrary = function (){
+    $scope.checkAllLibrary = function () {
         for (var i = 0; i < $scope.LibrarySector.length; i++) {
             if ($scope.LibrarySector.selectedAll == true) {
                 $scope.LibrarySector[i].selected = true;
@@ -170,7 +163,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
     };
 
-    $scope.checkAllAg = function (){
+    $scope.checkAllAg = function () {
         for (var i = 0; i < $scope.AgSector.length; i++) {
             if ($scope.AgSector.selectedAll == true) {
                 $scope.AgSector[i].selected = true;
@@ -182,44 +175,20 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     // Handle Check/Uncheck All filters
     $scope.filterCICO = function () {
-        //CICOFilterFactory.checkAll($scope.CICOSector, $scope.selectedSector, $scope.CICOSector.selectedAll);
-        // set scope variables to mirror factory properties
-        //$scope.checkedBool = CICOFilterFactory.checkBool;
-        //$scope.CICOSector.selectedAll = CICOFilterFactory.selectall;
-
         $scope.CICOSector.selectedAll = !$scope.CICOSector.selectedAll;
 
-        // Toggle cicos sector later
+        // Toggle health sector later
         if ($scope.CICOSector.selectedAll == true) {
-            if($scope.selection == 'India') {
-                $scope.CICOLayer.active = true;
-            }
-            if($scope.selection == 'Kenya'){
-                $scope.CICOLayer_Kenya.active = true;
-            }
-            if($scope.selection == 'Nigeria'){
-                $scope.CICOLayer_Nigeria.active = true;
-            }
-
+            if ($scope.selection == 'India') $scope.CICOLayer.active = true;
+            if ($scope.selection == 'Kenya') $scope.CICOLayer_Kenya.active = true;
+            if ($scope.selection == 'Nigeria') $scope.CICOLayer_Nigeria.active = true;
             $scope.checkAllCICO();
         } else {
-            if($scope.selection == 'India') {
-                $scope.CICOLayer.active = false;
-            }
-            if($scope.selection == 'Kenya'){
-                $scope.CICOLayer_Kenya.active = false;
-            }
-            if($scope.selection == 'Nigeria'){
-                $scope.CICOLayer_Nigeria.active = false;
-            }
+            if ($scope.selection == 'India') $scope.CICOLayer.active = false;
+            if ($scope.selection == 'Kenya') $scope.CICOLayer_Kenya.active = false;
+            if ($scope.selection == 'Nigeria') $scope.CICOLayer_Nigeria.active = false;
             $scope.checkAllCICO();
-
         }
-
-        console.log("CICO Checked Bool: " + $scope.checkedBool);
-        console.log("CICO Selected All: " + $scope.CICOSector.selectedAll);
-        console.log("CICO Active? " + $scope.CICOLayer.active);
-
     };
 
     $scope.filterHealth = function () {
@@ -285,47 +254,58 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     };
 
-    $scope.toggleViewAllHealth = function() {
-        $scope.HealthSector.viewAll = !$scope.HealthSector.viewAll;
 
+    $scope.toggleViewAllHealth = function () {
+        $scope.HealthSector.viewAll = !$scope.HealthSector.viewAll;
     };
 
-    $scope.toggleViewAllAg = function() {
+    $scope.toggleViewAllAg = function () {
         $scope.AgSector.viewAll = !$scope.AgSector.viewAll;
     };
 
-    $scope.toggleViewAllLibrary = function() {
+    $scope.toggleViewAllLibrary = function () {
         $scope.LibrarySector.viewAll = !$scope.LibrarySector.viewAll;
     };
 
-    $scope.toggleViewAllCICOS = function() {
+    $scope.toggleViewAllCICOS = function () {
         $scope.CICOSector.viewAll = !$scope.CICOSector.viewAll;
     };
 
+    $scope.ViewAllSectors = function () {
+        if ($scope.CICOSector.active == false) $scope.toggleViewAllCICOS();
+        if ($scope.LibrarySector.active == false) $scope.toggleViewAllLibrary();
+        if ($scope.AgSector.active == false) $scope.toggleViewAllAg();
+        if ($scope.HealthSector.active == false) $scope.toggleViewAllHealth();
+    };
+
     // Handle filters clicks events
-    $scope.setCICOSelection = function (sector, checked) {
-        // Set selected value for each sector based on checkbox
-        for (var i = 0; i < $scope.CICOSector.length; i++) {
-            if (sector == $scope.CICOSector[i].type) {
-                $scope.CICOSector[i].selected = checked;
-                break;
+    $scope.setCICOSelection = function (type, checked, prov_type, prov_checked) {
+        // Set selected value for each type based on checkbox
+
+        if (type !== null && checked !== null) {
+            for (var i = 0; i < $scope.CICOSector.length; i++) {
+                if (type == $scope.CICOSector[i].type) {
+                    $scope.CICOSector[i].selected = checked;
+                    break;
+                }
+                console.log(type + ": " + checked);
             }
-            console.log(sector + ": " + checked);
         }
+
         // Save selected Filters into array
         $scope.CICOSelections = [];
         $scope.CICOSelections_obj = {};
         $scope.CICOTop3 = [];
         $scope.t3 = [];
-        var cico_sector ='';
+        var cico_sector = '';
 
-        if($scope.selection == 'India') {
+        if ($scope.selection == 'India') {
             cico_sector = 'CICOS';
         }
-        if($scope.selection == 'Kenya') {
+        if ($scope.selection == 'Kenya') {
             cico_sector = 'cicos_kenya';
         }
-        if($scope.selection == 'Nigeria') {
+        if ($scope.selection == 'Nigeria') {
             cico_sector = 'cicos_nigeria';
         }
 
@@ -333,16 +313,37 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         var sidx = 0;
         var order = 0;
 
+
         //Add to CICO Selections
         for (var i = 0; i < $scope.CICOSector.length; i++) {
+            var providers = [];
             if ($scope.CICOSector[i].selected == true) {
-                $scope.CICOSelections.push({
+                if ($scope.CICOSector[i].providers) {
+                    for (var x = 0; x < $scope.CICOSector[i].providers.length; x++) {
+                        if (prov_type !== null && prov_checked !== null) {
+                            if ($scope.CICOSector[i].providers[x].type == prov_type) {
+                                $scope.CICOSector[i].providers[x].selected = prov_checked;
+                            }
+                        }
+                        if ($scope.CICOSector[i].providers[x].selected == true) {
+                            providers.push($scope.CICOSector[i].providers[x].type);
+                        }
+                    }
+                    $scope.CICOSelections.push({
+                            type: $scope.CICOSector[i].type,
+                            selected: $scope.CICOSector[i].selected,
+                            sector: cico_sector,
+                            providers: providers
+                        }
+                    );
+                } else {
+                    $scope.CICOSelections.push({
                         type: $scope.CICOSector[i].type,
                         selected: $scope.CICOSector[i].selected,
                         sector: cico_sector
-                    }
-            );
-                //$scope.t3.push(sector);
+                    });
+                }
+
                 //Add to Top 3 array
                 for (var j = 0; j < $scope.CICOSelections.length; j++) {
                     // Top 3 includes the LAST 3 CICO selections
@@ -351,7 +352,11 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                             $scope.CICOTop3.splice(sidx, 1, $scope.CICOSelections[$scope.CICOSelections.length - 1]);
                             $scope.top3 = ($scope.CICOTop3.length > 0);
                             $scope.CICOSector.viewAll = false;
-                            if (sidx <2){sidx++;} else {sidx = 0;}
+                            if (sidx < 2) {
+                                sidx++;
+                            } else {
+                                sidx = 0;
+                            }
                         } else {
                             $scope.CICOTop3.push($scope.CICOSelections[$scope.CICOSelections.length - 1]);
                             $scope.top3 = ($scope.CICOTop3.length > 0);
@@ -363,25 +368,28 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             }
         }
 
+
         // Add object containing layer name to cico selections so map will remove the last sector (map.js findLayer())
-        if($scope.CICOSelections.length == 0){
+        if ($scope.CICOSelections.length == 0) {
             $scope.CICOSelections.push({sector: cico_sector});
         }
 
-        //var CICOSelectionsLength = $scope.CICOSelections.length;
-        //// Hard coded 16
-        //if ($scope.selection == 'Kenya' && CICOSelectionsLength < CICOFilterFactory.CICOsTypeTotal_Kenya) {
-        //    $scope.CICOSector.selectedAll = false;
-        //} else {
-        //    $scope.CICOSector.selectedAll = true;
-        //}
+    };
 
-        //for(var i=$scope.CICOSelections.length-1;i<3;i++){
-        //  $scope.CICOTop3.push($scope.CICOSelections[i]);
-        //}
+    $scope.setProviderSelection = function (sector_type, parray, provider, checked) {
 
-        console.log("TOP 3: " + $scope.CICOTop3);
-        console.log("length: " + CICOSelectionsLength + " " + $scope.CICOSelections);
+        //  $scope.CICOProviders_Kenya[sector_type] = [];
+        //for(var i=0;i<parray.length;i++){
+        //    if(parray[i].type == provider){
+        //        parray[i].selected = checked;
+        //    }
+        //}
+        //
+        //  for(var i=0;i<parray.length;i++){
+        //      if(parray[i].selected == true){
+        //          $scope.CICOProviders_Kenya[sector_type].push(parray[i].type);
+        //      }
+        //  }
     };
 
     $scope.setAgSelection = function (sector, checked) {
@@ -399,9 +407,9 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.AgTop3 = [];
         $scope.t3 = [];
 
-        var ag_sector ='';
+        var ag_sector = '';
 
-        if($scope.selection == 'India') {
+        if ($scope.selection == 'India') {
             ag_sector = 'agriculture';
         }
 
@@ -427,7 +435,11 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                             $scope.AgTop3.splice(sidx, 1, $scope.AgSelections[$scope.AgSelections.length - 1]);
                             $scope.top3 = ($scope.AgTop3.length > 0);
                             $scope.AgSector.viewAll = false;
-                            if (sidx <2){sidx++;} else {sidx = 0;}
+                            if (sidx < 2) {
+                                sidx++;
+                            } else {
+                                sidx = 0;
+                            }
                         } else {
                             $scope.AgTop3.push($scope.AgSelections[$scope.AgSelections.length - 1]);
                             $scope.top3 = ($scope.AgTop3.length > 0);
@@ -440,7 +452,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
 
         // Add object containing layer name to health selections so map will remove the last sector (map.js findLayer())
-        if($scope.AgSelections.length == 0){
+        if ($scope.AgSelections.length == 0) {
             $scope.AgSelections.push({sector: ag_sector});
         }
 
@@ -457,7 +469,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         //}
 
         console.log("TOP 3: " + $scope.AgTop3);
-        console.log("length: " + AgSelectionsLength + " " + $scope.AgSelections);
+        //console.log("length: " + AgSelectionsLength + " " + $scope.AgSelections);
     };
 
     $scope.setHealthSelection = function (sector, checked) {
@@ -475,9 +487,9 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.HealthTop3 = [];
         $scope.t3 = [];
 
-        var health_sector ='';
+        var health_sector = '';
 
-        if($scope.selection == 'India') {
+        if ($scope.selection == 'India') {
             health_sector = 'health';
         }
 
@@ -503,7 +515,11 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                             $scope.HealthTop3.splice(sidx, 1, $scope.HealthSelections[$scope.HealthSelections.length - 1]);
                             $scope.top3 = ($scope.HealthTop3.length > 0);
                             $scope.HealthSector.viewAll = false;
-                            if (sidx <2){sidx++;} else {sidx = 0;}
+                            if (sidx < 2) {
+                                sidx++;
+                            } else {
+                                sidx = 0;
+                            }
                         } else {
                             $scope.HealthTop3.push($scope.HealthSelections[$scope.HealthSelections.length - 1]);
                             $scope.top3 = ($scope.HealthTop3.length > 0);
@@ -516,7 +532,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
 
         // Add object containing layer name to health selections so map will remove the last sector (map.js findLayer())
-        if($scope.HealthSelections.length == 0){
+        if ($scope.HealthSelections.length == 0) {
             $scope.HealthSelections.push({sector: health_sector});
         }
 
@@ -533,7 +549,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         //}
 
         console.log("TOP 3: " + $scope.HealthTop3);
-        console.log("length: " + HealthSelectionsLength + " " + $scope.HealthSelections);
+        //console.log("length: " + HealthSelectionsLength + " " + $scope.HealthSelections);
     };
 
     $scope.setLibrarySelection = function (sector, checked) {
@@ -551,9 +567,9 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.LibraryTop3 = [];
         $scope.t3 = [];
 
-        var library_sector ='';
+        var library_sector = '';
 
-        if($scope.selection == 'India') {
+        if ($scope.selection == 'India') {
             library_sector = 'library';
         }
 
@@ -593,7 +609,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
 
         // Add object containing layer name to library selections so map will remove the last sector (map.js findLayer())
-        if($scope.LibrarySelections.length == 0){
+        if ($scope.LibrarySelections.length == 0) {
             $scope.LibrarySelections.push({sector: library_sector});
         }
 
@@ -613,22 +629,29 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         //console.log("length: " + LibrarySelectionsLength + " " + $scope.LibrarySelections);
     };
 
-    // BroadCast change in AgSelections
-    $scope.$watch('AgSelections', function (){
-        $rootScope.$broadcast('AgSelections',$scope.AgSelections);
+    // BroadCast change in filter Selections
+    $scope.$watch('AgSelections', function () {
+        $rootScope.$broadcast('AgSelections', $scope.AgSelections);
     });
 
-    $scope.$watch('CICOSelections', function (){
-        $rootScope.$broadcast('CICOSelections',$scope.CICOSelections);
+    $scope.$watch('CICOSelections', function () {
+        //console.log($scope.CICOSector);
+        $rootScope.$broadcast('CICOSelections', $scope.CICOSelections);
+    }, true);
+
+    $scope.$watch('HealthSelections', function () {
+        $rootScope.$broadcast('HealthSelections', $scope.HealthSelections);
     });
 
-    $scope.$watch('HealthSelections', function (){
-        $rootScope.$broadcast('HealthSelections',$scope.HealthSelections);
+    $scope.$watch('LibrarySelections', function () {
+        $rootScope.$broadcast('LibrarySelections', $scope.LibrarySelections);
     });
 
-    $scope.$watch('LibrarySelections', function (){
-        $rootScope.$broadcast('LibrarySelections',$scope.LibrarySelections);
-    });
+    //Broadcast change in provider selections
+    $scope.$watch('CICOProviders_Kenya', function () {
+        $rootScope.$broadcast('CICOProviders_Kenya', $scope.CICOProviders_Kenya);
+    }, true);
+
 
     // Watch for change in selected Sector
     $scope.$watch(function () {
@@ -752,12 +775,12 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     $scope.toggleMapLayer = function (layerKey, layer) {
 
-        if($scope.selection == 'Kenya'){
+        if ($scope.selection == 'Kenya') {
             layerKey = 'cicos_kenya';
             layer = $scope.CICOLayer_Kenya;
         }
 
-        if($scope.selection == 'Nigeria'){
+        if ($scope.selection == 'Nigeria') {
             layerKey = 'cicos_nigeria';
             layer = $scope.CICOLayer_Nigeria;
         }
@@ -784,7 +807,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
         // remove layer
         if (layer.active === false) {
-
             $scope.mapLayers = $.grep($scope.mapLayers, function (routeLayer) {
                 return routeLayer !== layerKey;
             });
