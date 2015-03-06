@@ -281,7 +281,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     // Handle filters clicks events
     $scope.setCICOSelection = function (type, checked, prov_type, prov_checked) {
         // Set selected value for each type based on checkbox
-
         if (type !== null && checked !== null) {
             for (var i = 0; i < $scope.CICOSector.length; i++) {
                 if (type == $scope.CICOSector[i].type) {
@@ -321,7 +320,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 if ($scope.CICOSector[i].providers) {
                     for (var x = 0; x < $scope.CICOSector[i].providers.length; x++) {
                         if (prov_type !== null && prov_checked !== null) {
-                            if ($scope.CICOSector[i].providers[x].type == prov_type) {
+                            if (type == $scope.CICOSector[i].type && $scope.CICOSector[i].providers[x].type == prov_type) {
                                 $scope.CICOSector[i].providers[x].selected = prov_checked;
                             }
                         }
@@ -351,7 +350,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                         if ($scope.CICOTop3.length >= 3) {
                             $scope.CICOTop3.splice(sidx, 1, $scope.CICOSelections[$scope.CICOSelections.length - 1]);
                             $scope.top3 = ($scope.CICOTop3.length > 0);
-                            $scope.CICOSector.viewAll = false;
+                            //$scope.CICOSector.viewAll = false;
                             if (sidx < 2) {
                                 sidx++;
                             } else {
@@ -374,22 +373,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             $scope.CICOSelections.push({sector: cico_sector});
         }
 
-    };
-
-    $scope.setProviderSelection = function (sector_type, parray, provider, checked) {
-
-        //  $scope.CICOProviders_Kenya[sector_type] = [];
-        //for(var i=0;i<parray.length;i++){
-        //    if(parray[i].type == provider){
-        //        parray[i].selected = checked;
-        //    }
-        //}
-        //
-        //  for(var i=0;i<parray.length;i++){
-        //      if(parray[i].selected == true){
-        //          $scope.CICOProviders_Kenya[sector_type].push(parray[i].type);
-        //      }
-        //  }
     };
 
     $scope.setAgSelection = function (sector, checked) {

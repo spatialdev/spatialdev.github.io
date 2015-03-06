@@ -265,8 +265,14 @@
     float: left;
 }
 
+#sectors-filter label {
+    font-size: 12px;
+    font-family: DIN-Bold;
+}
+
 .providers {
     margin-left:25px;
+    font-family: DIN;
 }
 
 #FilterArea .btn-sector{

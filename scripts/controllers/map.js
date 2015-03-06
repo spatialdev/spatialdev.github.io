@@ -137,10 +137,10 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                         // treat properties with providers different
                         if (typeobj[featureProperty].hasOwnProperty('providers') == true) {
                             for (var i = 0; i < typeobj[featureProperty].providers.length; i++) {
-                                //look for '|' in feature properties
-                                if (featureProperty.indexOf("|") !== -1) {
+                                //look for '|' in feature providers
+                                if (featureProvider.indexOf("|") !== -1) {
                                     // split the properties and compare each value in array
-                                    pvdr_split = featureProperty.split("|");
+                                    pvdr_split = featureProvider.split("|");
                                     pvdr_split.forEach(function (val) {
                                         if (val === typeobj[featureProperty].providers[i]) return true;
                                     })
