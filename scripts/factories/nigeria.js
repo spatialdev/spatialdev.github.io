@@ -372,8 +372,64 @@ module.exports = angular.module('SpatialViewer').factory('NigeriaFactory', funct
     };
     var CICOs = [];
     var CICOsLandUse = [];
+    var CICOsproviders = [];
     var service = {};
     service.CICOsTotal = 0;
+    var ProviderData = {
+        "Bank Branches": [
+            'Access Bank Plc',
+            'Central Bank of Nigeria',
+            'Citi Bank',
+            'Diamond Bank Plc',
+            'Ecobank Nigeria Plc',
+            'Enterprise Bank',
+            'Fidelity Bank Plc',
+            'First Bank of Nigeria Plc',
+            'First City Monument Bank Plc',
+            'GT Bank',
+            'Jaiz Bank Plc',
+            'Keystone Bank Limited',
+            'Mainstreet Bank Limited',
+            'Savannah Bank of Nigeria',
+            'Skye Bank Plc',
+            'Stanbic IBTC Bank Plc',
+            'Standard Chartered Bank Ltd',
+            'Sterling Bank Plc',
+            'Union Bank of Nigeria',
+            'United Bank of Africa',
+            'Unity Bank Plc',
+            'Wema Bank Plc',
+            'Zenith Bank Plc'
+
+        ],
+        "Mobile Money Agent": ['Diamond Bank',
+            'Cellulant',
+            'Chams Mobile',
+            'Eartholeum Networks',
+            'Ecobank',
+            'eTranzact International',
+            'FETS',
+            'First Bank plc',
+            'First Bank',
+            'Fortis Mobile',
+            'GT Bank',
+            'Mkudi/Mino',
+            'Monitise',
+            'Pagatech',
+            'Parkway Projects',
+            'Paycom',
+            'Stanbic',
+            'Teasy',
+            'VTNetwork',
+            'Zenith Bank',
+            'Zinternet'
+        ],
+        "Mobile Network Operator Outlets": ['MTN Retail Outlet',
+            'Airtel',
+            'Etisalat',
+            'Glo'
+        ]
+    };
 
     service.getCICOsCounts = function () {
         $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2013/query?where=country%3D%27Nigeria%27&returnfields=type&format=geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type&statsdef=count%3Atype').
@@ -390,10 +446,32 @@ module.exports = angular.module('SpatialViewer').factory('NigeriaFactory', funct
                     );
                     service.CICOsTotal += parseInt(CICOs[i].count);
                 }
-                // Calculate percentage per type
-                //service.pctPerType(CICOs);
                 for (var i = 0; i < CICOs.length; i++) {
+                    // Calculate percentage per type
                     CICOs[i]["pct"] = ((parseInt(CICOs[i].count) / service.CICOsTotal));
+
+                    if(CICOs[i].type=='Bank Branches') {
+                        CICOs[i].viewAll = true;
+                        CICOs[i].providers = [];
+                        ProviderData["Bank Branches"].forEach(function (val) {
+                            CICOs[i].providers.push({type: val, selected: true});
+                        });
+                    }
+                    if(CICOs[i].type=="Mobile Network Operator Outlets") {
+                        CICOs[i].viewAll = true;
+                        CICOs[i].providers = [];
+                        ProviderData["Mobile Network Operator Outlets"].forEach(function (val) {
+                            CICOs[i].providers.push({type: val, selected: true});
+                        });
+                    }
+
+                    if(CICOs[i].type=="Mobile Money Agent") {
+                        CICOs[i].viewAll = true;
+                        CICOs[i].providers = [];
+                        ProviderData["Mobile Money Agent"].forEach(function (val) {
+                            CICOs[i].providers.push({type: val, selected: true});
+                        });
+                    }
                 }
 
                 // Sort sector array by count

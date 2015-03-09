@@ -371,7 +371,7 @@ module.exports = angular.module('SpatialViewer').factory('KenyaFactory', functio
         }
 
     };
-    service.ProviderData = {
+    var ProviderData = {
         "Commercial Bank": [
             "ABC Bank (Kenya)",
             "Bank of Africa",
@@ -487,37 +487,39 @@ module.exports = angular.module('SpatialViewer').factory('KenyaFactory', functio
                             "selected": false
                         }
                     );
-                    service.CICOsTotal_Kenya += parseInt(CICOs[i].count);
-                }
-                // Calculate percentage per type
+                    service.CICOsTotal += parseInt(CICOs[i].count);
+                };
+
                 //service.pctPerType(CICOs);
                 for (var i = 0; i < CICOs.length; i++) {
-                    CICOs[i]["pct"] = ((parseInt(CICOs[i].count) / service.CICOsTotal_Kenya));
+
+                    CICOs[i]["pct"] = ((parseInt(CICOs[i].count) / service.CICOsTotal));
+
                     if(CICOs[i].type=='Money Transfer Service') {
                         CICOs[i].viewAll = true;
                         CICOs[i].providers = [];
-                        service.ProviderData["Money Transfer Service"].forEach(function (val) {
+                        ProviderData["Money Transfer Service"].forEach(function (val) {
                             CICOs[i].providers.push({type: val, selected: true});
                         });
                     }
                     if(CICOs[i].type=="Commercial Bank") {
                         CICOs[i].viewAll = true;
                         CICOs[i].providers = [];
-                        service.ProviderData["Commercial Bank"].forEach(function (val) {
+                        ProviderData["Commercial Bank"].forEach(function (val) {
                             CICOs[i].providers.push({type: val, selected: true});
                         });
                     }
                     if(CICOs[i].type=="Bank Agent") {
                         CICOs[i].viewAll = true;
                         CICOs[i].providers = [];
-                        service.ProviderData["Bank Agent"].forEach(function (val) {
+                        ProviderData["Bank Agent"].forEach(function (val) {
                             CICOs[i].providers.push({type: val, selected: true});
                         });
                     }
                     if(CICOs[i].type=="Mobile Money Agent") {
                         CICOs[i].viewAll = true;
                         CICOs[i].providers = [];
-                        service.ProviderData["Mobile Money Agent"].forEach(function (val) {
+                        ProviderData["Mobile Money Agent"].forEach(function (val) {
                             CICOs[i].providers.push({type: val, selected: true});
                         });
                     }

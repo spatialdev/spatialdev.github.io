@@ -623,7 +623,8 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
             $scope.currentDetailitem = $scope.ALLdetails[0]; // first item shown
             $scope.photourl = $scope.currentDetailitem.url; // get url from first item properties
-            $scope.currentDetailitemPhoto = $scope.ALLdetails[0].photos.split("|"); // split the pipe seperated values
+            // split the pipe seperated values
+            if($scope.ALLdetails[0].photos != null) $scope.currentDetailitemPhoto = $scope.ALLdetails[0].photos.split("|");
             $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : $scope.activeidx++;
         }
 
@@ -683,7 +684,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     $scope.showDetails = function (item, themeItems, idx) {
 
         $scope.currentItem = item;
-        console.log($scope.currentItem);
+        //console.log($scope.currentItem);
 //        if (item.sf_id) {
 //            $rootScope.setParamWithVal('sf_id', item.sf_id);
 //        }
@@ -840,7 +841,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : ++$scope.activeidx;
         $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx]; // change current item to active index
         $scope.photourl = $scope.currentDetailitem.url;
-        $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
+        if($scope.ALLdetails[$scope.activeidx].photos != null) $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
 
         $scope.showDetails($scope.currentDetailitem);
     };
@@ -851,7 +852,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         $scope.activeidx = ($scope.activeidx > 0) ? --$scope.activeidx : $scope.ALLdetails.length-1;
         $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx]; // change current item to active index
         $scope.photourl = $scope.currentDetailitem.url;
-        $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
+        if($scope.ALLdetails[$scope.activeidx].photos != null) $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
 
         $scope.showDetails($scope.currentDetailitem);
     };

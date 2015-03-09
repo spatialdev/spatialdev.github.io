@@ -394,7 +394,7 @@ layer.cicos_kenya = {
 layer.cicos_nigeria = {
   type: 'pbf',
   name: 'FSP Nigeria',
-  url: "http://spatialserver.spatialdev.com/services/vector-tiles/cicos_2013_nigeria/{z}/{x}/{y}.pbf",
+  url: "http://spatialserver.spatialdev.com/services/vector-tiles/cicos_2013_nigeria/{z}/{x}/{y}.pbf?fields=type,id,providers",
   debug: false,
   clickableLayers: [],
 

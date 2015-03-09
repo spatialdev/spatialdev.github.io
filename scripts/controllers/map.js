@@ -51,16 +51,16 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         var types = [];
 
         if (args) {
-            args.forEach(function (val, idx) {
-                typeobj[val.type] = {
-                    type: val.type,
-                    sector: val.sector
+            for(var i=0;i<args.length;i++){
+                typeobj[args[i].type] = {
+                    type: args[i].type,
+                    sector: args[i].sector
                 };
-                types.push(val.type);
-                sector = val.sector;
-            });
+                types.push(args[i].type);
+                sector = args[i].sector;
+            }
 
-            AgWhereClause = buildPostGresQueryExpression(types);
+            AgWhereClause = buildPostGresQueryExpression(types,null);
 
             var filter = function (feature, context) {
                 if (feature && feature.properties) {
@@ -96,29 +96,29 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         var providers = {};
 
         if (args) {
-            args.forEach(function (val, idx) {
+            for(var i=0;i<args.length;i++){
                 // create object to compare feature filter properties with
-                if (val.providers) {
-                    typeobj[val.type] = {
-                        type: val.type,
-                        sector: val.sector,
-                        providers: val.providers
+                if (args[i].providers) {
+                    typeobj[args[i].type] = {
+                        type: args[i].type,
+                        sector: args[i].sector,
+                        providers: args[i].providers
                     };
-                    types.push(val.type);
-                    sector = val.sector;
-                    providers[val.type] = {
-                        providers: val.providers
+                    types.push(args[i].type);
+                    sector = args[i].sector;
+                    providers[args[i].type] = {
+                        providers: args[i].providers
                     }
                 } else {
                     //these object does not have providers
-                    typeobj[val.type] = {
-                        type: val.type,
-                        sector: val.sector
+                    typeobj[args[i].type] = {
+                        type: args[i].type,
+                        sector: args[i].sector
                     };
-                    types.push(val.type);
-                    sector = val.sector;
+                    types.push(args[i].type);
+                    sector = args[i].sector;
                 }
-            });
+            }
 
             // create where string that is part of the CICOWhere clause sub queries
             ProviderWhereClause = buildPostGresProviderExpression(providers);
@@ -141,9 +141,9 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                 if (featureProvider.indexOf("|") !== -1) {
                                     // split the properties and compare each value in array
                                     pvdr_split = featureProvider.split("|");
-                                    pvdr_split.forEach(function (val) {
-                                        if (val === typeobj[featureProperty].providers[i]) return true;
-                                    })
+                                    for(var p=0;p<pvdr_split.length;p++){
+                                        if (pvdr_split[p] === typeobj[featureProperty].providers[i]) return true;
+                                    }
                                 } else {
                                     //if no '|' compare the feature property to our typeobj
                                     if (featureProvider === typeobj[featureProperty].providers[i]) return true;
@@ -192,7 +192,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                 sector = val.sector;
             });
 
-            HealthWhereClause = buildPostGresQueryExpression(types);
+            HealthWhereClause = buildPostGresQueryExpression(types,null);
 
             var filter = function (feature, context) {
                 if (feature && feature.properties) {
@@ -237,7 +237,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                 sector = val.sector;
             });
 
-            LibraryWhereClause = buildPostGresQueryExpression(types);
+            LibraryWhereClause = buildPostGresQueryExpression(types,null);
 
             var filter = function (feature, context) {
                 if (feature && feature.properties) {
@@ -696,7 +696,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             if (typearray.length >= 1) {
                 typearray.forEach(function (val) {
                     // handle providers
-                    if (Object.keys(providers).length > 0) {
+                    if (providers !== null && Object.keys(providers).length > 0) {
                         Object.keys(providers).forEach(function (p) {
                             // if cico selections has a type that has providers
                             if (p == val) {
@@ -714,20 +714,20 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                     }
                 });
 
-                if ($scope.selection == 'Nigeria') {
-                    //remove trailing comma
-                    //finalstring = typestring.replace(/(^\s*,)|(,\s*$)/g, '');
-                    finalstring = typestring.substring(0, typestring.length - 3);
-                    return finalstring + "AND Country ='Nigeria'";
-                }
+                //if ($scope.selection == 'India') {
+                //    //remove trailing comma
+                //    //finalstring = typestring.replace(/(^\s*,)|(,\s*$)/g, '');
+                //    finalstring = typestring.substring(0, typestring.length - 3);
+                //    return finalstring + "AND Country ='Nigeria'";
+                //}
 
-                if ($scope.selection == 'Kenya') {
+                if ($scope.selection == 'Kenya' || $scope.selection == 'Nigeria' || $scope.selection == 'India') {
                     //remove trailing 'OR'
                     finalstring = typestring.substring(0, typestring.length - 3);
-                    return finalstring + "AND Country ='Kenya'";
+                    return finalstring + "AND Country ='" +$scope.selection+ "'";
                 }
 
-                return "type IN(" + finalstring + ")";
+                //return "type IN(" + finalstring + ")";
 
             } else {
                 typearray.forEach(function (val) {
@@ -749,13 +749,15 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
         if (Object.keys(obj)) { // if obj is valid
             Object.keys(obj).forEach(function (key) {
-                fobj[key] = {providers: ''};
-                obj[key].providers.forEach(function (val, i) {
-                    // for each filter, create string that combines all providers
-                    fobj[key].providers += "providers like '%" + val + "%' or ";
-                });
-                // remove the last 'or ' from string
-                fobj[key].providers = fobj[key].providers.substring(0, fobj[key].providers.length - 3);
+                if(obj[key].providers.length > 0){
+                    fobj[key] = {providers: ''};
+                    obj[key].providers.forEach(function (val, i) {
+                        // for each filter, create string that combines all providers
+                        fobj[key].providers += "providers like '%" + val + "%' or ";
+                    });
+                    // remove the last 'or ' from string
+                    fobj[key].providers = fobj[key].providers.substring(0, fobj[key].providers.length - 3);
+                }
             })
         }
         return fobj;

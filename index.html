@@ -64,7 +64,7 @@
 
     <div class="logo_BG">
         <div class="logo_font">
-            <a href="/SpatialViewer/#/map@26.000000,85.000000,6(dark)">
+            <a href="/SpatialViewer/#/default">
                 <div class="fsp">FSP</div>
                 <div class="maps">MAPS</div>
             </a>
@@ -704,19 +704,27 @@
             </label>
             <li class="divider"></li>
 
-            <div ng-show="top3">
-                <label ng-repeat="name in CICOTop3" class="checkbox">
-                    <input type="checkbox" ng-model="name.selected"
-                           ng-click="setCICOSelection(name.type, !name.selected)">
-                    {{name.type}}
-                </label>
-                <li class="divider"></li>
-            </div>
+            <!--<div ng-show="top3">-->
+            <!--<label ng-repeat="name in CICOTop3" class="checkbox">-->
+            <!--<input type="checkbox" ng-model="name.selected" ng-click="setCICOSelection(name.type, !name.selected,null,null)">-->
+            <!--{{name.type}}-->
+            <!--</label>-->
+            <!--<li class="divider"></li>-->
+            <!--</div>-->
 
-            <label ng-show="CICOSector.viewAll" ng-repeat="names in CICOSector" class="checkbox">
-                <input type="checkbox" ng-model="names.selected"
-                       ng-click="setCICOSelection(names.type, !names.selected)">
+            <label ng-show="CICOSector.viewAll" ng-repeat="names in CICOSector" ng-init="outerIndex = $index" class="checkbox">
+                <input ng-show="!names.providers" ng-disabled="names.providers" type="checkbox" ng-model="names.selected" ng-click="setCICOSelection(names.type, !names.selected,null,null)">
                 {{names.type}} ({{names.count | number}})
+
+                <div class="providers">
+                    <div ng-show="names.providers.length>0">
+                        <input type="checkbox" ng-model="names.viewAll" ng-click="names.viewAll = !names.viewAll"> View All
+                    </div>
+                    <div ng-show="names.viewAll===true && names.providers.length>0" ng-repeat="providers in names.providers" ng-init="innerIndex = $index">
+                        <input type="checkbox" ng-model="providers.selected" ng-click="setCICOSelection(names.type, null,providers.type,!providers.selected)">
+                        {{providers.type }}
+                    </div>
+                </div>
             </label>
 
             <div ng-show="!CICOSector.viewAll" class="ShowMore" ng-click="toggleViewAllCICOS()">

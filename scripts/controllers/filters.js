@@ -25,9 +25,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.ShowAllSectors = false;
     $scope.SearchBar = false;
     $scope.AgTop3 = [];
-    $scope.t3 = [];
-
-    $scope.CICOProviders_Kenya = {};
 
     $scope.toggleSearchBar = function () {
         $scope.SearchBar = !$scope.SearchBar;
@@ -72,7 +69,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 $scope.NigeriaOn = false;
                 //$scope.CICOSelections = [];
                 $scope.CICOTop3 = [];
-                $scope.t3 = [];
                 console.log("India On " + $scope.IndiaOn);
                 break;
             case 'Kenya':
@@ -84,7 +80,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 $scope.ShowAllSectors = true;
                 //$scope.CICOSelections = [];
                 $scope.CICOTop3 = [];
-                $scope.t3 = [];
                 $scope.QuickStats = KenyaFactory.Kenya.QuickStats;
                 $scope.title = "Overview - Kenya";
                 console.log("Kenya QuickStats " + $scope.QuickStats);
@@ -98,7 +93,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 $scope.ShowAllSectors = true;
                 //$scope.CICOSelections = [];
                 $scope.CICOTop3 = [];
-                $scope.t3 = [];
                 $scope.QuickStats = NigeriaFactory.Nigeria.QuickStats;
                 $scope.title = "Overview - Nigeria";
                 console.log("Nigeria QuickStats " + $scope.QuickStats);
@@ -295,7 +289,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.CICOSelections = [];
         $scope.CICOSelections_obj = {};
         $scope.CICOTop3 = [];
-        $scope.t3 = [];
         var cico_sector = '';
 
         if ($scope.selection == 'India') {
@@ -388,7 +381,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.AgSelections = [];
         $scope.AgSelections_obj = {};
         $scope.AgTop3 = [];
-        $scope.t3 = [];
 
         var ag_sector = '';
 
@@ -409,7 +401,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                         sector: ag_sector
                     }
                 );
-                //$scope.t3.push(sector);
                 //Add to Top 3 array
                 for (var j = 0; j < $scope.AgSelections.length; j++) {
                     // Top 3 includes the LAST 3 Ag selections
@@ -468,7 +459,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.HealthSelections = [];
         $scope.HealthSelections_obj = {};
         $scope.HealthTop3 = [];
-        $scope.t3 = [];
 
         var health_sector = '';
 
@@ -489,7 +479,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                         sector: health_sector
                     }
                 );
-                //$scope.t3.push(sector);
                 //Add to Top 3 array
                 for (var j = 0; j < $scope.HealthSelections.length; j++) {
                     // Top 3 includes the LAST 3 Health selections
@@ -548,7 +537,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.LibrarySelections = [];
         $scope.LibrarySelections_obj = {};
         $scope.LibraryTop3 = [];
-        $scope.t3 = [];
 
         var library_sector = '';
 
@@ -570,7 +558,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                     }
                 );
                 //Library only has 4 sub sectors; top 3 is unnecessary
-                //$scope.t3.push(sector);
                 //Add to Top 3 array
                 //for (var j = 0; j < $scope.LibrarySelections.length; j++) {
                 //    // Top 3 includes the LAST 3 Library selections
@@ -629,12 +616,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.$watch('LibrarySelections', function () {
         $rootScope.$broadcast('LibrarySelections', $scope.LibrarySelections);
     });
-
-    //Broadcast change in provider selections
-    $scope.$watch('CICOProviders_Kenya', function () {
-        $rootScope.$broadcast('CICOProviders_Kenya', $scope.CICOProviders_Kenya);
-    }, true);
-
 
     // Watch for change in selected Sector
     $scope.$watch(function () {
