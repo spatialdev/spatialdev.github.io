@@ -1,0 +1,16 @@
+{
+  "name": "SpatialViewer",
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "~5.9.1",
+    "watchify": "1.0.1"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "watch": "watchify -v -d scripts/app.js -o dist/spatial-viewer.js",
+    "build": "browserify -d scripts/app.js -o dist/spatial-viewer.js"
+  }
+}

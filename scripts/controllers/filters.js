@@ -96,9 +96,12 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 $scope.QuickStats = NigeriaFactory.Nigeria.QuickStats;
                 $scope.title = "Overview - Nigeria";
                 console.log("Nigeria QuickStats " + $scope.QuickStats);
+                break;
             default:
-                $scope.QuickStats = IndiaFactory.India.QuickStats;
-
+                $scope.IndiaOn = false;
+                $scope.KenyaOn = false;
+                $scope.NigeriaOn = false;
+                $scope.ShowAllSectors = false;
         }
     });
 
@@ -131,6 +134,11 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         for (var i = 0; i < $scope.CICOSector.length; i++) {
             if ($scope.CICOSector.selectedAll == true) {
                 $scope.CICOSector[i].selected = true;
+                if($scope.CICOSector[i].hasOwnProperty("providers")==true) {
+                    for (var p = 0; p < $scope.CICOSector[i].providers.length; p++) {
+                        $scope.CICOSector[i].providers[p].selected = true;
+                    }
+                }
             } else {
                 $scope.CICOSector[i].selected = false;
             }

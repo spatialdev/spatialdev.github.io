@@ -97,15 +97,13 @@ SpatialViewer.run(function ($rootScope, $state, $stateParams) {
 
 SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
-    .when('/default', '/map@' + config.MapLocation.MapCenter.Latitude + "," +config.MapLocation.MapCenter.Longitude + ","
-  +config.MapLocation.MapZoom + '(dark)')
-    .when('/phl', '/map@11.759815,121.893311,6(dark)')
-    .otherwise(localStorage.getItem('defaultRoute') || '/map@'+config.MapLocation.MapCenter.Latitude+','
-      +config.MapLocation.MapCenter.Longitude+','+config.MapLocation.MapZoom+'(dark)');
+    .when('/default', '/map@26.000000,85.000000,6(dark),india')
+    .when('/phl', '/map@26.000000,85.000000,6(dark),india')
+    .otherwise(localStorage.getItem('defaultRoute') || '/map@26.000000,85.000000,6dark),india');
 
   $stateProvider
     .state('main', {
-      url: '/map@:lat,:lng,:zoom(*layers)?title&zoom-extent&stories&layers-panel&filters-panel&filters&legend&basemaps&info&theme&details-panel&search-panel&sf_id&level',
+      url: '/map@:lat,:lng,:zoom(*layers),:country?title&zoom-extent&stories&layers-panel&filters-panel&filters&legend&basemaps&info&theme&details-panel&search-panel&sf_id&level',
       views: {
         'details': {
           template: ' ',

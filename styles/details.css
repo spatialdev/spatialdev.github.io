@@ -79,10 +79,10 @@ div.tooltip{
 
 .CountryOverview {
     font-family: Din-Regular;
-    font-size:16px;
+    font-size: 16px;
     padding: 2px 26px;
     line-height: 22px;
-    height:90%;
+    height: 350px;
     background-color: white;
 }
 

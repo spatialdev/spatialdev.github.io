@@ -295,18 +295,19 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
     $scope.SelectCountry = {
         default: 'India',
-        countryNames: ['Bangladesh', 'Uganda', 'Kenya', 'Nigeria', 'Tanzania', 'India', 'India-Bihar', 'India - Uttar Pradeh']
+        countryNames: ['Bangladesh', 'Uganda', 'Kenya', 'Nigeria', 'Tanzania', 'India']
     };
 
     //$scope.SectorTypes = {
     //  typeNames: ['Financial Service', 'Library','Agriculture','Health']
     //};
 
-    $scope.selection = 'Select A Region';
+    $scope.selection = $scope.SelectCountry.default;
     SectorFactory.selectedCountry = $scope.selection;
 
     //Users Selected Country
     $scope.setCountry = function (selected) {
+        $stateParams.country = selected;
         $scope.selection = selected;
         SectorFactory.setCountry(selected);
         SectorFactory.selectedCountry = $scope.selection;
@@ -323,7 +324,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         var cname = selected;
         console.log(cname);
 
-        if (cname !== null && cname !== 'Select A Region') {
+        if (cname !== null) {
             map.setView([eval(cname + "Factory")[cname].MapCenter.Latitude,
                     eval(cname + "Factory")[cname].MapCenter.Longitude],
                 eval(cname + "Factory")[cname].MapZoom);
@@ -366,6 +367,10 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         var state = $state.current.name !== stateName ? stateName : 'main';
         $state.go(state, $stateParams);
     };
+
+    $scope.$watch('selection',function(){
+       $stateParams.country = $scope.selection;
+    });
 
     function redraw() {
         var lat = parseFloat($stateParams.lat) || 0;
@@ -419,6 +424,11 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
      * Broadcast Listeners.
      */
     $scope.$on('route-update', function () {
+
+        if($scope.selection !== $stateParams.country.capitalize()) $scope.switchCountry($stateParams.country.capitalize());
+        $scope.selection = $stateParams.country.capitalize();
+        $scope.setCountry($scope.selection);
+
         if ($scope.blur === 'blur' && $state.current.name !== 'landing') {
             $scope.blur = '';
         }
