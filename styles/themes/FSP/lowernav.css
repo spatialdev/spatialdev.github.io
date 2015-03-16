@@ -132,7 +132,7 @@
 }
 
 #BasemapSelector {
-    width: 220px;
+    width: 241px;
     height: 100px;
     position: absolute;
     right: 17px;
@@ -140,15 +140,32 @@
     z-index: 10;
     font-size: 12px;
     background: white;
+    display: none;
 }
 
 #BasemapSelector .header {
     font-size: 14px;
-    margin-bottom: 13px;
     font-weight: 600;
     text-transform: uppercase;
 }
 
 #BasemapSelector .content {
     padding: 10px 8px;
+}
+
+#BasemapSelector.on {
+    display: block;
+}
+
+#BasemapSelector .map-thumbnail{
+    transition: all 0.2s ease-in-out;
+    height: 50px;
+    width: 68px;
+    float: left;
+    margin-right: 7px;
+}
+
+#BasemapSelector img{
+    height: 50px;
+    width: 68px;
 }

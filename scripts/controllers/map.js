@@ -293,41 +293,45 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     // Country Select
     // All variables will be inherited by other controllers
 
-    $scope.SelectCountry = {
+    $scope.CountryList = {
         default: 'India',
         countryNames: ['Bangladesh', 'Uganda', 'Kenya', 'Nigeria', 'Tanzania', 'India']
     };
 
-    //$scope.SectorTypes = {
-    //  typeNames: ['Financial Service', 'Library','Agriculture','Health']
-    //};
 
-    $scope.selection = $scope.SelectCountry.default;
+    $scope.selection = $scope.CountryList.default;
     SectorFactory.selectedCountry = $scope.selection;
 
     //Users Selected Country
     $scope.setCountry = function (selected) {
-        $stateParams.country = selected;
-        $scope.selection = selected;
-        SectorFactory.setCountry(selected);
-        SectorFactory.selectedCountry = $scope.selection;
 
+        // validate country is part of list
+        if($scope.CountryList.countryNames.indexOf(selected) !== -1) {
+
+            $stateParams.country = selected;
+            //only run if state params country is different from map/filters/details.js selected country
+            if ($scope.selection !== $stateParams.country.capitalize()) {
+                $scope.selection = selected;
+
+
+                //remove all layers but basemap
+                var temparr = $stateParams.layers.split(",");
+                $stateParams.layers = temparr[0];
+                $stateParams.country = selected;
+
+                SectorFactory.setCountry(selected); //change country for all listeners of selectedcountry
+                $scope.zoomToCountry(selected); // switch mapview to country coordinates
+                $state.go($state.current.name, $stateParams); // update app state with new params
+            }
+
+        }
     };
 
-    $scope.zoomToCountry = function () {
-        map.setView([IndiaFactory.India.MapCenter.Latitude,
-                IndiaFactory.India.MapCenter.Longitude],
-            IndiaFactory.India.MapZoom);
-    };
-
-    $scope.switchCountry = function (selected) {
-        var cname = selected;
-        console.log(cname);
-
-        if (cname !== null) {
-            map.setView([eval(cname + "Factory")[cname].MapCenter.Latitude,
-                    eval(cname + "Factory")[cname].MapCenter.Longitude],
-                eval(cname + "Factory")[cname].MapZoom);
+    $scope.zoomToCountry = function (selected) {
+        if (selected !== null) {
+            $stateParams.lat = eval(selected + "Factory")[selected].MapCenter.Latitude;
+            $stateParams.lng = eval(selected + "Factory")[selected].MapCenter.Longitude;
+            $stateParams.zoom = eval(selected + "Factory")[selected].MapZoom;
         }
     };
 
@@ -342,7 +346,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     $scope.$watch(function () {
         return SectorFactory.selectedCountry;
     }, function () {
-        SectorFactory.selectedCountry = $scope.selection;
+        $scope.selection= SectorFactory.selectedCountry;
 
         switch ($scope.selection) {
             case 'India':
@@ -425,9 +429,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
      */
     $scope.$on('route-update', function () {
 
-        if($scope.selection !== $stateParams.country.capitalize()) $scope.switchCountry($stateParams.country.capitalize());
-        $scope.selection = $stateParams.country.capitalize();
-        $scope.setCountry($scope.selection);
+        if($scope.selection !== $stateParams.country.capitalize()) $scope.setCountry($stateParams.country.capitalize());
 
         if ($scope.blur === 'blur' && $state.current.name !== 'landing') {
             $scope.blur = '';
@@ -724,13 +726,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                     }
                 });
 
-                //if ($scope.selection == 'India') {
-                //    //remove trailing comma
-                //    //finalstring = typestring.replace(/(^\s*,)|(,\s*$)/g, '');
-                //    finalstring = typestring.substring(0, typestring.length - 3);
-                //    return finalstring + "AND Country ='Nigeria'";
-                //}
-
                 if ($scope.selection == 'Kenya' || $scope.selection == 'Nigeria' || $scope.selection == 'India') {
                     //remove trailing 'OR'
                     finalstring = typestring.substring(0, typestring.length - 3);
@@ -743,9 +738,13 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                 typearray.forEach(function (val) {
                     typestring += "'" + val + "'";
                 });
-                if ($scope.selection == 'Nigeria') return "type IN(" + finalstring + ") AND Country ='Nigeria'";
-                //if ($scope.selection == 'Kenya') return "type IN(" + finalstring + ") AND Country ='Kenya'";
-                return "type IN(" + typestring + ")";
+
+                if($scope.selection == 'India'){
+                    return "type IN(" + typestring + ") AND country = '" + $scope.selection +"'";
+                } else {
+                    return "type IN(" + finalstring + ") AND Country ='" + $scope.selection + "'";
+                }
+
 
             }
         } else {

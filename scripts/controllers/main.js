@@ -14,6 +14,8 @@ module.exports = angular.module('SpatialViewer').controller('MainCtrl', function
 
   $rootScope.$broadcast('route-update');
 
+
+
   /**
    * Only if the latest route has a different layer string than before.
    */

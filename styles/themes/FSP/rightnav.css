@@ -101,6 +101,11 @@
     width: 457px;
     margin-top: -88px;
     border: 1px solid #d3d3d3;
+    max-height: 495px;
+}
+
+#DetailsPanel .content{
+    height: 322px;
     overflow-y: auto;
 }
 

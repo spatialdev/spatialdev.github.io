@@ -154,442 +154,442 @@
         <div ui-view="leftmenu"></div>
 
         <!--Side View-->
-        <div ng-controller="SideViewCtrl" class="side-view">
+        <!--<div ng-controller="SideViewCtrl" class="side-view">-->
 
 
-            <!--Stories Panel-->
-            <div ng-controller="StoriesCtrl" ng-class="{on: isParam('stories')}"
-                 class="navpanel container stories-container">
+            <!--&lt;!&ndash;Stories Panel&ndash;&gt;-->
+            <!--<div ng-controller="StoriesCtrl" ng-class="{on: isParam('stories')}"-->
+                 <!--class="navpanel container stories-container">-->
 
-                <div class="row">
-                    <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('stories')"><span
-                            class="glyphicon glyphicon-chevron-left"></span></button>
-                    <div class="col-md-10 side-view-title-wrapper">
-                        <div class="title">STORIES</div>
-                        <div class="description">Click on a thumbnail to load a predefined map.</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-offset-4 col-md-4">
-                        {{filteredStories.length}}
-                        <span ng-show="filteredStories.length > 1 || filteredStories.length == 0">Stories</span>
-                        <span ng-show="filteredStories.length ==  1">Story</span>
-                    </div>
-                </div>
-                <div class="row scrollable">
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Filter stories by:</h3>
-                            </div>
-                            <div class="panel-body">
-                                <form>
-                                    <fieldset>
-                                        <h4>Keywords:</h4>
+                <!--<div class="row">-->
+                    <!--<button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('stories')"><span-->
+                            <!--class="glyphicon glyphicon-chevron-left"></span></button>-->
+                    <!--<div class="col-md-10 side-view-title-wrapper">-->
+                        <!--<div class="title">STORIES</div>-->
+                        <!--<div class="description">Click on a thumbnail to load a predefined map.</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col-md-offset-4 col-md-4">-->
+                        <!--{{filteredStories.length}}-->
+                        <!--<span ng-show="filteredStories.length > 1 || filteredStories.length == 0">Stories</span>-->
+                        <!--<span ng-show="filteredStories.length ==  1">Story</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row scrollable">-->
+                    <!--<div class="col-md-4">-->
+                        <!--<div class="panel panel-default">-->
+                            <!--<div class="panel-heading">-->
+                                <!--<h3 class="panel-title">Filter stories by:</h3>-->
+                            <!--</div>-->
+                            <!--<div class="panel-body">-->
+                                <!--<form>-->
+                                    <!--<fieldset>-->
+                                        <!--<h4>Keywords:</h4>-->
 
-                                        <input class="form-control" type="text" placeholder="Search keywords..."
-                                               ng-model="storiesSearchText">
+                                        <!--<input class="form-control" type="text" placeholder="Search keywords..."-->
+                                               <!--ng-model="storiesSearchText">-->
 
+                                        <!--&lt;!&ndash;<label class="checkbox">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<input type="checkbox" value="all" ng-model="allText" ng-change="clearSearch()">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;All&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</label>&ndash;&gt;-->
                                         <!--<label class="checkbox">-->
-                                        <!--<input type="checkbox" value="all" ng-model="allText" ng-change="clearSearch()">-->
-                                        <!--All-->
+                                            <!--<input type="checkbox" value="disasterpreparedness"-->
+                                                   <!--ng-model="disasterpreparedness"-->
+                                                   <!--ng-change="filterByCheckbox('Disaster Preparedness')">-->
+                                            <!--Disaster Preparedness-->
                                         <!--</label>-->
-                                        <label class="checkbox">
-                                            <input type="checkbox" value="disasterpreparedness"
-                                                   ng-model="disasterpreparedness"
-                                                   ng-change="filterByCheckbox('Disaster Preparedness')">
-                                            Disaster Preparedness
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="checkbox" value="disasterresponse" ng-model="disasterresponse"
-                                                   ng-change="filterByCheckbox('Disaster Response')">
-                                            Disaster Response
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="checkbox" value="haiti" ng-model="haiti"
-                                                   ng-change="filterByCheckbox('Haiti')">
-                                            Haiti
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="checkbox" value="restoringfamilylinks"
-                                                   ng-model="restoringfamilylinks"
-                                                   ng-change="filterByCheckbox('Restoring Family Links')">
-                                            Restoring Family Links
-                                        </label>
-
-
-                                    </fieldset>
-                                    <br>
-                                    <fieldset>
-                                        <h4>Extent:</h4>
-
                                         <!--<label class="checkbox">-->
-                                        <!--<input type="checkbox" value="all" ng-model="allAreas" ng-change="clearSearch()">-->
-                                        <!--All-->
+                                            <!--<input type="checkbox" value="disasterresponse" ng-model="disasterresponse"-->
+                                                   <!--ng-change="filterByCheckbox('Disaster Response')">-->
+                                            <!--Disaster Response-->
                                         <!--</label>-->
-                                        <label class="checkbox">
-                                            <input type="checkbox" value="africa" ng-model="africa"
-                                                   ng-change="filterByCheckbox('Africa')">
-                                            Africa
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="checkbox" value="amee" ng-model="amee"
-                                                   ng-change="filterByCheckbox('AMEE')">
-                                            AMEE
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="checkbox" value="global" ng-model="global"
-                                                   ng-change="filterByCheckbox('Global')">
-                                            Global
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="checkbox" value="lac" ng-model="lac"
-                                                   ng-change="filterByCheckbox('LAC')">
-                                            LAC
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="checkbox" value="usa" ng-model="usa"
-                                                   ng-change="filterByCheckbox('USA')">
-                                            USA
-                                        </label>
+                                        <!--<label class="checkbox">-->
+                                            <!--<input type="checkbox" value="haiti" ng-model="haiti"-->
+                                                   <!--ng-change="filterByCheckbox('Haiti')">-->
+                                            <!--Haiti-->
+                                        <!--</label>-->
+                                        <!--<label class="checkbox">-->
+                                            <!--<input type="checkbox" value="restoringfamilylinks"-->
+                                                   <!--ng-model="restoringfamilylinks"-->
+                                                   <!--ng-change="filterByCheckbox('Restoring Family Links')">-->
+                                            <!--Restoring Family Links-->
+                                        <!--</label>-->
 
-                                    </fieldset>
-                                </form>
-                                <!--<h4>Extent:</h4>-->
-                                <!--<h4>Keywords:</h4>-->
-                            </div>
 
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-6"
-                                 ng-repeat="story in filteredStories = (stories | searchStoriesFilter:this)">
-                                <a href="{{story.url}}" class="thumbnail">
-                                    <div class="image">
-                                        <img ng-src="{{story.thumbnail}}" alt="...">
-                                    </div>
-                                    <div class="caption">
-                                        <div class="container thumbnail-container">
-                                            <div class="row">
-                                                <div class="col-md-1 nopaddingnomargin">
-                                                    <i class="item-arrow RCRed icon-14_arrow_stories"></i>
-                                                </div>
-                                                <div class="col-md-11 nopaddingnomargin">
-                                                    {{story.name}}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-offset-1 col-md-11 nopadding">
-                                                    <p>{{story.date}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Stories Panel-->
+                                    <!--</fieldset>-->
+                                    <!--<br>-->
+                                    <!--<fieldset>-->
+                                        <!--<h4>Extent:</h4>-->
 
-            <!--Layers Panel-->
-            <div ng-controller="LayersCtrl" ng-class="{on: isParam('layers-panel')}"
-                 class="navpanel container layers-container">
+                                        <!--&lt;!&ndash;<label class="checkbox">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<input type="checkbox" value="all" ng-model="allAreas" ng-change="clearSearch()">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;All&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                                        <!--<label class="checkbox">-->
+                                            <!--<input type="checkbox" value="africa" ng-model="africa"-->
+                                                   <!--ng-change="filterByCheckbox('Africa')">-->
+                                            <!--Africa-->
+                                        <!--</label>-->
+                                        <!--<label class="checkbox">-->
+                                            <!--<input type="checkbox" value="amee" ng-model="amee"-->
+                                                   <!--ng-change="filterByCheckbox('AMEE')">-->
+                                            <!--AMEE-->
+                                        <!--</label>-->
+                                        <!--<label class="checkbox">-->
+                                            <!--<input type="checkbox" value="global" ng-model="global"-->
+                                                   <!--ng-change="filterByCheckbox('Global')">-->
+                                            <!--Global-->
+                                        <!--</label>-->
+                                        <!--<label class="checkbox">-->
+                                            <!--<input type="checkbox" value="lac" ng-model="lac"-->
+                                                   <!--ng-change="filterByCheckbox('LAC')">-->
+                                            <!--LAC-->
+                                        <!--</label>-->
+                                        <!--<label class="checkbox">-->
+                                            <!--<input type="checkbox" value="usa" ng-model="usa"-->
+                                                   <!--ng-change="filterByCheckbox('USA')">-->
+                                            <!--USA-->
+                                        <!--</label>-->
 
-                <div class="row">
-                    <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('layers-panel')"><span
-                            class="glyphicon glyphicon-chevron-left"></span></button>
-                    <div class="col-md-8 side-view-title-wrapper">
-                        <div class="title">Map Layers</div>
-                        <div class="description"></div>
-                    </div>
-                </div>
-                <div class="row">
+                                    <!--</fieldset>-->
+                                <!--</form>-->
+                                <!--&lt;!&ndash;<h4>Extent:</h4>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<h4>Keywords:</h4>&ndash;&gt;-->
+                            <!--</div>-->
 
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a class="a-nav-tab" ng-click="navTab='contextual'" data-toggle="tab">Map
-                            Layers</a></li>
-                        <li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Uploaded Data</a></li>
-                    </ul>
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-8">-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-6"-->
+                                 <!--ng-repeat="story in filteredStories = (stories | searchStoriesFilter:this)">-->
+                                <!--<a href="{{story.url}}" class="thumbnail">-->
+                                    <!--<div class="image">-->
+                                        <!--<img ng-src="{{story.thumbnail}}" alt="...">-->
+                                    <!--</div>-->
+                                    <!--<div class="caption">-->
+                                        <!--<div class="container thumbnail-container">-->
+                                            <!--<div class="row">-->
+                                                <!--<div class="col-md-1 nopaddingnomargin">-->
+                                                    <!--<i class="item-arrow RCRed icon-14_arrow_stories"></i>-->
+                                                <!--</div>-->
+                                                <!--<div class="col-md-11 nopaddingnomargin">-->
+                                                    <!--{{story.name}}-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                            <!--<div class="row">-->
+                                                <!--<div class="col-md-offset-1 col-md-11 nopadding">-->
+                                                    <!--<p>{{story.date}}</p>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; End Stories Panel&ndash;&gt;-->
 
-                    <!-- Tab panes -->
-                    <div class="tab-content scrollable">
-                        <div ng-class="{active: navTab==='contextual'}" class="tab-pane">
+            <!--&lt;!&ndash;Layers Panel&ndash;&gt;-->
+            <!--<div ng-controller="LayersCtrl" ng-class="{on: isParam('layers-panel')}"-->
+                 <!--class="navpanel container layers-container">-->
 
-                            <h4>Administrative boundary levels:</h4>
+                <!--<div class="row">-->
+                    <!--<button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('layers-panel')"><span-->
+                            <!--class="glyphicon glyphicon-chevron-left"></span></button>-->
+                    <!--<div class="col-md-8 side-view-title-wrapper">-->
+                        <!--<div class="title">Map Layers</div>-->
+                        <!--<div class="description"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
 
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" ng-model="gadmLevel" value="auto">
-                                    Automatic
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" ng-model="gadmLevel" value="-1">
-                                    ARC - American Red Cross Regions
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" ng-model="gadmLevel" value="0">
-                                    0. Countries
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label ng-class="{'disabled-radio-label': zoom < 6}">
-                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 6" value="1">
-                                    1. State / Province
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label ng-class="{'disabled-radio-label': zoom < 8}">
-                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 8" value="2">
-                                    2. County
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label ng-class="{'disabled-radio-label': zoom < 9}">
-                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 9" value="3">
-                                    3. Level 3
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label ng-class="{'disabled-radio-label': zoom < 11}">
-                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 11" value="4">
-                                    4. Level 4
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label ng-class="{'disabled-radio-label': zoom < 13}">
-                                    <input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 13" value="5">
-                                    5. Level 5
-                                </label>
-                            </div>
+                    <!--&lt;!&ndash; Nav tabs &ndash;&gt;-->
+                    <!--<ul class="nav nav-tabs">-->
+                        <!--<li class="active"><a class="a-nav-tab" ng-click="navTab='contextual'" data-toggle="tab">Map-->
+                            <!--Layers</a></li>-->
+                        <!--<li><a class="a-nav-tab" ng-click="navTab='uploaded'" data-toggle="tab">Uploaded Data</a></li>-->
+                    <!--</ul>-->
 
-                            <div ng-repeat="(panelName, panel) in layersPanels">
-                                <h4>{{panelName}}</h4>
-                                <label class="checkbox" ng-repeat="(layerKey, layer) in panel">
-                                    <input type="checkbox" ng-model="layer.active"
-                                           ng-change="toggleMapLayer(layerKey, layer)">
-                                    {{layer.name || layer.properties.title || layerKey}}
-                                </label>
-                            </div>
-                            <br/>
-                        </div>
-                        <div ng-class="{active: navTab==='uploaded'}" class="tab-pane">
-                            <div ng-show="numGists===0">
-                                <br/>
-
-                                <p>
-                                    This is a list of spatial data layers you have uploaded to Github.
-                                </p>
-
-                                <p>
-                                    You haven't uploaded any data yet. Click on the <a ui-sref="upload(params)">Upload
-                                    Data</a>
-                                    button on the top right menu for more information.
-                                </p>
-                            </div>
-                            <div ng-show="numGists>0">
-                                <h4>Layers hosted on Github:</h4>
-                                <label class="checkbox" ng-repeat="gist in gists">
-                                    <input type="checkbox" ng-model="gist.active"
-                                           ng-change="toggleMapLayer(gist.url, gist)">
-                                    {{gist.name}} (<a href="{{gist.htmlUrl}}" target="_blank">View on Github</a>)
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--End Layers Panel-->
-
-            <!--Filters Panel-->
-            <div ng-controller="FiltersCtrl" ng-class="{on: isParam('filters-panel')}"
-                 class="navpanel container filters-container">
-                <div class="row">
-                    <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('filters-panel')">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                    <div class="col-md-10 side-view-title-wrapper">
-                        <div class="title">Filters</div>
-                        <a class="clear-all" ng-click="clearAllFilters()">Clear All Filters</a>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a class="a-nav-tab" ng-click="navTab='CICOS'; setSelectedSector(navTab)"
-                                              data-toggle="tab">Financial</a></li>
-
-                        <li><a class="a-nav-tab" ng-click="navTab='health'; setSelectedSector(navTab)"
-                               data-toggle="tab">Health</a></li>
-
-                        <li><a class="a-nav-tab" ng-click="navTab='library'; setSelectedSector(navTab)"
-                               data-toggle="tab">Library</a></li>
-
-                        <li><a class="a-nav-tab" ng-click="navTab='agriculture'; setSelectedSector(navTab)"
-                               data-toggle="tab">Agriculture</a></li>
-
-                        <!--<li><a class="a-nav-tab" ng-click="navTab='custom'" data-toggle="tab">Custom</a></li>-->
-                    </ul>
-
-                    <!-- Tab panes -->
+                    <!--&lt;!&ndash; Tab panes &ndash;&gt;-->
                     <!--<div class="tab-content scrollable">-->
-                    <!--<div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">-->
-                    <!--<label class="checkbox">-->
-                    <!--<input type="checkbox" ng-model="CICOSector.selectedAll" ng-click="filterCICO();-->
-                    <!--toggleMapLayer(navTab, CICOLayer)">-->
-                    <!--{{checkedBool}}-->
-                    <!--</label>-->
-                    <!--<label ng-repeat="names in CICOSector" class="checkbox">-->
-                    <!--<input type="checkbox" ng-model="names.selected"-->
-                    <!--ng-click="setCICOSelection(names.type, !names.selected)">-->
-                    <!--{{names.type}} ({{names.count | number}})-->
-                    <!--</label>-->
+                        <!--<div ng-class="{active: navTab==='contextual'}" class="tab-pane">-->
+
+                            <!--<h4>Administrative boundary levels:</h4>-->
+
+                            <!--<div class="radio">-->
+                                <!--<label>-->
+                                    <!--<input type="radio" ng-model="gadmLevel" value="auto">-->
+                                    <!--Automatic-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="radio">-->
+                                <!--<label>-->
+                                    <!--<input type="radio" ng-model="gadmLevel" value="-1">-->
+                                    <!--ARC - American Red Cross Regions-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="radio">-->
+                                <!--<label>-->
+                                    <!--<input type="radio" ng-model="gadmLevel" value="0">-->
+                                    <!--0. Countries-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="radio">-->
+                                <!--<label ng-class="{'disabled-radio-label': zoom < 6}">-->
+                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 6" value="1">-->
+                                    <!--1. State / Province-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="radio">-->
+                                <!--<label ng-class="{'disabled-radio-label': zoom < 8}">-->
+                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 8" value="2">-->
+                                    <!--2. County-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="radio">-->
+                                <!--<label ng-class="{'disabled-radio-label': zoom < 9}">-->
+                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 9" value="3">-->
+                                    <!--3. Level 3-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="radio">-->
+                                <!--<label ng-class="{'disabled-radio-label': zoom < 11}">-->
+                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 11" value="4">-->
+                                    <!--4. Level 4-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="radio">-->
+                                <!--<label ng-class="{'disabled-radio-label': zoom < 13}">-->
+                                    <!--<input type="radio" ng-model="gadmLevel" ng-disabled="zoom < 13" value="5">-->
+                                    <!--5. Level 5-->
+                                <!--</label>-->
+                            <!--</div>-->
+
+                            <!--<div ng-repeat="(panelName, panel) in layersPanels">-->
+                                <!--<h4>{{panelName}}</h4>-->
+                                <!--<label class="checkbox" ng-repeat="(layerKey, layer) in panel">-->
+                                    <!--<input type="checkbox" ng-model="layer.active"-->
+                                           <!--ng-change="toggleMapLayer(layerKey, layer)">-->
+                                    <!--{{layer.name || layer.properties.title || layerKey}}-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<br/>-->
+                        <!--</div>-->
+                        <!--<div ng-class="{active: navTab==='uploaded'}" class="tab-pane">-->
+                            <!--<div ng-show="numGists===0">-->
+                                <!--<br/>-->
+
+                                <!--<p>-->
+                                    <!--This is a list of spatial data layers you have uploaded to Github.-->
+                                <!--</p>-->
+
+                                <!--<p>-->
+                                    <!--You haven't uploaded any data yet. Click on the <a ui-sref="upload(params)">Upload-->
+                                    <!--Data</a>-->
+                                    <!--button on the top right menu for more information.-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--<div ng-show="numGists>0">-->
+                                <!--<h4>Layers hosted on Github:</h4>-->
+                                <!--<label class="checkbox" ng-repeat="gist in gists">-->
+                                    <!--<input type="checkbox" ng-model="gist.active"-->
+                                           <!--ng-change="toggleMapLayer(gist.url, gist)">-->
+                                    <!--{{gist.name}} (<a href="{{gist.htmlUrl}}" target="_blank">View on Github</a>)-->
+                                <!--</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
                     <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;End Layers Panel&ndash;&gt;-->
 
-                    <!--<div ng-class="{active: navTab==='health'}" id="sectors-filter" class="tab-pane">-->
-                    <!--<label class="checkbox">-->
-                    <!--<input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth();-->
-                    <!--toggleMapLayer(navTab, HealthLayer)">-->
-                    <!--{{checkedBool}}-->
-                    <!--</label>-->
-
-                    <!--<label ng-repeat="names in HealthSector" class="checkbox">-->
-                    <!--<input type="checkbox" ng-model="names.selected"-->
-                    <!--ng-click="setHealthSelection(names.type, !names.selected)">-->
-                    <!--{{names.type}} ({{names.count | number}})-->
-                    <!--</label>-->
-                    <!--</div>-->
-
-                    <!--<div ng-class="{active: navTab==='library'}" id="sectors-filter" class="tab-pane">-->
-                    <!--<div>-->
-                    <!--<label class="checkbox">-->
-                    <!--<input type="checkbox" ng-model="LibrarySector.selectedAll"-->
-                    <!--ng-click="filterLibrary(); toggleMapLayer(navTab, LibraryLayer)">-->
-                    <!--{{checkedBool}}-->
-                    <!--</label>-->
-
-                    <!--<label ng-repeat="names in LibrarySector" class="checkbox">-->
-                    <!--<input type="checkbox" ng-model="names.selected"-->
-                    <!--ng-click="setLibrarySelection(names.type, !names.selected)">-->
-                    <!--{{names.type}} ({{names.count | number}})-->
-                    <!--</label>-->
-                    <!--</div>-->
-                    <!--</div>-->
-
-                    <!--<div ng-class="{active: navTab==='agriculture'}" id="sectors-filter" class="tab-pane">-->
-
-                    <!--<div>-->
-                    <!--<label class="checkbox">-->
-                    <!--<input type="checkbox" ng-model="AgSector.selectedAll"-->
-                    <!--ng-click="filterAg(); toggleMapLayer(navTab, AgLayer)">-->
-                    <!--{{checkedBool}}-->
-                    <!--</label>-->
-
-                    <!--<label ng-repeat="names in AgSector" class="checkbox">-->
-                    <!--<input type="checkbox" ng-model="names.selected"-->
-                    <!--ng-click="setAgSelection(names.type, !names.selected)">-->
-                    <!--{{names.type}} ({{names.count | number}})-->
-                    <!--</label>-->
-                    <!--</div>-->
-                    <!--</div>-->
-
-                    <!--<div ng-class="{active: navTab==='custom'}" class="tab-pane" id="custom-filter">-->
-                    <!--<h4>Filter WHERE Clause</h4>-->
-                    <!--<textarea class="form-control" rows="6" placeholder="Create a custom where clause..."-->
-                    <!--ng-model="whereClause"></textarea>-->
-                    <!--<button ng-click="submitFilter()" type="button"-->
-                    <!--class="btn btn-primary pull-right custom-filter-submit">-->
-                    <!--Submit-->
+            <!--&lt;!&ndash;Filters Panel&ndash;&gt;-->
+            <!--<div ng-controller="FiltersCtrl" ng-class="{on: isParam('filters-panel')}"-->
+                 <!--class="navpanel container filters-container">-->
+                <!--<div class="row">-->
+                    <!--<button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('filters-panel')">-->
+                        <!--<span class="glyphicon glyphicon-chevron-left"></span>-->
                     <!--</button>-->
+                    <!--<div class="col-md-10 side-view-title-wrapper">-->
+                        <!--<div class="title">Filters</div>-->
+                        <!--<a class="clear-all" ng-click="clearAllFilters()">Clear All Filters</a>-->
                     <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+
+                    <!--&lt;!&ndash; Nav tabs &ndash;&gt;-->
+                    <!--<ul class="nav nav-tabs">-->
+                        <!--<li class="active"><a class="a-nav-tab" ng-click="navTab='CICOS'; setSelectedSector(navTab)"-->
+                                              <!--data-toggle="tab">Financial</a></li>-->
+
+                        <!--<li><a class="a-nav-tab" ng-click="navTab='health'; setSelectedSector(navTab)"-->
+                               <!--data-toggle="tab">Health</a></li>-->
+
+                        <!--<li><a class="a-nav-tab" ng-click="navTab='library'; setSelectedSector(navTab)"-->
+                               <!--data-toggle="tab">Library</a></li>-->
+
+                        <!--<li><a class="a-nav-tab" ng-click="navTab='agriculture'; setSelectedSector(navTab)"-->
+                               <!--data-toggle="tab">Agriculture</a></li>-->
+
+                        <!--&lt;!&ndash;<li><a class="a-nav-tab" ng-click="navTab='custom'" data-toggle="tab">Custom</a></li>&ndash;&gt;-->
+                    <!--</ul>-->
+
+                    <!--&lt;!&ndash; Tab panes &ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="tab-content scrollable">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div ng-class="{active: navTab==='CICOS'}" class="tab-pane" id="sectors-filter">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label class="checkbox">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="checkbox" ng-model="CICOSector.selectedAll" ng-click="filterCICO();&ndash;&gt;-->
+                    <!--&lt;!&ndash;toggleMapLayer(navTab, CICOLayer)">&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{checkedBool}}&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label ng-repeat="names in CICOSector" class="checkbox">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="checkbox" ng-model="names.selected"&ndash;&gt;-->
+                    <!--&lt;!&ndash;ng-click="setCICOSelection(names.type, !names.selected)">&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{names.type}} ({{names.count | number}})&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<div ng-class="{active: navTab==='health'}" id="sectors-filter" class="tab-pane">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label class="checkbox">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="checkbox" ng-model="HealthSector.selectedAll" ng-click="filterHealth();&ndash;&gt;-->
+                    <!--&lt;!&ndash;toggleMapLayer(navTab, HealthLayer)">&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{checkedBool}}&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<label ng-repeat="names in HealthSector" class="checkbox">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="checkbox" ng-model="names.selected"&ndash;&gt;-->
+                    <!--&lt;!&ndash;ng-click="setHealthSelection(names.type, !names.selected)">&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{names.type}} ({{names.count | number}})&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<div ng-class="{active: navTab==='library'}" id="sectors-filter" class="tab-pane">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label class="checkbox">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="checkbox" ng-model="LibrarySector.selectedAll"&ndash;&gt;-->
+                    <!--&lt;!&ndash;ng-click="filterLibrary(); toggleMapLayer(navTab, LibraryLayer)">&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{checkedBool}}&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<label ng-repeat="names in LibrarySector" class="checkbox">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="checkbox" ng-model="names.selected"&ndash;&gt;-->
+                    <!--&lt;!&ndash;ng-click="setLibrarySelection(names.type, !names.selected)">&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{names.type}} ({{names.count | number}})&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<div ng-class="{active: navTab==='agriculture'}" id="sectors-filter" class="tab-pane">&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label class="checkbox">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="checkbox" ng-model="AgSector.selectedAll"&ndash;&gt;-->
+                    <!--&lt;!&ndash;ng-click="filterAg(); toggleMapLayer(navTab, AgLayer)">&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{checkedBool}}&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<label ng-repeat="names in AgSector" class="checkbox">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="checkbox" ng-model="names.selected"&ndash;&gt;-->
+                    <!--&lt;!&ndash;ng-click="setAgSelection(names.type, !names.selected)">&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{names.type}} ({{names.count | number}})&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<div ng-class="{active: navTab==='custom'}" class="tab-pane" id="custom-filter">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<h4>Filter WHERE Clause</h4>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<textarea class="form-control" rows="6" placeholder="Create a custom where clause..."&ndash;&gt;-->
+                    <!--&lt;!&ndash;ng-model="whereClause"></textarea>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button ng-click="submitFilter()" type="button"&ndash;&gt;-->
+                    <!--&lt;!&ndash;class="btn btn-primary pull-right custom-filter-submit">&ndash;&gt;-->
+                    <!--&lt;!&ndash;Submit&ndash;&gt;-->
+                    <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;End Filters Panel&ndash;&gt;-->
+
+            <!--&lt;!&ndash;Legend Panel&ndash;&gt;-->
+            <!--<div ng-controller="LegendCtrl" ng-class="{on: isParam('legend')}"-->
+                 <!--class="navpanel container legend-container">-->
+                <!--<div class="row">-->
+                    <!--<button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('legend')"><span-->
+                            <!--class="glyphicon glyphicon-chevron-left"></span></button>-->
+                    <!--<div class="col-md-8 side-view-title-wrapper">-->
+                        <!--<div class="title">Legend</div>-->
+                        <!--<div class="description"></div>-->
                     <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row scrollable">-->
+                    <!--<ul class="list-group legend-list">-->
+                        <!--<li class="list-group-item" ng-repeat="layer in layers">-->
+                            <!--<div class="legendTitle">{{layer.name}}</div>-->
+                            <!--<div class="legendIcon" ng-bind-html="layer.activeLegend"></div>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;End Legend Panel&ndash;&gt;-->
 
-                </div>
-            </div>
-            <!--End Filters Panel-->
+            <!--&lt;!&ndash;&lt;!&ndash;Basemaps Panel&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<div ng-controller="BasemapsCtrl" ng-class="{on: isParam('basemaps')}"&ndash;&gt;-->
+            <!--&lt;!&ndash;class="navpanel container basemaps-container">&ndash;&gt;-->
 
-            <!--Legend Panel-->
-            <div ng-controller="LegendCtrl" ng-class="{on: isParam('legend')}"
-                 class="navpanel container legend-container">
-                <div class="row">
-                    <button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('legend')"><span
-                            class="glyphicon glyphicon-chevron-left"></span></button>
-                    <div class="col-md-8 side-view-title-wrapper">
-                        <div class="title">Legend</div>
-                        <div class="description"></div>
-                    </div>
-                </div>
-                <div class="row scrollable">
-                    <ul class="list-group legend-list">
-                        <li class="list-group-item" ng-repeat="layer in layers">
-                            <div class="legendTitle">{{layer.name}}</div>
-                            <div class="legendIcon" ng-bind-html="layer.activeLegend"></div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!--End Legend Panel-->
+            <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+            <!--&lt;!&ndash;<button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('basemaps')"><span&ndash;&gt;-->
+            <!--&lt;!&ndash;class="glyphicon glyphicon-chevron-left"></span></button>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-7 side-view-title-wrapper">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="title">BASEMAPS</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="row scrollable">&ndash;&gt;-->
 
-            <!--&lt;!&ndash;Basemaps Panel&ndash;&gt;-->
-            <!--<div ng-controller="BasemapsCtrl" ng-class="{on: isParam('basemaps')}"-->
-            <!--class="navpanel container basemaps-container">-->
+            <!--&lt;!&ndash;<div class="col-md-12">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
 
-            <!--<div class="row">-->
-            <!--<button class="side-view-close btn btn-lg btn-primary" ng-click="toggleParam('basemaps')"><span-->
-            <!--class="glyphicon glyphicon-chevron-left"></span></button>-->
-            <!--<div class="col-md-7 side-view-title-wrapper">-->
-            <!--<div class="title">BASEMAPS</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="row scrollable">-->
+            <!--&lt;!&ndash;<div class="col-md-12" ng-repeat="alias in basemaps">&ndash;&gt;-->
+            <!--&lt;!&ndash;<a ng-click="swapBasemap(alias)" class="thumbnail">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="image" ng-class="{active: isActiveBasemap(alias)}">&ndash;&gt;-->
+            <!--&lt;!&ndash;<img src="images/basemaps/{{alias}}.jpg" alt="{{name(alias)}}">&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="caption">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="container thumbnail-container">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-11 nopaddingnomargin">&ndash;&gt;-->
+            <!--&lt;!&ndash;{{name(alias)}}&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-            <!--<div class="col-md-12">-->
-            <!--<div class="row">-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-            <!--<div class="col-md-12" ng-repeat="alias in basemaps">-->
-            <!--<a ng-click="swapBasemap(alias)" class="thumbnail">-->
-            <!--<div class="image" ng-class="{active: isActiveBasemap(alias)}">-->
-            <!--<img src="images/basemaps/{{alias}}.jpg" alt="{{name(alias)}}">-->
-            <!--</div>-->
-            <!--<div class="caption">-->
-            <!--<div class="container thumbnail-container">-->
-            <!--<div class="row">-->
-            <!--<div class="col-md-11 nopaddingnomargin">-->
-            <!--{{name(alias)}}-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</a>-->
-            <!--</div>-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-            <!--</div>-->
-            <!--</div>-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;End Basemaps Panel&ndash;&gt;&ndash;&gt;-->
 
+            <!--&lt;!&ndash;Info Panel&ndash;&gt;-->
+            <!--<div ng-controller="InfoCtrl" ng-class="{on: isParam('info')}" class="navpanel container">-->
+                <!--<button class="side-view-close btn btn-lg btn-primary topnav-button"-->
+                        <!--ng-click="toggleParam('info')"><span-->
+                        <!--class="glyphicon glyphicon-chevron-left"></span></button>-->
+                <!--info.html-->
             <!--</div>-->
-
-            <!--</div>-->
-            <!--&lt;!&ndash;End Basemaps Panel&ndash;&gt;-->
-
-            <!--Info Panel-->
-            <div ng-controller="InfoCtrl" ng-class="{on: isParam('info')}" class="navpanel container">
-                <button class="side-view-close btn btn-lg btn-primary topnav-button"
-                        ng-click="toggleParam('info')"><span
-                        class="glyphicon glyphicon-chevron-left"></span></button>
-                info.html
-            </div>
-            <!--End Info Panel-->
+            <!--&lt;!&ndash;End Info Panel&ndash;&gt;-->
 
 
-        </div>
+        <!--</div>-->
         <!--End Side View-->
 
         <div class="windowEffects" ng-class="{grayout: isParam('zoom-extent')}"></div>
@@ -884,7 +884,7 @@
                 <div id="MapUpperRightToolbarWrapper">
 
                     <div class="left-section countryselect">
-                        <div class="world countrytext ng-binding" ng-click="switchCountry(selection)">
+                        <div class="world countrytext ng-binding" ng-click="setCountry(selection)">
                             {{selection}}
                             <div class="side-view-close btn btn-lg abs" ng-click="toggleParam('zoom-extent')">
                                 <span class="glyphicon glyphicon-chevron-down"></span>
@@ -1030,10 +1030,10 @@
         <!-- Region / Country Selector Panel -->
         <div id="CountrySelectorPanelWrapper" ng-class="{on: isParam('zoom-extent')}">
             <!--<button ng-click="closeParam('zoom-extent')" type="button" class="close" aria-hidden="true">&times;</button>-->
-            <div id="CountrySelectedRegion" ng-repeat="cname in SelectCountry.countryNames">
+            <div id="CountrySelectedRegion" ng-repeat="cname in CountryList.countryNames">
                 <a>
                     <div id="CountrySelectedCountry">
-                        <div ng-click="toggleParam('zoom-extent'); setCountry(cname); switchCountry(cname)">{{cname}}
+                        <div ng-click="toggleParam('zoom-extent'); setCountry(cname)">{{cname}}
                         </div>
                     </div>
                 </a>
@@ -1043,16 +1043,25 @@
     </div>
 
     <!--Basemaps Panel-->
-    <div ng-controller="BasemapsCtrl" ng-class="{on: isParam('basemaps')}">
+    <div ng-controller="BasemapsCtrl"s>
         <div id="MapBasemap" title="Change Basemap" ng-click="toggleParam('basemaps')">
             <span class="mapimg icon-icon_basemaps"></span>
         </div>
 
-        <div id="BasemapSelector">
+        <div id="BasemapSelector" ng-class="{on: isParam('basemaps')}">
             <div class="content">
                 <div class="header">
                     basemaps
                 </div>
+                <div ng-repeat="alias in basemaps">
+                    <a ng-click="swapBasemap(alias)" class="map-thumbnail">
+                        <div ng-class="{active: isActiveBasemap(alias)}">
+                            <img src="images/basemaps/{{alias}}.jpg" alt="{{name(alias)}}">
+                        </div>
+                        <div class="caption">
+                            {{alias}}
+                        </div>
+                    </a>
             </div>
         </div>
 
@@ -1165,10 +1174,8 @@
                        data-toggle="tab">Health</a></li>
             </ul>
 
-            <div class="tab-content">
-                <div ng-class="{active: navTab==='PointDetails'}" class="tab-pane" style="height:420px;
-overflow-x: hidden;
-overflow-y: auto;">
+            <div class="tab-content content">
+                <div ng-class="{active: navTab==='PointDetails'}" class="tab-pane" style="">
 
                     <div ng-show="ALLdetails.length>0">
                         <div id="pageTally" class="ng-binding">page {{activeidx+1}} of {{ALLdetails.length}}</div>

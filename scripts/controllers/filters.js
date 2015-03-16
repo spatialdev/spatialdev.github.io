@@ -49,13 +49,25 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
     };
 
+    var deactiveLayers = function(){
+        $scope.LibraryLayer.active = false;
+        $scope.HealthLayer.active = false;
+        $scope.CICOLayer.active = false;
+        $scope.AgLayer.active = false;
+        $scope.CICOLayer_Kenya.active = false;
+        $scope.CICOLayer_Nigeria.active = false;
+        $scope.CICOSector.selectedAll = false;
+    };
+
+
     $scope.$watch(function () {
         return SectorFactory.selectedCountry;
     }, function () {
+
         $scope.selection = SectorFactory.selectedCountry;
         console.log(" ------ Details.js Current Country has changed to: " + $scope.selection);
         $scope.setFilters();
-
+        deactiveLayers();
         switch ($scope.selection) {
             case 'India':
                 SectorFactory.sectorSelections = [];

@@ -562,18 +562,11 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     // Watch for change in right details navTab
     $scope.$watch('navTab', function () {
         if ($scope.selection == 'India') {
-            if ($scope.navTab !== 'countryoverview') {
+            if ($scope.navTab !== 'countryoverview' && $scope.selectedSector !== "") {
                 $scope.title = $scope.selectedSector;
             } else {
                 $scope.title = "Overview - Bihar & Uttar Pradesh";
             }
-            // set default bar chart to CICOs
-        //    if ($scope.selectedSector == 'CICOS') {
-        //        $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
-        //    }
-        //} else {
-        //    //$scope.title = "Overview - Kenya";
-        //}
         }});
 
     // Watch for change in selected Sector
