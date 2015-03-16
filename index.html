@@ -65,7 +65,7 @@
         <div ng-controller="FiltersCtrl">
         <div class="logo_BG">
             <div class="logo_font">
-                <a href="/SpatialViewer/#/default" ng-click="deactiveLayers()">
+                <a href="/SpatialViewer/#/default" ng-click="defaultState()">
                     <div class="fsp">FSP</div>
                     <div class="maps">MAPS</div>
                 </a>
@@ -1017,8 +1017,8 @@
                                 </div>
                             </a>
                         </div>
-                        <div ng-show="CICOLayer.active === false && LibraryLayer.active === false && HealthLayer.active === false && AgLayer.active === false"
-                             class="View_All" ng-click="ViewAllSectors()"><a>View All</a></div>
+                        <!--<div ng-show="CICOLayer.active === false && LibraryLayer.active === false && HealthLayer.active === false && AgLayer.active === false"-->
+                             <!--class="View_All" ng-click="ViewAllSectors()"><a>View All</a></div>-->
                     </div>
                 </div>
 
