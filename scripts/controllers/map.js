@@ -293,13 +293,9 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     // Country Select
     // All variables will be inherited by other controllers
 
-    $scope.CountryList = {
-        default: 'India',
-        countryNames: ['Bangladesh', 'Uganda', 'Kenya', 'Nigeria', 'Tanzania', 'India']
-    };
+    $scope.CountryList = SectorFactory.CountryList;
 
-
-    $scope.selection = $scope.CountryList.default;
+    $scope.selection = $scope.CountryList.default.country;
     SectorFactory.selectedCountry = $scope.selection;
 
     //Users Selected Country

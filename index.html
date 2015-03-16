@@ -62,9 +62,10 @@
     <!-- NavBar is the vertical & left-hand (west) panel controlled by the jQuery Layout plugin. -->
     <div id="NavBar" class="ui-layout-west" ng-controller="NavBarCtrl">
 
+        <div ng-controller="FiltersCtrl">
         <div class="logo_BG">
             <div class="logo_font">
-                <a href="/SpatialViewer/#/default">
+                <a href="/SpatialViewer/#/default" ng-click="deactiveLayers()">
                     <div class="fsp">FSP</div>
                     <div class="maps">MAPS</div>
                 </a>
@@ -72,9 +73,8 @@
         </div>
 
         <div class="NavButtonGroup btn-group">
-            <button type="button" class="btn btn-default top">
+            <button type="button" class="btn btn-default top" ng-click="defaultState()">
                 <span class="icon-icon_home nav_icons"></span>
-
                 <div class="icon_title">Home</div>
             </button>
             <button type="button" class="btn btn-default">
@@ -104,6 +104,7 @@
             <!--</button>-->
 
 
+        </div>
         </div>
         <div class="NavigationTooltipContainer main">
             <div id="FlyoutLogoPlaceHolder"></div>
@@ -147,8 +148,8 @@
             <!--</div>-->
         </div>
     </div>
-    <!-- MapCtrl is the center (center) panel controlled by the jQuery Layout plugin, and is also where the map lives. -->
 
+    <!-- MapCtrl is the center (center) panel controlled by the jQuery Layout plugin, and is also where the map lives. -->
     <div ng-controller="MapCtrl" id="MapCtrl" class="ui-layout-center">
 
         <div ui-view="leftmenu"></div>

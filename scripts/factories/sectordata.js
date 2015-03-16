@@ -5,8 +5,18 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
     service.SelectedSector = '';
     service.selectedCountry = 'India';
     service.sectorSelections = [];
-    //service.ALLdetails = [];
-    //service.ALLdetailsLength = 0;
+
+    service.CountryList = {
+        default:{
+            country:'India',
+            MapCenter: {
+                Latitude: 26,
+                Longitude: 85
+            },
+            MapZoom: 6
+        },
+        countryNames: ['Bangladesh', 'Uganda', 'Kenya', 'Nigeria', 'Tanzania', 'India']
+    };
 
     service.setSelectedSector = function (sector) {
         service.SelectedSector = sector;
@@ -21,32 +31,6 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
 
         console.log("SectorFactory tab: " + service.SelectedSector);
     };
-
-    //service.setAllDetails = function (details) {
-    //
-    //    if(service.ALLdetails.length >= 1) {
-    //        details.forEach(function (val) {
-    //            val.forEach(function (v) {
-    //                service.ALLdetails.push(v);
-    //            })
-    //        })
-    //    } else {
-    //        service.ALLdetails.push(details);
-    //    }
-    //
-    //    //service.ALLdetails.push(details);
-    //    service.ALLdetails.forEach(function(val){
-    //        service.ALLdetailsLength = service.ALLdetailsLength + val.length;
-    //    });
-    //};
-
-    //service.clearDetails = function () {
-    //    service.ALLdetails = [];
-    //};
-    //
-    //service.clearTotal = function () {
-    //    service.ALLdetailsLength = 0;
-    //};
 
     service.setCountry = function (country) {
         service.selectedCountry = country;

@@ -25,6 +25,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.ShowAllSectors = false;
     $scope.SearchBar = false;
     $scope.AgTop3 = [];
+    $scope.CountryList = SectorFactory.CountryList;
 
     $scope.toggleSearchBar = function () {
         $scope.SearchBar = !$scope.SearchBar;
@@ -49,7 +50,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
     };
 
-    var deactiveLayers = function(){
+    $scope.deactiveLayers = function(){
         $scope.LibraryLayer.active = false;
         $scope.HealthLayer.active = false;
         $scope.CICOLayer.active = false;
@@ -57,6 +58,28 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.CICOLayer_Kenya.active = false;
         $scope.CICOLayer_Nigeria.active = false;
         $scope.CICOSector.selectedAll = false;
+        $scope.LibrarySector.selectedAll = false;
+        $scope.HealthSector.selectedAll = false;
+        $scope.AgSector.selectedAll = false;
+    };
+
+    $scope.defaultState = function(){
+        $scope.deactiveLayers();
+
+        $scope.CountryList = SectorFactory.CountryList;
+
+        var temparr = $stateParams.layers.split(",");
+        $stateParams.layers = temparr[0];
+
+        $stateParams.lat = $scope.CountryList.default.MapCenter.Latitude;
+        $stateParams.lng = $scope.CountryList.default.MapCenter.Longitude;
+        $stateParams.zoom = $scope.CountryList.default.MapZoom;
+        $stateParams.country =  $scope.CountryList.default.country;
+        $scope.selection = $scope.CountryList.default.country;
+
+        $scope.closeParam('details-panel');
+
+        $state.go($state.current.name, $stateParams);
     };
 
 
@@ -67,7 +90,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.selection = SectorFactory.selectedCountry;
         console.log(" ------ Details.js Current Country has changed to: " + $scope.selection);
         $scope.setFilters();
-        deactiveLayers();
+        $scope.deactiveLayers();
         switch ($scope.selection) {
             case 'India':
                 SectorFactory.sectorSelections = [];
