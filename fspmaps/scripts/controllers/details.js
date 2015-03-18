@@ -34,7 +34,6 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 $scope.APData = AgFilterFactory.Ag_Counts;
                 $scope.sectortotal = AgFilterFactory.AgTotal;
                 $scope.APChart(AgFilterFactory.Ag_LandUse_Counts);
-                console.log("case: agriculture");
                 break;
             case 'CICOS':
             case 'Financial Service':
@@ -43,43 +42,36 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                     $scope.APData = CICOFilterFactory.CICOs_Counts;
                     $scope.sectortotal = CICOFilterFactory.CICOsTotal;
                     $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
-                    console.log("case: India CICOS");
 
                 }
                 if($scope.selection == 'Kenya'){
                     $scope.APData = KenyaFactory.CICOs_Counts;
                     $scope.sectortotal = KenyaFactory.CICOsTotal;
-                    console.log("case: Kenya CICOS");
                 }
                 if($scope.selection == 'Nigeria'){
                     $scope.APData = NigeriaFactory.CICOs_Counts;
                     $scope.sectortotal = NigeriaFactory.CICOsTotal;
-                    console.log("case: Nigeria CICOS");
                 }
                 break;
             case 'Health':
                 $scope.APData = HealthFilterFactory.Health_Counts;
                 $scope.sectortotal = HealthFilterFactory.HealthTotal;
                 $scope.APChart(HealthFilterFactory.Health_LandUse_Counts);
-                console.log("case: Health");
                 break;
             case 'Library':
                 $scope.APData = LibraryFilterFactory.Library_Counts;
                 $scope.sectortotal = LibraryFilterFactory.LibraryTotal;
                 $scope.APChart(LibraryFilterFactory.Library_LandUse_Counts);
-                console.log("case: Library");
                 break;
             default:
                 if($scope.selection == 'India'){
                     $scope.APData = CICOFilterFactory.CICOs_Counts;
                     $scope.sectortotal = CICOFilterFactory.CICOsTotal;
                     $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
-                    console.log("case: India CICOS");
 
                 } if($scope.selection == 'Kenya'){
                     $scope.APData = CICOFilterFactory.CICOs_Counts_Kenya;
                     $scope.sectortotal = CICOFilterFactory.CICOsTotal_Kenya;
-                    console.log("case: Kenya CICOS");
                 }
                 //$scope.APData = CICOFilterFactory.CICOs_Counts;
                 //$scope.sectortotal = CICOFilterFactory.CICOsTotal;
@@ -106,26 +98,22 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
             case 'India':
                 $scope.QuickStats = IndiaFactory.India.QuickStats;
                 $scope.title = "Overview - Bihar & Uttar Pradesh";
-                console.log("India QuickStats");
                 break;
             case 'Kenya':
                 $scope.QuickStats = KenyaFactory.Kenya.QuickStats;
                 $scope.title = "Overview - Kenya";
                 $scope.SectorTypes = ['Financial Service'];
-                console.log("Kenya QuickStats " + $scope.QuickStats);
                 break;
             case 'Nigeria':
                 $scope.QuickStats = NigeriaFactory.Nigeria.QuickStats;
                 $scope.title = "Overview - Nigeria";
                 $scope.SectorTypes = ['Financial Service'];
-                console.log("Nigeria QuickStats " + $scope.QuickStats);
                 break;
             default:
                 $scope.QuickStats = IndiaFactory.India.QuickStats;
                 $scope.title = "Overview - Bihar & Uttar Pradesh";
 
         }
-        console.log(" ------ Details.js Current Country has changed to: " + $scope.selection);
     });
 
     $http.get('data/sf-object-field-hash.json', {cached: true}).success(function (sfFieldHash) {

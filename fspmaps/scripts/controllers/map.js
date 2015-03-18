@@ -340,9 +340,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             $state.go($state.current.name, $stateParams); // update app state with new param
         }
 
-
-        console.log("map.js country change to: " + $stateParams.country);
-        console.log("map.js scope selection: " + $scope.selection);
     });
 
 
@@ -801,7 +798,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
     $scope.$watch('CICODetails', function () {
         $rootScope.$broadcast('CICODetails', $scope.CICODetails);
-        console.log('CICO Details change');
     });
 
     function highlightPointSelection(index, points, sector) {

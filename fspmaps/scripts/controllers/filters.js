@@ -34,7 +34,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     // Function is called after Country has changed
     // $scope.CICOSector can either contain Kenya/India/Nigeria data
     $scope.setFilters = function () {
-        var stateCountry = $stateParams.country.capitalize();
+        if ($stateParams.hasOwnProperty('country')==true) var stateCountry = $stateParams.country.capitalize();
         if (stateCountry == 'Kenya') {
             $scope.CICOSector = KenyaFactory.CICOs_Counts;
             //$scope.CICOProviders.viewAll = true;
@@ -280,10 +280,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             $scope.HealthLayer.active = false;
             $scope.checkAllHealth();
         }
-
-        console.log("Checked Bool: " + $scope.checkedBool);
-        console.log("Selected All: " + $scope.HealthSector.selectedAll);
-        console.log("Active? " + $scope.HealthLayer.active);
     };
 
     $scope.filterLibrary = function (bool) {
@@ -337,10 +333,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             $scope.AgLayer.active = false;
             $scope.checkAllAg();
         }
-
-        console.log("Checked Bool: " + $scope.checkedBool);
-        console.log("Selected All: " + $scope.AgSector.selectedAll);
-        console.log("Active? " + $scope.AgLayer.active);
 
     };
 
