@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# fspmaps
-SpatialViewer FSP
-=======
 SpatialViewer
 =============
 
