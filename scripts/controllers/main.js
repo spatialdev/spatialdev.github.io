@@ -12,9 +12,9 @@ module.exports = angular.module('SpatialViewer').controller('MainCtrl', function
   var levelStr = $stateParams.level;
   var zoomStr = $stateParams.zoom;
 
+  var country = $stateParams.country;
+
   $rootScope.$broadcast('route-update');
-
-
 
   /**
    * Only if the latest route has a different layer string than before.
@@ -24,6 +24,11 @@ module.exports = angular.module('SpatialViewer').controller('MainCtrl', function
     window.prevTheme = themeStr;
     var layers = layersStr.split(',');
     $rootScope.$broadcast('layers-update', layers);
+  }
+
+  if(country !== window.prevCountryStr){
+    window.prevCountryStr = country;
+    $rootScope.$broadcast('country-update',country);
   }
 
   if (levelStr !== null && levelStr !== window.prevLevelStr) {

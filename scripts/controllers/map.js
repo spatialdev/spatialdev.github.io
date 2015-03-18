@@ -264,6 +264,14 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         console.log("MAP.JS Listener enabled" + args);
     });
 
+    $scope.setCountry = function(country){
+        if( $scope.CountryList.countryNames.indexOf(country) !== -1){
+            $stateParams.country = country;
+            $scope.closeParam('details-panel');
+            $state.go($state.current.name, $stateParams); // update app state with new param
+        }
+    };
+
     $scope.params = $stateParams;
     $scope.blur = '';
 
@@ -298,30 +306,41 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     $scope.selection = $scope.CountryList.default.country;
     SectorFactory.selectedCountry = $scope.selection;
 
-    //Users Selected Country
-    $scope.setCountry = function (selected) {
+    $scope.$on('country-update',function(){
+        if($scope.CountryList.countryNames.indexOf($stateParams.country.capitalize()) !== -1) {
 
-        // validate country is part of list
-        if($scope.CountryList.countryNames.indexOf(selected) !== -1) {
+            $scope.selection = $stateParams.country.capitalize();
+            SectorFactory.setCountry($stateParams.country.capitalize());
 
-            $stateParams.country = selected;
-            //only run if state params country is different from map/filters/details.js selected country
-            if ($scope.selection !== $stateParams.country.capitalize()) {
-                $scope.selection = selected;
+            $scope.zoomToCountry($scope.selection); // switch mapview to country coordinates
 
+            //remove all layers but basemap
+            var temparr = $stateParams.layers.split(",");
 
-                //remove all layers but basemap
-                var temparr = $stateParams.layers.split(",");
-                $stateParams.layers = temparr[0];
-                $stateParams.country = selected;
+            if(temparr.length>1) {
+                if ($scope.selection !== 'India') {
+                    if (temparr[1].indexOf($scope.CountryList[$scope.selection].layer) == -1) {
+                        $stateParams.layers = temparr[0];
+                    }
 
-                SectorFactory.setCountry(selected); //change country for all listeners of selectedcountry
-                $scope.zoomToCountry(selected); // switch mapview to country coordinates
-                $state.go($state.current.name, $stateParams); // update app state with new params
+                } else {
+                    temparr.forEach(function (val, idx) {
+                        if (idx !== 0 && $scope.CountryList[$scope.selection].layer.indexOf(val) == -1) {
+                            temparr.splice(temparr.indexOf(val), 1);
+                            $stateParams.layers = temparr.join(",");
+                        }
+                    })
+                }
             }
 
+            $state.go($state.current.name, $stateParams); // update app state with new param
         }
-    };
+
+
+        console.log("map.js country change to: " + $stateParams.country);
+        console.log("map.js scope selection: " + $scope.selection);
+    });
+
 
     $scope.zoomToCountry = function (selected) {
         if (selected !== null) {
@@ -336,7 +355,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             return SectorFactory.sectorSelections;
         }, function () {
             $scope.allSectors = SectorFactory.sectorSelections;
-        }
+        },true
     );
 
     $scope.$watch(function () {
@@ -423,9 +442,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     /***
      * Broadcast Listeners.
      */
-    $scope.$on('route-update', function () {
 
-        if($scope.selection !== $stateParams.country.capitalize()) $scope.setCountry($stateParams.country.capitalize());
+    $scope.$on('route-update', function () {
 
         if ($scope.blur === 'blur' && $state.current.name !== 'landing') {
             $scope.blur = '';
@@ -858,7 +876,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         sector.forEach(function (val) {
             $scope.featureCollection = [];
             $scope.ALLdetails = [];
-            switch (val) {
+            switch (val.capitalize()) {
                 case 'Health':
                     var tablePostArgs = {
                         returnfields: 'lat,lng,id,type,name,photos,delivery_center,separate_maternity,sba_resource,female_sterilization,intra_uterine,condoms,oral_pills,pharmacist,csection_emonc,phc_24_7,blood_transfusion,immunization,cold_chain_equipment',

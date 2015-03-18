@@ -89,48 +89,48 @@ module.exports = angular.module('SpatialViewer').controller('LayersCtrl', functi
    * When the route changes, we should see what layers we have on there and have the layers
    * in the panels checked accordingly.
    */
-  $scope.$on('layers-update', function(evt, layers) {
-
-    // github gists
-    $scope.listGists();
-
-    // reset the nomad layers
-    for (var nk in $scope.nomadLayers) {
-      $scope.nomadLayers[nk].active = false;
-    }
-
-    // reset the layer config layers
-    for (var lck in LayerConfig) {
-      if (typeof LayerConfig[lck] === 'object' && LayerConfig[lck] !== null) {
-        LayerConfig[lck].active = false;
-      }
-    }
-
-    /**
-     * Check if the layer is active in map layers
-     */
-    $scope.mapLayers = layers;
-    // skip the first layer, the basemap
-    for (var i = 1, len = layers.length; i < len; i++) {
-      var l = layers[i];
-      // layer is in the layer config
-      if (typeof LayerConfig[l] === 'object' && LayerConfig[l] !== null) {
-        LayerConfig[l].active = true;
-      }
-      // layer is a github gist
-      else if ($scope.gists[l]) {
-        $scope.gists[l].active = true;
-      }
-      // layer is a not in the layer config. it's nomadic.
-      else {
-        $scope.nomadLayers[l] = {
-          name: l,
-          url: l,
-          active: true
-        }
-      }
-    }
-  });
+  //$scope.$on('layers-update', function(evt, layers) {
+  //
+  //  // github gists
+  //  $scope.listGists();
+  //
+  //  // reset the nomad layers
+  //  for (var nk in $scope.nomadLayers) {
+  //    $scope.nomadLayers[nk].active = false;
+  //  }
+  //
+  //  // reset the layer config layers
+  //  for (var lck in LayerConfig) {
+  //    if (typeof LayerConfig[lck] === 'object' && LayerConfig[lck] !== null) {
+  //      LayerConfig[lck].active = false;
+  //    }
+  //  }
+  //
+  //  /**
+  //   * Check if the layer is active in map layers
+  //   */
+  //  $scope.mapLayers = layers;
+  //  // skip the first layer, the basemap
+  //  for (var i = 1, len = layers.length; i < len; i++) {
+  //    var l = layers[i];
+  //    // layer is in the layer config
+  //    if (typeof LayerConfig[l] === 'object' && LayerConfig[l] !== null) {
+  //      LayerConfig[l].active = true;
+  //    }
+  //    // layer is a github gist
+  //    else if ($scope.gists[l]) {
+  //      $scope.gists[l].active = true;
+  //    }
+  //    // layer is a not in the layer config. it's nomadic.
+  //    else {
+  //      $scope.nomadLayers[l] = {
+  //        name: l,
+  //        url: l,
+  //        active: true
+  //      }
+  //    }
+  //  }
+  //});
 
   $scope.toggleMapLayer = function (layerKey, layer) {
 

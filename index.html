@@ -962,7 +962,7 @@
                         <div class="SingleSector">
                             <!-- India -->
                             <a class="cicos" ng-show="selection==='India'" ng-class="CICOLayer.active ? 'on' : 'off'"
-                               ng-click="setSelectedSector('CICOS');filterCICO();toggleMapLayer('CICOS',CICOLayer)">
+                               ng-click="setSelectedSector('CICOS');filterCICO(true);toggleMapLayer('CICOS',CICOLayer)">
                                 <div ng-show="IndiaOn">
                                     <span class="icon-nearBy nav_icons nearby"></span>
                                     Financial Service
@@ -971,7 +971,7 @@
                             <!-- Nigeria -->
                             <a class="cicos" ng-show="selection==='Nigeria'"
                                ng-class="CICOLayer_Nigeria.active ? 'on' : 'off'"
-                               ng-click="setSelectedSector('CICOS');filterCICO();toggleMapLayer('CICOS',CICOLayer)">
+                               ng-click="setSelectedSector('CICOS');filterCICO(true);toggleMapLayer('CICOS',CICOLayer)">
                                 <div ng-show="NigeriaOn">
                                     <span class="icon-nearBy nav_icons nearby"></span>
                                     Financial Service
@@ -980,7 +980,7 @@
                             <!-- Kenya -->
                             <a class="cicos" ng-show="selection==='Kenya'"
                                ng-class="CICOLayer_Kenya.active ? 'on' : 'off'"
-                               ng-click="setSelectedSector('CICOS');filterCICO();toggleMapLayer('CICOS',CICOLayer)">
+                               ng-click="setSelectedSector('CICOS');filterCICO(true);toggleMapLayer('CICOS',CICOLayer)">
                                 <div ng-show="KenyaOn">
                                     <span class="icon-nearBy nav_icons nearby"></span>
                                     Financial Service
@@ -990,7 +990,7 @@
                         <!-- Library Sector -->
                         <div class="SingleSector">
                             <a class="library" ng-class="LibraryLayer.active ? 'on' : 'off'"
-                               ng-click="setSelectedSector('Library');filterLibrary();toggleMapLayer('library',LibraryLayer)">
+                               ng-click="setSelectedSector('Library');filterLibrary(true);toggleMapLayer('library',LibraryLayer)">
                                 <div ng-show="IndiaOn">
                                     <span class="icon-nearBy nav_icons nearby"></span>
                                     Library
@@ -1000,7 +1000,7 @@
                         <!-- Health Sector -->
                         <div class="SingleSector">
                             <a class="health" ng-class="HealthLayer.active ? 'on' : 'off'"
-                               ng-click="setSelectedSector('Health');filterHealth();toggleMapLayer('health',HealthLayer)">
+                               ng-click="setSelectedSector('Health');filterHealth(true);toggleMapLayer('health',HealthLayer)">
                                 <div ng-show="IndiaOn">
                                     <span class="icon-nearBy nav_icons nearby"></span>
                                     Health
@@ -1010,7 +1010,7 @@
                         <!-- Agriculture Sector -->
                         <div class="SingleSector">
                             <a class="agriculture" ng-class="AgLayer.active ? 'on' : 'off'"
-                               ng-click="setSelectedSector('Agriculture');filterAg();toggleMapLayer('agriculture',AgLayer)">
+                               ng-click="setSelectedSector('Agriculture');filterAg(true);toggleMapLayer('agriculture',AgLayer)">
                                 <div ng-show="IndiaOn">
                                     <span class="icon-nearBy nav_icons nearby"></span>
                                     Agriculture

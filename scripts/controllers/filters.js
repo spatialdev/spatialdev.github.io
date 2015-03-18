@@ -86,7 +86,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.$watch(function () {
         return SectorFactory.selectedCountry;
     }, function () {
-
         $scope.selection = SectorFactory.selectedCountry;
         console.log(" ------ Details.js Current Country has changed to: " + $scope.selection);
         $scope.setFilters();
@@ -102,6 +101,10 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 $scope.ShowAllSectors = true;
                 $scope.KenyaOn = false;
                 $scope.NigeriaOn = false;
+                $scope.checkAllAg();
+                $scope.checkAllCICO();
+                $scope.checkAllHealth();
+                $scope.checkAllLibrary();
                 //$scope.CICOSelections = [];
                 $scope.CICOTop3 = [];
                 console.log("India On " + $scope.IndiaOn);
@@ -211,8 +214,35 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     };
 
     // Handle Check/Uncheck All filters
-    $scope.filterCICO = function () {
-        $scope.CICOSector.selectedAll = !$scope.CICOSector.selectedAll;
+    $scope.filterCICO = function (bool) {
+        var cicosectorName = '';
+
+        if($stateParams.country.capitalize()=='India'){
+            cicosectorName = 'CICOS'
+        }
+        if($stateParams.country.capitalize()=='Kenya'){
+            cicosectorName = 'cicos_kenya'
+        }
+        if($stateParams.country.capitalize()=='Nigeria'){
+            cicosectorName = 'cicos_nigeria'
+        }
+
+
+
+        if(bool) {
+            // handle toggling sectors on bottom sector panel
+            if ($stateParams.layers.indexOf(cicosectorName) == -1) {
+                $scope.CICOSector.selectedAll = true;
+            } else {
+                $scope.CICOSector.selectedAll = false;
+            }
+        } else {
+            if ($stateParams.layers.indexOf(cicosectorName) == -1) {
+                $scope.CICOSector.selectedAll = false;
+            } else {
+                $scope.CICOSector.selectedAll = true;
+            }
+        }
 
         // Toggle health sector later
         if ($scope.CICOSector.selectedAll == true) {
@@ -228,13 +258,21 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
     };
 
-    $scope.filterHealth = function () {
-        // Run check all from Health Factory
-        //HealthFilterFactory.checkAll($scope.HealthSector, $scope.selectedSector, $scope.HealthSector.selectedAll);
-        //// set scope variables to mirror factory properties
-        //$scope.checkedBool = HealthFilterFactory.checkBool;
-
-        $scope.HealthSector.selectedAll = !$scope.HealthSector.selectedAll;
+    $scope.filterHealth = function (bool) {
+        if(bool) {
+            // handle toggling sectors on bottom sector panel
+            if ($stateParams.layers.indexOf('health') == -1) {
+                $scope.HealthSector.selectedAll = true;
+            } else {
+                $scope.HealthSector.selectedAll = false;
+            }
+        } else {
+            if ($stateParams.layers.indexOf('health') == -1) {
+                $scope.HealthSector.selectedAll = false;
+            } else {
+                $scope.HealthSector.selectedAll = true;
+            }
+        }
 
         // Toggle health sector later
         if ($scope.HealthSector.selectedAll == true) {
@@ -250,13 +288,24 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         console.log("Active? " + $scope.HealthLayer.active);
     };
 
-    $scope.filterLibrary = function () {
-        //LibraryFilterFactory.checkAll($scope.LibrarySector, $scope.selectedSector, $scope.LibrarySector.selectedAll);
-        //$scope.checkedBool = LibraryFilterFactory.checkBool;
+    $scope.filterLibrary = function (bool) {
 
-        $scope.LibrarySector.selectedAll = !$scope.LibrarySector.selectedAll;
+        if(bool) {
+            // handle toggling sectors on bottom sector panel
+            if ($stateParams.layers.indexOf('library') == -1) {
+                $scope.LibrarySector.selectedAll = true;
+            } else {
+                $scope.LibrarySector.selectedAll = false;
+            }
+        } else {
+            if ($stateParams.layers.indexOf('library') == -1) {
+                $scope.LibrarySector.selectedAll = false;
+            } else {
+                $scope.LibrarySector.selectedAll = true;
+            }
+        }
 
-        // Toggle ag sector later
+        // Toggle library sector
         if ($scope.LibrarySector.selectedAll == true) {
             $scope.LibraryLayer.active = true;
             $scope.checkAllLibrary();
@@ -264,19 +313,25 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
             $scope.LibraryLayer.active = false;
             $scope.checkAllLibrary();
         }
-
-        console.log("Checked Bool: " + $scope.checkedBool);
-        console.log("Selected All: " + $scope.LibrarySector.selectedAll);
-        console.log("Active? " + $scope.LibraryLayer.active);
-
     };
 
-    $scope.filterAg = function () {
-        //AgFilterFactory.checkAll($scope.AgSector, $scope.selectedSector, $scope.AgSector.selectedAll);
-        //$scope.checkedBool = AgFilterFactory.checkBool;
-        $scope.AgSector.selectedAll = !$scope.AgSector.selectedAll;
+    $scope.filterAg = function (bool) {
+        if(bool) {
+            // handle toggling sectors on bottom sector panel
+            if ($stateParams.layers.indexOf('agriculture') == -1) {
+                $scope.AgSector.selectedAll = true;
+            } else {
+                $scope.AgSector.selectedAll = false;
+            }
+        } else {
+            if ($stateParams.layers.indexOf('agriculture') == -1) {
+                $scope.AgSector.selectedAll = false;
+            } else {
+                $scope.AgSector.selectedAll = true;
+            }
+        }
 
-        // Toggle ag sector later
+        // Toggle ag sector
         if ($scope.AgSector.selectedAll == true) {
             $scope.AgLayer.active = true;
             $scope.checkAllAg();
@@ -739,6 +794,20 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
      */
     $scope.$on('layers-update', function (evt, layers) {
 
+        if($stateParams.country.capitalize() == "India"){
+        //
+        //    var layers = $stateParams.layers.split(",");
+        //    for(var i =1;i<layers.length;i++){
+        //        if(SectorFactory.sectorSelections.indexOf(layers[i])==-1){
+        //            SectorFactory.setSelectedSector(layers[i]);
+        //        }
+        //    }
+        //    $scope.filterLibrary(false);
+        //    $scope.filterAg(false);
+        //    $scope.filterHealth(false);
+        }
+        //$scope.filterCICO(false);
+
         // github gists
         $scope.listGists();
 
@@ -793,7 +862,8 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         }
 
         // add layer
-        if (layer.active === true) {
+
+        if (layer.active === true && $stateParams.layers.indexOf(layerKey)==-1) {
             $scope.mapLayers.push(layerKey);
 
             // remove layer

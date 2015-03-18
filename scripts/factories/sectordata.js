@@ -14,6 +14,13 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
                 Longitude: 85
             },
             MapZoom: 6
+        },Kenya:{
+            layer:'cicos_kenya'
+        },Nigeria:{
+            layer:'cicos_nigeria'
+        },
+        India:{
+            layer: ['library','CICOS','agriculture','health']
         },
         countryNames: ['Bangladesh', 'Uganda', 'Kenya', 'Nigeria', 'Tanzania', 'India']
     };
