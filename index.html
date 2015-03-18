@@ -650,7 +650,7 @@
                     <!-- Financial services Kenya -->
                     <div class="dropdown" ng-show="KenyaOn">
 
-                        <button ng-disabled="!CICOLayer_Kenya.active"
+                        <button ng-disabled="$stateParams.layers.indexOf('cicos_kenya')==-1"
                                 class="btn btn-default dropdown-toggle ng-binding btn-sector"
                                 type="button"
                                 data-toggle="dropdown"
@@ -706,7 +706,7 @@
                     <!-- Financial services Nigeria -->
                     <div class="dropdown" ng-show="NigeriaOn">
 
-                        <button ng-disabled="!CICOLayer_Nigeria.active"
+                        <button ng-disabled="$stateParams.layers.indexOf('cicos_nigeria')==-1"
                                 class="btn btn-default dropdown-toggle ng-binding btn-sector"
                                 type="button"
                                 data-toggle="dropdown"
@@ -970,7 +970,7 @@
                             </a>
                             <!-- Nigeria -->
                             <a class="cicos" ng-show="selection==='Nigeria'"
-                               ng-class="CICOLayer_Nigeria.active ? 'on' : 'off'"
+                               ng-class="$stateParams.layers.indexOf('cicos_nigeria')!==-1 ? 'on' : 'off'"
                                ng-click="setSelectedSector('CICOS');filterCICO(true);toggleMapLayer('CICOS',CICOLayer)">
                                 <div ng-show="NigeriaOn">
                                     <span class="icon-nearBy nav_icons nearby"></span>
@@ -979,7 +979,7 @@
                             </a>
                             <!-- Kenya -->
                             <a class="cicos" ng-show="selection==='Kenya'"
-                               ng-class="CICOLayer_Kenya.active ? 'on' : 'off'"
+                               ng-class="$stateParams.layers.indexOf('cicos_kenya')!==-1 ? 'on' : 'off'"
                                ng-click="setSelectedSector('CICOS');filterCICO(true);toggleMapLayer('CICOS',CICOLayer)">
                                 <div ng-show="KenyaOn">
                                     <span class="icon-nearBy nav_icons nearby"></span>

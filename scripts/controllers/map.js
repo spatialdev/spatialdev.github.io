@@ -266,6 +266,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
     $scope.setCountry = function(country){
         if( $scope.CountryList.countryNames.indexOf(country) !== -1){
+            SectorFactory.setCountry(country);
+            $scope.selection = country;
             $stateParams.country = country;
             $scope.closeParam('details-panel');
             $state.go($state.current.name, $stateParams); // update app state with new param
@@ -314,6 +316,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
             $scope.zoomToCountry($scope.selection); // switch mapview to country coordinates
 
+            CICOWhereClause = ''; //reset query
+
             //remove all layers but basemap
             var temparr = $stateParams.layers.split(",");
 
@@ -350,13 +354,9 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
         }
     };
 
-    // Watch for change in selected Sector
-    $scope.$watch(function () {
-            return SectorFactory.sectorSelections;
-        }, function () {
-            $scope.allSectors = SectorFactory.sectorSelections;
-        },true
-    );
+    $scope.$on('all-sectors',function(){
+        $scope.allSectors = SectorFactory.allSectors;
+    });
 
     $scope.$watch(function () {
         return SectorFactory.selectedCountry;
@@ -999,6 +999,8 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                     break;
 
                 case 'CICOS':
+                case 'Cicos_kenya':
+                case 'Cicos_nigeria':
                     if ($scope.selection == 'India') {
                         var tablePostArgs = {
                             returnfields: 'lat,lng,name,assoc_bank,assoc_business,form_submitted,type,id,photos',

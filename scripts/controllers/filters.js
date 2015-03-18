@@ -34,19 +34,23 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     // Function is called after Country has changed
     // $scope.CICOSector can either contain Kenya/India/Nigeria data
     $scope.setFilters = function () {
-        if ($scope.selection == 'Kenya') {
+        var stateCountry = $stateParams.country.capitalize();
+        if (stateCountry == 'Kenya') {
             $scope.CICOSector = KenyaFactory.CICOs_Counts;
             //$scope.CICOProviders.viewAll = true;
             $scope.CICOSector.viewAll = true;
+            $scope.CICOSector.selectedAll = true;
         }
-        if ($scope.selection == 'India') {
+        if (stateCountry == 'India') {
             $scope.CICOSector = CICOFilterFactory.CICOs_Counts;
+            $scope.CICOSector.selectedAll = true;
             //$scope.CICOSector.viewAll = false;
             //$scope.HealthSector.viewAll = true;
         }
-        if ($scope.selection == 'Nigeria') {
+        if (stateCountry == 'Nigeria') {
             $scope.CICOSector = NigeriaFactory.CICOs_Counts;
             $scope.CICOSector.viewAll = true;
+            $scope.CICOSector.selectedAll = true;
         }
     };
 
@@ -57,10 +61,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         $scope.AgLayer.active = false;
         $scope.CICOLayer_Kenya.active = false;
         $scope.CICOLayer_Nigeria.active = false;
-        $scope.CICOSector.selectedAll = false;
-        $scope.LibrarySector.selectedAll = false;
-        $scope.HealthSector.selectedAll = false;
-        $scope.AgSector.selectedAll = false;
     };
 
     $scope.defaultState = function(){
@@ -81,7 +81,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
         $state.go($state.current.name, $stateParams);
     };
-
 
     $scope.$watch(function () {
         return SectorFactory.selectedCountry;
@@ -105,7 +104,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 $scope.checkAllCICO();
                 $scope.checkAllHealth();
                 $scope.checkAllLibrary();
-                //$scope.CICOSelections = [];
                 $scope.CICOTop3 = [];
                 console.log("India On " + $scope.IndiaOn);
                 break;
@@ -116,7 +114,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 $scope.KenyaOn = true;
                 $scope.NigeriaOn = false;
                 $scope.ShowAllSectors = true;
-                //$scope.CICOSelections = [];
+                $scope.checkAllCICO();
                 $scope.CICOTop3 = [];
                 $scope.QuickStats = KenyaFactory.Kenya.QuickStats;
                 $scope.title = "Overview - Kenya";
@@ -129,7 +127,7 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                 $scope.KenyaOn = false;
                 $scope.NigeriaOn = true;
                 $scope.ShowAllSectors = true;
-                //$scope.CICOSelections = [];
+                $scope.checkAllCICO();
                 $scope.CICOTop3 = [];
                 $scope.QuickStats = NigeriaFactory.Nigeria.QuickStats;
                 $scope.title = "Overview - Nigeria";
@@ -215,19 +213,19 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
     // Handle Check/Uncheck All filters
     $scope.filterCICO = function (bool) {
-        var cicosectorName = '';
 
-        if($stateParams.country.capitalize()=='India'){
+        var cicosectorName = '';
+        var stateCountry = $stateParams.country.capitalize();
+
+        if(stateCountry=='India'){
             cicosectorName = 'CICOS'
         }
-        if($stateParams.country.capitalize()=='Kenya'){
+        if(stateCountry=='Kenya'){
             cicosectorName = 'cicos_kenya'
         }
-        if($stateParams.country.capitalize()=='Nigeria'){
+        if(stateCountry=='Nigeria'){
             cicosectorName = 'cicos_nigeria'
         }
-
-
 
         if(bool) {
             // handle toggling sectors on bottom sector panel
@@ -246,14 +244,14 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
 
         // Toggle health sector later
         if ($scope.CICOSector.selectedAll == true) {
-            if ($scope.selection == 'India') $scope.CICOLayer.active = true;
-            if ($scope.selection == 'Kenya') $scope.CICOLayer_Kenya.active = true;
-            if ($scope.selection == 'Nigeria') $scope.CICOLayer_Nigeria.active = true;
+            if (stateCountry == 'India') $scope.CICOLayer.active = true;
+            if (stateCountry == 'Kenya') $scope.CICOLayer_Kenya.active = true;
+            if (stateCountry == 'Nigeria') $scope.CICOLayer_Nigeria.active = true;
             $scope.checkAllCICO();
         } else {
-            if ($scope.selection == 'India') $scope.CICOLayer.active = false;
-            if ($scope.selection == 'Kenya') $scope.CICOLayer_Kenya.active = false;
-            if ($scope.selection == 'Nigeria') $scope.CICOLayer_Nigeria.active = false;
+            if (stateCountry == 'India') $scope.CICOLayer.active = false;
+            if (stateCountry == 'Kenya') $scope.CICOLayer_Kenya.active = false;
+            if (stateCountry == 'Nigeria') $scope.CICOLayer_Nigeria.active = false;
             $scope.checkAllCICO();
         }
     };
@@ -345,7 +343,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
         console.log("Active? " + $scope.AgLayer.active);
 
     };
-
 
     $scope.toggleViewAllHealth = function () {
         $scope.HealthSector.viewAll = !$scope.HealthSector.viewAll;
@@ -793,20 +790,26 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
      * in the panels checked accordingly.
      */
     $scope.$on('layers-update', function (evt, layers) {
+        var currentlayers = [];
 
-        if($stateParams.country.capitalize() == "India"){
-        //
-        //    var layers = $stateParams.layers.split(",");
-        //    for(var i =1;i<layers.length;i++){
-        //        if(SectorFactory.sectorSelections.indexOf(layers[i])==-1){
-        //            SectorFactory.setSelectedSector(layers[i]);
-        //        }
-        //    }
-        //    $scope.filterLibrary(false);
-        //    $scope.filterAg(false);
-        //    $scope.filterHealth(false);
-        }
-        //$scope.filterCICO(false);
+        // set current layers for map.js scope.allSectors
+        var layers = $stateParams.layers.split(",");
+        layers.forEach(function (val, idx) {
+            if (idx !== 0 && currentlayers.indexOf(val) == -1) {
+                currentlayers.push(val);
+            }
+        });
+
+        SectorFactory.allSectors = currentlayers;
+
+        // filter cico is used two ways; parameter is false when filtering from a url layer update
+        // true when filtering from UI
+        $scope.filterCICO(false);
+        $scope.filterLibrary(false);
+        $scope.filterAg(false);
+        $scope.filterHealth(false);
+
+        $rootScope.$broadcast('all-sectors',currentlayers);
 
         // github gists
         $scope.listGists();
