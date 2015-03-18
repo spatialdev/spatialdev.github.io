@@ -1,0 +1,33 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "8",
+                "type": "Public Library"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "198",
+                "type": "Village"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "38",
+                "type": "Private Library"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "26",
+                "type": "District"
+            }
+        }
+    ]
+}

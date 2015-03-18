@@ -1,0 +1,16 @@
+{
+  "CountryName": "Kenya",
+  "MapCenter": {
+    "Latitude": 0.57128,
+    "Longitude": 37.789536
+  },
+  "MapZoom": 6,
+  "QuickStats": {
+    "totalPopulation": 40357237,
+    "urbanPct": .073,
+    "ruralPct": .927,
+    "within5Km": .767,
+    "ruralpop": 37393023,
+    "urbanpop": 2964013
+  }
+}

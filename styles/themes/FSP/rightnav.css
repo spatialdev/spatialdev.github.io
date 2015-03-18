@@ -1,0 +1,184 @@
+.on #DetailsNub {
+    background-color: rgb(237,27,46);
+    color: #fff;
+}
+.on #DetailsNub .iconpopup-svg.svg{
+    background-color: #f1efec;
+    color: rgb(237,27,46);
+    padding:0px;
+    fill:rgb(237,27,46);
+}
+
+/* NavBar Flyout Tooltips */
+.NavigationTooltipContainer-right {
+    position: absolute;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.NavigationTooltipContainer-right{
+    left: -145px;
+}
+
+.NavigationTooltipContainer-right.main{
+    top: 0;
+    margin-top: 45px;
+}
+
+.NavFlyoutGroup-right {
+    margin: 0px;
+    padding: 0px;
+}
+
+#DetailsWrapper .side-view-close {
+    background-color: rgb(237,27,46);
+    top: -88px;
+    right: 0px;
+}
+
+#DetailsNub{
+    color: #3c3c3c;
+    /*padding: 13px 16px 10px 16px;*/
+    width: 61px;
+    height:61px;
+    font-size: 18px;
+    margin-left:0px;
+    background-color:#f1efec;
+    padding:0px;
+    border-color: #D2D2D2;
+    border-width: 1px;
+}
+
+#DetailsButtonWrapper button:hover{
+    color: rgb(237,27,46)!important;
+}
+
+#DetailsButtonWrapper {
+    width: 61px;
+    margin-top: 45px;
+    z-index:1;
+}
+
+.NavFlyoutGroup-right {
+    padding-top: 0px;
+}
+
+.right-icon-gap{
+    margin-bottom:15px;
+}
+
+.flyout-right {
+    padding: 10px 25px;
+    background-color: rgb(237,27,46);
+    color: #fff;
+    text-transform: uppercase;
+    font-family: DIN;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    height: 61px;
+    -moz-box-shadow: inset -15px -2px 17px -17px #000000;
+    -webkit-box-shadow: inset -15px -2px 17px -17px #000000;
+    box-shadow: inset -15px -2px 17px -17px #000000;
+    margin-left: 206px;
+    visibility: hidden;
+    line-height: 42px;
+    white-space: nowrap;
+}
+
+
+.flyout-right.on {
+    -webkit-transition: all .5s ease;
+    visibility: visible;
+    position: absolute;
+    margin: 0px;
+}
+
+#DetailsPanel {
+    float: left;
+    padding: 0px 10px 10px;
+    background-color: #ffffff;
+    width: 457px;
+    margin-top: -88px;
+    border: 1px solid #d3d3d3;
+    max-height: 495px;
+}
+
+#DetailsPanel .content{
+    height: 322px;
+    overflow-y: auto;
+}
+
+#OverviewPanel {
+    float: left;
+    padding: 14px 10px 10px;
+    background-color: #F2F2F2;
+    width: 457px;
+    margin-top: -88px;
+    border: 1px solid #d3d3d3;
+}
+
+#DetailsWrapper {
+    right: -457px;
+}
+
+#DetailsWrapper.on {
+}
+
+.row-rightnav {
+    background-color:#f1efec;
+    margin-left: -11px;
+    width:106%;
+}
+
+.row-rightinfo {
+    background-color:#fff;
+    margin-left: -11px;
+}
+
+.full-width{
+    width:100%;
+}
+
+#DetailsPanel .title {
+    font-size: 20px;
+    font-family: Din-Medium;
+    text-transform: uppercase;
+    color: rgb(237,27,46);
+    margin-bottom: 15px;
+}
+
+.first-nav-tab{
+    margin-left: 10px;
+}
+
+#DetailsPanel .nav-tabs a {
+    font-family: Din-Regular;
+}
+
+.info-svg{
+    margin-left: 5px;
+    margin-left: 5px;
+    margin-top: 6px;
+}
+
+.analysis-svg {
+    margin-left: 5px;
+    margin-left: 0px;
+    margin-top: 6px;
+    width: 39px;
+}
+
+.iconpopup-svg {
+    width:41px;
+    margin-top: 3px;
+}
+
+.svg:hover {
+    fill:rgb(237,27,46);
+}
+
+#DetailsNub .no-padding{
+    padding:0px;
+}
+
