@@ -1,0 +1,117 @@
+﻿jQuery1820787813187809661_1409881288801 && jQuery1820787813187809661_1409881288801({
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "93",
+        "featuretype": "PostBank"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "1253",
+        "featuretype": "Money Transfer Service"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "503",
+        "featuretype": "Offsite ATMs"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "613",
+        "featuretype": "Bus Stands"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "121",
+        "featuretype": "Forex Bureaus"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "706",
+        "featuretype": "SACCOs"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "500",
+        "featuretype": "MFIs"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "82",
+        "featuretype": "Purchase Lease Factoring"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "57",
+        "featuretype": "Dev Finance"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "364",
+        "featuretype": "Post Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "1221",
+        "featuretype": "Commercial Bank"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "93",
+        "featuretype": "Pension Providers"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "878",
+        "featuretype": "Insurance Providers"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "48524",
+        "featuretype": "Mobile Money Agent"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "7052",
+        "featuretype": "Bank Agent"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "count_gid": "139",
+        "featuretype": "Cap Markets"
+      }
+    }
+  ]
+});

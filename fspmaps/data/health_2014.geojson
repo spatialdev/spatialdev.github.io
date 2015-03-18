@@ -1,0 +1,82 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "5065",
+                "type": "Sub Health Centres"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "28",
+                "type": "Sub Divisional District Hospitals"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "11",
+                "type": "Medical Colleges and Hospitals"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "3",
+                "type": "ANM or District Training Centres"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "487",
+                "type": "Primary Health Centre (PHC)"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "770",
+                "type": "Additional Primary Health Centres (APHC)"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "34",
+                "type": "District Hospitals"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "703",
+                "type": "Private hospitals and clinics"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "60",
+                "type": "Community Health Centre (CHC)/First Referral Units"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "8",
+                "type": "Nursing Schools"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "count_type": "12",
+                "type": "Approved Nursing Training Centres (Private Sector)"
+            }
+        }
+    ]
+}

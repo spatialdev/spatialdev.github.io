@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://getbootstrap.com/examples/justified-nav/ -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/ico" href="../favicon.ico">
+
+    <title>India Regional Summary</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+    <!--DIN FONT-->
+    <link href="../css/fspwebfont.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href="css/main.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <span id="fsp-maps-link" class="navbar-brand">FSP Maps</span>
+    </div>
+    <div class="container">
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li id="page-header">INDIA SUMMARY</li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+
+
+
+<div class="container">
+
+    <div class="masthead">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#fsp" role="tab" data-toggle="tab">FINANCIAL SERVICES</a></li>
+            <li role="presentation"><a href="#library" role="tab" data-toggle="tab">LIBRARIES</a></li>
+            <li role="presentation"><a href="#health" role="tab" data-toggle="tab">HEALTHCARE</a></li>
+            <li role="presentation"><a href="#agriculture" role="tab" data-toggle="tab">AGRICULTURE</a></li>
+
+            <li id="resetButton"><span class="content">Reset</span></li>
+            <li id="exportBtn" class="on"><span id="export-glyph" class="glyphicon glyphicon-export on"></span><span class="content on">Export</span><span class="loading"></span></li>
+            <li id="openBtn"><a href="" class="open list-unstyled" target="_blank">Open</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+            <div role="tabpanel" class="tab-pane fade in active" id="fsp">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h2 class="region-name-header">Uttar Pradesh</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div id="fsp-map" class="map"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4>Total Financial Service Locations:</h4>
+                        <h3 id="fsp-total-count" class="summary-blue-number"></h3>
+
+                        <h4 class="fat-top">Status (Active / Inactive):</h4>
+                        <div class="progress">
+                            <div id="fsp-status-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% Active
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="fsp-num-active" class="summary-blue-number">0</span> Active &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="fsp-num-inactive" class="summary-blue-number">0</span> Inactive
+                        </div>
+                        <h4 class="fat-top">Land Use (Urban / Rural):</h4>
+                        <div class="progress">
+                            <div id="fsp-urban-rural-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% Urban
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="fsp-num-urban" class="summary-blue-number">0</span> Urban &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="fsp-num-rural" class="summary-blue-number">0</span> Rural
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>TYPES OF FINANCIAL SERVICE PROVIDERS</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="fsp-types-bar" class="chart"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="fsp-types-pie" class="chart"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>ASSOCIATED BUSINESSES (MOBILE CARRIERS)</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="fsp-assoc-bus-bar" class="chart"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="fsp-assoc-bus-pie" class="chart"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>ASSOCIATED BANKS</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="fsp-assoc-bank-bar" class="chart"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="fsp-assoc-bank-pie" class="chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="library">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h2 class="region-name-header">Uttar Pradesh</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div id="library-map" class="map"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4>Total Libraries:</h4>
+                        <h3 id="library-total-count" class="summary-blue-number">0</h3>
+
+                        <h4 class="fat-top">Internet Access:</h4>
+                        <div class="progress">
+                            <div id="library-internet-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Access
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="library-num-access" class="summary-blue-number">0</span> With Access &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="library-num-no-access" class="summary-blue-number">0</span> Without Access
+                        </div>
+                        <h4 class="fat-top">Land Use (Urban / Rural):</h4>
+                        <div class="progress">
+                            <div id="library-urban-rural-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% Urban
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="library-num-urban" class="summary-blue-number">0</span> Urban &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="library-num-rural" class="summary-blue-number">0</span> Rural
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>TYPES OF LIBRARIES</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div id="library-types-bar" class="chart"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div id="library-types-pie" class="chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Computer Access:</h4>
+                        <div class="progress">
+                            <div id="library-computer-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Computers
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="library-num-computers" class="summary-blue-number">0</span> With Computers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="library-num-no-computers" class="summary-blue-number">0</span> Without Computers
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Computer Fee:</h4>
+                        <div class="progress">
+                            <div id="library-fee-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% Charging Access Fee
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="library-num-fee" class="summary-blue-number">0</span> Charging Access Fee &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="library-num-no-fee" class="summary-blue-number">0</span> Free Usage
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Fiction:</h4>
+                        <div class="progress">
+                            <div id="library-fiction-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Fiction
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="library-num-fiction" class="summary-blue-number">0</span> With Fiction &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="library-num-no-fiction" class="summary-blue-number">0</span> Without Fiction
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Non Fiction:</h4>
+                        <div class="progress">
+                            <div id="library-non-fiction-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Non Fiction
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="library-num-non-fiction" class="summary-blue-number">0</span> With Non Fiction &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="library-num-no-non-fiction" class="summary-blue-number">0</span> Without Non Fiction
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Newspapers:</h4>
+                        <div class="progress">
+                            <div id="library-newspapers-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Newspapers
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="library-num-newspapers" class="summary-blue-number">0</span> With Newspapers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="library-num-no-newspapers" class="summary-blue-number">0</span> Without Newspapers
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Encyclopedias:</h4>
+                        <div class="progress">
+                            <div id="library-encyclopedias-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Encyclopedias
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="library-num-encyclopedias" class="summary-blue-number">0</span> With Newspapers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="library-num-no-encyclopedias" class="summary-blue-number">0</span> Without Encyclopedias
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="health">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h2 class="region-name-header">Uttar Pradesh</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div id="health-map" class="map"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4>Total Healthcare Locations:</h4>
+                        <h3 id="health-total-count" class="summary-blue-number">0</h3>
+
+                        <h4 class="fat-top">Status (Active / Inactive):</h4>
+                        <div class="progress">
+                        <div id="health-status-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                        0% Active
+                        </div>
+                        </div>
+                        <div class="sub-counts">
+                        <span id="health-num-active" class="summary-blue-number">0</span> Active &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-inactive" class="summary-blue-number">0</span> Inactive
+                        </div>
+                        <h4 class="fat-top">Land Use (Urban / Rural):</h4>
+                        <div class="progress">
+                        <div id="health-urban-rural-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                        0% Urban
+                        </div>
+                        </div>
+                        <div class="sub-counts">
+                        <span id="health-num-urban" class="summary-blue-number">0</span> Urban &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-rural" class="summary-blue-number">0</span> Rural
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>TYPES OF HEALTHCARE FACILITIES</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <div id="health-types-bar" class="chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="health-types-pie" class="chart"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Access Road:</h4>
+                        <div class="progress">
+                            <div id="health-access-road-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Access Road
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="health-num-access-road" class="summary-blue-number">0</span> With Access Road &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-no-access-road" class="summary-blue-number">0</span> Without Access Road
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Blood Transfusion:</h4>
+                        <div class="progress">
+                            <div id="health-blood-transfusion-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% Blood Transfusion Available
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="health-num-blood-transfusion" class="summary-blue-number">0</span> Providing Blood Transfusions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-no-blood-transfusion" class="summary-blue-number">0</span> Not Providing Blood Transfusions
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Dispensary:</h4>
+                        <div class="progress">
+                            <div id="health-dispensary-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Dispensary
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="health-num-dispensary" class="summary-blue-number">0</span> With Dispensary &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-no-dispensary" class="summary-blue-number">0</span> Without Dispensary
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Electricity:</h4>
+                        <div class="progress">
+                            <div id="health-electricity-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Electricity
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="health-num-electricity" class="summary-blue-number">0</span> With Electricity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-no-electricity" class="summary-blue-number">0</span> Without Electricity
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Immunization:</h4>
+                        <div class="progress">
+                            <div id="health-immunization-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Immunization
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="health-num-immunization" class="summary-blue-number">0</span> With Immunization &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-no-immunization" class="summary-blue-number">0</span> Without Immunization
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Pharmacist:</h4>
+                        <div class="progress">
+                            <div id="health-pharmacist-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% With Pharmacist
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="health-num-pharmacist" class="summary-blue-number">0</span> With Pharmacist &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-no-pharmacist" class="summary-blue-number">0</span> Without Pharmacist
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Open 24 / 7:</h4>
+                        <div class="progress">
+                            <div id="health-open-24-7-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% Open 24 / 7
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="health-num-open-24-7" class="summary-blue-number">0</span> Open 24 / 7 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-no-open-24-7" class="summary-blue-number">0</span> Not Open 24 / 7
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Running Water:</h4>
+                        <div class="progress">
+                            <div id="health-running-water-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% Has Running Water
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="health-num-running-water" class="summary-blue-number">0</span> With Running Water &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="health-num-no-running-water" class="summary-blue-number">0</span> Without Running Water
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="agriculture">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h2 class="region-name-header">Uttar Pradesh</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div id="agriculture-map" class="map"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4>Total Agriculture Locations:</h4>
+                        <h3 id="agriculture-total-count" class="summary-blue-number">0</h3>
+
+                        <h4 class="fat-top">Vending Fertilizer:</h4>
+                        <div class="progress">
+                        <div id="agriculture-vending-fertilizer-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                        0% Vending Fertilizer
+                        </div>
+                        </div>
+                        <div class="sub-counts">
+                        <span id="agriculture-num-vending" class="summary-blue-number">0</span> Vending Fertilizer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="agriculture-num-not-vending" class="summary-blue-number">0</span> Not Vending Fertilizer
+                        </div>
+                        <h4 class="fat-top">Land Use (Urban / Rural):</h4>
+                        <div class="progress">
+                        <div id="agriculture-urban-rural-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                        0% Urban
+                        </div>
+                        </div>
+                        <div class="sub-counts">
+                        <span id="agriculture-num-urban" class="summary-blue-number">0</span> Urban &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="agriculture-num-rural" class="summary-blue-number">0</span> Rural
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>TYPES OF AGRICULTURE LOCATIONS</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="agriculture-types-bar" class="chart"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="agriculture-types-pie" class="chart"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>SEED MULTIPLIER</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="agriculture-seed_muliplier-bar" class="chart"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="agriculture-seed_muliplier-pie" class="chart"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Branding:</h4>
+                        <div class="progress">
+                            <div id="agriculture-branded-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% Has Branding
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="agriculture-num-branded" class="summary-blue-number">0</span> With Visible Branding &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="agriculture-num-no-branded" class="summary-blue-number">0</span> Without Visible Branding
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="fat-top">Tools / Equipment:</h4>
+                        <div class="progress">
+                            <div id="agriculture-tools_equipment-progress" class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0% Selling Tools / Equipment
+                            </div>
+                        </div>
+                        <div class="sub-counts">
+                            <span id="agriculture-num-tools_equipment" class="summary-blue-number">0</span> Selling Tools / Equipment &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="agriculture-num-no-tools_equipment" class="summary-blue-number">0</span> Not Selling Tools / Equipment
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /container -->
+
+<div class="footer">
+    <div class="container">
+        <p class="text-muted">
+            © 2014 Bill & Melinda Gates Foundation. All rights reserved.
+            <a href="http://www.gatesfoundation.org/" target="__blank">
+                <img id="GatesLogo" class="pull-right" src="../img/gateslogo.png" alt="logo">
+            </a>
+        </p>
+    </div>
+</div>
+
+<div id='tooltip'></div>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="../scripts/libs/flot/jquery.flot.js"></script>
+<script src="../scripts/libs/flot/jquery.flot.pie.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script src="../node_modules/leaflet-mapbox-vector-tile/dist/Leaflet.MapboxVectorTile.js"></script>
+<script src="dist/summary.js"></script>
+
+
+</body>
+</html>
