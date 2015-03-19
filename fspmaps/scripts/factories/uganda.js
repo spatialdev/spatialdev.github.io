@@ -7,14 +7,14 @@
 module.exports = angular.module('SpatialViewer').factory('UgandaFactory', function ($http) {
 
     var service = {};
-
-    $http.get('data/countrydata/Uganda.json').
-        success(function(data) {
-            service.Uganda = data;
-        }).
-        error(function(data) {
-            alert(data);
-        });
+    //
+    //$http.get('data/countrydata/Uganda.json').
+    //    success(function(data) {
+    //        service.Uganda = data;
+    //    }).
+    //    error(function(data) {
+    //        alert(data);
+    //    });
 
     return service;
 
