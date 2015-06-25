@@ -97,13 +97,13 @@ SpatialViewer.run(function ($rootScope, $state, $stateParams) {
 
 SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
-    .when('/default', '/map@26.000000,85.000000,6(dark),india')
-    .when('/phl', '/map@26.000000,85.000000,6(dark),india')
-    .otherwise(localStorage.getItem('defaultRoute') || '/map@26.000000,85.000000,6dark),india');
+    .when('/default', '/map@1.3,32,7(dark,cicos_uganda),uganda')
+    .when('/phl', '/map@1.3,32,7(dark,cicos_uganda),uganda')
+    .otherwise(localStorage.getItem('defaultRoute') || '/map@1.3,32,7(dark,cicos_uganda),uganda');
 
   $stateProvider
     .state('main', {
-      url: '/map@:lat,:lng,:zoom(*layers),:country?title&zoom-extent&stories&layers-panel&filters-panel&filters&legend&basemaps&info&theme&details-panel&search-panel&sf_id&level',
+      url: '/map@:lat,:lng,:zoom(*layers),:country?title&zoom-extent&stories&layers-panel&filters-panel&filters&legend&basemaps&info&theme&details-panel&country-summary&search-panel&tools&sf_id&level',
       views: {
         'details': {
           template: ' ',
@@ -116,7 +116,7 @@ SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
       }
     })
     .state('upload', {
-      url: '/map@:lat,:lng,:zoom(*layers)/upload?title&zoom-extent&stories&layers-panel&filters-panel&filters&legend&basemaps&info&theme&details-panel&search-panel&sf_id&level',
+      url: '/map@:lat,:lng,:zoom(*layers)/upload?title&zoom-extent&stories&layers-panel&filters-panel&filters&legend&basemaps&info&theme&details-panel&country-summary&search-panel&tools&sf_id&level',
       views: {
         'details': {
           template: ' ',
@@ -129,7 +129,7 @@ SpatialViewer.config(function ($stateProvider, $urlRouterProvider) {
       }
     })
     .state('export', {
-          url: '/map@:lat,:lng,:zoom(*layers)/export?title&zoom-extent&stories&layers-panel&filters-panel&filters&legend&basemaps&info&theme&details-panel&search-panel&sf_id&level',
+          url: '/map@:lat,:lng,:zoom(*layers)/export?title&zoom-extent&stories&layers-panel&filters-panel&filters&legend&basemaps&info&theme&details-panel&country-summary&search-panel&tools&sf_id&level',
           views: {
               'details': {
                   template: ' ',
@@ -237,6 +237,7 @@ require('./factories/uganda');
 require('./factories/tanzania');
 require('./factories/bangladesh');
 require('./factories/sectordata');
+require('./factories/EducationFilter');
 require('./factories/CICOFilter');
 require('./factories/HealthFilter');
 require('./factories/LibraryFilter');
@@ -245,7 +246,7 @@ require('./controllers/main');
 require('./controllers/map');
 require('./controllers/navbar');
 require('./controllers/side-view');
-require('./controllers/stories');
+require('./controllers/tools');
 require('./controllers/layers');
 require('./controllers/filters');
 require('./controllers/details');
@@ -259,4 +260,3 @@ require('./controllers/upload');
 require('./controllers/search');
 require('./controllers/export');
 require('./controllers/countryselect');
-require('../lib/Leaflet.MapboxVectorTile/src/MVTSource.js');

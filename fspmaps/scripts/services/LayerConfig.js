@@ -13,6 +13,30 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
      * and should not be changed by the user.
      */
 
+    var currentlayers = [];
+
+    var layers = [];
+
+    $rootScope.$on('layers-update', function (e,l) {
+        // set current layers for map.js scope.allSectors
+        layers = $stateParams.layers.split(",");
+        layers.forEach(function (val, idx) {
+            if (idx !== 0 && currentlayers.indexOf(val) == -1) {
+                currentlayers.push(val);
+            }
+        });
+
+    });
+
+    var AllFeatures = [];
+
+    var collectLayerFeatures = function(){
+        if(AllFeatures.length == currentlayers.length){
+            $rootScope.$broadcast('details', AllFeatures);
+            AllFeatures = [];
+        }
+    };
+
     //GADM country extents, level 0
     this.countryextents = {
         type: 'geojson',
@@ -36,6 +60,13 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
         //require('../../config/layers/xyz.js')
     ];
 
+    // add all layers and remove from country factories
+    // reference in filters.js
+    this.configLayers = {};
+    this.configLayers['cicos_uganda'] = configLayers[1]['cicos_uganda'];
+    this.configLayers['education_uganda'] = configLayers[1]['education_uganda'];
+    this.configLayers['agriculture_uganda'] = configLayers[1]['agriculture_uganda'];
+
     for (var i = 0, len = configLayers.length; i < len; i++) {
         var cfg = configLayers[i];
         for (var key in cfg) {
@@ -43,6 +74,47 @@ module.exports = angular.module('SpatialViewer').service('LayerConfig', function
             //console.log(this[key]);
         }
     }
+
+    var idx = 0;
+
+    // watch for when user details panel index changes
+    $rootScope.$on('activeidx', function (event, args) {
+        // activeidx changes multiples times in details.js, so only run when details index != activeidx
+        if (idx !== args.properties.index && args.properties.index !== 0) {
+            idx = args.properties.index;
+        }
+    });
+
+    this.configLayers['cicos_uganda']['onClick'] = function(evt) {
+        $rootScope.$apply(function(){
+            if (evt && evt.features && evt.features.length > 0) {
+                AllFeatures.push(evt.features);
+                //collectLayerFeatures();
+                $rootScope.$broadcast('details', evt.features);
+            }
+        })
+    };
+
+    this.configLayers['education_uganda']['onClick'] = function(evt) {
+        $rootScope.$apply(function(){
+            if (evt && evt.features && evt.features.length > 0) {
+                AllFeatures.push(evt.features);
+                //collectLayerFeatures();
+                $rootScope.$broadcast('details', evt.features);
+            }
+        })
+    };
+
+    this.configLayers['agriculture_uganda']['onClick'] = function(evt) {
+        $rootScope.$apply(function(){
+            if (evt && evt.features && evt.features.length > 0) {
+                AllFeatures.push(evt.features);
+                //collectLayerFeatures();
+                $rootScope.$broadcast('details', evt.features);
+            }
+        })
+    };
+
 
     /**
      * For layers, we try and get an alias for everything, so if it's a URL that

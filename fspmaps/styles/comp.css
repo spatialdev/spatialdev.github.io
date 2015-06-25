@@ -80,9 +80,7 @@ a {
 
 
 
-.stories-container a.thumbnail:hover, .stories-container a.thumbnail:focus, .stories-container a.thumbnail.active {
-    border: none;
-}
+
 
 /* End override the Bootstrap Inner-Shadow */
 

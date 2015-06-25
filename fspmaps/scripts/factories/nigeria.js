@@ -624,7 +624,6 @@ module.exports = angular.module('SpatialViewer').factory('NigeriaFactory', funct
                 return pointRadius;
             }
 
-
             var type = feature.type;
             switch (type) {
                 case 1: //'Point'

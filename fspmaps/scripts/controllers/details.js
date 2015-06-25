@@ -5,13 +5,18 @@
 
 module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', function ($scope, $rootScope, $state, $stateParams, $http, SectorFactory,
                                                                                      Donuts, $filter, IndiaFactory, KenyaFactory, NigeriaFactory,
-                                                                                     CICOFilterFactory, HealthFilterFactory, AgFilterFactory,
+                                                                                     CICOFilterFactory, HealthFilterFactory, AgFilterFactory, UgandaFactory,
                                                                                      LibraryFilterFactory) {
     $scope.details = {};
     $scope.activeidx = 0;
     $scope.currentDetailitem = {};
     $scope.ALLdetails = [];
+    $scope.detailslength = 0;
+    $scope.AllFeatureLayers = [];
     $scope.allSectors = [];
+    var MapBuilder = {};
+
+    $scope.APData = UgandaFactory.CICOs_Counts;
 
     $scope.toolTipDiv = null;
 
@@ -23,17 +28,21 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     $scope.getSelectedSector = function () {
 
         // watch for change in sector, not tab
-        if ($scope.navTab !== 'countryoverview') {
-            $scope.title = $scope.selectedSector;
-        } else {
-            $scope.title = "Overview - Bihar & Uttar Pradesh";
-        }
+        $scope.title = $scope.selection;
 
         switch ($scope.selectedSector) {
             case 'Agriculture':
-                $scope.APData = AgFilterFactory.Ag_Counts;
-                $scope.sectortotal = AgFilterFactory.AgTotal;
-                $scope.APChart(AgFilterFactory.Ag_LandUse_Counts);
+                if($scope.selection == 'India'){
+                    $scope.APData = AgFilterFactory.Ag_Counts;
+                    $scope.sectortotal = AgFilterFactory.AgTotal;
+                    //$scope.APChart(AgFilterFactory.Ag_LandUse_Counts);
+                }
+
+                if($scope.selection == 'Uganda'){
+                    $scope.APData = UgandaFactory.Ag_Counts;
+                    $scope.sectortotal = UgandaFactory.AgTotal;
+                }
+
                 break;
             case 'CICOS':
             case 'Financial Service':
@@ -41,8 +50,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 if($scope.selection == 'India'){
                     $scope.APData = CICOFilterFactory.CICOs_Counts;
                     $scope.sectortotal = CICOFilterFactory.CICOsTotal;
-                    $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
-
+                    //$scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
                 }
                 if($scope.selection == 'Kenya'){
                     $scope.APData = KenyaFactory.CICOs_Counts;
@@ -52,22 +60,31 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                     $scope.APData = NigeriaFactory.CICOs_Counts;
                     $scope.sectortotal = NigeriaFactory.CICOsTotal;
                 }
+                if($scope.selection == 'Uganda'){
+                    $scope.APData = UgandaFactory.CICOs_Counts;
+                    $scope.sectortotal = UgandaFactory.CICOsTotal;
+                }
                 break;
             case 'Health':
                 $scope.APData = HealthFilterFactory.Health_Counts;
                 $scope.sectortotal = HealthFilterFactory.HealthTotal;
-                $scope.APChart(HealthFilterFactory.Health_LandUse_Counts);
+                //$scope.APChart(HealthFilterFactory.Health_LandUse_Counts);
                 break;
             case 'Library':
                 $scope.APData = LibraryFilterFactory.Library_Counts;
                 $scope.sectortotal = LibraryFilterFactory.LibraryTotal;
-                $scope.APChart(LibraryFilterFactory.Library_LandUse_Counts);
+                //$scope.APChart(LibraryFilterFactory.Library_LandUse_Counts);
+                break;
+            case 'Education':
+                $scope.APData = UgandaFactory.Education_Counts;
+                $scope.sectortotal = UgandaFactory.EducationTotal;
+                //$scope.APChart(LibraryFilterFactory.Library_LandUse_Counts);
                 break;
             default:
                 if($scope.selection == 'India'){
                     $scope.APData = CICOFilterFactory.CICOs_Counts;
                     $scope.sectortotal = CICOFilterFactory.CICOsTotal;
-                    $scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
+                    //$scope.APChart(CICOFilterFactory.CICOs_LandUse_Counts);
 
                 } if($scope.selection == 'Kenya'){
                     $scope.APData = CICOFilterFactory.CICOs_Counts_Kenya;
@@ -109,15 +126,18 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 $scope.title = "Overview - Nigeria";
                 $scope.SectorTypes = ['Financial Service'];
                 break;
+            case 'Uganda':
+                $scope.title = "Overview - Uganda";
+                $scope.QuickStats = UgandaFactory.Uganda.QuickStats;
+                $scope.SectorTypes = ['Financial Service','Agriculture', 'Education'];
+                break;
             default:
                 $scope.QuickStats = IndiaFactory.India.QuickStats;
                 $scope.title = "Overview - Bihar & Uttar Pradesh";
-
         }
-    });
 
-    $http.get('data/sf-object-field-hash.json', {cached: true}).success(function (sfFieldHash) {
-        $scope.sfFieldHash = sfFieldHash;
+
+
     });
 
     $scope.APChart = function (sector) {
@@ -163,8 +183,8 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         var landUseTypes = [];
 
         for (var i = 0; i < sector.length; i++) {
-            if (landUseTypes.includes(sector[i].land_use) == false) {
-                landUseTypes.push(sector[i].land_use);
+            if (landUseTypes.includes(sector[i].type) == false) {
+                landUseTypes.push(sector[i].type);
             }
         }
 
@@ -184,7 +204,6 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         var cicoTypes = []; //Get unique list of cico types
         var cicoTypesObject = {}; //Get unique list of cico types
         var maxCounts = []; //keep the cico counts here.
-
         //for (var i=0;i<sector.length;i++){
         //    if (!cicoTypesObject[sector[i].type]) {
         //        cicoTypes.push(sector[i].type);
@@ -205,9 +224,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                 if (citem.type == item) {
                     //If it's a match, add the count to the array
                     cicoTypesObject[item].counts.push({
-                        name: citem.land_use,
+                        name: citem.type,
                         value: citem.count,
-                        landUse: citem.land_use,
+                        landUse: citem.type,
                         FeatureType: citem.type
                     });
                     maxCounts.push(+citem.count);
@@ -541,11 +560,11 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
 
     // Set sector total on page load
-    $scope.$watch(function () {
-        return CICOFilterFactory.CICOsTotal;
-    }, function () {
-        $scope.sectortotal = CICOFilterFactory.CICOsTotal;
-    });
+    //$scope.$watch(function () {
+    //    return CICOFilterFactory.CICOsTotal;
+    //}, function () {
+    //    $scope.sectortotal = CICOFilterFactory.CICOsTotal;
+    //});
 
     // Watch for change in right details navTab
     $scope.$watch('navTab', function () {
@@ -558,12 +577,18 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         }});
 
     // Watch for change in selected Sector
-    $scope.$watch(function () {
-        return SectorFactory.SelectedSector;
-    }, function() {
+
+    $scope.$on('selectedSector', function (event, featureLayer) {
         $scope.selectedSector = SectorFactory.SelectedSector;
         $scope.getSelectedSector();
     });
+
+    //$scope.$watch(function () {
+    //    return SectorFactory.SelectedSector;
+    //}, function() {
+    //    $scope.selectedSector = SectorFactory.SelectedSector;
+    //    $scope.getSelectedSector();
+    //});
 
     $scope.toggleSectorShow = function(){
         $scope.ShowAllSectors = !$scope.ShowAllSectors;
@@ -583,49 +608,76 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
     $scope.alertUserToClick = true;
 
+    $scope.$on('layers-update', function(){
+
+        console.log("low");
+
+        switch ($stateParams.layers.split(",")[1]){
+            case 'cicos_uganda':
+                UgandaFactory.getCICOsCounts(function(counts,total){
+                    $scope.APData = counts;
+                    $scope.sectortotal = total;
+                    $scope.selectedSector = 'CICOS';
+                });
+                break;
+            case 'agriculture_uganda':
+                UgandaFactory.getAgCounts(function(counts,total){
+                    $scope.APData = counts;
+                    $scope.sectortotal = total;
+                    $scope.selectedSector = 'Agriculture';
+                });
+                break;
+            case 'education_uganda':
+                UgandaFactory.getEducationCounts(function(counts,total){
+                    $scope.APData = counts;
+                    $scope.sectortotal = total;
+                    $scope.selectedSector = 'Education';
+                });
+                break;
+            default:
+                $scope.APData = UgandaFactory.CICOs_Counts;
+                $scope.sectortotal = UgandaFactory.CICOsTotal;
+        }
+
+    });
+
     $scope.$on('details', function (event, featureLayer) {
 
+        $scope.ALLdetails = [];
+        $scope.AllFeatureLayers = [];
         $scope.activeidx = 0;
 
-        $scope.ALLdetails = [];
-        $scope.alertUserToClick = false;
-        var properties = featureLayer;
-
-        //combine all sector data into one array
-        properties.forEach(function (val) {
-            val.forEach(function (v) {
-                $scope.ALLdetails.push(v.properties);
-            })
+        featureLayer.forEach(function(v){
+            $scope.AllFeatureLayers.push(v);
+            $scope.ALLdetails.push(v.vtf.properties);
+            //v.forEach(function(l){
+            //    $scope.AllFeatureLayers.push(l);
+            //    $scope.ALLdetails.push(l.vtf.properties);
+            //})
         });
+
+        $scope.alertUserToClick = false;
+
+        $scope.detailslength = $scope.ALLdetails.length;
 
         if($scope.ALLdetails.length > 0) {
             $scope.openParam('details-panel'); //open details panel
             $scope.navTab = 'PointDetails';
 
+            if (MapBuilder.selectedConfetti) MapBuilder.selectedConfetti.deselect(true);
             $scope.currentDetailitem = $scope.ALLdetails[0]; // first item shown
-            $scope.photourl = $scope.currentDetailitem.url; // get url from first item properties
+            MapBuilder.selectedConfetti = $scope.AllFeatureLayers[0].vtf;
+            MapBuilder.selectedConfetti.select(true);
+
+            $scope.photourl = 'http://spatialserver.spatialdev.com/fsp-ebs/2015/Uganda/';
             // split the pipe seperated values
             if($scope.ALLdetails[0].photos != null) $scope.currentDetailitemPhoto = $scope.ALLdetails[0].photos.split("|");
+            $scope.photourl = 'http://spatialserver.spatialdev.com/fsp-ebs/2015/Uganda/'+$scope.currentDetailitemPhoto;
             $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : $scope.activeidx++;
         }
 
         $scope.feature = featureLayer.feature;
-        $scope.title = $scope.featureTitle = properties.name || properties.title || 'Selected Feature';
-        if (properties.salesforce) { // salesforce theme badge selected
-            $scope.contextualLayer = false;
-            $scope.groupings = properties.salesforce;
-            $scope.numThemeItems = $.map(properties.salesforce, function (n) {
-                return n
-            }).length;
-            $scope.showList();
-            $scope.openParam('details-panel');
-            $scope.createDonuts();
-        } else { // standard geojson, show properties as details
 
-            $scope.contextualLayer = (properties.sf_id ? false : true);
-            $scope.showDetails(properties);
-            $scope.openParam('details-panel');
-        }
         $scope.resizeDetailsPanel();
     });
 
@@ -665,164 +717,18 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     $scope.showDetails = function (item, themeItems, idx) {
 
         $scope.currentItem = item;
-        //console.log($scope.currentItem);
-//        if (item.sf_id) {
-//            $rootScope.setParamWithVal('sf_id', item.sf_id);
-//        }
-//        if (item.name || item.title) {
-//            $scope.title = item.name || item.title;
-//        }
-//        if (typeof idx === 'number') $scope.activeThemeItemIdx = idx;
-//        if (themeItems) $scope.activeThemeItemsList = themeItems;
-//        $scope.itemsList = false;
-//        $scope.details = removeUnwantedItems(formatDetails(item, $stateParams.theme), $stateParams.theme);
-//        if (!$scope.contextualLayer) {
-//            $scope.lessDetails = removeUnwantedItems(lessDetails(formatDetails(item, $stateParams.theme)), $stateParams.theme);
-//        }
-//
-//        //Filter/Format RFAs and Indicators
-//        if ($scope.details.requestsForAssistance && typeof $scope.details.requestsForAssistance === 'array') {
-//            //Filter/Format
-//            $scope.details.requestsForAssistance = $scope.details.requestsForAssistance.map(function (rfa) {
-//                return removeUnwantedItems(formatDetails(rfa, "RFA"), "RFA");
-//            });
-//        }
-//
-//        if ($scope.details.indicators && typeof $scope.details.indicators === 'array') {
-//            //Filter/Format
-//            $scope.details.indicators = $scope.details.indicators.map(function (indicator) {
-//                return removeUnwantedItems(formatDetails(indicator, "indicator"), "indicator");
-//            });
-//        }
-//
-//        if ($scope.details.risks && typeof $scope.details.risks === 'array') {
-//            //Filter/Format
-////          $scope.details.risks = $scope.details.risks.map(function (risk) {
-////              return removeUnwantedItems(formatDetails(risk, "risk"), "risk");
-////          });
-//        }
-//
-//        if ($scope.details.statuses && typeof $scope.details.statuses === 'array') {
-//            //Filter/Format
-////          $scope.details.statuses = $scope.details.statuses.map(function (status) {
-////              return removeUnwantedItems(formatDetails(status, "status"), "status");
-////          });
-//        }
 
         $scope.resizeDetailsPanel();
     };
-
-    function removeUnwantedItems(details, type) {
-        var passthroughDetails = {};
-        var blacklistDictionary = config.unwantedProjectDetails;
-
-        if (type === 'disaster') {
-            blacklistDictionary = config.unwantedDisasterDetails;
-        }
-        else if (type === 'project') {
-            blacklistDictionary = config.unwantedProjectDetails;
-        }
-        else if (type === 'RFA') {
-            blacklistDictionary = config.unwantedRFADetails;
-        }
-        else if (type === 'indicator') {
-            blacklistDictionary = config.unwantedIndicatorDetails;
-        }
-
-        for (var key in details) {
-            var blacklisted = blacklistDictionary[key];
-            if (blacklisted && (typeof blacklisted === 'function')) {
-                //evaluate the function to decide if the key should be shown.
-                blacklisted = blacklisted(details[key]);
-            }
-            if (!blacklisted) {
-                //Allow the item thru if it is not blacklisted
-                passthroughDetails[key] = details[key];
-            }
-        }
-
-        return passthroughDetails;
-    }
-
-    function formatDetails(details, type) {
-        var formattedDetails = {};
-        var formattingDictionary = config.projectDetailsFormatting;
-
-        if (type === 'disaster') {
-            formattingDictionary = config.disasterDetailsFormatting;
-        }
-        else if (type === 'project') {
-            formattingDictionary = config.projectDetailsFormatting;
-        }
-        else if (type === 'RFA') {
-            formattingDictionary = config.RFADetailsFormatting;
-        }
-        else if (type === 'indicator') {
-            formattingDictionary = config.indicatorDetailsFormatting;
-        }
-
-        for (var key in details) {
-            var formatter = formattingDictionary[key];
-            if (formatter) {
-                switch (formatter.split(",")[0]) {
-                    case "currency":
-                        formattedDetails[key] = $filter('currency')(details[key], (formatter.split(",")[1] || "USD"));
-                        break;
-
-                    case "number":
-                        formattedDetails[key] = $filter('number')(details[key]);
-                        break;
-
-                    case "date":
-                        formattedDetails[key] = $filter('date')(details[key], "yyyy-dd-MM");
-                        break;
-                    case "rfaName":
-                        formattedDetails[key] = $scope.details.location__r_admin_0__c + ' ' + $scope.details.disaster_type__c + ' - ' + details.appeal_source__c;
-                        break;
-
-                    default:
-                        formattedDetails[key] = details[key];
-                }
-            }
-            else {
-                //No formatting
-                formattedDetails[key] = details[key];
-            }
-        }
-
-        return formattedDetails;
-    }
-
-    function lessDetails(details) {
-        var lessDetails = [];
-        if ($stateParams.theme === 'disaster') {
-            for (var i = 0, len = config.disasterDetailsShortList.length; i < len; i++) {
-                var key = config.disasterDetailsShortList[i];
-                lessDetails.push({
-                    key: key,
-                    value: details[key]
-                });
-            }
-        } else {
-            var projectDetailsShortList = config.projectDetailsShortList;
-            for (var i = 0, len = projectDetailsShortList.length; i < len; i++) {
-                var key = projectDetailsShortList[i];
-                lessDetails.push({
-                    key: key,
-                    value: details[key]
-                });
-            }
-        }
-        return lessDetails;
-    }
 
     $scope.nextThemeItem = function () {
 
         // if active item is length of details array, reset to zero, otherwise add 1
         $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : ++$scope.activeidx;
         $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx]; // change current item to active index
-        $scope.photourl = $scope.currentDetailitem.url;
         if($scope.ALLdetails[$scope.activeidx].photos != null) $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
+        $scope.photourl = 'http://spatialserver.spatialdev.com/fsp-ebs/2015/Uganda/' + $scope.currentDetailitemPhoto;
+
 
         $scope.showDetails($scope.currentDetailitem);
     };
@@ -832,8 +738,9 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
         //if active item is greater than 0, then subtract the index, otherwise go to last index
         $scope.activeidx = ($scope.activeidx > 0) ? --$scope.activeidx : $scope.ALLdetails.length-1;
         $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx]; // change current item to active index
-        $scope.photourl = $scope.currentDetailitem.url;
         if($scope.ALLdetails[$scope.activeidx].photos != null) $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
+        $scope.photourl = 'http://spatialserver.spatialdev.com/fsp-ebs/2015/Uganda/' + $scope.currentDetailitemPhoto;
+
 
         $scope.showDetails($scope.currentDetailitem);
     };
@@ -865,6 +772,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     //For Init.
     $scope.resizeDetailsPanel();
 
+
     $scope.save = function (data, name) {
         var json = JSON.stringify(data, null, 2);
         var blob = new Blob([json], {type: 'text/plain'});
@@ -877,6 +785,18 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
     $scope.$watch('activeidx',function(){
         $rootScope.$broadcast('activeidx', {properties: {index: $scope.activeidx,sector:$scope.currentDetailitem.sector}});
+
+        if($scope.AllFeatureLayers && $scope.AllFeatureLayers.length > 0){
+
+            MapBuilder.selectedConfetti = $scope.AllFeatureLayers[$scope.activeidx].vtf;
+
+            if (MapBuilder.selectedConfetti) {
+                MapBuilder.selectedConfetti.mvtLayer.clearSelectedFeatureTiles();
+                MapBuilder.selectedConfetti.select(true);
+                if (MapBuilder.previouslySelectedConfetti) MapBuilder.previouslySelectedConfetti.deselect(true);
+                MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
+            }
+        }
     });
 
 });

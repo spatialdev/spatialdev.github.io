@@ -536,6 +536,9 @@ module.exports = angular.module('SpatialViewer').factory('KenyaFactory', functio
             error(function (data) {
                 alert(data);
             });
+
+
+
     };
     service.getCICOsUrbanRuralCounts = function () {
         $http.get('http://spatialserver.spatialdev.com/services/tables/cicos_2013/query?where=country%3D%27Kenya%27&returnfields=type%2Cland_use&format=%20geojson&returnGeometry=no&returnGeometryEnvelopes=no&groupby=type%2Cland_use&statsdef=count%3Atype').

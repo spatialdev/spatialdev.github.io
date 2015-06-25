@@ -27,7 +27,7 @@
 }
 
 .SectorArea .AllSectors{
-    left: 25px;
+    left: 138px;
     position: absolute;
     height: 61px;
     background-color: rgb(255, 255, 255);
@@ -43,7 +43,7 @@
 }
 
 .SectorArea .AllSectors.on {
-    width: 584px;
+    width: 480px;
 }
 
 .SectorArea .SectorContent {
@@ -75,31 +75,34 @@
 }
 
 .SectorArea .SectorContent .SingleSector .cicos{
-    color: rgba(157, 33, 41,.4);
+    color: #e2e1dd;
 }
 
 .SectorArea .SectorContent .SingleSector .cicos.on{
     color: rgb(157, 33, 41);
 }
 
-.SectorArea .SectorContent .SingleSector .library{
-    color: rgba(42, 133, 173,.4);
+.SectorArea .SectorContent .SingleSector .library,
+.SectorArea .SectorContent .SingleSector .education{
+    color: #e2e1dd;
 }
 
-.SectorArea .SectorContent .SingleSector .library.on{
+.SectorArea .SectorContent .SingleSector .library.on,
+.SectorArea .SectorContent .SingleSector .education.on{
     color: rgb(42, 133, 173);
 }
 
 .SectorArea .SectorContent .SingleSector .health{
-    color: rgba(127, 157, 106,.4);
+    color: #e2e1dd;
 }
 
 .SectorArea .SectorContent .SingleSector .health.on{
     color: rgb(127, 157, 106);
 }
 
-.SectorArea .SectorContent .SingleSector .agriculture{
-    color: rgba(209, 110, 35,.4);}
+.SectorArea .SectorContent .SingleSector .agriculture {
+    color: #e2e1dd;
+}
 
 .SectorArea .SectorContent .SingleSector .agriculture.on{
     color: rgb(209, 110, 35);
@@ -107,6 +110,12 @@
 
 .SectorArea .SectorContent .SingleSector a {
     text-decoration: none;
+}
+
+.SingleSector.off {
+    padding: 0px;
+    height: 0px;
+    width:0px;
 }
 
 .nearby {

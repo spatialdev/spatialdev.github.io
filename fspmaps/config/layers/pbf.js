@@ -1,5 +1,77 @@
 var layer = module.exports = {};
 
+layer.OnClickEvent = function (index, points, sector) {
+
+    if (points.length > 0) {
+
+        if ($scope.ALLpoints.length < 2) { // check if more then one sector is selected
+            index = $scope.detailsIndex;
+            var currentPoint = points[0][index];
+
+            if (currentPoint) {
+                var layerindex = overlayNames.indexOf(sector);
+                var currOverlay = overlays[layerindex];
+
+                var layers = currOverlay.getLayers();
+                if (layers) {
+                    var layer = layers[Object.keys(layers)[0]];
+                    if (layer) {
+                        var id = "id";
+                        if(sector == "cicos_uganda"){
+                            id = "submission_id"
+                        }
+                        MapBuilder.selectedConfetti = layer.features[currentPoint.properties[id]];
+                        if (MapBuilder.selectedConfetti) {
+                            MapBuilder.selectedConfetti.select();
+                            if (MapBuilder.previouslySelectedConfetti) MapBuilder.previouslySelectedConfetti.deselect();
+                            MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
+                        }
+                    }
+                }
+            }
+        } else {
+            // handles multiple sectors
+            index = $scope.detailsIndex;
+
+            var allpoints = [];
+
+            //combine feature points from all sectors into one array 'allpoints'
+            points.forEach(function (val) {
+                val.forEach(function (v) {
+                    allpoints.push(v);
+                });
+            });
+
+            var currentPoint = allpoints[index];
+
+            if (currentPoint) {
+                var layerindex = (currentPoint.properties.sector == "fsp") ? overlayNames.indexOf(sector) : overlayNames.indexOf(currentPoint.properties.sector);
+                var currOverlay = overlays[layerindex];
+
+                var layers = currOverlay.getLayers();
+                if (layers) {
+                    var layer = layers[Object.keys(layers)[0]];
+                    if (layer) {
+                        var id = "id";
+                        if(sector == "cicos_uganda"){
+                            id = "submission_id"
+                        }
+                        MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
+                        if (MapBuilder.selectedConfetti) {
+                            MapBuilder.selectedConfetti.select();
+                            if (MapBuilder.previouslySelectedConfetti && (MapBuilder.selectedConfetti.id !== MapBuilder.previouslySelectedConfetti.id)) MapBuilder.previouslySelectedConfetti.deselect();
+                            MapBuilder.previouslySelectedConfetti = MapBuilder.selectedConfetti;
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
+}
+
+
 layer.gadm2014kenya = {
   type: 'pbf',
   name: 'GADM 2014 Kenya',
@@ -388,6 +460,403 @@ layer.cicos_kenya = {
 
     return style;
   }
+
+};
+
+
+layer.cicos_uganda = {
+    type: 'pbf',
+    name: 'FSP Uganda 2015',
+    url: "http://spatialserver.spatialdev.com/services/vector-tiles/cicos_2015_uganda/{z}/{x}/{y}.pbf?fields=type,id",
+    debug: false,
+    clickableLayers: null,
+
+    getIDForLayerFeature: function(feature) {
+        return feature.properties['submission_id'];
+    },
+
+    /**
+     * The filter function gets called when iterating though each vector tile feature (vtf). You have access
+     * to every property associated with a given feature (the feature, and the layer). You can also filter
+     * based of the context (each tile that the feature is drawn onto).
+     *
+     * Returning false skips over the feature and it is not drawn.
+     *
+     * @param feature
+     * @returns {boolean}
+     */
+    filter: function(feature, context) {
+        //return feature.properties.country == 'Kenya';
+        return true;
+    },
+
+    /**
+     * When we want to link events between layers, like clicking on a label and a
+     * corresponding polygon freature, this will return the corresponding mapping
+     * between layers. This provides knowledge of which other feature a given feature
+     * is linked to.
+     *
+     * @param layerName  the layer we want to know the linked layer from
+     * @returns {string} returns corresponding linked layer
+     */
+    layerLink: function(layerName) {
+        if (layerName.indexOf('_label') > -1) {
+            return layerName.replace('_label', '');
+        }
+        return layerName + '_label';
+    },
+
+    onClick: function(evt){
+        if(evt && evt.features){
+            evt.features.forEach(function(f){
+                f.vtf.select();
+            });
+        }
+    },
+    onMouseMove: function(evt){
+      if(evt && evt.features){
+        console.log("moused over " + evt.features.length);
+      }
+    },
+
+    /**
+     * Specify which features should have a certain z index (integer).  Lower numbers will draw on 'the bottom'.
+     *
+     * @param feature - the PBFFeature that contains properties
+     */
+    layerOrdering: function(feature){
+        //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
+        if(feature && feature.properties){
+            feature.properties.zIndex = 5;
+        }
+    },
+
+    style: function(feature) {
+        var style = {};
+        var selected = style.selected = {};
+        var pointRadius = 1;
+
+        function ScaleDependentPointRadius(zoom){
+            //Set point radius based on zoom
+            var pointRadius = 1;
+            if(zoom >= 0 && zoom <= 7){
+                pointRadius = 1;
+            }
+            else if(zoom > 7 && zoom <= 10){
+                pointRadius = 3;
+            }
+            else if(zoom > 10){
+                pointRadius = 4;
+            }
+
+            return pointRadius;
+        }
+
+        var type = feature.type;
+        switch (type) {
+            case 1: //'Point'
+                // unselected
+                style.color = 'rgb(157, 33, 41)';
+                style.radius = ScaleDependentPointRadius;
+                // selected
+                selected.color = 'rgb(157, 33, 41)';
+                selected.radius = 7;
+                selected.strokeStyle = 'rgba(255,255,255,0.5)';
+                selected.lineWidth = 2;
+                //selected.outline = {
+                //  strokeStyle: 'rgb(20,20,20)',
+                //  lineWidth: 2
+                //};
+                break;
+            case 2: //'LineString'
+                // unselected
+                style.color = 'rgba(161,217,155,0.8)';
+                style.size = 3;
+                // selected
+                selected.color = 'rgba(255,25,0,0.5)';
+                selected.size = 3;
+                break;
+            case 3: //'Polygon'
+                // unselected
+                style.color = 'rgba(149,139,255,0.4)';
+                style.outline = {
+                    color: 'rgb(20,20,20)',
+                    size: 2
+                };
+                // selected
+                selected.color = 'rgba(255,25,0,0.3)';
+                selected.outline = {
+                    color: '#d9534f',
+                    size: 3
+                };
+        }
+
+        return style;
+    }
+
+};
+
+layer.agriculture_uganda = {
+    type: 'pbf',
+    name: 'FSP Uganda Agriculture 2015',
+    url: "http://spatialserver.spatialdev.com/services/vector-tiles/agriculture_2015_uganda/{z}/{x}/{y}.pbf?fields=type,submission_id",
+    debug: false,
+    clickableLayers: null,
+
+    getIDForLayerFeature: function(feature) {
+        return feature.properties['submission_id'];
+    },
+
+    /**
+     * The filter function gets called when iterating though each vector tile feature (vtf). You have access
+     * to every property associated with a given feature (the feature, and the layer). You can also filter
+     * based of the context (each tile that the feature is drawn onto).
+     *
+     * Returning false skips over the feature and it is not drawn.
+     *
+     * @param feature
+     * @returns {boolean}
+     */
+    filter: function(feature, context) {
+        //return feature.properties.country == 'Kenya';
+        return true;
+    },
+
+    /**
+     * When we want to link events between layers, like clicking on a label and a
+     * corresponding polygon freature, this will return the corresponding mapping
+     * between layers. This provides knowledge of which other feature a given feature
+     * is linked to.
+     *
+     * @param layerName  the layer we want to know the linked layer from
+     * @returns {string} returns corresponding linked layer
+     */
+    layerLink: function(layerName) {
+        if (layerName.indexOf('_label') > -1) {
+            return layerName.replace('_label', '');
+        }
+        return layerName + '_label';
+    },
+
+    onClick: function(evt){
+        if(evt && evt.features){
+            evt.features.forEach(function(f){
+                f.vtf.select();
+            });
+        }
+    },
+    onMouseMove: function(evt){
+        if(evt && evt.features){
+            console.log("moused over " + evt.features.length);
+        }
+    },
+
+    /**
+     * Specify which features should have a certain z index (integer).  Lower numbers will draw on 'the bottom'.
+     *
+     * @param feature - the PBFFeature that contains properties
+     */
+    layerOrdering: function(feature){
+        //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
+        if(feature && feature.properties){
+            feature.properties.zIndex = 5;
+        }
+    },
+
+    style: function(feature) {
+        var style = {};
+        var selected = style.selected = {};
+        var pointRadius = 1;
+
+        function ScaleDependentPointRadius(zoom){
+            //Set point radius based on zoom
+            var pointRadius = 1;
+            if(zoom >= 0 && zoom <= 7){
+                pointRadius = 1;
+            }
+            else if(zoom > 7 && zoom <= 10){
+                pointRadius = 3;
+            }
+            else if(zoom > 10){
+                pointRadius = 4;
+            }
+
+            return pointRadius;
+        }
+
+        var type = feature.type;
+        switch (type) {
+            case 1: //'Point'
+                // unselected
+                style.color = 'rgb(209, 110, 35)';
+                style.radius = ScaleDependentPointRadius;
+                // selected
+                selected.color = 'rgb(209, 110, 35)';
+                selected.radius = 7;
+                selected.strokeStyle = 'rgba(255,255,255,0.5)';
+                selected.lineWidth = 2;
+                //selected.outline = {
+                //  strokeStyle: 'rgb(20,20,20)',
+                //  lineWidth: 2
+                //};
+                break;
+            case 2: //'LineString'
+                // unselected
+                style.color = 'rgba(161,217,155,0.8)';
+                style.size = 3;
+                // selected
+                selected.color = 'rgba(255,25,0,0.5)';
+                selected.size = 3;
+                break;
+            case 3: //'Polygon'
+                // unselected
+                style.color = 'rgba(149,139,255,0.4)';
+                style.outline = {
+                    color: 'rgb(20,20,20)',
+                    size: 2
+                };
+                // selected
+                selected.color = 'rgba(255,25,0,0.3)';
+                selected.outline = {
+                    color: '#d9534f',
+                    size: 3
+                };
+        }
+
+        return style;
+    }
+
+};
+
+layer.education_uganda = {
+    type: 'pbf',
+    name: 'FSP Uganda Education 2015',
+    url: "http://spatialserver.spatialdev.com/services/vector-tiles/education_2015_uganda/{z}/{x}/{y}.pbf?fields=type,submission_id",
+    debug: false,
+    clickableLayers: null,
+
+    getIDForLayerFeature: function(feature) {
+        return feature.properties['submission_id'];
+    },
+
+    /**
+     * The filter function gets called when iterating though each vector tile feature (vtf). You have access
+     * to every property associated with a given feature (the feature, and the layer). You can also filter
+     * based of the context (each tile that the feature is drawn onto).
+     *
+     * Returning false skips over the feature and it is not drawn.
+     *
+     * @param feature
+     * @returns {boolean}
+     */
+    filter: function(feature, context) {
+        //return feature.properties.country == 'Kenya';
+        return true;
+    },
+
+    /**
+     * When we want to link events between layers, like clicking on a label and a
+     * corresponding polygon freature, this will return the corresponding mapping
+     * between layers. This provides knowledge of which other feature a given feature
+     * is linked to.
+     *
+     * @param layerName  the layer we want to know the linked layer from
+     * @returns {string} returns corresponding linked layer
+     */
+    layerLink: function(layerName) {
+        if (layerName.indexOf('_label') > -1) {
+            return layerName.replace('_label', '');
+        }
+        return layerName + '_label';
+    },
+
+    onClick: function(evt){
+        if(evt && evt.features){
+            evt.features.forEach(function(f){
+                f.vtf.select();
+            });
+        }
+    },
+    onMouseMove: function(evt){
+        if(evt && evt.features){
+            console.log("moused over " + evt.features.length);
+        }
+    },
+
+    /**
+     * Specify which features should have a certain z index (integer).  Lower numbers will draw on 'the bottom'.
+     *
+     * @param feature - the PBFFeature that contains properties
+     */
+    layerOrdering: function(feature){
+        //This only needs to be done for each type, not necessarily for each feature. But we'll start here.
+        if(feature && feature.properties){
+            feature.properties.zIndex = 5;
+        }
+    },
+
+    style: function(feature) {
+        var style = {};
+        var selected = style.selected = {};
+        var pointRadius = 1;
+
+        function ScaleDependentPointRadius(zoom){
+            //Set point radius based on zoom
+            var pointRadius = 1;
+            if(zoom >= 0 && zoom <= 7){
+                pointRadius = 1;
+            }
+            else if(zoom > 7 && zoom <= 10){
+                pointRadius = 3;
+            }
+            else if(zoom > 10){
+                pointRadius = 4;
+            }
+
+            return pointRadius;
+        }
+
+        var type = feature.type;
+        switch (type) {
+            case 1: //'Point'
+                // unselected
+                style.color = 'rgb(42, 133, 173)';
+                style.radius = ScaleDependentPointRadius;
+                // selected
+                selected.color = 'rgb(42, 133, 173)';
+                selected.radius = 7;
+                selected.strokeStyle = 'rgba(255,255,255,0.5)';
+                selected.lineWidth = 2;
+                //selected.outline = {
+                //  strokeStyle: 'rgb(20,20,20)',
+                //  lineWidth: 2
+                //};
+                break;
+            case 2: //'LineString'
+                // unselected
+                style.color = 'rgba(161,217,155,0.8)';
+                style.size = 3;
+                // selected
+                selected.color = 'rgba(255,25,0,0.5)';
+                selected.size = 3;
+                break;
+            case 3: //'Polygon'
+                // unselected
+                style.color = 'rgba(149,139,255,0.4)';
+                style.outline = {
+                    color: 'rgb(20,20,20)',
+                    size: 2
+                };
+                // selected
+                selected.color = 'rgba(255,25,0,0.3)';
+                selected.outline = {
+                    color: '#d9534f',
+                    size: 3
+                };
+        }
+
+        return style;
+    }
 
 };
 
@@ -1197,7 +1666,6 @@ layer.library = {
 
 };
 
-
 // All possible CICO layer (combined from all countries)
 var CICO_Config = {
   'Offsite ATMs': {
@@ -1224,18 +1692,49 @@ var CICO_Config = {
     providers: null,
     zIndex: 10
   },
-  'Mobile Money Agent': {
+    'Savings and credit co-operatives (SACCOs)': {
+    color: '#cf8a57',
+        infoLabel: 'Savings and credit co-operatives (SACCOs)',
+        providers: null,
+        zIndex: 10
+},
+
+'Mobile Money Agent': {
     color: '#8CB7C7',
     infoLabel: 'Mobile Money Agent',
     providers: null,
     zIndex: -1
   },
+    'Microfinance Institute': {
+        color: '#825D99',
+        infoLabel: 'Microfinance Institute',
+        providers: null,
+        zIndex: 5
+    },
+    'Post offices': {
+        color: '#FFFF00',
+        infoLabel: 'Post offices',
+        providers: null,
+        zIndex: 6
+},
+    'Microfinance deposit taking institution': {
+        color: '#ff5d5d',
+        infoLabel: 'Microfinance deposit taking institution',
+        providers: null,
+        zIndex: 7
+    },
   'MDIs': {
     color: '#825D99',
     infoLabel: 'MDI',
     providers: null,
     zIndex: 6
   },
+    'Credit institutions': {
+        color: '#6CA76B',
+        infoLabel: 'Credit institutions',
+        providers: null,
+        zIndex: 8
+    },
   'Credit Institution': {
     color: '#6CA76B',
     infoLabel: 'Credit Institution',

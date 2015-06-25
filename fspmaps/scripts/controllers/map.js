@@ -8,13 +8,15 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                                                                  UgandaFactory, BangladeshFactory, TanzaniaFactory, NigeriaFactory,
                                                                                  $scope, $rootScope, $state, $stateParams,
                                                                                  $http) {
-    var map = L.map('map');
+    var map = L.map('map', { maxZoom: 16});
     var lastLayersStr = '';
     var lastBasemapUrl = null;
+    var layerDifference; //an object that stores whether or not new layers are added, or have been removed, and what their names are
     var basemapLayer = null;
     var layersStr = null;
     var overlays = [];
     var overlayNames = [];
+    var overlays_dictionary = {};
     var theme = null;
     var filters = null;
     var MapBuilder = {};
@@ -40,8 +42,54 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     $scope.CICODetails = {};
     var CICOWhereClause = '';
     var AgWhereClause = '';
+    var EducationWhereClause = '';
     var HealthWhereClause = '';
     var ProviderWhereClause = '';
+
+    $scope.$on('EducationSelections', function (event, args) {
+
+        // object keys are the CICO selection sub sector names
+        var typeobj = {};
+        var sector = '';
+        var types = [];
+
+        if (args) {
+            for(var i=0;i<args.length;i++){
+                typeobj[args[i].type] = {
+                    type: args[i].type,
+                    sector: args[i].sector
+                };
+                types.push(args[i].type);
+                sector = args[i].sector;
+            }
+
+            EducationWhereClause = buildPostGresQueryExpression(types,null);
+
+            var filter = function (feature, context) {
+                if (feature && feature.properties) {
+                    var featureProperty = feature.properties.type;
+                    // check if selections are valid types
+                    if (typeobj[featureProperty]) {
+                        return true;  // show the feature
+                    }
+                    return false; //hide the feature
+                } else {
+                    console.error('We are trying to filter on a point with no feature or feature.properties.');
+                }
+                return false; // error state, there should be a feature with properties
+            };
+
+            var activeLayer = findLayer(sector);
+
+            if (activeLayer) {
+                activeLayer.setFilter(filter);
+                activeLayer.redraw(true);
+            }
+        }
+
+        console.log("MAP.JS Listener enabled" + args);
+    });
+
 
     $scope.$on('AgSelections', function (event, args) {
 
@@ -80,7 +128,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
             if (activeLayer) {
                 activeLayer.setFilter(filter);
-                activeLayer.redraw();
+                activeLayer.redraw(true);
             }
         }
 
@@ -131,11 +179,16 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             var filter = function (feature, context) {
                 if (feature && feature.properties) {
                     var featureProperty = feature.properties.type;
-                    var featureProvider = feature.properties.providers;
                     // check if selections are valid types
                     if (typeobj[featureProperty]) {
                         // treat properties with providers different
                         if (typeobj[featureProperty].hasOwnProperty('providers') == true) {
+                            var featureProvider = feature.properties.providers;
+
+                            if(typeof featureProvider === 'undefined'){
+                                console.log("investigate")
+                            }
+
                             for (var i = 0; i < typeobj[featureProperty].providers.length; i++) {
                                 //look for '|' in feature providers
                                 if (featureProvider.indexOf("|") !== -1) {
@@ -166,9 +219,11 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             // search for pbf later
             var activeLayer = findLayer(sector);
 
+            console.log(activeLayer);
+
             if (activeLayer) {
                 activeLayer.setFilter(filter); // set new filter
-                activeLayer.redraw(); // redraw the map
+                activeLayer.redraw(true); // redraw the map
             }
         }
 
@@ -309,39 +364,37 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     SectorFactory.selectedCountry = $scope.selection;
 
     $scope.$on('country-update',function(){
-        if($scope.CountryList.countryNames.indexOf($stateParams.country.capitalize()) !== -1) {
-
-            $scope.selection = $stateParams.country.capitalize();
-            SectorFactory.setCountry($stateParams.country.capitalize());
-
-            $scope.zoomToCountry($scope.selection); // switch mapview to country coordinates
-
-            CICOWhereClause = ''; //reset query
-
-            //remove all layers but basemap
-            var temparr = $stateParams.layers.split(",");
-
-            if(temparr.length>1) {
-                if ($scope.selection !== 'India') {
-                    if (temparr[1].indexOf($scope.CountryList[$scope.selection].layer) == -1) {
-                        $stateParams.layers = temparr[0];
-                    }
-
-                } else {
-                    temparr.forEach(function (val, idx) {
-                        if (idx !== 0 && $scope.CountryList[$scope.selection].layer.indexOf(val) == -1) {
-                            temparr.splice(temparr.indexOf(val), 1);
-                            $stateParams.layers = temparr.join(",");
-                        }
-                    })
-                }
-            }
-
-            $state.go($state.current.name, $stateParams); // update app state with new param
-        }
+        //if($scope.CountryList.countryNames.indexOf($stateParams.country.capitalize()) !== -1) {
+        //
+        //    $scope.selection = $stateParams.country.capitalize();
+        //    SectorFactory.setCountry($stateParams.country.capitalize());
+        //
+        //    $scope.zoomToCountry($scope.selection); // switch mapview to country coordinates
+        //
+        //    CICOWhereClause = ''; //reset query
+        //
+        //    //remove all layers but basemap
+        //    var temparr = $stateParams.layers.split(",");
+        //
+        //    if(temparr.length>1) {
+        //        if ($scope.selection !== 'India') {
+        //            if (temparr[1].indexOf($scope.CountryList[$scope.selection].layer) == -1) {
+        //                $stateParams.layers = temparr[0];
+        //            }
+        //
+        //        } else {
+        //            temparr.forEach(function (val, idx) {
+        //                if (idx !== 0 && $scope.CountryList[$scope.selection].layer.indexOf(val) == -1) {
+        //                    temparr.splice(temparr.indexOf(val), 1);
+        //                    $stateParams.layers = temparr.join(",");
+        //                }
+        //            })
+        //        }
+        //    }
+        //    $state.go($state.current.name, $stateParams); // update app state with new param
+        //}
 
     });
-
 
     $scope.zoomToCountry = function (selected) {
         if (selected !== null) {
@@ -367,8 +420,9 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                 };
                 break;
             case 'Kenya':
+            case 'Uganda':
                 $scope.SectorTypes = {
-                    typeNames: ['Financial Service']
+                    typeNames: ['Financial Service', 'Education', 'Agriculture']
                 };
                 break;
             default:
@@ -408,18 +462,31 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             if (basemapLayer) {
                 map.removeLayer(basemapLayer);
             }
-            basemapLayer = L.tileLayer(basemapUrl);
-            basemapLayer.addTo(map);
+            basemapLayer = L.tileLayer(basemapUrl).addTo(map);
+
+            basemapLayer.on('load', function () {
+                //Move to back
+                basemapLayer.bringToBack();
+            });
         }
 
         if (lastLayersStr !== layersStr) {
-            drawOverlays();
+            //See if new layers are added or if layers need to be removed.
+            var lastLayersArray = lastLayersStr.split(',');
+            var currentLayersArray = layersStr.split(',');
+
+            if(lastLayersArray.length > currentLayersArray.length){
+                //One or more layers has been removed.
+                layerDifference = { type: 'removed', list: $(lastLayersArray).not(currentLayersArray).get()};
+            }
+            else{
+                //One or more layers has been added
+                layerDifference = { type: 'added', list: $(currentLayersArray).not(lastLayersArray).get()};
+
+            }
         }
 
-        if (theme != $stateParams.theme || filters != $stateParams.filters) { // null and undefined should be ==
-            theme = $stateParams.theme;
-            filters = $stateParams.filters;
-        }
+        drawOverlays(layerDifference);
 
         var c = $scope.center = {
             lat: lat,
@@ -509,7 +576,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             || $stateParams.lng !== lng
             || $stateParams.zoom !== zoom) {
 
-            console.log('map: lat,lng,zoom !== $stateParams');
             $stateParams.lat = lat;
             $stateParams.lng = lng;
             $stateParams.zoom = zoom;
@@ -519,47 +585,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     });
 
     map.on('click', function (e) { // handle map click events
-        //Depending on what mode we're in and what we're showing...
-        //This is a test hard-coded for confetti mode.
-        //var latlng = e.latlng;
-        //var lat = e.latlng.lat;
-        //var lng = e.latlng.lng;
-        //
-        //var wkt = "POINT(" + lng + " " + lat + ")";
-        //var postArgs = {format: 'geojson', input_geometry: wkt, buffer_distance: 1000, name: "buffer"};
-        //var url = "http://spatialserver.spatialdev.com/services/geoprocessing/geoprocessing_operation";
-        //
-        ////Using this info, call spatial server with a radius and x,y as WKT to get nearby points.
-        //$http.post(url, postArgs).success(function (result, status) {
-        //
-        //    if (!result || result.error) {
-        //        console.error('Unable to fetch feature: ' + result.error);
-        //        return;
-        //    }
-        //
-        //    //We have the buffer as geojson.  Send it to the point table to intersect
-        //    var tablePostArgs = {
-        //        returnfields: 'id,type,provider,photos',
-        //        format: 'geojson',
-        //        returnGeometry: 'yes',
-        //        intersects: JSON.stringify(result),
-        //        limit: 200 //add a limit of 200 so we don't get carried away
-        //    };
-        //    var pointUrl = "http://spatialserver.spatialdev.com/services/tables/cicos_2013/query";
-        //
-        //    $http.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
-        //        //GeoJSON result of points
-        //        if (!points || points.error) {
-        //            console.error('Unable to fetch feature: ' + points.error);
-        //            return;
-        //        }
-        //
-        //        //point is a featurecollection. open the panel and show some stuff.
-        //        if (points && points.features && points.features.length > 0) {
-        //            //$rootScope.$broadcast('details', {feature: {properties: points.features[0].properties}});
-        //        }
-        //    });
-        //});
+
     });
 
     //Connect the layout onresize end event
@@ -572,7 +598,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     }
 
 
-    function drawOverlays() {
+    function drawOverlays(differenceObject) {
         for (var i = 0, len = overlayNames.length; i < len; ++i) {
             var overlayName = overlayNames[i];
             var currOverlay = overlays[i];
@@ -588,7 +614,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             }
 
             if (typeof LayerConfig[overlayName] === 'object'
-                && LayerConfig[overlayName].type.toLowerCase() === 'pbf') {
+              && LayerConfig[overlayName].type.toLowerCase() === 'pbf') {
 
                 var cfg = LayerConfig[overlayName];
                 var layer = new L.TileLayer.MVTSource(cfg);
@@ -616,7 +642,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             // try for WMS (not a vector layer)
             // if things get more fancy with wms, it should get its own factory
             else if (typeof LayerConfig[overlayName] === 'object'
-                && LayerConfig[overlayName].type.toLowerCase() === 'wms') {
+              && LayerConfig[overlayName].type.toLowerCase() === 'wms') {
 
                 var cfg = LayerConfig[overlayName];
                 var layer = L.tileLayer.wms(cfg.url, {
@@ -631,7 +657,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
              * Tiles that are an overlay. OSM / Google / Mapnik tend to make tiles in this format.
              */
             else if (typeof LayerConfig[overlayName] === 'object'
-                && LayerConfig[overlayName].type.toLowerCase() === 'xyz') {
+              && LayerConfig[overlayName].type.toLowerCase() === 'xyz') {
 
                 var cfg = LayerConfig[overlayName];
                 var layer = L.tileLayer(cfg.url, {
@@ -644,7 +670,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
              * TMS flips the y. GeoServer often serves this.
              */
             else if (typeof LayerConfig[overlayName] === 'object'
-                && LayerConfig[overlayName].type.toLowerCase() === 'tms') {
+              && LayerConfig[overlayName].type.toLowerCase() === 'tms') {
                 var cfg = LayerConfig[overlayName];
                 var layer = L.tileLayer(cfg.url, {
                     opacity: cfg.opacity || 0.5,
@@ -656,24 +682,40 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
             // if its not wms, its a vector layer
             else {
                 var vecRes = VectorProvider.createResource(overlayName);
-                var layer = vecRes.getLayer();
-                layer.addTo(map);
+                if (vecRes) {
+                    var layer = vecRes.getLayer();
+                    layer.addTo(map);
+                }
+                else {
+                    //Not a valid layer.
+                    console.log(overlayName + " is not a layer specified in layerConfig.js");
+                    continue;
+                }
             }
 
-            layer.overlayName = overlayName;
-            overlays[i] = layer;
+            if(layer) {
+                layer.overlayName = overlayName;
+                //layer.addTo(map);
+                overlays[i] = layer;
+                overlays_dictionary[overlayName] = layer; //keep a dictionary reference for faster fetching in UpdateECOSData
 
+            }
         }
 
-
-        // there are more overlays left in the list, less layers specified in route
-        // we need to remove those too.
-        for (var len2 = overlays.length; i < len2; ++i) {
-            if (overlays[i].destroyResource) overlays[i].destroyResource();
-            map.removeLayer(overlays[i]);
-            delete overlays[i];
+        if (differenceObject && differenceObject.type == 'removed') {
+            // there are more overlays left in the list, less layers specified in route
+            // we need to remove those too.
+            var i = 0;
+            for (var len2 = overlays.length; i < len2; ++i) {
+                //If the overlay name exists in the list of layers to be removed, then remove it.
+                if (overlays[i] && overlays[i].overlayName && differenceObject.list.indexOf(overlays[i].overlayName) > -1) {
+                    if(overlays[i].destroyResource) overlays[i].destroyResource();
+                    map.removeLayer(overlays[i]);
+                    delete overlays_dictionary[overlays[i].overlayName]; //delete dictionary reference for faster fetching in UpdateECOSData
+                    delete overlays[i];
+                }
+            }
         }
-
     }
 
     function findLayer(layer) {
@@ -737,7 +779,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                     }
                 });
 
-                if ($scope.selection == 'Kenya' || $scope.selection == 'Nigeria' || $scope.selection == 'India') {
+                if ($scope.selection == 'Uganda' || $scope.selection == 'Kenya' || $scope.selection == 'Nigeria' || $scope.selection == 'India') {
                     //remove trailing 'OR'
                     finalstring = typestring.substring(0, typestring.length - 3);
                     return finalstring + "AND Country ='" +$scope.selection+ "'";
@@ -755,8 +797,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                 } else {
                     return "type IN(" + finalstring + ") AND Country ='" + $scope.selection + "'";
                 }
-
-
             }
         } else {
             return "";
@@ -767,13 +807,15 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
     function buildPostGresProviderExpression(obj) {
         var fobj = {};
 
-        if (Object.keys(obj)) { // if obj is valid
+        var prvd = ($scope.selection == 'Uganda') ? 'prvd' : 'providers';
+
+            if (Object.keys(obj)) { // if obj is valid
             Object.keys(obj).forEach(function (key) {
                 if(obj[key].providers.length > 0){
                     fobj[key] = {providers: ''};
                     obj[key].providers.forEach(function (val, i) {
                         // for each filter, create string that combines all providers
-                        fobj[key].providers += "providers like '%" + val + "%' or ";
+                        fobj[key].providers += prvd + " like '%" + val + "%' or ";
                     });
                     // remove the last 'or ' from string
                     fobj[key].providers = fobj[key].providers.substring(0, fobj[key].providers.length - 3);
@@ -785,7 +827,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
 
     map.on('click', function (evt) {
         $scope.ALLpoints = [];
-        createOnClickEvent(evt, $scope.allSectors);
+        //createOnClickEvent(evt, $scope.allSectors);
         console.log("Map Clicked");
     });
 
@@ -816,7 +858,11 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                     if (layers) {
                         var layer = layers[Object.keys(layers)[0]];
                         if (layer) {
-                            MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
+                            var id = "id";
+                            if(sector == "cicos_uganda"){
+                                id = "submission_id"
+                            }
+                            MapBuilder.selectedConfetti = layer.features[currentPoint.properties[id]];
                             if (MapBuilder.selectedConfetti) {
                                 MapBuilder.selectedConfetti.select();
                                 if (MapBuilder.previouslySelectedConfetti) MapBuilder.previouslySelectedConfetti.deselect();
@@ -848,6 +894,10 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                     if (layers) {
                         var layer = layers[Object.keys(layers)[0]];
                         if (layer) {
+                            var id = "id";
+                            if(sector == "cicos_uganda"){
+                                id = "submission_id"
+                            }
                             MapBuilder.selectedConfetti = layer.features[currentPoint.properties.id];
                             if (MapBuilder.selectedConfetti) {
                                 MapBuilder.selectedConfetti.select();
@@ -997,6 +1047,7 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                 case 'CICOS':
                 case 'Cicos_kenya':
                 case 'Cicos_nigeria':
+                case 'Cicos_uganda':
                     if ($scope.selection == 'India') {
                         var tablePostArgs = {
                             returnfields: 'lat,lng,name,assoc_bank,assoc_business,form_submitted,type,id,photos',
@@ -1114,6 +1165,44 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                                 }
 
                                 if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, $scope.featureCollection, "cicos_kenya");
+
+                            }
+                        });
+                    }
+                    if ($scope.selection == 'Uganda'){
+                        var tablePostArgs = {
+                            returnfields: 'type,status,submission_id,prvd,country',
+                            format: 'geojson',
+                            returnGeometry: 'yes',
+                            intersects: buffer,
+                            limit: 200 //add a limit of 200 so we don't get carried away
+                        };
+
+                        var pointUrl = "http://spatialserver.spatialdev.com/services/tables/cicos_2015/query";
+
+                        if (CICOWhereClause != '') {
+                            tablePostArgs.where = CICOWhereClause;
+                        }
+
+                        $http.post(pointUrl, tablePostArgs).success(function (points, qstatus) {
+                            //GeoJSON result of points
+                            if (!points || points.error) {
+                                console.error('Unable to fetch feature: ' + points.error);
+                                return;
+                            }
+
+                            //point is a featurecollection. open the panel and show some stuff.
+                            if (points && points.features && points.features.length > 0) {
+                                if ($scope.featureCollection.length < sector.length) {
+                                    // add sector and url for photos
+                                    points.features.forEach(function (val) {
+                                        val.properties["sector"] = 'cicos_uganda';
+                                    });
+                                    $scope.ALLpoints.push(points);
+                                    $scope.featureCollection.push(points.features);
+                                    $rootScope.$broadcast('details', $scope.featureCollection);
+                                }
+                                if ($scope.detailsIndex == 0) highlightPointSelection($scope.detailsIndex, $scope.featureCollection, "cicos_uganda");
 
                             }
                         });

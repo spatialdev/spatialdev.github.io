@@ -8,10 +8,10 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
 
     service.CountryList = {
         default:{
-            country:'India',
-            MapCenter: {
-                Latitude: 26,
-                Longitude: 85
+            country:'Uganda',
+            "MapCenter": {
+                "Latitude": 1.3,
+                "Longitude": 32
             },
             MapZoom: 6
         },Kenya:{
@@ -21,6 +21,9 @@ module.exports = angular.module('SpatialViewer').factory('SectorFactory', functi
         },
         India:{
             layer: ['library','CICOS','agriculture','health']
+        },
+        Uganda:{
+            layer: ['cicos_2013_uganda','education_2015_uganda','agriculture_2015_uganda']
         },
         countryNames: ['Bangladesh', 'Uganda', 'Kenya', 'Nigeria', 'Tanzania', 'India']
     };
