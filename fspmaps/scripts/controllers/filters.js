@@ -209,7 +209,6 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
     $scope.HealthSector.active = false;
     $scope.LibrarySector.active = false;
 
-
     $scope.checkedBool = "View All";
     $scope.selectedSector = 'CICOS';
 

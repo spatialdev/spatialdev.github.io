@@ -65,10 +65,10 @@
         <div ng-controller="FiltersCtrl">
             <div class="logo_BG">
                 <div class="logo_font">
-                    <a href="#/default" ng-click="defaultState()">
+                    <!--<a href="#/default" ng-click="defaultState()">-->
                         <div class="fsp">FSP</div>
                         <div class="maps">MAPS</div>
-                    </a>
+                    <!--</a>-->
                 </div>
             </div>
 
@@ -1035,7 +1035,15 @@
     </div>
 
     <!--Basemaps Panel-->
-    <div ng-controller="BasemapsCtrl" s>
+    <div ng-controller="BasemapsCtrl">
+
+        <div id="MapReset" title="Reset Map">
+            <a href="#/default" ng-click="defaultState()" title="Reset App">
+                <div class="mapreset"></div>
+
+            </a>
+        </div>
+
         <div id="MapBasemap" title="Change Basemap" ng-click="toggleParam('basemaps')">
             <span class="mapimg icon-icon_basemaps"></span>
         </div>
@@ -1253,7 +1261,7 @@
 
                                 <div class="img">
                                     <div ng-repeat="x in currentDetailitemPhoto">
-                                        <img class="img" src="{{photourl}}{{x}}"/>
+                                        <img class="img" src="{{currentDetailitemPhoto}}"/>
                                     </div>
                                 </div>
 
@@ -1270,7 +1278,7 @@
                                         Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
                                     </div>
                                     <div ng-show="selection=='Nigeria' || selection=='Kenya' || selection=='Uganda'">
-                                        ID:{{currentDetailitem.submission_id}} </br>
+                                        ID:{{currentDetailitem.submission || currentDetailitem.submission_id}} </br>
                                         Type: {{currentDetailitem.type}}  </br>
                                     </div>
 

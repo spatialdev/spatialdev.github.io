@@ -126,6 +126,17 @@
 
 #MapBasemap {
     position: absolute;
+    bottom: 128px;
+    right: 17px;
+    z-index: 2;
+    cursor: pointer;
+    background: white;
+    height: 33px;
+    width: 33px;
+}
+
+#MapReset {
+    position: absolute;
     bottom: 85px;
     right: 17px;
     z-index: 2;
@@ -133,6 +144,13 @@
     background: white;
     height: 33px;
     width: 33px;
+}
+
+.mapreset {
+    background-image: url("svgs/icon_reload.svg");
+    height: 22px;
+    width: 19px;
+    margin: 5px auto;
 }
 
 #MapBasemap .mapimg{
@@ -145,7 +163,7 @@
     height: 100px;
     position: absolute;
     right: 17px;
-    bottom: 119px;
+    bottom: 165px;
     z-index: 10;
     font-size: 12px;
     background: white;

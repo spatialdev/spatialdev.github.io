@@ -15,6 +15,8 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
     $scope.AllFeatureLayers = [];
     $scope.allSectors = [];
     var MapBuilder = {};
+    var photourl = 'http://spatialserver.spatialdev.com/fsp-ebs/2015/Uganda/';
+
 
     $scope.APData = UgandaFactory.CICOs_Counts;
 
@@ -669,10 +671,13 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
             MapBuilder.selectedConfetti = $scope.AllFeatureLayers[0].vtf;
             MapBuilder.selectedConfetti.select(true);
 
-            $scope.photourl = 'http://spatialserver.spatialdev.com/fsp-ebs/2015/Uganda/';
             // split the pipe seperated values
-            if($scope.ALLdetails[0].photos != null) $scope.currentDetailitemPhoto = $scope.ALLdetails[0].photos.split("|");
-            $scope.photourl = 'http://spatialserver.spatialdev.com/fsp-ebs/2015/Uganda/'+$scope.currentDetailitemPhoto;
+            if($scope.ALLdetails[0].photos != null) {
+                $scope.currentDetailitemPhoto = $scope.ALLdetails[0].photos.split("|");
+                $scope.currentDetailitemPhoto.forEach(function(p,i){
+                    $scope.currentDetailitemPhoto[i] = photourl + p;
+                });
+            }
             $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : $scope.activeidx++;
         }
 
@@ -723,24 +728,32 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
 
     $scope.nextThemeItem = function () {
 
+
         // if active item is length of details array, reset to zero, otherwise add 1
         $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : ++$scope.activeidx;
         $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx]; // change current item to active index
-        if($scope.ALLdetails[$scope.activeidx].photos != null) $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
-        $scope.photourl = 'http://spatialserver.spatialdev.com/fsp-ebs/2015/Uganda/' + $scope.currentDetailitemPhoto;
-
+        if($scope.ALLdetails[$scope.activeidx].photos != null) {
+            $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
+            $scope.currentDetailitemPhoto.forEach(function(p,i){
+                $scope.currentDetailitemPhoto[i] = photourl + p;
+            })
+        }
 
         $scope.showDetails($scope.currentDetailitem);
     };
 
     $scope.prevThemeItem = function () {
 
+
         //if active item is greater than 0, then subtract the index, otherwise go to last index
         $scope.activeidx = ($scope.activeidx > 0) ? --$scope.activeidx : $scope.ALLdetails.length-1;
         $scope.currentDetailitem = $scope.ALLdetails[$scope.activeidx]; // change current item to active index
-        if($scope.ALLdetails[$scope.activeidx].photos != null) $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
-        $scope.photourl = 'http://spatialserver.spatialdev.com/fsp-ebs/2015/Uganda/' + $scope.currentDetailitemPhoto;
-
+        if($scope.ALLdetails[$scope.activeidx].photos != null) {
+            $scope.currentDetailitemPhoto = $scope.ALLdetails[$scope.activeidx].photos.split("|");
+            $scope.currentDetailitemPhoto.forEach(function(p,i){
+                $scope.currentDetailitemPhoto[i] = photourl + p;
+            })
+        }
 
         $scope.showDetails($scope.currentDetailitem);
     };

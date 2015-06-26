@@ -463,16 +463,15 @@ layer.cicos_kenya = {
 
 };
 
-
 layer.cicos_uganda = {
     type: 'pbf',
     name: 'FSP Uganda 2015',
-    url: "http://spatialserver.spatialdev.com/services/vector-tiles/cicos_2015_uganda/{z}/{x}/{y}.pbf?fields=type,id",
+    url: "http://spatialserver.spatialdev.com/services/vector-tiles/uganda_cicos_2015/{z}/{x}/{y}.pbf?fields=type,submission",
     debug: false,
     clickableLayers: null,
 
     getIDForLayerFeature: function(feature) {
-        return feature.properties['submission_id'];
+        return feature.properties['submission'];
     },
 
     /**
