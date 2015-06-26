@@ -365,13 +365,13 @@
 }
 
 #FilterArea .dropdown-menu.financial{
-    left: 27px;
-    top: 47px;
+    left: 23px;
+    top: 29px;
 }
 
 #FilterArea .dropdown-menu.ag{
-    left: 20px;
-    top: 33px;
+    left: 23px;
+    top: 31px;
     z-index: 2003;
 }
 

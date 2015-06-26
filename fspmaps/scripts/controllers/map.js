@@ -188,7 +188,6 @@ module.exports = angular.module('SpatialViewer').controller('MapCtrl', function 
                             if(typeof featureProvider === 'undefined'){
                                 console.log("investigate")
                             }
-
                             for (var i = 0; i < typeobj[featureProperty].providers.length; i++) {
                                 //look for '|' in feature providers
                                 if (featureProvider.indexOf("|") !== -1) {

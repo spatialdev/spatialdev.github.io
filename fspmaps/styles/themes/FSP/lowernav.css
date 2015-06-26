@@ -27,7 +27,7 @@
 }
 
 .SectorArea .AllSectors{
-    left: 138px;
+    left: 198px;
     position: absolute;
     height: 61px;
     background-color: rgb(255, 255, 255);
@@ -43,7 +43,7 @@
 }
 
 .SectorArea .AllSectors.on {
-    width: 480px;
+    width: 421px;
 }
 
 .SectorArea .SectorContent {

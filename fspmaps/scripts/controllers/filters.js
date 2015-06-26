@@ -605,26 +605,26 @@ module.exports = angular.module('SpatialViewer').controller('FiltersCtrl', funct
                     }
                 );
                 //Add to Top 3 array
-                for (var j = 0; j < $scope.AgSelections.length; j++) {
-                    // Top 3 includes the LAST 3 Ag selections
-                    if ($scope.AgTop3.includes($scope.AgSelections[$scope.AgSelections.length - 1]) == false) {
-                        if ($scope.AgTop3.length >= 3) {
-                            $scope.AgTop3.splice(sidx, 1, $scope.AgSelections[$scope.AgSelections.length - 1]);
-                            $scope.top3 = ($scope.AgTop3.length > 0);
-                            //$scope.AgSector.viewAll = false;
-                            if (sidx < 2) {
-                                sidx++;
-                            } else {
-                                sidx = 0;
-                            }
-                        } else {
-                            $scope.AgTop3.push($scope.AgSelections[$scope.AgSelections.length - 1]);
-                            $scope.top3 = ($scope.AgTop3.length > 0);
-                            //$scope.AgSector.viewAll = false;
-
-                        }
-                    }
-                }
+                //for (var j = 0; j < $scope.AgSelections.length; j++) {
+                //    // Top 3 includes the LAST 3 Ag selections
+                //    if ($scope.AgTop3.includes($scope.AgSelections[$scope.AgSelections.length - 1]) == false) {
+                //        if ($scope.AgTop3.length >= 3) {
+                //            $scope.AgTop3.splice(sidx, 1, $scope.AgSelections[$scope.AgSelections.length - 1]);
+                //            $scope.top3 = ($scope.AgTop3.length > 0);
+                //            //$scope.AgSector.viewAll = false;
+                //            if (sidx < 2) {
+                //                sidx++;
+                //            } else {
+                //                sidx = 0;
+                //            }
+                //        } else {
+                //            $scope.AgTop3.push($scope.AgSelections[$scope.AgSelections.length - 1]);
+                //            $scope.top3 = ($scope.AgTop3.length > 0);
+                //            //$scope.AgSector.viewAll = false;
+                //
+                //        }
+                //    }
+                //}
             }
         }
 

@@ -968,7 +968,7 @@
 
                         </div>
                         <!-- Library Sector -->
-                        <div class="SingleSector" ng-class="LibraryLayer.active ? 'on' : 'off'">
+                        <div ng-show="selection=='India'" class="SingleSector" ng-class="LibraryLayer.active ? 'on' : 'off'">
                             <a class="library"
                                ng-click="setSelectedSector('Library');filterLibrary(true);toggleMapLayer('library',LibraryLayer)">
                                 <div ng-show="IndiaOn">
@@ -978,7 +978,7 @@
                             </a>
                         </div>
                         <!-- Health Sector -->
-                        <div class="SingleSector" ng-class="HealthLayer.active ? 'on' : 'off'">
+                        <div  ng-show="selection=='India' class="SingleSector" ng-class="HealthLayer.active ? 'on' : 'off'">
                             <a class="health"
                                ng-click="setSelectedSector('Health');filterHealth(true);toggleMapLayer('health',HealthLayer)">
                                 <div ng-show="IndiaOn">
@@ -1213,20 +1213,20 @@
                     </div>
 
                     <ul class="nav nav-tabs">
-                        <li ng-class="{active: navTab==='PointDetails'}" class="nav-tab"><a class="a-nav-tab"
-                                                                                            ng-click="navTab='PointDetails'"
-                                                                                            data-toggle="tab">Feature
-                            Details</a></li>
-                        <li ng-class="{active: navTab==='countryoverview'}" class="a-nav-tab"><a class="a-nav-tab"
-                                                                                                 ng-click="navTab='countryoverview'"
-                                                                                                 data-toggle="tab">Country
-                            Overview</a>
-                        </li>
-                        <li ng-class="{active: navTab==='apoints'}" class="nav-tab"><a class="first-nav-tab"
-                                                                                       ng-click="navTab='apoints'"
-                                                                                       data-toggle="tab">Access
-                            Points</a>
-                        </li>
+                        <!--<li ng-class="{active: navTab==='PointDetails'}" class="nav-tab"><a class="a-nav-tab"-->
+                                                                                            <!--ng-click="navTab='PointDetails'"-->
+                                                                                            <!--data-toggle="tab">Feature-->
+                            <!--Details</a></li>-->
+                        <!--<li ng-class="{active: navTab==='countryoverview'}" class="a-nav-tab"><a class="a-nav-tab"-->
+                                                                                                 <!--ng-click="navTab='countryoverview'"-->
+                                                                                                 <!--data-toggle="tab">Country-->
+                            <!--Overview</a>-->
+                        <!--</li>-->
+                        <!--<li ng-class="{active: navTab==='apoints'}" class="nav-tab"><a class="first-nav-tab"-->
+                                                                                       <!--ng-click="navTab='apoints'"-->
+                                                                                       <!--data-toggle="tab">Access-->
+                            <!--Points</a>-->
+                        <!--</li>-->
                         <!--<li><a class="a-nav-tab" ng-click="navTab='alorem'" data-toggle="tab">Access Lorem</a></li>-->
 
                     </ul>
@@ -1255,6 +1255,13 @@
                     <div ng-class="{active: navTab==='PointDetails'}" class="tab-pane" style="">
 
                         <div ng-show="detailslength>0">
+
+                            <div>
+                                <div class="details-legend-swatch" ng-style="{'background-color': sectorColor }"></div>
+                                <div class="sector-label">{{selectedSector}}</div>
+
+
+                            </div>
                             <div id="pageTally" class="ng-binding">page {{activeidx+1}} of {{detailslength}}</div>
 
                             <div class="DetailsOverview">
@@ -1277,7 +1284,7 @@
                                         Type: {{currentDetailitem.type}}  </br>
                                         Lat,Lng:{{currentDetailitem.lat}},{{currentDetailitem.lng}}  </br>
                                     </div>
-                                    <div ng-show="selection=='Nigeria' || selection=='Kenya' || selection=='Uganda'">
+                                    <div class="point-details" ng-show="selection=='Nigeria' || selection=='Kenya' || selection=='Uganda'">
                                         ID:{{currentDetailitem.submission || currentDetailitem.submission_id}} </br>
                                         Type: {{currentDetailitem.type}}  </br>
                                     </div>

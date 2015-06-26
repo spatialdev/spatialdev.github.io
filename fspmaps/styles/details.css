@@ -61,15 +61,20 @@ div.tooltip{
 }
 
 #pageTally {
-    font-family: Din-Regular;
-    text-align: center;
-    padding: 5px;
-    background-color: #ececec;
+    font-family: "DIN";
+    text-align: RIGHT;
     font-weight: bold;
-    margin-top: 10px;
-    width: 50%;
+    margin: 10px 0px 0px 0px;
+    padding: 0px 10px;
+    width: 100%;
     margin-right: auto;
     margin-left: auto;
+}
+
+.point-details {
+    font-family: "DIN";
+    font-size: 20px;
+    text-align: left;
 }
 
 .AccessPointName {
@@ -106,6 +111,18 @@ div.tooltip{
     width: 16px;
     float: right;
     margin: 3px 0px 0px 4px;
+}
+
+.details-legend-swatch {
+    height: 16px;
+    width: 16px;
+    margin: 3px 10px 0px 4px;
+    border-radius: 8px;
+    float: left;
+}
+
+.sector-label{
+    float: left;
 }
 
 .swatch-name {

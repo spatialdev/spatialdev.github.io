@@ -620,6 +620,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                     $scope.APData = counts;
                     $scope.sectortotal = total;
                     $scope.selectedSector = 'CICOS';
+                    $scope.sectorColor = CICOFilterFactory.CICO_Config[$scope.selectedSector].color;
                 });
                 break;
             case 'agriculture_uganda':
@@ -627,6 +628,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                     $scope.APData = counts;
                     $scope.sectortotal = total;
                     $scope.selectedSector = 'Agriculture';
+                    $scope.sectorColor = CICOFilterFactory.CICO_Config[$scope.selectedSector].color;
                 });
                 break;
             case 'education_uganda':
@@ -634,6 +636,8 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
                     $scope.APData = counts;
                     $scope.sectortotal = total;
                     $scope.selectedSector = 'Education';
+                    $scope.sectorColor = CICOFilterFactory.CICO_Config[$scope.selectedSector].color;
+
                 });
                 break;
             default:
@@ -680,6 +684,7 @@ module.exports = angular.module('SpatialViewer').controller('DetailsCtrl', funct
             }
             $scope.activeidx = ($scope.activeidx >= $scope.ALLdetails.length-1) ? 0 : $scope.activeidx++;
         }
+
 
         $scope.feature = featureLayer.feature;
 
