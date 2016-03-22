@@ -4,11 +4,11 @@
  * MIT License
 */
 var settings = {
-    github_user : 'alterebro', // GitHub username
+    github_user : 'spatialdev', // GitHub username
     metadata : {
-        title : 'Github User Page Generator : alterebro.github.io',
-        description : 'Github User Page JavaCript Generator built with Vue.js that creates a dynamic page based on the existing data and repositories of a given GitHub user',
-        url : 'http://alterebro.github.io' // URL where it's going to be published
+        title : 'Spatialdev',
+        description : 'We use cool technologies to represent complex information in ways that make sense — make important things more visible - help reinforce values that can make a difference – and move things forward.',
+        url : 'http://spatialdev.github.io' // URL where it's going to be published
     }
 }
 
