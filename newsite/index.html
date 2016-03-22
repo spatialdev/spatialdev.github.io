@@ -91,7 +91,7 @@
 	</header>
 
 	<main role="main">
-		<section v-for="repo in repos">
+		<section v-for="repo in repos | orderBy 'watchers' -1">
 			<header>
 				<h3><i class="fa fa-github"></i> <a href="{{ repo.html_url }}" title="{{ repo.name }}" target="_blank">{{ repo.name }}</a></h3>
 				<p class="repo-langs" v-if="repo.language">
@@ -135,8 +135,8 @@
 		</p>
 	</footer>
 
-	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
-	<script>if (!window.Vue) { document.write('<script src="frontend/scripts/vue-1.0.18.min.js"><\/script>'); }</script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.js"></script>
+	<script>if (!window.Vue) { document.write('<script src="frontend/scripts/vue-1.0.18.js"><\/script>'); }</script>
 	<script type="text/javascript" src="frontend/scripts/atomic.js"></script>
 	<script type="text/javascript" src="frontend/scripts/cache.js"></script>
 	<script type="text/javascript" src="frontend/scripts/app.js"></script>

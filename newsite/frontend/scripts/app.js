@@ -1,6 +1,4 @@
 /* GUPG : Github User Page Generator
- * (c) 2016 Jorge Moreno @alterebro (www.moro.es)
- * https://github.com/alterebro/alterebro.github.io
  * MIT License
 */
 var settings = {
@@ -160,6 +158,7 @@ var app = new Vue({
                 var reposData = [];
                 atomic.get(githubAPI.repos).success(function (d, x) {
     				reposData = d;
+                    console.log(reposData);
                     Cache.set(cache_key, reposData);
     			})
     			.error(function () {})
