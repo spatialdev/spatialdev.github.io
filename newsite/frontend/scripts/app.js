@@ -149,25 +149,25 @@ var app = new Vue({
 		getReposData : function() {
 
 			var self = this;
-            //var cache_key = settings.github_user+'_repos'.toLowerCase();
-            //var cache = Cache.get(cache_key);
-            //if ( !!cache ) {
-            //
-            //    self.setReposData(cache);
-            //
-            //} else {
+            var cache_key = settings.github_user+'_repos'.toLowerCase();
+            var cache = Cache.get(cache_key);
+            if ( !!cache ) {
+
+                self.setReposData(cache);
+
+            } else {
 
                 var reposData = [];
                 atomic.get(githubAPI.repos).success(function (d, x) {
     				reposData = d;
                     console.log(reposData);
-                    //Cache.set(cache_key, reposData);
+                    Cache.set(cache_key, reposData);
     			})
     			.error(function () {})
     			.always(function () {
                     self.setReposData(reposData);
                 });
-            //}
+            }
 		},
 
         // ---------------------

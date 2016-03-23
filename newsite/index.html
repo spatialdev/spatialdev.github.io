@@ -76,8 +76,8 @@
 			<li v-if="user_data.location"><i class="fa fa-fw fa-globe"></i> {{ user_data.location }}</li>
 			<li v-else><i class="fa fa-fw fa-globe"></i> The Internet</li>
 
-			<li v-if="user_data.blog"><i class="fa fa-fw fa-link"></i> {{{ user_data.blog | autolinks }}}</li>
-			<li v-else><i class="fa fa-fw fa-link"></i> {{{ user_data.html_url | autolinks }}}</li>
+			<!--<li v-if="user_data.blog"><i class="fa fa-fw fa-link"></i> {{{ user_data.blog | autolinks }}}</li>-->
+			<li v-else><i class="fa fa-fw fa-link"></i> <a href="www.spatialdev.com">www.spatialdev.com</a></li>
 		</ul>
 		<div id="header-aside">
 			<figure v-if="user_data.avatar_url"><img :src="user_data.avatar_url" width="32" alt="{{ user }}" /></figure>
