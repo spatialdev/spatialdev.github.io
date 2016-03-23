@@ -12,6 +12,11 @@
 
   var exports = {};
 
+  //var githubTokenURL  = "?access_token=dec7b1e6a1297805a9f5342bceab90398badd8e1";
+
+
+  //var githubTokenURL  = '?client_id=31a5153f64b6dc1e2932&client_secret=bf81d0f6e458460da43025243424754668262a16';
+
   var config = {
     contentType: 'application/x-www-form-urlencoded'
   };

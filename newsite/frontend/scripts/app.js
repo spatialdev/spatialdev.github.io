@@ -10,12 +10,14 @@ var settings = {
     }
 }
 
+var githubTokenURL  = '?client_id=31a5153f64b6dc1e2932&client_secret=bf81d0f6e458460da43025243424754668262a16';
+
 // Replace the github user from the url querystring : ?username
 settings.github_user = location.search.slice(1) || settings.github_user;
 
 var githubAPI = {
-	repos : 'https://api.github.com/users/' + settings.github_user + '/repos?sort=pushed',
-	user : 'https://api.github.com/users/' + settings.github_user
+	repos : 'https://api.github.com/users/' + settings.github_user + '/repos' + githubTokenURL + '&visibility=private&page=1&per_page=100',
+	user : 'https://api.github.com/users/' + settings.github_user + githubTokenURL
 }
 
 var data = {
@@ -100,24 +102,24 @@ var app = new Vue({
 		getLanguages : function(index, url) {
 
             var self = this;
-            var cache_key = (settings.github_user+'_repo_'+index).toLowerCase();
-            var cache = Cache.get(cache_key);
-            if ( !!cache ) {
-
-                self.setLanguages(cache, index);
-
-            } else {
+            //var cache_key = (settings.github_user+'_repo_'+index).toLowerCase();
+            //var cache = Cache.get(cache_key);
+            //if ( !!cache ) {
+            //
+            //    self.setLanguages(cache, index);
+            //
+            //} else {
 
                 var langData = {};
-                atomic.get(url).success(function (d, x) {
+                atomic.get(url + githubTokenURL).success(function (d, x) {
                     langData = d;
-                    Cache.set(cache_key, langData);
+                    //Cache.set(cache_key, langData);
                 })
     			.error(function () {})
     			.always(function () {
                     self.setLanguages(langData, index);
                 });
-            }
+            //}
 		},
 
         // ---------------------
@@ -147,25 +149,25 @@ var app = new Vue({
 		getReposData : function() {
 
 			var self = this;
-            var cache_key = settings.github_user+'_repos'.toLowerCase();
-            var cache = Cache.get(cache_key);
-            if ( !!cache ) {
-
-                self.setReposData(cache);
-
-            } else {
+            //var cache_key = settings.github_user+'_repos'.toLowerCase();
+            //var cache = Cache.get(cache_key);
+            //if ( !!cache ) {
+            //
+            //    self.setReposData(cache);
+            //
+            //} else {
 
                 var reposData = [];
                 atomic.get(githubAPI.repos).success(function (d, x) {
     				reposData = d;
                     console.log(reposData);
-                    Cache.set(cache_key, reposData);
+                    //Cache.set(cache_key, reposData);
     			})
     			.error(function () {})
     			.always(function () {
                     self.setReposData(reposData);
                 });
-            }
+            //}
 		},
 
         // ---------------------
@@ -177,17 +179,17 @@ var app = new Vue({
 
             var self = this;
             var cache_key = settings.github_user+'_user'.toLowerCase();
-            var cache = Cache.get(cache_key);
-            if ( !!cache ) {
-
-                self.setUserData(cache);
-
-            } else {
+            //var cache = Cache.get(cache_key);
+            //if ( !!cache ) {
+            //
+            //    self.setUserData(cache);
+            //
+            //} else {
 
                 var userData = {};
                 atomic.get(githubAPI.user).success(function(d, x) {
                     userData = d;
-                    Cache.set(cache_key, userData);
+                    //Cache.set(cache_key, userData);
                 })
                 .error(function (e) {
                     self.error_msg = e.message;
@@ -195,7 +197,7 @@ var app = new Vue({
     			.always(function () {
                     self.setUserData(userData);
                 });
-            }
+            //}
         },
 
         // ---------------------

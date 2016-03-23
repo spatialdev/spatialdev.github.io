@@ -67,10 +67,10 @@
 		<h1><strong><a href="{{ user_data.html_url }}" title="{{ user }}" target="_blank">@{{ user }}</a></strong> {{ user_data.name }}</h1>
 		<ul class="fa-ul">
 			<li>
-				<i class="fa fa-fw fa-code"></i>
-				<span v-for="user_lang in user_languages | orderBy 'user_lang' -1" class="code-lang" v-if="user_lang / user_languages_total * 100 > 0.1">
-					<strong>{{ $key }}</strong> {{ user_lang | langpercent }}%
-				</span>
+				<!--<i class="fa fa-fw fa-code"></i>-->
+				<!--<span v-for="user_lang in user_languages | orderBy 'user_lang' -1" class="code-lang" v-if="user_lang / user_languages_total * 100 > 0.1">-->
+					<!--<strong>{{ $key }}</strong> {{ user_lang | langpercent }}%-->
+				<!--</span>-->
 			</li>
 
 			<li v-if="user_data.location"><i class="fa fa-fw fa-globe"></i> {{ user_data.location }}</li>
@@ -94,6 +94,9 @@
 		<section v-for="repo in repos | orderBy 'watchers' -1">
 			<header>
 				<h3><i class="fa fa-github"></i> <a href="{{ repo.html_url }}" title="{{ repo.name }}" target="_blank">{{ repo.name }}</a></h3>
+				<!--<p>-->
+					<!--<i class="fa fa-fw fa-eye"></i> Private: {{ repo.private }}-->
+				<!--</p>-->
 				<p class="repo-langs" v-if="repo.language">
 					<i class="fa fa-fw fa-code"></i> {{ repo.language }}
 				</p>
@@ -102,6 +105,7 @@
 					<i class="fa fa-fw fa-star-o"></i> {{ repo.stargazers_count }}
 					<i class="fa fa-fw fa-code-fork"></i> {{ repo.forks_count }}
 					<i class="fa fa-fw fa-eye"></i> {{ repo.watchers_count }}
+
 				</p>
 			</header>
 			<article>
