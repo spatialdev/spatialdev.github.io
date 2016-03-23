@@ -10,14 +10,14 @@ var settings = {
     }
 }
 
-var githubTokenURL  = '?client_id=31a5153f64b6dc1e2932&client_secret=bf81d0f6e458460da43025243424754668262a16';
+
 
 // Replace the github user from the url querystring : ?username
 settings.github_user = location.search.slice(1) || settings.github_user;
 
 var githubAPI = {
-	repos : 'https://api.github.com/users/' + settings.github_user + '/repos' + githubTokenURL + '&visibility=private&page=1&per_page=100',
-	user : 'https://api.github.com/users/' + settings.github_user + githubTokenURL
+	repos : 'https://api.github.com/users/' + settings.github_user + '/repos?sort=pushed',
+	user : 'https://api.github.com/users/' + settings.github_user
 }
 
 var data = {
@@ -111,7 +111,7 @@ var app = new Vue({
             //} else {
 
                 var langData = {};
-                atomic.get(url + githubTokenURL).success(function (d, x) {
+                atomic.get(url).success(function (d, x) {
                     langData = d;
                     //Cache.set(cache_key, langData);
                 })
@@ -133,7 +133,7 @@ var app = new Vue({
                     data.forks += reposData[i].forks_count;
                     data.watching += reposData[i].watchers_count;
 
-                    this.getLanguages(i, reposData[i].languages_url);
+                    //this.getLanguages(i, reposData[i].languages_url);
                 }
 
                 window.setTimeout(function() {
@@ -179,17 +179,17 @@ var app = new Vue({
 
             var self = this;
             var cache_key = settings.github_user+'_user'.toLowerCase();
-            //var cache = Cache.get(cache_key);
-            //if ( !!cache ) {
-            //
-            //    self.setUserData(cache);
-            //
-            //} else {
+            var cache = Cache.get(cache_key);
+            if ( !!cache ) {
+
+                self.setUserData(cache);
+
+            } else {
 
                 var userData = {};
                 atomic.get(githubAPI.user).success(function(d, x) {
                     userData = d;
-                    //Cache.set(cache_key, userData);
+                    Cache.set(cache_key, userData);
                 })
                 .error(function (e) {
                     self.error_msg = e.message;
@@ -197,7 +197,7 @@ var app = new Vue({
     			.always(function () {
                     self.setUserData(userData);
                 });
-            //}
+            }
         },
 
         // ---------------------
