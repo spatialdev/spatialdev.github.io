@@ -159,7 +159,7 @@ var app = new Vue({
 
                 var reposData = [];
                 atomic.get(githubAPI.repos).success(function (d, x) {
-    				reposData = d;
+    				reposData = self.updateRepoList(d);
                     console.log(reposData);
                     Cache.set(cache_key, reposData);
     			})
@@ -169,6 +169,20 @@ var app = new Vue({
                 });
             }
 		},
+        updateRepoList : function (repos){
+
+            var listReposToHide = ['pg-acl-prototype', 'itc_projects', 'permission-prototype', 'ng-cadasta', 'onadata'];
+            var updatedList = repos;
+            function deleteElement(element, index, array) {
+                listReposToHide.forEach( function (repoHide) {
+                    if (repoHide === element.name){
+                        updatedList.splice(index, 1);
+                    }
+                })
+            }
+            updatedList.forEach( deleteElement );
+            return updatedList;
+        },
 
         // ---------------------
         // User Data
